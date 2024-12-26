@@ -1,0 +1,24 @@
+optimum-task-411411-3f4dc520069f.json
+static-manifest*
+/projects/compile image/static
+/projects/py_web_dev/static
+/projects/compile image/venv
+/projects/py_web_dev/venv
+/projects/py_web_dev/__pycache__
+/projects/py_web_dev/.idea
+/projects/DArchive
+*.mp4
+*.pdf
+*.part
+*.ytdl
+**/venv/
+**/ex-*
+**/.env*
+/projects/resume/resume.md
+/projects/resume/index.html
+/projects/resume/spam.sh
+/projects/AWS/S3 Static Website/*.md
+**/automation
+/projects/Knowledge Base/*.md
+/projects/Knowledge Base/*.log
+/projects/Knowledge Base/README.md
