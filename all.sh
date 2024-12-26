@@ -5,7 +5,7 @@ ssh-add ~/.ssh/github_key_1
 echo "Enter commit message for the 'notes' repository:"
 read commit_message_notes
 
-echo "Enter commit message for the 'tools-and-projects' repository:"
+echo "Enter commit message for the 'tools-2025' repository:"
 read commit_message_tools
 
 
@@ -47,4 +47,3 @@ git commit -m "$commit_message_tools"
 echo ""
 echo "Starting push;"
 git push -u origin main
-

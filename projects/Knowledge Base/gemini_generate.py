@@ -7,10 +7,7 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import time
 import pyperclip
-
-
-
-
+import functools
 
 
 
@@ -23,12 +20,42 @@ load_dotenv()
 
 # Set up logging with timestamp in the desired format (yyyy-mm-dd 24 hr)
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format="%(asctime)s : %(levelname)s : %(message)s",  # Default log format with timestamp, level, and message
     datefmt="%Y-%m-%d %H:%M:%S",  # Timestamp format (yyyy-mm-dd 24 hr)
     handlers=[logging.FileHandler("gemini.log")]  # Output logs to console
 )
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
+
+
+# trace_client = trace.Client()
+
+
+
+def log_entry_exit(func):
+    """Decorator to log function entry and exit with function name."""
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        # Get the logger for the module where the function is defined
+        func_logger = logging.getLogger(func.__module__)
+
+        # Log function entry with function name
+        func_logger.debug(f"Entering {func.__name__}")
+
+        try:
+            result = func(*args, **kwargs)
+            return result
+        finally:
+            # Log function exit with function name
+            func_logger.debug(f"Exiting {func.__name__}")
+
+    return wrapper
+
+
+
+
+
+
 
 # Initialize the API once
 def configure_genai():
@@ -39,11 +66,20 @@ def configure_genai():
 
 
 
-def gen_response(prompts, record, model):
+
+
+
+@log_entry_exit
+def gen_response(prompts, record):
     """Generate a response from the Gemini API using multiple prompts."""
+    # logger.debug("Entering gen_response")
     gemini_response = None
     RESPONSES = []
+    model = configure_genai()  # Initialize the model once
 
+
+
+    
     if not prompts:
         logger.error("No prompts provided.")
         raise Exception("No prompts provided")
@@ -70,16 +106,19 @@ def gen_response(prompts, record, model):
 
     return gemini_response.text
 
-def process_record(record, prompts, model, results_queue):
+@log_entry_exit
+def process_record(record, prompts, results_queue):
     """Process a single record with multiple prompts."""
     try:
         # Generate response based on record and prompts
-        response = gen_response(prompts, [record], model)  # Pass record as list
+        response = gen_response(prompts, [record])  # Pass record as list
         results_queue.put(response)  # Put the result in the queue
     except Exception as e:
         logger.error(f"Error processing record: {e}")
         results_queue.put(f"Error: {str(e)}")  # Put error message in the queue
 
+
+@log_entry_exit
 def collect_results_from_queue(results_queue):
     """Collect all results from the results_queue."""
     all_responses = []
@@ -88,10 +127,11 @@ def collect_results_from_queue(results_queue):
         all_responses.append(response)
     return all_responses
 
+
+@log_entry_exit
 def parallelize_processing(records, prompts):
     """Parallelize the processing of records and prompts using multiprocessing."""
-    model = configure_genai()  # Initialize the model once
-
+    # global model
     # Get the number of available CPU cores
     num_workers = cpu_count()
 
@@ -104,7 +144,16 @@ def parallelize_processing(records, prompts):
         with concurrent.futures.ProcessPoolExecutor(max_workers=num_workers) as executor:
             futures = []
             for record in records:
-                futures.append(executor.submit(process_record, record, prompts, model, results_queue))
+                futures.append(executor.submit(process_record, record, prompts, results_queue))
+
+
+            # Wait for all futures to complete
+            concurrent.futures.wait(futures)
+
+
+
+        
+
 
             # Collecting results from the queue as the workers complete
             all_responses = []
@@ -125,6 +174,74 @@ def parallelize_processing(records, prompts):
 
 
 
+def files_content ():
+    md_directory = './md/'
+
+    try:
+        # Get all .md files in the directory
+        records = [open(os.path.join(md_directory, f), 'r').read() for f in os.listdir(md_directory) if f.endswith('.md')]
+        return records
+    except FileNotFoundError:
+        logger.error(f"Directory not found: {md_directory}")
+        sys.exit(1)
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        sys.exit(1)
+
+
+
+
+def lines_content ():
+    # First argument is the file containing records (e.g., links)
+    input_file = sys.argv[1]
+
+
+    try:
+        with open(input_file, 'r') as f:
+            records = [line.strip() for line in f.readlines()]
+            return records
+    except FileNotFoundError:
+        logger.error(f"File not found: {input_file}")
+        sys.exit(1)
+
+
+
+
+
+
+@log_entry_exit
+def res_agg (base_responses):
+    # perform aggregate on base_responses
+
+    try:
+        with open("base_prompts.md", "r") as file:
+            base_prompt = file.readline().strip()  # Read the first line and remove any trailing whitespace
+            agg_prompt  = file.readline().strip()  # Read the second line and remove any trailing whitespace
+
+    except FileNotFoundError:
+        print("Error: base_prompts.md not found.")
+        base_prompt = ""  # If the file isn't found, set base_prompt to an empty string
+        agg_prompt = ""  # If the file isn't found, set agg_prompt to an empty string
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+    prompts = ""
+    prompts = f"{base_prompt} {agg_prompt}"
+
+    base_responses.append (prompts)
+    
+    # global model
+    model = configure_genai ()
+
+
+
+
+    gemini_response = model.generate_content (base_responses)
+    aggregate_responses = [gemini_response.text]
+    
+    return aggregate_responses
 
 
 
@@ -134,14 +251,23 @@ def parallelize_processing(records, prompts):
 
 
 
+
+
+
+
+
+@log_entry_exit
 def main():
     """Main function to read input, parallelize the work, and print the results."""
     if len(sys.argv) < 1:
         logger.error("Insufficient arguments provided. You need to provide at least one record and one prompt.")
         sys.exit(1)
 
-    # First argument is the file containing records (e.g., links)
-    input_file = sys.argv[1]
+
+    logger.critical ("A new run;")
+    logger.critical ("<run>")
+
+
 
     # Remaining arguments are the prompts
     # prompts = sys.argv[2:]
@@ -177,15 +303,18 @@ def main():
 
     # print("Modified prompts:", prompts)
 
-
-
-    
-    try:
-        with open(input_file, 'r') as f:
-            records = [line.strip() for line in f.readlines()]
-    except FileNotFoundError:
-        logger.error(f"File not found: {input_file}")
-        sys.exit(1)
+    # Prompt user for input
+    user_input = input("Choose the content source (1 for files, 2 for lines): ")
+    agg_opt = input ("Do you want to perform aggregate operation? 1 for agg, 2 for no agg; ")
+    # Assign records based on the input
+    if user_input == '1':
+        records = files_content()
+    elif user_input == '2':
+        records = lines_content()
+    else:
+        # Log error and exit program if the input is invalid
+        logger.error(f"Invalid option chosen: {user_input}")
+        sys.exit(1)    
 
     logger.info(f"Starting parallel processing for {len(records)} records with {len(prompts)} prompts.")
 
@@ -199,14 +328,31 @@ def main():
     #     print(f"{responses.rstrip()}")
 
 
+    if (agg_opt == '1'):
+        all_responses = res_agg (all_responses)
+    else:
+        pass
+
+
+
     # Clean and print all responses, then copy them to the clipboard
     cleaned_responses = "\n\n".join(responses.rstrip() for responses in all_responses)
+    # logger.info(cleaned_responses)
     print(cleaned_responses)  # Print the cleaned responses
     # pyperclip.copy(cleaned_responses)  # Copy them to the clipboard
 
 
     with open("links_base.md", "w") as file:
         file.write(cleaned_responses + "\n\n")
+
+
+
+    
+    logger.critical ("</run>")
+
+
+
+
 
 
 
@@ -217,5 +363,7 @@ def main():
 
     
 if __name__ == "__main__":
+    # trace_span = client.start_span(name="application_start")
     main()
+    # trace_span.end ()
 
