@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send a Request</title>
+    <style>
+        body {
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000000; /* Dark background */
+            color: #eee; /* Light text color */
+        }
+
+        form {
+            background-color: #1e1e1e; /* Darker grey for form background */
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Darker shadow */
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: cyan; /* Cyan heading */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 24px);
+            padding: 14px;
+            margin-bottom: 30px;
+            border: 1px solid #555; /* Darker border */
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #2b2b2b; /* Dark input background */
+            color: #eee;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(255, 0, 128); /* Magenta submit button */
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(220, 0, 108); /* Darker magenta on hover */
+        }
+
+        .response {
+            margin-top: 20px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+
+<body>
+    <form method="POST" action="/test">
+        <h1>Send a Request</h1>
+
+        <label for="target_route">Target Route:</label>
+        <input type="text" name="target_route" id="target_route" required>
+
+        <label for="no_of_hits">Number of Hits:</label>
+        <input type="text" name="no_of_hits" id="no_of_hits">
+
+        <input type="submit" value="Send">
+    </form>
+
+</body>
+</html>

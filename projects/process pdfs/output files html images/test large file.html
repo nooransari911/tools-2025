@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>Gemini Response</title>
+
+        <style>
+        body {
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            min-height: 100vh;
+            background-color: #000000; /* Dark background */
+            color: #eee; /* Light text color */
+            margin: 0; /* Remove default margin */
+            padding: 0 20px; /* Add some padding for smaller screens */
+        }
+
+        h1 {
+            text-align: left;
+            margin-bottom: 80px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: cyan; /* Cyan heading */
+        }
+        h2 {
+            text-align: left;
+            margin: 20px 0;
+            font-weight: 600;
+            letter-spacing: 2px;  /* Increased spacing */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        ul {
+            text-align: left;
+            list-style: none; /* Remove default list styling */
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            text-align: left;
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+
+        .class-tokens {
+            text-align: left;
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+            max-width: 500px;
+        }
+
+
+
+        /* Style for the markdown content */
+        .markdown {
+            width: 100%;
+            max-width: 1200px;
+            padding-left: 20px;
+        }
+
+        .markdown ul {
+            list-style: disc; /* Use disc bullets for lists */
+            padding-left: 20px;
+        }
+
+        .markdown li {
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .markdown h1 {
+            text-align: left;
+            margin-top: 200px;
+             margin-bottom: 20px;
+             margin-right: 0px;
+             margin-left: 0px;
+            font-weight: 600;
+            letter-spacing: 2px;  /* Increased spacing */
+            color: rgb(0, 255, 255); /* Cyan heading */
+        }
+         .markdown h2 {
+            text-align: left;
+            margin-top: 80px;
+             margin-bottom: 20px;
+             margin-right: 0px;
+             margin-left: 0px;
+            font-weight: 600;
+            letter-spacing: 2px;  /* Increased spacing */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        /* Style for br elements to maintain spacing */
+        br {
+            margin: 20px 0;
+        }
+    </style>
+
+</head>
+<body>
+    <h2 id="heading">Selected directory: </h2> <!-- Element with ID 'heading' -->
+    <h2 id="directory">/home/ansarimn/Downloads/tools and projects/projects/process pdfs/ex-input files/</h2> <!-- Element with ID 'directory' -->
+    <h2 id="tokens"><div class="class-tokens">total input tokens: 87697</div><div class="class-tokens">total output tokens: 8192</div></h2> <!-- Element with ID 'directory' -->
+    <h2 id="elapsed_time"><div class="class-tokens">266.614270608 seconds</div></h2> <!-- Element with ID 'directory' -->
+    <div id="only_responses" class="markdown"><h2>Module 2: AWS Academy Data Engineering: Data-Driven Organizations Student Guide</h2>
+<h3>1.1 Data-Driven Organizations</h3>
+<h4>1.1.1 Introduction</h4>
+<p>This module provides an overview of data-driven organizations, covering:</p>
+<ul>
+<li>How data analytics and AI/ML contribute to data-driven decisions.</li>
+<li>The layers of a data pipeline and data transformations within them.</li>
+<li>The roles of data engineers and data scientists in building data pipelines.</li>
+<li>The influence of modern data strategies on infrastructure design.</li>
+</ul>
+<h4>1.1.2 Module Objectives</h4>
+<p>Upon completion, you will be able to:</p>
+<ul>
+<li><strong>Distinguish:</strong> Data analytics from Artificial Intelligence (AI) and Machine Learning (ML) applications.</li>
+<li><strong>Identify:</strong> The layers within a data pipeline.</li>
+<li><strong>Describe:</strong> Actions taken on data as it moves through a pipeline.</li>
+<li><strong>Define:</strong> Responsibilities of data engineers and data scientists in data pipeline processing.</li>
+<li><strong>Explain:</strong> Three modern data strategies impacting data infrastructure development.</li>
+</ul>
+<h4>1.1.3 Module Overview</h4>
+<p><strong>Presentation Sections</strong></p>
+<ul>
+<li>Data-driven decisions</li>
+<li>The data pipeline - infrastructure for data-driven decisions</li>
+<li>The role of the data engineer in data-driven organizations</li>
+<li>Modern data strategies</li>
+</ul>
+<p><strong>Knowledge Checks</strong></p>
+<ul>
+<li>Online knowledge check</li>
+<li>Sample exam question</li>
+</ul>
+<h4>1.1.4 Data-Driven Decisions</h4>
+<p><strong>The Need for Data-Driven Decisions</strong></p>
+<p>Organizations are increasingly investing in data and analytics to 
+become more data-driven. This shift is driven by the vast amounts of 
+data generated from websites, mobile apps, and smart devices.</p>
+<p><strong>How Data Drives Decisions</strong></p>
+<p>Data science plays a crucial role in data-driven decisions, using two main categories:</p>
+<ul>
+<li><strong>Data Analytics:</strong> Analyzes large datasets to identify
+ patterns and trends, generating actionable insights. Well-suited for 
+structured data with a limited number of variables.</li>
+<li><strong>AI/ML:</strong> Uses mathematical models to predict data at 
+scale, learning from examples in large datasets. Ideal for unstructured 
+data and complex variables.</li>
+</ul>
+<p><strong>Examples of Data-Driven Decisions</strong></p>
+<ul>
+<li><strong>Individuals:</strong> Restaurant recommendations, personalized shopping suggestions, fraud detection.</li>
+<li><strong>Organizations:</strong> Predicting fraudulent transactions, optimizing website design, personalized customer experiences.</li>
+</ul>
+<p><strong>Challenges of Data-Driven Decisions</strong></p>
+<p>While data offers opportunities, it also presents challenges:</p>
+<ul>
+<li><strong>Data Costs:</strong> Managing and storing large volumes of data can be expensive.</li>
+<li><strong>Unstructured Data:</strong> Analyzing unstructured data like images and text requires specialized tools.</li>
+<li><strong>Security Risks:</strong> Protecting sensitive data is paramount.</li>
+<li><strong>Query Processing:</strong> Processing large datasets can be time-consuming.</li>
+</ul>
+<p><strong>The Value of Data Over Time</strong></p>
+<p>Data's value diminishes over time. Real-time data enables proactive 
+decisions, while older data serves reactive and historical analysis.</p>
+<p><strong>Trade-offs in Data-Driven Decisions</strong></p>
+<p>Balancing cost, speed, and accuracy is essential when building data infrastructure to support decision-making.</p>
+<h4>1.1.5 The Data Pipeline - Infrastructure for Data-Driven Decisions</h4>
+<p><strong>What is a Data Pipeline?</strong></p>
+<p>A data pipeline is the infrastructure that supports data-driven decision-making, encompassing:</p>
+<ul>
+<li>Ingesting data from various sources.</li>
+<li>Storing and processing data.</li>
+<li>Enabling data analysis and insight generation.</li>
+</ul>
+<p><strong>Designing a Data Pipeline</strong></p>
+<ul>
+<li>Begin with the business problem and work backward to identify data requirements.</li>
+<li>Choose appropriate infrastructure based on data volume, velocity, and variety.</li>
+</ul>
+<p><strong>Layers of a Data Pipeline</strong></p>
+<ul>
+<li><strong>Ingestion:</strong> Acquiring data from sources.</li>
+<li><strong>Storage:</strong> Persisting data in appropriate formats.</li>
+<li><strong>Processing:</strong> Transforming and preparing data for analysis.</li>
+<li><strong>Analysis &amp; Visualization:</strong> Exploring data and generating insights.</li>
+</ul>
+<p><strong>Data Wrangling</strong></p>
+<p>Data wrangling refers to manipulating and transforming raw data for analysis, including:</p>
+<ul>
+<li><strong>Discovery:</strong> Identifying data sources and understanding their characteristics.</li>
+<li><strong>Cleaning:</strong> Removing inconsistencies and errors.</li>
+<li><strong>Normalization:</strong> Standardizing data formats.</li>
+<li><strong>Enrichment:</strong> Adding valuable information to datasets.</li>
+</ul>
+<p><strong>Iterative Nature of Data Processing</strong></p>
+<p>Data processing is often iterative, involving multiple cycles of refinement and analysis.</p>
+<h4>1.1.6 The Role of the Data Engineer in Data-Driven Organizations</h4>
+<p><strong>Data Engineer vs. Data Scientist</strong></p>
+<p>Both roles work with data pipelines, but their focuses differ:</p>
+<ul>
+<li><strong>Data Engineer:</strong> Builds and manages the infrastructure that data passes through.</li>
+<li><strong>Data Scientist:</strong> Analyzes the data in the pipeline to extract insights.</li>
+</ul>
+<p><strong>Questions for Building a Data Pipeline</strong></p>
+<p>Data engineers and scientists ask questions about:</p>
+<ul>
+<li>Data availability, location, format, and quality.</li>
+<li>Security requirements and access controls.</li>
+<li>Data volume, update frequency, and processing speed.</li>
+<li>Potential insights and suitable analysis tools.</li>
+</ul>
+<p><strong>Iterative Design Process</strong></p>
+<p>Designing a data pipeline is an iterative process, requiring ongoing collaboration between data engineers and scientists.</p>
+<h4>1.1.7 Modern Data Strategies</h4>
+<p><strong>Strategies for Building Data Infrastructure</strong></p>
+<ul>
+<li><strong>Modernize:</strong> Migrate to cloud-based, purpose-built services, reducing operational overhead and increasing agility.</li>
+<li><strong>Unify:</strong> Create a single source of truth for data, enabling cross-organizational access and collaboration.</li>
+<li><strong>Innovate:</strong> Incorporate AI/ML to uncover new insights and drive proactive decision-making.</li>
+</ul>
+<p><strong>The Importance of Data as a Strategic Asset</strong></p>
+<p>Treating data as a valuable asset empowers organizations to make 
+better decisions, respond faster to change, and unlock new 
+opportunities.</p>
+<p><strong>Key Takeaways:</strong></p>
+<ul>
+<li>Data-driven organizations leverage data science for informed decisions.</li>
+<li>The data pipeline provides the infrastructure for data processing and analysis.</li>
+<li>Data engineers and scientists collaborate to build and analyze data pipelines.</li>
+<li>Modern data strategies emphasize modernization, unification, and innovation.</li>
+</ul>
+<hr>
+<h2>Module 3: AWS Academy Data Engineering - Elements of Data</h2>
+<h3>2.1 Elements of Data</h3>
+<h4>2.1.1 Introduction</h4>
+<p>This module focuses on understanding the characteristics of data that influence data pipeline design.</p>
+<h4>2.1.2 Module Objectives</h4>
+<p>Upon completion, you will be able to:</p>
+<ul>
+<li><strong>List:</strong> The five Vs of data.</li>
+<li><strong>Describe:</strong> The impact of volume and velocity on your data pipeline.</li>
+<li><strong>Compare and contrast:</strong> Structured, semistructured, and unstructured data types.</li>
+<li><strong>Identify:</strong> Data sources commonly used to feed data pipelines.</li>
+<li><strong>Pose questions:</strong> About data to assess its veracity.</li>
+<li><strong>Suggest methods:</strong> To improve the veracity of data in your pipeline.</li>
+</ul>
+<h4>2.1.3 Module Overview</h4>
+<p><strong>Presentation Sections</strong></p>
+<ul>
+<li>The five Vs of data: volume, velocity, variety, veracity, and value</li>
+<li>Volume and velocity</li>
+<li>Variety - data types</li>
+<li>Variety - data sources</li>
+<li>Veracity and value</li>
+<li>Activities to improve veracity and value</li>
+</ul>
+<p><strong>Activity</strong></p>
+<ul>
+<li>Planning Your Pipeline</li>
+</ul>
+<p><strong>Knowledge Checks</strong></p>
+<ul>
+<li>Online knowledge check</li>
+<li>Sample exam question</li>
+</ul>
+<h4>2.1.4 The Five Vs of Data</h4>
+<p><strong>Understanding Data Characteristics</strong></p>
+<p>The five Vs of data are critical for pipeline design:</p>
+<ul>
+<li><strong>Volume:</strong> The amount of data to be processed.</li>
+<li><strong>Velocity:</strong> The speed at which data enters and moves through the pipeline.</li>
+<li><strong>Variety:</strong> The types and formats of data, including structured, semistructured, and unstructured.</li>
+<li><strong>Veracity:</strong> The accuracy, trustworthiness, and quality of data.</li>
+<li><strong>Value:</strong> The insights that can be extracted from data.</li>
+</ul>
+<p><strong>Strategies for Value Extraction</strong></p>
+<ul>
+<li>Ensure data meets business needs.</li>
+<li>Evaluate data acquisition feasibility.</li>
+<li>Match pipeline design to data characteristics.</li>
+<li>Balance cost and performance.</li>
+<li>Empower users to focus on insights.</li>
+<li>Implement data governance and cataloging.</li>
+</ul>
+<p><strong>The Importance of Veracity</strong></p>
+<p>Bad data can lead to worse decisions than limited data. Maintaining data integrity is crucial for reliable analysis.</p>
+<h4>2.1.5 Volume and Velocity</h4>
+<p><strong>Impact on Pipeline Layers</strong></p>
+<p>Volume and velocity influence decisions across all pipeline layers:</p>
+<ul>
+<li><strong>Ingestion:</strong> Choosing methods to handle data influx.</li>
+<li><strong>Storage:</strong> Selecting storage types and scaling for capacity.</li>
+<li><strong>Processing:</strong> Determining processing power and distributed solutions.</li>
+<li><strong>Analysis &amp; Visualization:</strong> Scaling tools for data volume and real-time needs.</li>
+</ul>
+<p><strong>Examples of Decisions Based on Volume and Velocity</strong></p>
+<ul>
+<li><strong>Ingestion:</strong> Streaming vs. batch ingestion for high-velocity data.</li>
+<li><strong>Storage:</strong> Short-term vs. long-term storage based on data value over time.</li>
+<li><strong>Processing:</strong> Big data frameworks for massive datasets.</li>
+<li><strong>Analysis &amp; Visualization:</strong> Real-time dashboards for streaming data.</li>
+</ul>
+<h4>2.1.6 Variety - Data Types</h4>
+<p><strong>Types of Data</strong></p>
+<ul>
+<li><strong>Structured:</strong> Organized in rows and columns with a well-defined schema (e.g., relational databases).</li>
+<li><strong>Semistructured:</strong> Possesses a self-describing structure but lacks a rigid schema (e.g., JSON, XML).</li>
+<li><strong>Unstructured:</strong> Lacks a predefined structure (e.g., images, videos, text).</li>
+</ul>
+<p><strong>Challenges of Data Variety</strong></p>
+<ul>
+<li><strong>Data Formatting:</strong> Different formats might require specific analysis tools.</li>
+<li><strong>Ingestion Complexity:</strong> Combining diverse data types can complicate pipelines.</li>
+<li><strong>Data Veracity:</strong> Maintaining data quality across multiple sources can be challenging.</li>
+</ul>
+<p><strong>The Rise of Unstructured Data</strong></p>
+<p>Most data growth today involves unstructured data, requiring specialized tools and AI/ML techniques for analysis.</p>
+<h4>2.1.7 Variety - Data Sources</h4>
+<p><strong>Common Data Source Types</strong></p>
+<ul>
+<li><strong>On-premises databases:</strong> Existing organizational data.</li>
+<li><strong>Public datasets:</strong> Aggregated data about specific topics.</li>
+<li><strong>Time-series data:</strong> Generated by events, IoT devices, and sensors.</li>
+</ul>
+<p><strong>Pipeline Considerations Based on Source Type</strong></p>
+<ul>
+<li><strong>Organizational data:</strong> Often structured and readily analyzed, but might contain sensitive information.</li>
+<li><strong>Public datasets:</strong> Often semistructured, requiring transformations and data merging.</li>
+<li><strong>Time-series data:</strong> Requires streaming ingestion and storage for real-time processing.</li>
+</ul>
+<p><strong>Benefits and Challenges of Data Source Variety</strong></p>
+<ul>
+<li><strong>Benefits:</strong> Enriched analysis through data combination.</li>
+<li><strong>Challenges:</strong> Increased processing complexity due to diverse structures and content.</li>
+</ul>
+<h4>2.1.8 Veracity and Value</h4>
+<p><strong>Veracity Drives Value</strong></p>
+<p>Trustworthy data is essential for reliable analysis and 
+decision-making. Bad data can lead to incorrect conclusions and negative
+ outcomes.</p>
+<p><strong>Maintaining Data Veracity</strong></p>
+<ul>
+<li><strong>Discovery:</strong> Assessing data quality and lineage.</li>
+<li><strong>Cleaning and Transformation:</strong> Removing inconsistencies, duplicates, and outliers.</li>
+<li><strong>Prevention:</strong> Implementing security measures, data audits, and governance processes.</li>
+</ul>
+<p><strong>Examples of Data Issues</strong></p>
+<ul>
+<li><strong>Missing data</strong></li>
+<li><strong>Ambiguity</strong></li>
+<li><strong>Statistical bias</strong></li>
+<li><strong>Duplicates</strong></li>
+<li><strong>Software bugs</strong></li>
+<li><strong>Human error</strong></li>
+</ul>
+<p><strong>Best Practices for Cleaning Data</strong></p>
+<ul>
+<li>Define what "clean" means for each data source.</li>
+<li>Trace errors back to their source.</li>
+<li>Change data thoughtfully and retain auditable records.</li>
+</ul>
+<p><strong>Data Transformation Techniques</strong></p>
+<p>Transformations prepare data for analysis, including:</p>
+<ul>
+<li>Converting data types.</li>
+<li>Replacing values.</li>
+<li>Merging datasets.</li>
+<li>Aggregating data.</li>
+</ul>
+<p><strong>Importance of Data Integrity and Consistency</strong></p>
+<ul>
+<li>Secure all layers of the pipeline.</li>
+<li>Implement least privilege access controls.</li>
+<li>Maintain audit trails.</li>
+<li>Enforce data compliance and governance.</li>
+<li>Maintain a single source of truth for data elements.</li>
+</ul>
+<h4>2.1.9 Key Takeaways</h4>
+<ul>
+<li>The five Vs of data (volume, velocity, variety, veracity, and value) drive pipeline design decisions.</li>
+<li>Volume and velocity determine scaling and throughput requirements.</li>
+<li>Data variety requires handling different types and sources, impacting processing complexity.</li>
+<li>Veracity is crucial for data trustworthiness and value extraction.</li>
+<li>Cleaning, transformation, and data integrity measures ensure data quality.</li>
+</ul>
+<hr>
+<h2>Module 4: AWS Academy Data Engineering - Design Principles and Patterns for Data Pipelines</h2>
+<h3>3.1 Design Principles and Patterns for Data Pipelines</h3>
+<h4>3.1.1 Introduction</h4>
+<p>This module covers the evolution of data architectures and how AWS services support modern data architectures. </p>
+<h4>3.1.2 Module Objectives</h4>
+<p>Upon completion, you will be able to:</p>
+<ul>
+<li><strong>Use:</strong> The AWS Well-Architected Framework to design analytics workloads.</li>
+<li><strong>Recount:</strong> Key milestones in the evolution of data stores and architectures.</li>
+<li><strong>Describe:</strong> Components of modern data architectures on AWS.</li>
+<li><strong>Cite:</strong> AWS design considerations and key services for a streaming analytics pipeline.</li>
+</ul>
+<h4>3.1.3 Module Overview</h4>
+<p><strong>Presentation Sections</strong></p>
+<ul>
+<li>AWS Well-Architected Framework and Lenses</li>
+<li>The evolution of data architectures</li>
+<li>Modern data architecture on AWS</li>
+<li>Modern data architecture pipeline: Ingestion and storage</li>
+<li>Modern data architecture pipeline: Processing and consumption</li>
+<li>Streaming analytics pipeline</li>
+</ul>
+<p><strong>Activity</strong></p>
+<ul>
+<li>Using the Well-Architected Framework</li>
+</ul>
+<p><strong>Labs</strong></p>
+<ul>
+<li>Querying Data by Using Athena</li>
+</ul>
+<p><strong>Knowledge Checks</strong></p>
+<ul>
+<li>Online knowledge check</li>
+<li>Sample exam question</li>
+</ul>
+<h4>3.1.4 AWS Well-Architected Framework</h4>
+<p><strong>Pillars of the Framework</strong></p>
+<p>The Well-Architected Framework provides best practices across six pillars:</p>
+<ul>
+<li>Operational Excellence</li>
+<li>Security</li>
+<li>Reliability</li>
+<li>Performance Efficiency</li>
+<li>Cost Optimization</li>
+<li>Sustainability</li>
+</ul>
+<p><strong>Well-Architected Lenses</strong></p>
+<p>Lenses extend guidance to specific domains:</p>
+<ul>
+<li><strong>Data Analytics Lens:</strong> Focuses on designing well-architected analytics workloads.</li>
+<li><strong>ML Lens:</strong> Addresses differences between application and ML workloads.</li>
+</ul>
+<p><strong>Activity: Using the Well-Architected Framework</strong></p>
+<p>This activity involves utilizing the Data Analytics Lens to identify best practices for building data pipelines.</p>
+<h4>3.1.5 The Evolution of Data Architectures</h4>
+<p><strong>Application Architecture Evolution</strong></p>
+<ul>
+<li>From monolithic mainframes to distributed systems:<ul>
+<li>Client-server architecture</li>
+<li>Three-tier architecture</li>
+<li>Microservices</li>
+</ul>
+</li>
+</ul>
+<p><strong>Data Store Evolution</strong></p>
+<ul>
+<li><strong>Hierarchical databases:</strong> Limited relationship handling capabilities.</li>
+<li><strong>Relational databases:</strong> Structured data storage with robust querying.</li>
+<li><strong>Nonrelational databases:</strong> Flexible data models for diverse data types.</li>
+<li><strong>Data lakes:</strong> Centralized storage for raw, unstructured, and structured data.</li>
+<li><strong>Purpose-built data stores:</strong> Optimized storage for specific data types and workloads.</li>
+</ul>
+<p><strong>Data Architecture Evolution</strong></p>
+<ul>
+<li><strong>Data warehouses:</strong> Separate analytical databases for reporting and BI.</li>
+<li><strong>Big data systems:</strong> Distributed frameworks for handling massive datasets.</li>
+<li><strong>Lambda architecture:</strong> Combining batch and stream processing for real-time insights.</li>
+</ul>
+<h4>3.1.6 Modern Data Architecture on AWS</h4>
+<p><strong>Key Design Considerations</strong></p>
+<ul>
+<li><strong>Scalable data lake:</strong> Centralized storage for all data types.</li>
+<li><strong>Performant and cost-effective components:</strong> Purpose-built services for specific needs.</li>
+<li><strong>Seamless data movement:</strong> Easy integration and data flow between components.</li>
+<li><strong>Unified governance:</strong> Centralized management and security policies.</li>
+</ul>
+<p><strong>Data Movement Types</strong></p>
+<ul>
+<li><strong>Outside in:</strong> Moving data from purpose-built stores to the data lake.</li>
+<li><strong>Inside out:</strong> Moving data from the data lake to purpose-built stores.</li>
+<li><strong>Around the perimeter:</strong> Moving data between purpose-built stores without accessing the data lake.</li>
+</ul>
+<p><strong>Avoiding Data Swamps</strong></p>
+<p>Proper data cataloging, security, and governance are crucial to prevent data lakes from becoming unusable.</p>
+<p><strong>AWS Services for Modern Data Architecture</strong></p>
+<ul>
+<li><strong>Amazon S3:</strong> Data lake storage.</li>
+<li><strong>Athena:</strong> Interactive querying of data in S3.</li>
+<li><strong>Amazon Redshift:</strong> Data warehousing.</li>
+<li><strong>Amazon OpenSearch Service:</strong> Real-time analytics and log analytics.</li>
+<li><strong>Amazon EMR:</strong> Big data processing.</li>
+<li><strong>Amazon Aurora:</strong> Relational database engine.</li>
+<li><strong>Amazon DynamoDB:</strong> Nonrelational database for high-performance applications.</li>
+<li><strong>Amazon SageMaker:</strong> AI/ML service.</li>
+<li><strong>AWS Glue:</strong> Data movement and transformation.</li>
+<li><strong>AWS Lake Formation:</strong> Data lake management and governance.</li>
+</ul>
+<h4>3.1.7 Modern Data Architecture Pipeline: Ingestion and Storage</h4>
+<p><strong>Ingestion Layer</strong></p>
+<ul>
+<li><strong>Matching services to data characteristics:</strong><ul>
+<li>Amazon AppFlow: SaaS applications.</li>
+<li>AWS Database Migration Service: Relational databases.</li>
+<li>AWS DataSync: File shares.</li>
+<li>Amazon Kinesis Data Streams and Firehose: Streaming data sources.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Storage Layer</strong></p>
+<ul>
+<li><strong>Storage:</strong><ul>
+<li>Amazon S3: Data lake.</li>
+<li>Amazon Redshift: Data warehouse.</li>
+</ul>
+</li>
+<li><strong>Catalog:</strong><ul>
+<li>AWS Glue Data Catalog: Metadata storage.</li>
+<li>AWS Lake Formation: Centralized governance and catalog.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Storage Zones in Amazon S3</strong></p>
+<ul>
+<li><strong>Landing zone:</strong> Initial data landing and cleaning.</li>
+<li><strong>Raw zone:</strong> Permanent storage of raw data.</li>
+<li><strong>Trusted zone:</strong> Structured data for the data warehouse.</li>
+<li><strong>Curated zone:</strong> Enriched and validated data for analysis.</li>
+</ul>
+<p><strong>Data Catalog Layer</strong></p>
+<ul>
+<li><strong>AWS Glue:</strong> Schema generation, crawling, and metadata management.</li>
+<li><strong>AWS Lake Formation:</strong> Centralized permissions management and schema-on-read for Redshift Spectrum.</li>
+</ul>
+<h4>3.1.8 Modern Data Architecture Pipeline: Processing and Consumption</h4>
+<p><strong>Processing Layer</strong></p>
+<ul>
+<li><strong>SQL-based processing:</strong> Amazon Redshift.</li>
+<li><strong>Big data processing:</strong> Amazon EMR and AWS Glue.</li>
+<li><strong>Near real-time processing:</strong> Amazon Kinesis Data Analytics or Spark Streaming on EMR or Glue.</li>
+</ul>
+<p><strong>Consumption Layer</strong></p>
+<ul>
+<li><strong>Interactive SQL:</strong> Athena.</li>
+<li><strong>Business intelligence:</strong> Amazon Redshift and QuickSight.</li>
+<li><strong>Machine learning:</strong> Amazon SageMaker.</li>
+</ul>
+<h4>3.1.9 Streaming Analytics Pipeline</h4>
+<p><strong>Key Design Considerations</strong></p>
+<ul>
+<li><strong>Throughput:</strong> Handling high-velocity data.</li>
+<li><strong>Loose coupling:</strong> Independent and scalable components.</li>
+<li><strong>Parallel consumers:</strong> Multiple consumers processing the same stream.</li>
+<li><strong>Checkpointing and replay:</strong> Fault tolerance and data durability.</li>
+</ul>
+<p><strong>Amazon Kinesis Services</strong></p>
+<ul>
+<li><strong>Kinesis Data Streams:</strong> Durable storage for streaming data.</li>
+<li><strong>Kinesis Data Firehose:</strong> Delivering streaming data to data stores and analytics services.</li>
+<li><strong>Kinesis Data Analytics:</strong> Real-time analytics on streaming data.</li>
+</ul>
+<h4>3.1.10 Key Takeaways</h4>
+<ul>
+<li>The AWS Well-Architected Framework provides best practices for designing analytics workloads.</li>
+<li>Data architectures evolved to handle increasing data volume, variety, and velocity.</li>
+<li>Modern data architectures unify disparate data sources using a data lake.</li>
+<li>AWS offers purpose-built services for each layer of the data 
+pipeline, including ingestion, storage, processing, and consumption.</li>
+<li>Streaming analytics pipelines require specific considerations for 
+throughput, loose coupling, parallel consumers, and checkpointing.</li>
+</ul>
+<hr>
+<h2>Module 5: AWS Academy Data Engineering: Securing and Scaling the Data Pipeline</h2>
+<h3>4.1 Securing and Scaling the Data Pipeline</h3>
+<h4>4.1.1 Introduction</h4>
+<p>This module covers best practices for securing and scaling analytics and ML workloads. </p>
+<h4>4.1.2 Module Objectives</h4>
+<p>Upon completion, you will be able to:</p>
+<ul>
+<li><strong>Highlight:</strong> How cloud security best practices apply to data pipelines.</li>
+<li><strong>List:</strong> AWS services that secure a data pipeline.</li>
+<li><strong>Cite:</strong> Factors driving performance and scaling decisions across each pipeline layer.</li>
+<li><strong>Describe:</strong> How infrastructure as code supports security and scalability.</li>
+<li><strong>Identify:</strong> The function of common AWS CloudFormation template sections.</li>
+</ul>
+<h4>4.1.3 Module Overview</h4>
+<p><strong>Presentation Sections</strong></p>
+<ul>
+<li>Cloud security review</li>
+<li>Security of analytics workloads</li>
+<li>ML security</li>
+<li>Scaling: An overview</li>
+<li>Creating a scalable infrastructure</li>
+<li>Creating scalable components</li>
+</ul>
+<p><strong>Knowledge Checks</strong></p>
+<ul>
+<li>Online knowledge check</li>
+<li>Sample exam question</li>
+</ul>
+<h4>4.1.4 Cloud Security Review</h4>
+<p><strong>Shared Responsibility Model</strong></p>
+<ul>
+<li><strong>AWS:</strong> Secures the underlying infrastructure (hardware, software, facilities, and networks).</li>
+<li><strong>Customer:</strong> Responsible for securing their applications, data, and configurations within AWS.</li>
+</ul>
+<p><strong>Design Principles for Data Security</strong></p>
+<ul>
+<li><strong>Implement a strong identity foundation:</strong> Least privilege access and separation of duties.</li>
+<li><strong>Enable traceability:</strong> Logging, monitoring, and auditing.</li>
+<li><strong>Apply security at all layers:</strong> Defense-in-depth approach with multiple security controls.</li>
+<li><strong>Automate security best practices:</strong> Infrastructure as code and automated security mechanisms.</li>
+<li><strong>Protect data in transit and at rest:</strong> Encryption, tokenization, and access control.</li>
+<li><strong>Keep people away from data:</strong> Reduce direct access and manual processing.</li>
+<li><strong>Prepare for security events:</strong> Incident management and response plans.</li>
+</ul>
+<p><strong>Access Management</strong></p>
+<ul>
+<li><strong>Authentication:</strong> Verifying user identities.</li>
+<li><strong>Authorization:</strong> Granting access based on permissions.</li>
+<li><strong>Principle of Least Privilege:</strong> Granting only necessary permissions.</li>
+</ul>
+<p><strong>AWS Identity and Access Management (IAM)</strong></p>
+<ul>
+<li>Centralized service for managing user access and permissions.</li>
+<li>Integration with most AWS services.</li>
+<li>Supports federated identity management, granular permissions, MFA, and audit trails.</li>
+</ul>
+<p><strong>Data Security</strong></p>
+<ul>
+<li><strong>Data at rest:</strong> Data stored in nonvolatile storage.<ul>
+<li>Secure key management.</li>
+<li>Encryption at rest.</li>
+<li>Access control and auditing.</li>
+</ul>
+</li>
+<li><strong>Data in transit:</strong> Data moving between systems.<ul>
+<li>Secure key and certificate management.</li>
+<li>Encryption in transit.</li>
+<li>Network communication authentication.</li>
+</ul>
+</li>
+</ul>
+<p><strong>AWS Key Management Service (AWS KMS)</strong></p>
+<ul>
+<li>Managed service for creating and managing cryptographic keys.</li>
+<li>Uses HSMs to protect keys.</li>
+<li>Integration with other AWS services.</li>
+<li>Supports usage policies for controlling key access.</li>
+</ul>
+<p><strong>Logging and Monitoring</strong></p>
+<ul>
+<li><strong>Logging:</strong> Collecting and recording activity and event data.<ul>
+<li>CloudTrail: AWS service for logging API calls and events.</li>
+</ul>
+</li>
+<li><strong>Monitoring:</strong> Continuously verifying security and performance.<ul>
+<li>CloudWatch: Service for monitoring AWS resources and applications.</li>
+</ul>
+</li>
+</ul>
+<h4>4.1.5 Security of Analytics Workloads</h4>
+<p><strong>Classify and Protect Data</strong></p>
+<ul>
+<li>Understand data classifications and protection policies.</li>
+<li>Identify data owners and have them set classifications.</li>
+<li>Record classifications in the Data Catalog.</li>
+<li>Implement encryption policies for each data class.</li>
+<li>Implement data retention policies for each data class.</li>
+<li>Require downstream systems to honor classifications.</li>
+</ul>
+<p><strong>Control Data Access</strong></p>
+<ul>
+<li>Allow data owners to determine access permissions.</li>
+<li>Build user identity solutions for unique identification.</li>
+<li>Implement appropriate data access authorization models (RBAC, dataset-level, column-level).</li>
+<li>Establish an emergency access process.</li>
+</ul>
+<p><strong>Control Access to Workload Infrastructure</strong></p>
+<ul>
+<li>Prevent unintended access through IAM policies and network isolation.</li>
+<li>Implement least privilege policies for source and downstream systems.</li>
+<li>Monitor infrastructure changes and user activities.</li>
+<li>Secure audit logs.</li>
+</ul>
+<h4>4.1.6 ML Security</h4>
+<p><strong>ML Lifecycle Phases</strong></p>
+<ul>
+<li>Identify the business goal</li>
+<li>Frame the ML problem</li>
+<li>Process data</li>
+<li>Train, tune, and evaluate</li>
+<li>Deploy model</li>
+<li>Monitor and evaluate</li>
+</ul>
+<p><strong>Security Best Practices for Each Phase</strong></p>
+<ul>
+<li><strong>Identify the business goal:</strong> Review software licenses and privacy agreements.</li>
+<li><strong>Frame the ML problem:</strong> Implement least privilege access and role-based authentication.</li>
+<li><strong>Process data:</strong> Secure data storage and processing environments, protect sensitive data, enforce data lineage, and retain only relevant data.</li>
+<li><strong>Train, tune, and evaluate:</strong> Detect risks of transfer learning, secure the ML environment, and protect against data poisoning threats.</li>
+<li><strong>Deploy model:</strong> Secure model artifacts and ensure secure communication with deployment endpoints.</li>
+<li><strong>Monitor and evaluate:</strong> Monitor model performance and detect anomalies or malicious activities.</li>
+</ul>
+<h4>4.1.7 Scaling: An Overview</h4>
+<p><strong>Scaling Considerations</strong></p>
+<ul>
+<li><strong>Performance goals:</strong> Identify key performance metrics and targets.</li>
+<li><strong>Data characteristics:</strong> Volume, velocity, variety, and processing requirements.</li>
+<li><strong>Resource utilization:</strong> Monitor and optimize resource usage.</li>
+<li><strong>Cost management:</strong> Balance performance with cost efficiency.</li>
+</ul>
+<h4>4.1.8 Creating a Scalable Infrastructure</h4>
+<p><strong>Infrastructure as Code (IaC)</strong></p>
+<ul>
+<li><strong>Repeatability:</strong> Consistent deployments across environments.</li>
+<li><strong>Reusability:</strong> Leveraging tested templates for new deployments.</li>
+<li><strong>Automation:</strong> Reducing manual configuration and errors.</li>
+</ul>
+<p><strong>AWS Services for IaC</strong></p>
+<ul>
+<li><strong>CloudFormation:</strong> Infrastructure provisioning and management using templates.</li>
+<li><strong>AWS CDK:</strong> Defining infrastructure using programming languages.</li>
+</ul>
+<h4>4.1.9 Creating Scalable Components</h4>
+<p><strong>Scaling Batch Processing</strong></p>
+<ul>
+<li><strong>Performance goals:</strong> Completion time, budget constraints, and error thresholds.</li>
+<li><strong>AWS Glue:</strong><ul>
+<li>Horizontal scaling: Increasing the number of workers.</li>
+<li>Vertical scaling: Using larger worker types.</li>
+</ul>
+</li>
+<li><strong>File size and compression:</strong> Choose splittable formats and codecs for parallel processing.</li>
+</ul>
+<p><strong>Scaling Stream Processing</strong></p>
+<ul>
+<li><strong>Throughput:</strong> Handling high-velocity data.</li>
+<li><strong>Amazon Kinesis Data Streams:</strong><ul>
+<li>Automatic shard scaling based on throughput needs.</li>
+<li>Manual shard adjustments.</li>
+</ul>
+</li>
+</ul>
+<h4>4.1.10 Key Takeaways</h4>
+<ul>
+<li>Secure data pipelines by implementing strong identity foundations, enabling traceability, and applying security at all layers.</li>
+<li>Apply specific security best practices to analytics and ML workloads throughout their lifecycles.</li>
+<li>Scale data pipelines by identifying performance goals, understanding
+ data characteristics, and utilizing appropriate AWS services and 
+configuration options.</li>
+<li>Infrastructure as code supports security and scalability by enabling repeatable and reusable deployments.</li>
+</ul>
+<hr>
+<h2>Module 6: AWS Academy Data Engineering - Ingesting and Preparing Data</h2>
+<h3>1.1 Ingesting and Preparing Data</h3>
+<h4>1.1.1 Introduction</h4>
+<p>This module discusses how to ingest and prepare data for analysis.</p>
+<h4>1.1.2 Module Objectives</h4>
+<p>Upon completion, you will be able to:</p>
+<ul>
+<li><strong>Differentiate:</strong> Between Extract, Transform, Load (ETL) and Extract, Load, Transform (ELT) processes.</li>
+<li><strong>Define:</strong> Data wrangling within the context of data ingestion.</li>
+<li><strong>Describe:</strong> Key tasks within each data wrangling step:<ul>
+<li>Discovery</li>
+<li>Structuring</li>
+<li>Cleaning</li>
+<li>Enriching</li>
+<li>Validating</li>
+<li>Publishing</li>
+</ul>
+</li>
+</ul>
+<h4>1.1.3 Module Overview</h4>
+<p><strong>Presentation Sections</strong></p>
+<ul>
+<li>ETL and ELT Comparison</li>
+<li>Data Wrangling Introduction</li>
+<li>Data Discovery</li>
+<li>Data Structuring</li>
+<li>Data Cleaning</li>
+<li>Data Enriching</li>
+<li>Data Validating</li>
+<li>Data Publishing</li>
+</ul>
+<p><strong>Knowledge Checks</strong></p>
+<ul>
+<li>Online Knowledge Check</li>
+<li>Sample Exam Question</li>
+</ul>
+<h4>1.1.4 ETL and ELT Comparison</h4>
+<p><strong>Ingesting Data</strong></p>
+<p>Data ingestion involves acquiring data from external sources and preparing it for analysis within a pipeline.</p>
+<p><strong>ETL (Extract, Transform, Load)</strong></p>
+<ul>
+<li><strong>Extract:</strong> Data from external sources.</li>
+<li><strong>Transform:</strong> Data into a structured format suitable for analysis.</li>
+<li><strong>Load:</strong> Transformed data into structured storage (e.g., data warehouse).</li>
+</ul>
+<p><strong>ELT (Extract, Load, Transform)</strong></p>
+<ul>
+<li><strong>Extract:</strong> Data from external sources.</li>
+<li><strong>Load:</strong> Raw data into a data lake (e.g., Amazon S3).</li>
+<li><strong>Transform:</strong> Data as needed for specific analysis scenarios.</li>
+</ul>
+<p><strong>Benefits of ETL</strong></p>
+<ul>
+<li>Automated routine transformations.</li>
+<li>Filtering sensitive data upfront.</li>
+</ul>
+<p><strong>Benefits of ELT</strong></p>
+<ul>
+<li>Faster ingestion by delaying transformations.</li>
+<li>Greater flexibility for data exploration and new queries.</li>
+</ul>
+<p><strong>The Evolving Ingestion Process</strong></p>
+<ul>
+<li>Modern data architectures blend ETL and ELT approaches.</li>
+<li>Data engineers, analysts, and scientists might perform different transformations at different stages.</li>
+<li>Pipelines should evolve based on usage patterns and insights.</li>
+</ul>
+<h4>1.1.5 Data Wrangling Introduction</h4>
+<p><strong>Data Wrangling</strong></p>
+<p>Transforming raw data from multiple sources into a valuable dataset for analysis.</p>
+<p><strong>Data Wrangling in ETL vs. ELT</strong></p>
+<ul>
+<li><strong>Traditional ETL:</strong> Primarily performed by data engineers using batch jobs.</li>
+<li><strong>ELT:</strong> Enables business users and data scientists to transform data within the data lake before refinement.</li>
+</ul>
+<p><strong>Data Wrangling Steps</strong></p>
+<ul>
+<li><strong>Discovery:</strong> Identifying and understanding data sources.</li>
+<li><strong>Structuring:</strong> Mapping raw data into a suitable format for storage and analysis.</li>
+<li><strong>Cleaning:</strong> Removing inconsistencies, errors, and unwanted data.</li>
+<li><strong>Enriching:</strong> Combining data sources and adding valuable information.</li>
+<li><strong>Validating:</strong> Ensuring data accuracy and integrity.</li>
+<li><strong>Publishing:</strong> Making the wrangled dataset available for analysis.</li>
+</ul>
+<h4>1.1.6 Data Discovery</h4>
+<p><strong>Tasks in Data Discovery</strong></p>
+<ul>
+<li>Determine if the source serves the business purpose.</li>
+<li>Understand data organization and access methods.</li>
+<li>Assess required tools and skills.</li>
+<li>Decide whether to proceed with the data source.</li>
+</ul>
+<p><strong>Example Scenario</strong></p>
+<ul>
+<li>Combining support ticket data from two different systems.</li>
+<li>Identifying relationships, formats, data needs, organization, and available tools.</li>
+</ul>
+<h4>1.1.7 Data Structuring</h4>
+<p><strong>Tasks in Data Structuring</strong></p>
+<ul>
+<li>Organize storage (folder structure, partitions, access controls).</li>
+<li>Parse source files into a structured format.</li>
+<li>Map source fields to target fields.</li>
+<li>Manage file size (splitting, merging, compression).</li>
+</ul>
+<p><strong>Example Scenario</strong></p>
+<ul>
+<li>Parsing and mapping fields from a JSON support ticket file.</li>
+</ul>
+<h4>1.1.8 Data Cleaning</h4>
+<p><strong>Tasks in Data Cleaning</strong></p>
+<ul>
+<li>Removing unwanted data (PII, irrelevant fields, duplicates, corrupted data).</li>
+<li>Filling in missing values.</li>
+<li>Validating and modifying data types.</li>
+<li>Fixing outliers.</li>
+</ul>
+<p><strong>Example Scenario</strong></p>
+<ul>
+<li>Cleaning support ticket data by replacing missing values, removing corrupted data, and validating data types.</li>
+</ul>
+<h4>1.1.9 Data Enriching</h4>
+<p><strong>Tasks in Data Enriching</strong></p>
+<ul>
+<li>Merging data sources into a single dataset.</li>
+<li>Adding new fields and calculating new values.</li>
+</ul>
+<p><strong>Example Scenario</strong></p>
+<ul>
+<li>Combining support ticket data from two sources.</li>
+<li>Adding a sales region field by querying the sales system.</li>
+</ul>
+<h4>1.1.10 Data Validating</h4>
+<p><strong>Tasks in Data Validating</strong></p>
+<ul>
+<li>Auditing the dataset for expected rows, consistency, formats, data types, duplicates, PII, and outliers.</li>
+<li>Addressing any data integrity issues.</li>
+</ul>
+<h4>1.1.11 Data Publishing</h4>
+<p><strong>Tasks in Data Publishing</strong></p>
+<ul>
+<li>Determine the target destination (data lake, data warehouse, other data stores).</li>
+<li>Configure access controls (IAM policies, data access permissions).</li>
+</ul>
+<h4>1.1.12 Key Takeaways</h4>
+<ul>
+<li>Ingestion involves extracting, transforming, and loading data into the pipeline.</li>
+<li>ETL transforms data before loading, while ELT loads raw data and transforms it later.</li>
+<li>Data wrangling is a multi-step process to prepare data for analysis.</li>
+<li>Data discovery, structuring, cleaning, enriching, validating, and publishing are key data wrangling steps.</li>
+</ul>
+<hr>
+<h2>Module 7: AWS Academy Data Engineering: Ingesting by Batch or by Stream</h2>
+<h3>2.1 Ingesting by Batch or by Stream</h3>
+<h4>2.1.1 Introduction</h4>
+<p>This module explores batch and stream ingestion methods, focusing on AWS services like Glue and Kinesis.</p>
+<h4>2.1.2 Module Objectives</h4>
+<p>Upon completion, you will be able to:</p>
+<ul>
+<li><strong>List:</strong> Key tasks for building an ingestion layer.</li>
+<li><strong>Describe:</strong> AWS services for ingestion tasks.</li>
+<li><strong>Illustrate:</strong> How AWS Glue automates batch ingestion.</li>
+<li><strong>Describe:</strong> Amazon Kinesis streaming services and features.</li>
+<li><strong>Identify:</strong> Configuration options for scaling ingestion in Glue and Kinesis.</li>
+<li><strong>Describe:</strong> Characteristics of ingesting IoT data using AWS IoT services.</li>
+</ul>
+<h4>2.1.3 Module Overview</h4>
+<p><strong>Presentation Sections</strong></p>
+<ul>
+<li>Comparing batch and stream ingestion</li>
+<li>Batch ingestion processing</li>
+<li>Purpose-built ingestion tools</li>
+<li>AWS Glue for batch ingestion processing</li>
+<li>Scaling considerations for batch processing</li>
+<li>Kinesis for stream processing</li>
+<li>Scaling considerations for stream processing</li>
+<li>Ingesting IoT data by stream</li>
+</ul>
+<p><strong>Lab</strong></p>
+<ul>
+<li>Performing ETL on a Dataset by Using AWS Glue</li>
+</ul>
+<p><strong>Knowledge Checks</strong></p>
+<ul>
+<li>Online knowledge check</li>
+<li>Sample exam question</li>
+</ul>
+<h4>2.1.4 Comparing Batch and Stream Ingestion</h4>
+<p><strong>Batch Ingestion</strong></p>
+<ul>
+<li>Processes data in batches at intervals (on demand, scheduled, or event-triggered).</li>
+<li>Suitable for large datasets and complex transformations.</li>
+<li>Typically used in ETL processes.</li>
+</ul>
+<p><strong>Stream Ingestion</strong></p>
+<ul>
+<li>Continuously processes data as it arrives.</li>
+<li>Handles high-velocity data and real-time analytics.</li>
+</ul>
+<p><strong>Data Volume and Velocity as Key Drivers</strong></p>
+<ul>
+<li>High volume and velocity favor stream processing.</li>
+<li>Lower volume and less time-sensitive data can be handled by batch processing.</li>
+</ul>
+<h4>2.1.5 Batch Ingestion Processing</h4>
+<p><strong>Tasks for Building a Batch Pipeline</strong></p>
+<ul>
+<li>Connect to the source and select data.</li>
+<li>Define source and target schemas.</li>
+<li>Securely transfer data.</li>
+<li>Perform transformations and load into storage.</li>
+</ul>
+<p><strong>Workflow Orchestration</strong></p>
+<ul>
+<li>Managing job dependencies and handling failures.</li>
+</ul>
+<p><strong>Key Characteristics for Batch Processing Design</strong></p>
+<ul>
+<li><strong>Ease of use:</strong> Developer-friendly tools and interfaces.</li>
+<li><strong>Data volume and variety:</strong> Handling diverse data types and sources.</li>
+<li><strong>Orchestration and monitoring:</strong> Tools for managing complex workflows.</li>
+<li><strong>Scaling and cost management:</strong> Flexibility to scale up and down as needed.</li>
+</ul>
+<h4>2.1.6 Purpose-built Ingestion Tools</h4>
+<p><strong>AWS Services for Batch Ingestion</strong></p>
+<ul>
+<li><strong>Amazon AppFlow:</strong> Ingesting data from SaaS applications.</li>
+<li><strong>AWS Database Migration Service:</strong> Migrating data from relational databases.</li>
+<li><strong>AWS DataSync:</strong> Ingesting data from file systems.</li>
+<li><strong>AWS Data Exchange:</strong> Integrating third-party datasets.</li>
+</ul>
+<p><strong>Selecting the Right Tool</strong></p>
+<p>Choose the tool that best matches the data source type and business requirements.</p>
+<h4>2.1.7 AWS Glue for Batch Ingestion Processing</h4>
+<p><strong>Features of AWS Glue</strong></p>
+<ul>
+<li><strong>Schema identification:</strong> Automatically generates schemas using crawlers.</li>
+<li><strong>Data cataloging:</strong> Centralized catalog for data discovery and governance.</li>
+<li><strong>Job authoring:</strong> Visual interface for creating and managing ETL jobs (AWS Glue Studio).</li>
+<li><strong>Serverless processing:</strong> Apache Spark-based runtime engine.</li>
+<li><strong>ETL orchestration:</strong> Workflows for managing complex pipelines.</li>
+<li><strong>Monitoring and troubleshooting:</strong> CloudWatch integration and job run insights.</li>
+</ul>
+<p><strong>Benefits of AWS Glue</strong></p>
+<ul>
+<li>Simplifies ETL tasks through automation and visual tools.</li>
+<li>Serverless architecture reduces operational overhead.</li>
+<li>Provides comprehensive monitoring and troubleshooting capabilities.</li>
+</ul>
+<h4>2.1.8 Scaling Considerations for Batch Processing</h4>
+<p><strong>Performance Goals</strong></p>
+<ul>
+<li>Completion time</li>
+<li>Budget constraints</li>
+<li>Error thresholds</li>
+</ul>
+<p><strong>Scaling AWS Glue Jobs</strong></p>
+<ul>
+<li><strong>Horizontal scaling:</strong> Adding more workers for parallel processing.</li>
+<li><strong>Vertical scaling:</strong> Using larger worker types for memory-intensive tasks.</li>
+</ul>
+<p><strong>File Size and Compression</strong></p>
+<ul>
+<li>Choose splittable file formats and compression codecs for efficient parallel processing.</li>
+</ul>
+<h4>2.1.9 Kinesis for Stream Processing</h4>
+<p><strong>Tasks for Building a Stream Processing Pipeline</strong></p>
+<ul>
+<li><strong>Producers:</strong> Put data records on the stream.</li>
+<li><strong>Data stream:</strong> Provides durable storage for streaming data.</li>
+<li><strong>Consumers:</strong> Read and process data from the stream.</li>
+</ul>
+<p><strong>Key Characteristics for Stream Ingestion and Processing</strong></p>
+<ul>
+<li><strong>Throughput:</strong> Handling high data volumes.</li>
+<li><strong>Loose coupling:</strong> Independent and scalable components.</li>
+<li><strong>Parallel consumers:</strong> Multiple consumers processing the same stream simultaneously.</li>
+<li><strong>Checkpointing and replay:</strong> Fault tolerance and data durability.</li>
+</ul>
+<h4>2.1.10 Purpose-built Kinesis Services</h4>
+<p><strong>Amazon Kinesis Services for Streaming</strong></p>
+<ul>
+<li><strong>Kinesis Data Streams:</strong> Durable storage for streaming data.</li>
+<li><strong>Kinesis Data Firehose:</strong> Delivering streaming data to data stores and analytics services.</li>
+<li><strong>Kinesis Data Analytics:</strong> Real-time analytics on streaming data.</li>
+</ul>
+<p><strong>Kinesis Data Streams</strong></p>
+<ul>
+<li>Handles high-volume, continuous data ingestion.</li>
+<li>Supports multiple producers and consumers.</li>
+<li>Provides encryption and access control for security.</li>
+</ul>
+<p><strong>Kinesis Data Firehose</strong></p>
+<ul>
+<li>Ingests and delivers streaming data to destinations (S3, Redshift, OpenSearch Service).</li>
+<li>Performs transformations using Lambda functions.</li>
+</ul>
+<p><strong>Kinesis Data Analytics</strong></p>
+<ul>
+<li>Analyzes streaming data in real time using SQL or Apache Flink.</li>
+</ul>
+<h4>2.1.11 Scaling Considerations for Stream Processing</h4>
+<p><strong>Throughput Management</strong></p>
+<ul>
+<li><strong>Kinesis Data Streams:</strong><ul>
+<li>Automatic shard scaling based on throughput.</li>
+<li>Manual shard adjustments.</li>
+</ul>
+</li>
+</ul>
+<h4>2.1.12 Ingesting IoT Data by Stream</h4>
+<p><strong>AWS IoT Services</strong></p>
+<ul>
+<li><strong>AWS IoT Core:</strong> Securely connect and manage IoT devices.</li>
+<li><strong>AWS IoT Analytics:</strong> Process and analyze IoT data.</li>
+</ul>
+<p><strong>Ingesting IoT Data</strong></p>
+<ul>
+<li>Devices publish data to AWS IoT Core.</li>
+<li>IoT rules route and transform messages.</li>
+<li>Kinesis Data Firehose delivers data to Amazon S3 or other destinations.</li>
+</ul>
+<h4>2.1.13 Lab: Performing ETL on a Dataset by Using AWS Glue</h4>
+<ul>
+<li>Use AWS Glue to perform ETL on a dataset, including creating a crawler, configuring a job, and analyzing results.</li>
+</ul>
+<h4>2.1.14 Key Takeaways</h4>
+<ul>
+<li>Batch ingestion processes data in batches, while stream ingestion handles continuous data flow.</li>
+<li>AWS Glue simplifies batch ingestion with schema identification, job authoring, and orchestration features.</li>
+<li>Amazon Kinesis services provide durable storage, transformation, and analytics capabilities for streaming data.</li>
+<li>Both batch and stream ingestion methods offer scaling options to handle varying data volumes and workloads.</li>
+<li>AWS IoT services enable secure and scalable ingestion of data from IoT devices.</li>
+</ul>
+<hr>
+<h2>Module 8: AWS Academy Data Engineering - Storing and Organizing Data</h2>
+<h3>3.1 Storing and Organizing Data</h3>
+<h4>3.1.1 Introduction</h4>
+<p>This module explores various storage options for data lakes, data warehouses, and purpose-built databases in AWS.</p>
+<h4>3.1.2 Module Objectives</h4>
+<p>Upon completion, you will be able to:</p>
+<ul>
+<li><strong>Define:</strong> Storage types in a modern data architecture.</li>
+<li><strong>Distinguish:</strong> Between data storage types.</li>
+<li><strong>Select:</strong> Data storage options based on specific needs.</li>
+<li><strong>Implement:</strong> Secure storage practices for cloud-based data.</li>
+</ul>
+<h4>3.1.3 Module Overview</h4>
+<p><strong>Presentation Sections</strong></p>
+<ul>
+<li>Storage in the modern data architecture</li>
+<li>Data lake storage</li>
+<li>Data warehouse storage</li>
+<li>Purpose-built databases</li>
+<li>Storage in support of the pipeline</li>
+<li>Securing storage</li>
+</ul>
+<p><strong>Lab</strong></p>
+<ul>
+<li>Storing and Analyzing Data by Using Amazon Redshift</li>
+</ul>
+<p><strong>Knowledge Checks</strong></p>
+<ul>
+<li>Online knowledge check</li>
+<li>Sample exam question</li>
+</ul>
+<h4>3.1.4 Storage in the Modern Data Architecture</h4>
+<p><strong>Centralized Storage</strong></p>
+<ul>
+<li><strong>Data Lake:</strong> Stores raw, unstructured, and structured data using Amazon S3.</li>
+<li>**</li>
+</ul>
+</div>
+
+
+    <script src="all%20modules,%20pro%204_files/marked.min.js"></script>
+    <script>
+        // Embed JSON data as a JavaScript object
+        const data = {
+            directory: "/home/ansarimn/Downloads/tools and projects/projects/process pdfs/ex-input files/",
+            responses: ["total input tokens: 87697", "total output tokens: 8192", "## Module 2: AWS Academy Data Engineering: Data-Driven Organizations Student Guide\n\n### 1.1 Data-Driven Organizations\n\n#### 1.1.1 Introduction\n\nThis module provides an overview of data-driven organizations, covering:\n\n- How data analytics and AI/ML contribute to data-driven decisions.\n- The layers of a data pipeline and data transformations within them.\n- The roles of data engineers and data scientists in building data pipelines.\n- The influence of modern data strategies on infrastructure design.\n\n#### 1.1.2 Module Objectives\n\nUpon completion, you will be able to:\n\n- **Distinguish:** Data analytics from Artificial Intelligence (AI) and Machine Learning (ML) applications.\n- **Identify:** The layers within a data pipeline.\n- **Describe:** Actions taken on data as it moves through a pipeline.\n- **Define:** Responsibilities of data engineers and data scientists in data pipeline processing.\n- **Explain:** Three modern data strategies impacting data infrastructure development.\n\n#### 1.1.3 Module Overview\n\n**Presentation Sections**\n\n- Data-driven decisions\n- The data pipeline - infrastructure for data-driven decisions\n- The role of the data engineer in data-driven organizations\n- Modern data strategies\n\n**Knowledge Checks**\n\n- Online knowledge check\n- Sample exam question\n\n#### 1.1.4 Data-Driven Decisions\n\n**The Need for Data-Driven Decisions**\n\nOrganizations are increasingly investing in data and analytics to become more data-driven. This shift is driven by the vast amounts of data generated from websites, mobile apps, and smart devices.\n\n**How Data Drives Decisions**\n\nData science plays a crucial role in data-driven decisions, using two main categories:\n\n- **Data Analytics:** Analyzes large datasets to identify patterns and trends, generating actionable insights. Well-suited for structured data with a limited number of variables.\n- **AI/ML:** Uses mathematical models to predict data at scale, learning from examples in large datasets. Ideal for unstructured data and complex variables.\n\n**Examples of Data-Driven Decisions**\n\n- **Individuals:** Restaurant recommendations, personalized shopping suggestions, fraud detection.\n- **Organizations:** Predicting fraudulent transactions, optimizing website design, personalized customer experiences.\n\n**Challenges of Data-Driven Decisions**\n\nWhile data offers opportunities, it also presents challenges:\n\n- **Data Costs:** Managing and storing large volumes of data can be expensive.\n- **Unstructured Data:** Analyzing unstructured data like images and text requires specialized tools.\n- **Security Risks:** Protecting sensitive data is paramount.\n- **Query Processing:** Processing large datasets can be time-consuming.\n\n**The Value of Data Over Time**\n\nData\u0027s value diminishes over time. Real-time data enables proactive decisions, while older data serves reactive and historical analysis.\n\n**Trade-offs in Data-Driven Decisions**\n\nBalancing cost, speed, and accuracy is essential when building data infrastructure to support decision-making.\n\n#### 1.1.5 The Data Pipeline - Infrastructure for Data-Driven Decisions\n\n**What is a Data Pipeline?**\n\nA data pipeline is the infrastructure that supports data-driven decision-making, encompassing:\n\n- Ingesting data from various sources.\n- Storing and processing data.\n- Enabling data analysis and insight generation.\n\n**Designing a Data Pipeline**\n\n- Begin with the business problem and work backward to identify data requirements.\n- Choose appropriate infrastructure based on data volume, velocity, and variety.\n\n**Layers of a Data Pipeline**\n\n- **Ingestion:** Acquiring data from sources.\n- **Storage:** Persisting data in appropriate formats.\n- **Processing:** Transforming and preparing data for analysis.\n- **Analysis \u0026 Visualization:** Exploring data and generating insights.\n\n**Data Wrangling**\n\nData wrangling refers to manipulating and transforming raw data for analysis, including:\n\n- **Discovery:** Identifying data sources and understanding their characteristics.\n- **Cleaning:** Removing inconsistencies and errors.\n- **Normalization:** Standardizing data formats.\n- **Enrichment:** Adding valuable information to datasets.\n\n**Iterative Nature of Data Processing**\n\nData processing is often iterative, involving multiple cycles of refinement and analysis.\n\n#### 1.1.6 The Role of the Data Engineer in Data-Driven Organizations\n\n**Data Engineer vs. Data Scientist**\n\nBoth roles work with data pipelines, but their focuses differ:\n\n- **Data Engineer:** Builds and manages the infrastructure that data passes through.\n- **Data Scientist:** Analyzes the data in the pipeline to extract insights.\n\n**Questions for Building a Data Pipeline**\n\nData engineers and scientists ask questions about:\n\n- Data availability, location, format, and quality.\n- Security requirements and access controls.\n- Data volume, update frequency, and processing speed.\n- Potential insights and suitable analysis tools.\n\n**Iterative Design Process**\n\nDesigning a data pipeline is an iterative process, requiring ongoing collaboration between data engineers and scientists.\n\n#### 1.1.7 Modern Data Strategies\n\n**Strategies for Building Data Infrastructure**\n\n- **Modernize:** Migrate to cloud-based, purpose-built services, reducing operational overhead and increasing agility.\n- **Unify:** Create a single source of truth for data, enabling cross-organizational access and collaboration.\n- **Innovate:** Incorporate AI/ML to uncover new insights and drive proactive decision-making.\n\n**The Importance of Data as a Strategic Asset**\n\nTreating data as a valuable asset empowers organizations to make better decisions, respond faster to change, and unlock new opportunities.\n\n**Key Takeaways:**\n\n- Data-driven organizations leverage data science for informed decisions.\n- The data pipeline provides the infrastructure for data processing and analysis.\n- Data engineers and scientists collaborate to build and analyze data pipelines.\n- Modern data strategies emphasize modernization, unification, and innovation.\n\n\n---\n\n\n## Module 3: AWS Academy Data Engineering - Elements of Data\n\n### 2.1 Elements of Data\n\n#### 2.1.1 Introduction\n\nThis module focuses on understanding the characteristics of data that influence data pipeline design.\n\n#### 2.1.2 Module Objectives\n\nUpon completion, you will be able to:\n\n- **List:** The five Vs of data.\n- **Describe:** The impact of volume and velocity on your data pipeline.\n- **Compare and contrast:** Structured, semistructured, and unstructured data types.\n- **Identify:** Data sources commonly used to feed data pipelines.\n- **Pose questions:** About data to assess its veracity.\n- **Suggest methods:** To improve the veracity of data in your pipeline.\n\n#### 2.1.3 Module Overview\n\n**Presentation Sections**\n\n- The five Vs of data: volume, velocity, variety, veracity, and value\n- Volume and velocity\n- Variety - data types\n- Variety - data sources\n- Veracity and value\n- Activities to improve veracity and value\n\n**Activity**\n\n- Planning Your Pipeline\n\n**Knowledge Checks**\n\n- Online knowledge check\n- Sample exam question\n\n#### 2.1.4 The Five Vs of Data\n\n**Understanding Data Characteristics**\n\nThe five Vs of data are critical for pipeline design:\n\n- **Volume:** The amount of data to be processed.\n- **Velocity:** The speed at which data enters and moves through the pipeline.\n- **Variety:** The types and formats of data, including structured, semistructured, and unstructured.\n- **Veracity:** The accuracy, trustworthiness, and quality of data.\n- **Value:** The insights that can be extracted from data.\n\n**Strategies for Value Extraction**\n\n- Ensure data meets business needs.\n- Evaluate data acquisition feasibility.\n- Match pipeline design to data characteristics.\n- Balance cost and performance.\n- Empower users to focus on insights.\n- Implement data governance and cataloging.\n\n**The Importance of Veracity**\n\nBad data can lead to worse decisions than limited data. Maintaining data integrity is crucial for reliable analysis.\n\n#### 2.1.5 Volume and Velocity\n\n**Impact on Pipeline Layers**\n\nVolume and velocity influence decisions across all pipeline layers:\n\n- **Ingestion:** Choosing methods to handle data influx.\n- **Storage:** Selecting storage types and scaling for capacity.\n- **Processing:** Determining processing power and distributed solutions.\n- **Analysis \u0026 Visualization:** Scaling tools for data volume and real-time needs.\n\n**Examples of Decisions Based on Volume and Velocity**\n\n- **Ingestion:** Streaming vs. batch ingestion for high-velocity data.\n- **Storage:** Short-term vs. long-term storage based on data value over time.\n- **Processing:** Big data frameworks for massive datasets.\n- **Analysis \u0026 Visualization:** Real-time dashboards for streaming data.\n\n#### 2.1.6 Variety - Data Types\n\n**Types of Data**\n\n- **Structured:** Organized in rows and columns with a well-defined schema (e.g., relational databases).\n- **Semistructured:** Possesses a self-describing structure but lacks a rigid schema (e.g., JSON, XML).\n- **Unstructured:** Lacks a predefined structure (e.g., images, videos, text).\n\n**Challenges of Data Variety**\n\n- **Data Formatting:** Different formats might require specific analysis tools.\n- **Ingestion Complexity:** Combining diverse data types can complicate pipelines.\n- **Data Veracity:** Maintaining data quality across multiple sources can be challenging.\n\n**The Rise of Unstructured Data**\n\nMost data growth today involves unstructured data, requiring specialized tools and AI/ML techniques for analysis.\n\n#### 2.1.7 Variety - Data Sources\n\n**Common Data Source Types**\n\n- **On-premises databases:** Existing organizational data.\n- **Public datasets:** Aggregated data about specific topics.\n- **Time-series data:** Generated by events, IoT devices, and sensors.\n\n**Pipeline Considerations Based on Source Type**\n\n- **Organizational data:** Often structured and readily analyzed, but might contain sensitive information.\n- **Public datasets:** Often semistructured, requiring transformations and data merging.\n- **Time-series data:** Requires streaming ingestion and storage for real-time processing.\n\n**Benefits and Challenges of Data Source Variety**\n\n- **Benefits:** Enriched analysis through data combination.\n- **Challenges:** Increased processing complexity due to diverse structures and content.\n\n#### 2.1.8 Veracity and Value\n\n**Veracity Drives Value**\n\nTrustworthy data is essential for reliable analysis and decision-making. Bad data can lead to incorrect conclusions and negative outcomes.\n\n**Maintaining Data Veracity**\n\n- **Discovery:** Assessing data quality and lineage.\n- **Cleaning and Transformation:** Removing inconsistencies, duplicates, and outliers.\n- **Prevention:** Implementing security measures, data audits, and governance processes.\n\n**Examples of Data Issues**\n\n- **Missing data**\n- **Ambiguity**\n- **Statistical bias**\n- **Duplicates**\n- **Software bugs**\n- **Human error**\n\n**Best Practices for Cleaning Data**\n\n- Define what \"clean\" means for each data source.\n- Trace errors back to their source.\n- Change data thoughtfully and retain auditable records.\n\n**Data Transformation Techniques**\n\nTransformations prepare data for analysis, including:\n\n- Converting data types.\n- Replacing values.\n- Merging datasets.\n- Aggregating data.\n\n**Importance of Data Integrity and Consistency**\n\n- Secure all layers of the pipeline.\n- Implement least privilege access controls.\n- Maintain audit trails.\n- Enforce data compliance and governance.\n- Maintain a single source of truth for data elements.\n\n#### 2.1.9 Key Takeaways\n\n- The five Vs of data (volume, velocity, variety, veracity, and value) drive pipeline design decisions.\n- Volume and velocity determine scaling and throughput requirements.\n- Data variety requires handling different types and sources, impacting processing complexity.\n- Veracity is crucial for data trustworthiness and value extraction.\n- Cleaning, transformation, and data integrity measures ensure data quality.\n\n\n---\n\n## Module 4: AWS Academy Data Engineering - Design Principles and Patterns for Data Pipelines\n\n### 3.1 Design Principles and Patterns for Data Pipelines\n\n#### 3.1.1 Introduction\n\nThis module covers the evolution of data architectures and how AWS services support modern data architectures. \n\n#### 3.1.2 Module Objectives\n\nUpon completion, you will be able to:\n\n- **Use:** The AWS Well-Architected Framework to design analytics workloads.\n- **Recount:** Key milestones in the evolution of data stores and architectures.\n- **Describe:** Components of modern data architectures on AWS.\n- **Cite:** AWS design considerations and key services for a streaming analytics pipeline.\n\n#### 3.1.3 Module Overview\n\n**Presentation Sections**\n\n- AWS Well-Architected Framework and Lenses\n- The evolution of data architectures\n- Modern data architecture on AWS\n- Modern data architecture pipeline: Ingestion and storage\n- Modern data architecture pipeline: Processing and consumption\n- Streaming analytics pipeline\n\n**Activity**\n\n- Using the Well-Architected Framework\n\n**Labs**\n\n- Querying Data by Using Athena\n\n**Knowledge Checks**\n\n- Online knowledge check\n- Sample exam question\n\n#### 3.1.4 AWS Well-Architected Framework\n\n**Pillars of the Framework**\n\nThe Well-Architected Framework provides best practices across six pillars:\n\n- Operational Excellence\n- Security\n- Reliability\n- Performance Efficiency\n- Cost Optimization\n- Sustainability\n\n**Well-Architected Lenses**\n\nLenses extend guidance to specific domains:\n\n- **Data Analytics Lens:** Focuses on designing well-architected analytics workloads.\n- **ML Lens:** Addresses differences between application and ML workloads.\n\n**Activity: Using the Well-Architected Framework**\n\nThis activity involves utilizing the Data Analytics Lens to identify best practices for building data pipelines.\n\n#### 3.1.5 The Evolution of Data Architectures\n\n**Application Architecture Evolution**\n\n- From monolithic mainframes to distributed systems:\n    - Client-server architecture\n    - Three-tier architecture\n    - Microservices\n\n**Data Store Evolution**\n\n- **Hierarchical databases:** Limited relationship handling capabilities.\n- **Relational databases:** Structured data storage with robust querying.\n- **Nonrelational databases:** Flexible data models for diverse data types.\n- **Data lakes:** Centralized storage for raw, unstructured, and structured data.\n- **Purpose-built data stores:** Optimized storage for specific data types and workloads.\n\n**Data Architecture Evolution**\n\n- **Data warehouses:** Separate analytical databases for reporting and BI.\n- **Big data systems:** Distributed frameworks for handling massive datasets.\n- **Lambda architecture:** Combining batch and stream processing for real-time insights.\n\n#### 3.1.6 Modern Data Architecture on AWS\n\n**Key Design Considerations**\n\n- **Scalable data lake:** Centralized storage for all data types.\n- **Performant and cost-effective components:** Purpose-built services for specific needs.\n- **Seamless data movement:** Easy integration and data flow between components.\n- **Unified governance:** Centralized management and security policies.\n\n**Data Movement Types**\n\n- **Outside in:** Moving data from purpose-built stores to the data lake.\n- **Inside out:** Moving data from the data lake to purpose-built stores.\n- **Around the perimeter:** Moving data between purpose-built stores without accessing the data lake.\n\n**Avoiding Data Swamps**\n\nProper data cataloging, security, and governance are crucial to prevent data lakes from becoming unusable.\n\n**AWS Services for Modern Data Architecture**\n\n- **Amazon S3:** Data lake storage.\n- **Athena:** Interactive querying of data in S3.\n- **Amazon Redshift:** Data warehousing.\n- **Amazon OpenSearch Service:** Real-time analytics and log analytics.\n- **Amazon EMR:** Big data processing.\n- **Amazon Aurora:** Relational database engine.\n- **Amazon DynamoDB:** Nonrelational database for high-performance applications.\n- **Amazon SageMaker:** AI/ML service.\n- **AWS Glue:** Data movement and transformation.\n- **AWS Lake Formation:** Data lake management and governance.\n\n#### 3.1.7 Modern Data Architecture Pipeline: Ingestion and Storage\n\n**Ingestion Layer**\n\n- **Matching services to data characteristics:**\n    - Amazon AppFlow: SaaS applications.\n    - AWS Database Migration Service: Relational databases.\n    - AWS DataSync: File shares.\n    - Amazon Kinesis Data Streams and Firehose: Streaming data sources.\n\n**Storage Layer**\n\n- **Storage:**\n    - Amazon S3: Data lake.\n    - Amazon Redshift: Data warehouse.\n- **Catalog:**\n    - AWS Glue Data Catalog: Metadata storage.\n    - AWS Lake Formation: Centralized governance and catalog.\n\n**Storage Zones in Amazon S3**\n\n- **Landing zone:** Initial data landing and cleaning.\n- **Raw zone:** Permanent storage of raw data.\n- **Trusted zone:** Structured data for the data warehouse.\n- **Curated zone:** Enriched and validated data for analysis.\n\n**Data Catalog Layer**\n\n- **AWS Glue:** Schema generation, crawling, and metadata management.\n- **AWS Lake Formation:** Centralized permissions management and schema-on-read for Redshift Spectrum.\n\n#### 3.1.8 Modern Data Architecture Pipeline: Processing and Consumption\n\n**Processing Layer**\n\n- **SQL-based processing:** Amazon Redshift.\n- **Big data processing:** Amazon EMR and AWS Glue.\n- **Near real-time processing:** Amazon Kinesis Data Analytics or Spark Streaming on EMR or Glue.\n\n**Consumption Layer**\n\n- **Interactive SQL:** Athena.\n- **Business intelligence:** Amazon Redshift and QuickSight.\n- **Machine learning:** Amazon SageMaker.\n\n#### 3.1.9 Streaming Analytics Pipeline\n\n**Key Design Considerations**\n\n- **Throughput:** Handling high-velocity data.\n- **Loose coupling:** Independent and scalable components.\n- **Parallel consumers:** Multiple consumers processing the same stream.\n- **Checkpointing and replay:** Fault tolerance and data durability.\n\n**Amazon Kinesis Services**\n\n- **Kinesis Data Streams:** Durable storage for streaming data.\n- **Kinesis Data Firehose:** Delivering streaming data to data stores and analytics services.\n- **Kinesis Data Analytics:** Real-time analytics on streaming data.\n\n#### 3.1.10 Key Takeaways\n\n- The AWS Well-Architected Framework provides best practices for designing analytics workloads.\n- Data architectures evolved to handle increasing data volume, variety, and velocity.\n- Modern data architectures unify disparate data sources using a data lake.\n- AWS offers purpose-built services for each layer of the data pipeline, including ingestion, storage, processing, and consumption.\n- Streaming analytics pipelines require specific considerations for throughput, loose coupling, parallel consumers, and checkpointing.\n\n---\n\n## Module 5: AWS Academy Data Engineering: Securing and Scaling the Data Pipeline\n\n### 4.1 Securing and Scaling the Data Pipeline\n\n#### 4.1.1 Introduction\n\nThis module covers best practices for securing and scaling analytics and ML workloads. \n\n#### 4.1.2 Module Objectives\n\nUpon completion, you will be able to:\n\n- **Highlight:** How cloud security best practices apply to data pipelines.\n- **List:** AWS services that secure a data pipeline.\n- **Cite:** Factors driving performance and scaling decisions across each pipeline layer.\n- **Describe:** How infrastructure as code supports security and scalability.\n- **Identify:** The function of common AWS CloudFormation template sections.\n\n#### 4.1.3 Module Overview\n\n**Presentation Sections**\n\n- Cloud security review\n- Security of analytics workloads\n- ML security\n- Scaling: An overview\n- Creating a scalable infrastructure\n- Creating scalable components\n\n**Knowledge Checks**\n\n- Online knowledge check\n- Sample exam question\n\n#### 4.1.4 Cloud Security Review\n\n**Shared Responsibility Model**\n\n- **AWS:** Secures the underlying infrastructure (hardware, software, facilities, and networks).\n- **Customer:** Responsible for securing their applications, data, and configurations within AWS.\n\n**Design Principles for Data Security**\n\n- **Implement a strong identity foundation:** Least privilege access and separation of duties.\n- **Enable traceability:** Logging, monitoring, and auditing.\n- **Apply security at all layers:** Defense-in-depth approach with multiple security controls.\n- **Automate security best practices:** Infrastructure as code and automated security mechanisms.\n- **Protect data in transit and at rest:** Encryption, tokenization, and access control.\n- **Keep people away from data:** Reduce direct access and manual processing.\n- **Prepare for security events:** Incident management and response plans.\n\n**Access Management**\n\n- **Authentication:** Verifying user identities.\n- **Authorization:** Granting access based on permissions.\n- **Principle of Least Privilege:** Granting only necessary permissions.\n\n**AWS Identity and Access Management (IAM)**\n\n- Centralized service for managing user access and permissions.\n- Integration with most AWS services.\n- Supports federated identity management, granular permissions, MFA, and audit trails.\n\n**Data Security**\n\n- **Data at rest:** Data stored in nonvolatile storage.\n    - Secure key management.\n    - Encryption at rest.\n    - Access control and auditing.\n- **Data in transit:** Data moving between systems.\n    - Secure key and certificate management.\n    - Encryption in transit.\n    - Network communication authentication.\n\n**AWS Key Management Service (AWS KMS)**\n\n- Managed service for creating and managing cryptographic keys.\n- Uses HSMs to protect keys.\n- Integration with other AWS services.\n- Supports usage policies for controlling key access.\n\n**Logging and Monitoring**\n\n- **Logging:** Collecting and recording activity and event data.\n    - CloudTrail: AWS service for logging API calls and events.\n- **Monitoring:** Continuously verifying security and performance.\n    - CloudWatch: Service for monitoring AWS resources and applications.\n\n#### 4.1.5 Security of Analytics Workloads\n\n**Classify and Protect Data**\n\n- Understand data classifications and protection policies.\n- Identify data owners and have them set classifications.\n- Record classifications in the Data Catalog.\n- Implement encryption policies for each data class.\n- Implement data retention policies for each data class.\n- Require downstream systems to honor classifications.\n\n**Control Data Access**\n\n- Allow data owners to determine access permissions.\n- Build user identity solutions for unique identification.\n- Implement appropriate data access authorization models (RBAC, dataset-level, column-level).\n- Establish an emergency access process.\n\n**Control Access to Workload Infrastructure**\n\n- Prevent unintended access through IAM policies and network isolation.\n- Implement least privilege policies for source and downstream systems.\n- Monitor infrastructure changes and user activities.\n- Secure audit logs.\n\n#### 4.1.6 ML Security\n\n**ML Lifecycle Phases**\n\n- Identify the business goal\n- Frame the ML problem\n- Process data\n- Train, tune, and evaluate\n- Deploy model\n- Monitor and evaluate\n\n**Security Best Practices for Each Phase**\n\n- **Identify the business goal:** Review software licenses and privacy agreements.\n- **Frame the ML problem:** Implement least privilege access and role-based authentication.\n- **Process data:** Secure data storage and processing environments, protect sensitive data, enforce data lineage, and retain only relevant data.\n- **Train, tune, and evaluate:** Detect risks of transfer learning, secure the ML environment, and protect against data poisoning threats.\n- **Deploy model:** Secure model artifacts and ensure secure communication with deployment endpoints.\n- **Monitor and evaluate:** Monitor model performance and detect anomalies or malicious activities.\n\n#### 4.1.7 Scaling: An Overview\n\n**Scaling Considerations**\n\n- **Performance goals:** Identify key performance metrics and targets.\n- **Data characteristics:** Volume, velocity, variety, and processing requirements.\n- **Resource utilization:** Monitor and optimize resource usage.\n- **Cost management:** Balance performance with cost efficiency.\n\n#### 4.1.8 Creating a Scalable Infrastructure\n\n**Infrastructure as Code (IaC)**\n\n- **Repeatability:** Consistent deployments across environments.\n- **Reusability:** Leveraging tested templates for new deployments.\n- **Automation:** Reducing manual configuration and errors.\n\n**AWS Services for IaC**\n\n- **CloudFormation:** Infrastructure provisioning and management using templates.\n- **AWS CDK:** Defining infrastructure using programming languages.\n\n#### 4.1.9 Creating Scalable Components\n\n**Scaling Batch Processing**\n\n- **Performance goals:** Completion time, budget constraints, and error thresholds.\n- **AWS Glue:**\n    - Horizontal scaling: Increasing the number of workers.\n    - Vertical scaling: Using larger worker types.\n- **File size and compression:** Choose splittable formats and codecs for parallel processing.\n\n**Scaling Stream Processing**\n\n- **Throughput:** Handling high-velocity data.\n- **Amazon Kinesis Data Streams:**\n    - Automatic shard scaling based on throughput needs.\n    - Manual shard adjustments.\n\n#### 4.1.10 Key Takeaways\n\n- Secure data pipelines by implementing strong identity foundations, enabling traceability, and applying security at all layers.\n- Apply specific security best practices to analytics and ML workloads throughout their lifecycles.\n- Scale data pipelines by identifying performance goals, understanding data characteristics, and utilizing appropriate AWS services and configuration options.\n- Infrastructure as code supports security and scalability by enabling repeatable and reusable deployments.\n\n---\n\n\n## Module 6: AWS Academy Data Engineering - Ingesting and Preparing Data\n\n### 1.1 Ingesting and Preparing Data\n\n#### 1.1.1 Introduction\n\nThis module discusses how to ingest and prepare data for analysis.\n\n#### 1.1.2 Module Objectives\n\nUpon completion, you will be able to:\n\n- **Differentiate:** Between Extract, Transform, Load (ETL) and Extract, Load, Transform (ELT) processes.\n- **Define:** Data wrangling within the context of data ingestion.\n- **Describe:** Key tasks within each data wrangling step:\n    - Discovery\n    - Structuring\n    - Cleaning\n    - Enriching\n    - Validating\n    - Publishing\n\n#### 1.1.3 Module Overview\n\n**Presentation Sections**\n\n- ETL and ELT Comparison\n- Data Wrangling Introduction\n- Data Discovery\n- Data Structuring\n- Data Cleaning\n- Data Enriching\n- Data Validating\n- Data Publishing\n\n**Knowledge Checks**\n\n- Online Knowledge Check\n- Sample Exam Question\n\n#### 1.1.4 ETL and ELT Comparison\n\n**Ingesting Data**\n\nData ingestion involves acquiring data from external sources and preparing it for analysis within a pipeline.\n\n**ETL (Extract, Transform, Load)**\n\n- **Extract:** Data from external sources.\n- **Transform:** Data into a structured format suitable for analysis.\n- **Load:** Transformed data into structured storage (e.g., data warehouse).\n\n**ELT (Extract, Load, Transform)**\n\n- **Extract:** Data from external sources.\n- **Load:** Raw data into a data lake (e.g., Amazon S3).\n- **Transform:** Data as needed for specific analysis scenarios.\n\n**Benefits of ETL**\n\n- Automated routine transformations.\n- Filtering sensitive data upfront.\n\n**Benefits of ELT**\n\n- Faster ingestion by delaying transformations.\n- Greater flexibility for data exploration and new queries.\n\n**The Evolving Ingestion Process**\n\n- Modern data architectures blend ETL and ELT approaches.\n- Data engineers, analysts, and scientists might perform different transformations at different stages.\n- Pipelines should evolve based on usage patterns and insights.\n\n#### 1.1.5 Data Wrangling Introduction\n\n**Data Wrangling**\n\nTransforming raw data from multiple sources into a valuable dataset for analysis.\n\n**Data Wrangling in ETL vs. ELT**\n\n- **Traditional ETL:** Primarily performed by data engineers using batch jobs.\n- **ELT:** Enables business users and data scientists to transform data within the data lake before refinement.\n\n**Data Wrangling Steps**\n\n- **Discovery:** Identifying and understanding data sources.\n- **Structuring:** Mapping raw data into a suitable format for storage and analysis.\n- **Cleaning:** Removing inconsistencies, errors, and unwanted data.\n- **Enriching:** Combining data sources and adding valuable information.\n- **Validating:** Ensuring data accuracy and integrity.\n- **Publishing:** Making the wrangled dataset available for analysis.\n\n#### 1.1.6 Data Discovery\n\n**Tasks in Data Discovery**\n\n- Determine if the source serves the business purpose.\n- Understand data organization and access methods.\n- Assess required tools and skills.\n- Decide whether to proceed with the data source.\n\n**Example Scenario**\n\n- Combining support ticket data from two different systems.\n- Identifying relationships, formats, data needs, organization, and available tools.\n\n#### 1.1.7 Data Structuring\n\n**Tasks in Data Structuring**\n\n- Organize storage (folder structure, partitions, access controls).\n- Parse source files into a structured format.\n- Map source fields to target fields.\n- Manage file size (splitting, merging, compression).\n\n**Example Scenario**\n\n- Parsing and mapping fields from a JSON support ticket file.\n\n#### 1.1.8 Data Cleaning\n\n**Tasks in Data Cleaning**\n\n- Removing unwanted data (PII, irrelevant fields, duplicates, corrupted data).\n- Filling in missing values.\n- Validating and modifying data types.\n- Fixing outliers.\n\n**Example Scenario**\n\n- Cleaning support ticket data by replacing missing values, removing corrupted data, and validating data types.\n\n#### 1.1.9 Data Enriching\n\n**Tasks in Data Enriching**\n\n- Merging data sources into a single dataset.\n- Adding new fields and calculating new values.\n\n**Example Scenario**\n\n- Combining support ticket data from two sources.\n- Adding a sales region field by querying the sales system.\n\n#### 1.1.10 Data Validating\n\n**Tasks in Data Validating**\n\n- Auditing the dataset for expected rows, consistency, formats, data types, duplicates, PII, and outliers.\n- Addressing any data integrity issues.\n\n#### 1.1.11 Data Publishing\n\n**Tasks in Data Publishing**\n\n- Determine the target destination (data lake, data warehouse, other data stores).\n- Configure access controls (IAM policies, data access permissions).\n\n#### 1.1.12 Key Takeaways\n\n- Ingestion involves extracting, transforming, and loading data into the pipeline.\n- ETL transforms data before loading, while ELT loads raw data and transforms it later.\n- Data wrangling is a multi-step process to prepare data for analysis.\n- Data discovery, structuring, cleaning, enriching, validating, and publishing are key data wrangling steps.\n\n---\n\n## Module 7: AWS Academy Data Engineering: Ingesting by Batch or by Stream\n\n### 2.1 Ingesting by Batch or by Stream\n\n#### 2.1.1 Introduction\n\nThis module explores batch and stream ingestion methods, focusing on AWS services like Glue and Kinesis.\n\n#### 2.1.2 Module Objectives\n\nUpon completion, you will be able to:\n\n- **List:** Key tasks for building an ingestion layer.\n- **Describe:** AWS services for ingestion tasks.\n- **Illustrate:** How AWS Glue automates batch ingestion.\n- **Describe:** Amazon Kinesis streaming services and features.\n- **Identify:** Configuration options for scaling ingestion in Glue and Kinesis.\n- **Describe:** Characteristics of ingesting IoT data using AWS IoT services.\n\n#### 2.1.3 Module Overview\n\n**Presentation Sections**\n\n- Comparing batch and stream ingestion\n- Batch ingestion processing\n- Purpose-built ingestion tools\n- AWS Glue for batch ingestion processing\n- Scaling considerations for batch processing\n- Kinesis for stream processing\n- Scaling considerations for stream processing\n- Ingesting IoT data by stream\n\n**Lab**\n\n- Performing ETL on a Dataset by Using AWS Glue\n\n**Knowledge Checks**\n\n- Online knowledge check\n- Sample exam question\n\n#### 2.1.4 Comparing Batch and Stream Ingestion\n\n**Batch Ingestion**\n\n- Processes data in batches at intervals (on demand, scheduled, or event-triggered).\n- Suitable for large datasets and complex transformations.\n- Typically used in ETL processes.\n\n**Stream Ingestion**\n\n- Continuously processes data as it arrives.\n- Handles high-velocity data and real-time analytics.\n\n**Data Volume and Velocity as Key Drivers**\n\n- High volume and velocity favor stream processing.\n- Lower volume and less time-sensitive data can be handled by batch processing.\n\n#### 2.1.5 Batch Ingestion Processing\n\n**Tasks for Building a Batch Pipeline**\n\n- Connect to the source and select data.\n- Define source and target schemas.\n- Securely transfer data.\n- Perform transformations and load into storage.\n\n**Workflow Orchestration**\n\n- Managing job dependencies and handling failures.\n\n**Key Characteristics for Batch Processing Design**\n\n- **Ease of use:** Developer-friendly tools and interfaces.\n- **Data volume and variety:** Handling diverse data types and sources.\n- **Orchestration and monitoring:** Tools for managing complex workflows.\n- **Scaling and cost management:** Flexibility to scale up and down as needed.\n\n#### 2.1.6 Purpose-built Ingestion Tools\n\n**AWS Services for Batch Ingestion**\n\n- **Amazon AppFlow:** Ingesting data from SaaS applications.\n- **AWS Database Migration Service:** Migrating data from relational databases.\n- **AWS DataSync:** Ingesting data from file systems.\n- **AWS Data Exchange:** Integrating third-party datasets.\n\n**Selecting the Right Tool**\n\nChoose the tool that best matches the data source type and business requirements.\n\n#### 2.1.7 AWS Glue for Batch Ingestion Processing\n\n**Features of AWS Glue**\n\n- **Schema identification:** Automatically generates schemas using crawlers.\n- **Data cataloging:** Centralized catalog for data discovery and governance.\n- **Job authoring:** Visual interface for creating and managing ETL jobs (AWS Glue Studio).\n- **Serverless processing:** Apache Spark-based runtime engine.\n- **ETL orchestration:** Workflows for managing complex pipelines.\n- **Monitoring and troubleshooting:** CloudWatch integration and job run insights.\n\n**Benefits of AWS Glue**\n\n- Simplifies ETL tasks through automation and visual tools.\n- Serverless architecture reduces operational overhead.\n- Provides comprehensive monitoring and troubleshooting capabilities.\n\n#### 2.1.8 Scaling Considerations for Batch Processing\n\n**Performance Goals**\n\n- Completion time\n- Budget constraints\n- Error thresholds\n\n**Scaling AWS Glue Jobs**\n\n- **Horizontal scaling:** Adding more workers for parallel processing.\n- **Vertical scaling:** Using larger worker types for memory-intensive tasks.\n\n**File Size and Compression**\n\n- Choose splittable file formats and compression codecs for efficient parallel processing.\n\n#### 2.1.9 Kinesis for Stream Processing\n\n**Tasks for Building a Stream Processing Pipeline**\n\n- **Producers:** Put data records on the stream.\n- **Data stream:** Provides durable storage for streaming data.\n- **Consumers:** Read and process data from the stream.\n\n**Key Characteristics for Stream Ingestion and Processing**\n\n- **Throughput:** Handling high data volumes.\n- **Loose coupling:** Independent and scalable components.\n- **Parallel consumers:** Multiple consumers processing the same stream simultaneously.\n- **Checkpointing and replay:** Fault tolerance and data durability.\n\n#### 2.1.10 Purpose-built Kinesis Services\n\n**Amazon Kinesis Services for Streaming**\n\n- **Kinesis Data Streams:** Durable storage for streaming data.\n- **Kinesis Data Firehose:** Delivering streaming data to data stores and analytics services.\n- **Kinesis Data Analytics:** Real-time analytics on streaming data.\n\n**Kinesis Data Streams**\n\n- Handles high-volume, continuous data ingestion.\n- Supports multiple producers and consumers.\n- Provides encryption and access control for security.\n\n**Kinesis Data Firehose**\n\n- Ingests and delivers streaming data to destinations (S3, Redshift, OpenSearch Service).\n- Performs transformations using Lambda functions.\n\n**Kinesis Data Analytics**\n\n- Analyzes streaming data in real time using SQL or Apache Flink.\n\n#### 2.1.11 Scaling Considerations for Stream Processing\n\n**Throughput Management**\n\n- **Kinesis Data Streams:**\n    - Automatic shard scaling based on throughput.\n    - Manual shard adjustments.\n\n#### 2.1.12 Ingesting IoT Data by Stream\n\n**AWS IoT Services**\n\n- **AWS IoT Core:** Securely connect and manage IoT devices.\n- **AWS IoT Analytics:** Process and analyze IoT data.\n\n**Ingesting IoT Data**\n\n- Devices publish data to AWS IoT Core.\n- IoT rules route and transform messages.\n- Kinesis Data Firehose delivers data to Amazon S3 or other destinations.\n\n#### 2.1.13 Lab: Performing ETL on a Dataset by Using AWS Glue\n\n- Use AWS Glue to perform ETL on a dataset, including creating a crawler, configuring a job, and analyzing results.\n\n#### 2.1.14 Key Takeaways\n\n- Batch ingestion processes data in batches, while stream ingestion handles continuous data flow.\n- AWS Glue simplifies batch ingestion with schema identification, job authoring, and orchestration features.\n- Amazon Kinesis services provide durable storage, transformation, and analytics capabilities for streaming data.\n- Both batch and stream ingestion methods offer scaling options to handle varying data volumes and workloads.\n- AWS IoT services enable secure and scalable ingestion of data from IoT devices.\n\n---\n\n## Module 8: AWS Academy Data Engineering - Storing and Organizing Data\n\n### 3.1 Storing and Organizing Data\n\n#### 3.1.1 Introduction\n\nThis module explores various storage options for data lakes, data warehouses, and purpose-built databases in AWS.\n\n#### 3.1.2 Module Objectives\n\nUpon completion, you will be able to:\n\n- **Define:** Storage types in a modern data architecture.\n- **Distinguish:** Between data storage types.\n- **Select:** Data storage options based on specific needs.\n- **Implement:** Secure storage practices for cloud-based data.\n\n#### 3.1.3 Module Overview\n\n**Presentation Sections**\n\n- Storage in the modern data architecture\n- Data lake storage\n- Data warehouse storage\n- Purpose-built databases\n- Storage in support of the pipeline\n- Securing storage\n\n**Lab**\n\n- Storing and Analyzing Data by Using Amazon Redshift\n\n**Knowledge Checks**\n\n- Online knowledge check\n- Sample exam question\n\n#### 3.1.4 Storage in the Modern Data Architecture\n\n**Centralized Storage**\n\n- **Data Lake:** Stores raw, unstructured, and structured data using Amazon S3.\n- **"],
+            elapsed_time: "266.614270608"
+        };
+
+        const tokens = data.responses.slice (0, 2);
+        const only_responses = data.responses.slice (2);
+
+
+        // Use the embedded data in your JavaScript code
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log(data);
+            document.getElementById('heading').textContent = "Selected directory: ";
+            document.getElementById('directory').textContent = data.directory;
+            document.getElementById('tokens').innerHTML = tokens.map (item => `<div class="class-tokens">${item}</div>`).join('');
+            document.getElementById('elapsed_time').innerHTML = `<div class="class-tokens">${data.elapsed_time} seconds</div>`;
+
+            // Convert markdown to HTML and inject into the element
+            const markdownHtml = only_responses.map(md => marked.parse(md)).join('<br>'); // Join with <br> for spacing
+            document.getElementById('only_responses').innerHTML = markdownHtml;
+        });
+
+    </script>
+
+</body></html>

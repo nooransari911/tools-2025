@@ -1,0 +1,53 @@
+ * Serving Flask app 'main'
+ * Debug mode: on
+[2024-09-08 15:34:05] [pgemini_chain_all_files] for psingle_file: 2272367
+for psingle_file: 2272412
+for psingle_file: 2272457
+for psingle_file: 2272502
+for psingle_file: 2272547
+for psingle_file: 2272592
+for psingle_file: 2272637
+for psingle_file: 2272682
+for psingle_file: 2272727
+for psingle_file: 2272772
+for psingle_file: 2272817
+for psingle_file: 2272862
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 11.md
+Done processing file Module 11.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 10.md
+Done processing file Module 10.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 12.md
+Done processing file Module 12.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 13.md
+Done processing file Module 13.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 5.md
+Done processing file Module 5.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 6.md
+Done processing file Module 6.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 7.md
+Done processing file Module 7.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 9.md
+Done processing file Module 9.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 8.md
+Done processing file Module 8.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 2.md
+Done processing file Module 2.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 14.md
+Done processing file Module 14.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 4.md
+Done processing file Module 4.md
+[2024-09-08 15:34:07] [psingle_file] Processing file Module 3.md
+Done processing file Module 3.md
+for psingle_file: 2272907
+[2024-09-08 15:34:17] [sigchld_handler] [2024-09-08 15:34:18] [sigchld_handler] Child process 2272727 terminated with status 0
+[2024-09-08 15:34:18] [sigchld_handler] Child process 2272817 terminated with status 0
+[2024-09-08 15:34:18] [sigchld_handler] Child process 2272862 terminated with status 0
+[2024-09-08 15:34:20] [sigchld_handler] Child process 2272502 terminated with status 0
+[2024-09-08 15:34:21] [sigchld_handler] Child process 2272547 terminated with status 0
+[2024-09-08 15:34:23] [sigchld_handler] [2024-09-08 15:34:24] [sigchld_handler] [2024-09-08 15:34:26] [sigchld_handler] Child process 2272637 terminated with status 0
+[2024-09-08 15:34:27] [sigchld_handler] Child process 2272367 terminated with status 0
+[2024-09-08 15:34:27] [sigchld_handler] [2024-09-08 15:34:34] [sigchld_handler] [2024-09-08 15:34:43] [sigchld_handler] [2024-09-08 15:35:49] [signal_handler] You pressed Ctrl+C!
+[2024-09-08 15:35:49] [sigchld_handler] [2024-09-08 15:35:49] [sigchld_handler] Child process 2271740 terminated with status 0
+[2024-09-08 15:35:49] [sigchld_handler] Child process 2271733 terminated with status 0
+[2024-09-08 15:35:49] [sigchld_handler] Child process 2271727 terminated with status 0
+[2024-09-08 15:35:49] [sigchld_handler] Child process 2271722 terminated with status 0

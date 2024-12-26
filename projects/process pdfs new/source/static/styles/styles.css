@@ -1,0 +1,266 @@
+/* Body: Background and text colors */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16pt;
+    background-color: #000011;  /* Background color from TOML: bg */
+    color: #C3DBE5;  /* Text color from TOML: fg */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+}
+
+/* Header styling */
+header {
+    background-color: #111;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    color: #00ffff;  /* Cyan color for header */
+}
+
+h2 {
+    margin-top: 40px;
+    color: #ff007f; /* Magenta color for header */
+}
+
+/* Main content area */
+main {
+    padding: 20px;
+}
+
+/* Code block container */
+pre {
+    background-color: #333; /* Dark grey background */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    color: #C3DBE5;  /* White color from TOML (fg) */
+    width: 100%;
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+/* Prism.js Syntax highlighting */
+code {
+    display: block;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: inherit;
+}
+
+hr {
+    margin-top: 40px;
+    border: 4px solid #ff88ff;
+}
+
+
+
+:not(pre) > code[class*="language-"], pre[class*="language-"] {
+    background: #222;
+    padding: 20px;
+    padding-left: 40px;
+}
+
+#files-list > div {
+    margin-bottom: 40px; /* Space between each file */
+}
+
+
+
+/*
+
+#files-list,
+#files-list * {
+    all: inherit;
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+/* Custom colors for syntax highlighting using CSS */
+
+/* Keywords, Functions, etc. */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #767676;  /* Gray for comments */
+    font-style: italic;
+}
+
+.token.punctuation {
+    color: #585C6C; /* Base4 for punctuation */
+}
+
+.token.selector,
+.token.property {
+    color: #00FFFF; /* Cyan for keywords and properties */
+}
+
+.token.function,
+.token.class-name {
+    color: #00FFFF;  /* Cyan for function names */
+}
+
+.token.boolean,
+.token.number {
+    color: #FF0080;  /* Magenta for booleans and numbers */
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.token.variable {
+    color: #FFFFFF; /* White for operators and variables */
+}
+
+/* Specific colors for other tokens based on TOML */
+.token.constant,
+.token.constant.numeric {
+    color: #D85F00; /* Orange for constants */
+}
+
+.token.string {
+    color: #00BBFF;  /* Green for strings */
+}
+
+.token.keyword {
+    color: #FF0080; /* Magenta for keywords */
+}
+
+.token.function.method {
+    color: #C3DBE5; /* White for method functions */
+}
+
+.token.tag {
+    color: #00FFFF;  /* Cyan for tags */
+}
+
+/* UI related elements */
+.ui.background {
+    background-color: #000011; /* Background from TOML: bg */
+}
+
+.ui.cursor {
+    background-color: #D85F00; /* Orange cursor from TOML */
+    color: #000022; /* Black cursor foreground */
+}
+
+.ui.cursorline {
+    background-color: #040408; /* Darker background for cursor line */
+}
+
+.ui.linenr {
+    color: #585C6C;  /* Base4 for line numbers */
+}
+
+.ui.statusline {
+    background-color: #464A56; /* Base3 background */
+    color: #C3DBE5; /* Text color from TOML */
+}
+
+.ui.menu {
+    background-color: #040408; /* Dark background for menu */
+    color: #C3DBE5;  /* Text color */
+}
+
+.ui.selection {
+    background-color: #1E1E33; /* Base2 for selection */
+}
+
+/* Diagnostic messages */
+.diagnostic.hint {
+    text-decoration: underline;
+    color: #00FFFF;  /* Cyan for hints */
+}
+
+.diagnostic.error {
+    text-decoration: underline;
+    color: #FF0000; /* Red for errors */
+}
+
+.diagnostic.warning {
+    text-decoration: underline;
+    color: #FFAA00; /* Yellow for warnings */
+}
+
+/* Additional UI colors */
+.ui.virtual.whitespace {
+    color: #1E1E33; /* Base2 for virtual whitespace */
+}
+
+.ui.virtual.ruler {
+    background-color: #000022; /* Black for ruler */
+}
+
+
+
+/* Styling the Copy Button */
+/* Styling the Copy Button */
+button {
+    background-color: #585C6C; /* Muted cyan background */
+    color: #C3DBE5; /* Light text color matching the body text */
+    border: none; /* Clean look without borders */
+    padding: 10px 20px; /* Comfortable padding */
+    font-size: 16px; /* Readable text size */
+    border-radius: 8px; /* Rounded corners for a modern appearance */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    /*margin: 20px;  Space around the button */
+    display: block; /* Center the button */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Hover effect for the button */
+button:hover {
+    background-color: #464A56; /* Slightly darker shade for hover effect */
+    transform: translateY(-2px); /* Lift effect */
+}
+
+/* Focus effect for accessibility */
+button:focus {
+    outline: 2px solid #00FFFF; /* Cyan focus outline for visibility */
+    outline-offset: 2px; /* Space between outline and button */
+}
+
+
+
+/* Style for the header container */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space between h1 and the button */
+    margin-bottom: 10px;
+}
+
+/* Style for the Copy button */
+.header-container button {
+    background-color: #444;
+    color: #C3DBE5;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.header-container button:hover {
+    background-color: #555; /* Slightly lighter on hover */
+}

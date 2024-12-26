@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>Gemini Response</title>
+
+        <style>
+        body {
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            min-height: 100vh;
+            background-color: #000000; /* Dark background */
+            color: #eee; /* Light text color */
+            margin: 0; /* Remove default margin */
+            padding: 0 20px; /* Add some padding for smaller screens */
+        }
+
+        h1 {
+            text-align: left;
+            margin-bottom: 80px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: cyan; /* Cyan heading */
+        }
+        h2 {
+            text-align: left;
+            margin: 20px 0;
+            font-weight: 600;
+            letter-spacing: 2px;  /* Increased spacing */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        ul {
+            text-align: left;
+            list-style: none; /* Remove default list styling */
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            text-align: left;
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+
+        .class-tokens {
+            text-align: left;
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+            max-width: 500px;
+        }
+
+
+
+        /* Style for the markdown content */
+        .markdown {
+            width: 100%;
+            max-width: 1200px;
+            padding-left: 20px;
+        }
+
+        .markdown ul {
+            list-style: disc; /* Use disc bullets for lists */
+            padding-left: 20px;
+        }
+
+        .markdown li {
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .markdown h1 {
+            text-align: left;
+            margin-top: 200px;
+             margin-bottom: 20px;
+             margin-right: 0px;
+             margin-left: 0px;
+            font-weight: 600;
+            letter-spacing: 2px;  /* Increased spacing */
+            color: rgb(0, 255, 255); /* Cyan heading */
+        }
+         .markdown h2 {
+            text-align: left;
+            margin-top: 80px;
+             margin-bottom: 20px;
+             margin-right: 0px;
+             margin-left: 0px;
+            font-weight: 600;
+            letter-spacing: 2px;  /* Increased spacing */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        /* Style for br elements to maintain spacing */
+        br {
+            margin: 20px 0;
+        }
+    </style>
+
+</head>
+<body>
+    <h2 id="heading">Selected directory: </h2> <!-- Element with ID 'heading' -->
+    <h2 id="directory">/home/ansarimn/Downloads/tools and projects/projects/process pdfs/ex-input files/</h2> <!-- Element with ID 'directory' -->
+    <h2 id="tokens"><div class="class-tokens">total input tokens: 81760</div><div class="class-tokens">total output tokens: 16384</div></h2> <!-- Element with ID 'directory' -->
+    <div id="only_responses" class="markdown"><h1>AWS Academy Cloud Architecting - Module 14: Planning for Disaster</h1>
+<h2>1. Contents</h2>
+<ul>
+<li>Module 14: Planning for Disaster</li>
+</ul>
+<h2>2. Module Overview</h2>
+<ul>
+<li><strong>Sections:</strong><ul>
+<li>2.1. Architectural need</li>
+<li>2.2. Disaster planning strategies</li>
+<li>2.3. Disaster recovery patterns</li>
+</ul>
+</li>
+<li><strong>Lab:</strong><ul>
+<li>Guided Lab: Hybrid Storage and Data Migration with AWS Storage Gateway File Gateway</li>
+</ul>
+</li>
+<li><strong>Knowledge check:</strong></li>
+</ul>
+<h2>3. Module Objectives</h2>
+<p>At the end of this module, you should be able to:</p>
+<ul>
+<li>Identify strategies for disaster planning.</li>
+<li>Define recovery point objective (RPO) and recovery time objective (RTO).</li>
+<li>Describe four common patterns for backup and disaster recovery and how to implement them.</li>
+<li>Use AWS Storage Gateway for on-premises-to-cloud backup solutions.</li>
+</ul>
+<h2>4. Section 1: Architectural Need</h2>
+<h3>4.1. Café Business Requirement</h3>
+<p>If the café's infrastructure ever becomes unavailable, the staff must
+ be able to get their applications running again within an amount of 
+time that is acceptable to the business. They need an architecture that 
+supports their disaster recovery plans while also optimizing for cost.</p>
+<p>The café has implemented several applications that run on AWS and is 
+storing a significant amount of business-critical data in the AWS Cloud.
+  Sofía, a member of the café's team, realizes that if the café's 
+infrastructure ever becomes unavailable, they must be able to get their 
+applications running and accessible within an acceptable time frame. 
+Currently, the café's staff hasn't developed any comprehensive disaster 
+recovery plans.</p>
+<p>Sofía raised this concern with Frank and Martha. They all agreed that
+ it's important to put backup and disaster recovery plans into place. 
+Their objective is to implement an architecture that supports their 
+disaster recovery time objectives while optimizing for cost. They also 
+agreed that as their revenue grows, they will be able to afford a 
+solution that supports a shorter recovery time objective.</p>
+<p>In this module, you will learn about key AWS service features that 
+support data backup and disaster recovery. With an understanding of 
+these features, you should be able to help the café meet this essential 
+business requirement.</p>
+<h2>5. Section 2: Disaster Planning Strategies</h2>
+<h3>5.1. Planning for Failures</h3>
+<p>"Everything fails, all the time." -Werner Vogels</p>
+<p>AWS Chief Technology Officer (CTO), Werner Vogels, has famously 
+stated on more than one occasion that, "Everything fails, all the time."
+ This statement has been influential in cloud computing architectural 
+design because it highlights a critical truth: failure is inevitable.</p>
+<p>We should not consider failure as an unlikely aberration. Instead, we
+ should assume that failures, both large and small, can and will occur. 
+How do we prepare for these events?</p>
+<p>Failures can be categorized into three types:</p>
+<ul>
+<li><strong>Small-scale event:</strong> A single server stopped responding or went offline.</li>
+<li><strong>Large-scale event:</strong> Multiple resources were affected, perhaps even across Availability Zones within a Region.</li>
+<li><strong>Colossal scale event:</strong> The failure is widespread, affecting a large number of users and systems.</li>
+</ul>
+<p>To minimize the impact of a disaster, organizations must invest time 
+and resources to plan and prepare, train employees, and document and 
+update processes. The amount of investment for disaster planning for a 
+particular system can vary dramatically, depending on the cost of a 
+potential outage.</p>
+<h3>5.2. Avoiding and Planning for Disaster</h3>
+<p>We can work to avoid and plan for disaster in three ways:</p>
+<ul>
+<li><strong>High availability:</strong> Provides redundancy and fault 
+tolerance. A system is highly available when it can withstand the 
+failure of one or multiple components (e.g., hard disks, servers, or 
+network connectivity). Production systems typically have defined uptime 
+requirements.</li>
+<li><strong>Backup:</strong> Critical to protecting data and ensuring 
+business continuity. However, it can be challenging to implement. The 
+pace at which data is generated is growing exponentially, while the 
+density and durability of local disks are not experiencing the same 
+growth rate. Even so, it is essential to keep your critical data backed 
+up in case of disaster.</li>
+<li><strong>Disaster recovery (DR):</strong> About preparing for and 
+recovering from a disaster. A disaster is any event that has a negative 
+impact on a company's business continuity or finances. Such events 
+include hardware or software failure, a network outage, a power outage, 
+or physical damage to a building (like fire or flooding). The cause can 
+be human error, or some other significant event. Disaster recovery is a 
+set of policies and procedures that enable the recovery or continuation 
+of vital technology infrastructure and systems after any disaster.</li>
+</ul>
+<h3>5.3. Selected AWS Well-Architected Framework Design Principles</h3>
+<h4>5.3.1. Operational Excellence Pillar</h4>
+<ul>
+<li>Anticipate failure.</li>
+<li>Refine operational procedures frequently.</li>
+</ul>
+<h4>5.3.2. Reliability Pillar</h4>
+<ul>
+<li>Test recovery procedures.</li>
+<li>Automatically recover from failure.</li>
+</ul>
+<p>Consider some design principles that relate to the topic of disaster recovery.</p>
+<p>The <strong>Operational Excellence pillar</strong> of the AWS 
+Well-Architected Framework emphasizes the importance of anticipating 
+failure. It recommends performing pre-mortem exercises to identify 
+potential sources of failure so that they can be removed or mitigated. 
+You must test your failure scenarios and validate your understanding of 
+their impact. The AWS Well-Architected Framework also describes the 
+benefits of refining your operational procedures frequently to look for 
+opportunities to improve them. Then, as you evolve your workload, you 
+can evolve your procedures accordingly.</p>
+<p>The <strong>Reliability pillar</strong> describes the importance of 
+designing systems that can recover from infrastructure or service 
+disruptions, and mitigating disruptions such as misconfigurations or 
+transient network issues.</p>
+<p>One of the design principles it mentions is to <strong>test recovery procedures</strong>.
+ Test how your system fails and validate your recovery procedures. You 
+can use automation to simulate different failures or recreate scenarios 
+that led to previous failures. This testing exposes failure pathways 
+that you can test and fix before a real failure scenario. It reduces the
+ risk of components that have not been tested before they fail.</p>
+<p>Another principle of design is to <strong>automatically recover from failure</strong>.
+ By monitoring a system for key performance indicators (KPIs), you can 
+trigger automation when a threshold is breached. These KPIs should be a 
+measure of business value, not the technical aspects of how the service 
+operates. Your automation could provide notifications and tracking of 
+failures, and for automated recovery processes that work around or 
+repair the failure.</p>
+<h3>5.4. Recovery Point Objective (RPO)</h3>
+<p><strong>Recovery point objective (RPO)</strong> is the maximum acceptable amount of data loss, measured in time.</p>
+<p><strong>How often must your data be backed up?</strong></p>
+<p><strong>Example RPO:</strong> The business can recover from losing (at most) the last 8 hours of data.</p>
+<p>Organizations of all sizes, large and small, often have a Business 
+Continuity Plan (BCP). A typical part of the BCP is to provide for IT 
+Service Continuity, including IT disaster recovery planning.</p>
+<p>One of the most important measures of a disaster recovery plan is to 
+define your RPO. To calculate RPO, first determine how much data loss is
+ acceptable, according to your BCP. Then, figure out how quickly that 
+data loss might occur, as a time measurement.</p>
+<p>For example, suppose you determine that the data your application 
+generates is important but not critical, so that losing 800 records 
+would be acceptable. You further calculate that even during peak times, 
+no more than 100 records are created in an hour. In this scenario, you 
+decide that an RPO of 8 hours is sufficient to meet your needs. If you 
+then implement a disaster recovery plan that meets this RPO, you are 
+sure to do data backups at least every 8 hours. Then, if a disaster 
+occurs at 22:00, the system should be able to recover all data that was 
+in the system before 14:00 PM.</p>
+<h3>5.5. Recovery Time Objective (RTO)</h3>
+<p><strong>Recovery time objective (RTO)</strong> is the maximum acceptable amount of time after a disaster strikes that a business process can remain out of commission.</p>
+<p><strong>How quickly must your applications and data be recovered?</strong></p>
+<p><strong>Example RTO:</strong> The application can be unavailable for a maximum of 1 hour.</p>
+<p>Another important measure of a disaster recovery plan is to define 
+the RTO. RTO is the time it takes after a disruption to restore your 
+applications and recover your data. To continue the previous example, 
+suppose a disaster occurs at 22:00 and the RTO is 1 hour. In that 
+scenario, the DR process should restore the business process to the 
+acceptable service level by 23:00.</p>
+<p>A company typically decides on acceptable RPO and RTO, and bases its 
+decision on the financial impact to the business when systems are 
+unavailable. The company determines financial impact by considering many
+ factors, including loss of business and damage to its reputation 
+because of downtime and the lack of systems availability.</p>
+<p>IT organizations then plan solutions to provide cost-effective system
+ recovery. The solutions are based on the RPO within the timeline and 
+the service level that the RTO establishes.</p>
+<h3>5.6. Plan for Disaster Recovery</h3>
+<p>Be intentional about where your data is stored and where your applications run.</p>
+<p>To properly scope your disaster recovery planning, you must look 
+holistically at your use of AWS. Most organizations use a combination of
+ services that can be broadly categorized as encompassing these five 
+service categories areas:</p>
+<ul>
+<li>Storage</li>
+<li>Compute</li>
+<li>Networking</li>
+<li>Databases</li>
+<li>Deployment orchestration services</li>
+</ul>
+<p>If a disaster occurs, your RPO and RTO will guide your 
+backup-and-restore plans and procedures across each of these service 
+areas. They will also likely affect your production deployment 
+architecture.</p>
+<p>It is also important to keep in mind that, although it's unlikely for
+ a Region to be unavailable, it is within the realm of possibility. If 
+some large-scale event affects a Region—for instance, a meteor 
+strike—would your data still be available? Would your applications still
+ be accessible? AWS provides multiple Regions around the world. Thus, 
+you can choose the most appropriate location for your disaster recovery 
+site, in addition to the site where your system is fully deployed.</p>
+<h3>5.7. Storage and Backup Building Blocks</h3>
+<p>The following services are referenced in the diagram:</p>
+<ul>
+<li>Amazon Elastic Block Store (Amazon EBS)</li>
+<li>Amazon Elastic Compute Cloud (Amazon EC2)</li>
+<li>Amazon Elastic File System (Amazon EFS)</li>
+<li>Amazon Simple Storage Service (Amazon S3)</li>
+<li>Amazon Simple Storage Service Glacier (Amazon S3 Glacier)</li>
+</ul>
+<p>To start your disaster planning in detail, look at the data storage 
+layer (postponing the discussion of the database layer for the moment).</p>
+<p>Your AWS Cloud storage can consist of a combination of block storage,
+ file system storage, and object storage. Meanwhile, your organization 
+might also use AWS services that connect the on-premises data center to 
+the AWS Cloud.</p>
+<p>In the next few slides, you will learn about high-level best practices for each of these three areas.</p>
+<p>One service that you might not be familiar with is AWS DataSync. AWS 
+DataSync provides movement of large amounts of data online between 
+on-premises storage and Amazon S3, Amazon EFS, or Amazon FSx for Windows
+ File Server. It supports scripted copy jobs and scheduled data 
+transfers from on-premises Network File Systems (NFS) and Server Message
+ Block (SMB) storage. It can also optionally use AWS Direct Connect 
+links.</p>
+<h3>5.8. Best Practice: S3 Cross-Region Replication</h3>
+<p>Most S3 storage classes replicate data across Availability Zones within a single Region.</p>
+<ul>
+<li>Configure S3 cross-Region replication for higher-level data security.</li>
+<li>Automatically, asynchronously replicates objects created after you add the replication configuration.</li>
+<li>Can also help meet compliance requirements and reduce latency for users who are accessing objects.</li>
+</ul>
+<p>For many organizations, the bulk of their data that is stored on AWS is in Amazon S3, which provides object storage.</p>
+<p>Recall that S3 buckets exist in a specific AWS Region. You choose the
+ Region when you create the bucket. Amazon S3 provides 11 9s 
+(99.999999999 percent) of durability for S3 Standard, S3 Standard-IA, S3
+ One Zone-IA, and Amazon S3 Glacier storage classes. Amazon S3 Standard,
+ S3 Standard-IA, and Amazon S3 Glacier are all designed to sustain data 
+if an entire Amazon S3 Availability Zone loss occurs. They provide this 
+stability by automatically storing your objects across a minimum of 
+three Availability Zones, each separated miles apart, across a single 
+AWS Region.</p>
+<p>For critical applications and data scenarios where you want a higher 
+level of data security, it is a best practice to configure S3 
+cross-Region replication. To enable the replication, you add a 
+replication configuration to your source bucket. The minimum 
+configuration must indicate the destination bucket where you want Amazon
+ S3 to replicate all objects, or a subset of all objects. It must also 
+include an AWS Identity and Access Management (IAM) role that grants 
+Amazon S3 permissions to copy the objects to the destination bucket.</p>
+<p>Copied objects retain their metadata. The destination bucket can 
+belong to another storage class. For example, the contents of an S3 
+Standard bucket might be replicated to an Amazon S3 Glacier bucket. You 
+can assign different ownership to the objects in the destination bucket.
+ You can also use S3 Replication Time Control (S3 RTC) to replicate your
+ data across different Regions in a predictable time frame. S3 RTC 
+replicates four 9s (99.99 percent) of new objects stored in Amazon S3 
+within 15 minutes (backed by a service-level agreement).</p>
+<h3>5.9. Best Practice: EBS Volume Snapshots</h3>
+<p>Create point-in-time snapshots of EBS volumes.</p>
+<ul>
+<li>Snapshots provide incremental backups (they back up the blocks that changed since the previous snapshot).</li>
+<li>Snapshots enable you to restore data to a new EBS volume.</li>
+<li>Use Amazon Data Lifecycle Manager to automate the creation, retention, and deletion of snapshots.</li>
+<li>You cannot snapshot instance storage.</li>
+</ul>
+<p>Regarding block storage, you can back up the data that is on EBS 
+volumes to Amazon S3 by taking point-in-time snapshots. Snapshots are 
+incremental backups, which means that it saves only the blocks on the 
+device that have changed since your most recent snapshot. This 
+architecture minimizes the time that is required to create the snapshot,
+ and it saves on storage costs by not duplicating data.</p>
+<p>Each snapshot contains all the information that is needed to restore 
+your data (from the moment when the snapshot was taken) to a new EBS 
+volume. When you create an EBS volume that is based on a snapshot, the 
+new volume begins as an exact replica of the original volume. This 
+original volume was used to create the snapshot. The replicated volume 
+loads data in the background so that you can begin to use it 
+immediately. If you access data that has not been loaded yet, the volume
+ immediately downloads the requested data from Amazon S3. Then, it 
+continues to load the rest of the volume's data in the background.</p>
+<p>Amazon EBS volumes provide off-instance storage that persists 
+independently from the life of an instance, and is replicated across 
+multiple servers in an Availability Zone. Volumes prevent the loss of 
+data from the failure of any single component. After you create a 
+snapshot, it finishes copying to Amazon S3 (when the snapshot status is 
+completed). Then, you can copy it from one AWS Region to another, or 
+within the same Region.</p>
+<p>You can use Amazon Data Lifecycle Manager to automate the creation, 
+retention, and deletion of snapshots that back up your EBS volumes. 
+Automating snapshot management helps you to:</p>
+<ul>
+<li>Protect valuable data by enforcing a regular backup schedule.</li>
+<li>Retain backups as required by auditors or internal compliance.</li>
+<li>Reduce storage costs by deleting outdated backups.</li>
+</ul>
+<p>You cannot create snapshots of EC2 instance store volumes. However, 
+if you must back up data from an instance store, you can create a new 
+EBS volume and format it. Then, mount the new volume to the EC2 instance
+ guest OS and copy the data on your instance store volume to the EBS 
+volume.</p>
+<p>Recall that instance store volumes provide temporary block-level 
+storage that works well for information that changes frequently, such as
+ buffers, caches, and scratch data. You might find that you must back up
+ data from an instance store. If so, you might want to rethink why you 
+are storing that data on an instance store volume in the first place.</p>
+<h3>5.10. Best Practice: File System Replication</h3>
+<p>It is also a best practice to replicate your file storage.</p>
+<p>AWS DataSync makes data move faster between two EFS or Amazon FSx 
+Windows File Server file systems, or between on-premises storage and AWS
+ file storage. You can use DataSync to transfer datasets over DX or the 
+internet. Use the service for one-time data migrations or ongoing 
+workflows for data protection and recovery.</p>
+<p>You can learn more about how to use AWS Backup to manage EBS volume 
+backups and to automate backups of EFS file systems. See the Scheduling 
+automated backups using Amazon EFS and AWS Backup blog for details.</p>
+<p>FSx for Windows File Server takes daily automatic backups of your 
+file systems, and it enables you to take more backups at any point. 
+Amazon FSx stores the backups in Amazon S3. The daily backup window is a
+ 30-minute window that you specify when you create a file system. The 
+daily backup retention period that is specified for your file system 
+determines the number of days that your daily automatic backups are 
+kept. (This number is 7 days by default.)</p>
+<p>Like most Amazon S3 storage classes replicate data across 
+Availability Zones, so do Amazon EFS and FSx for Windows File Server 
+file systems. Your disaster recovery requirements might specify that you
+ need a multi-region recovery solution. In that case, it is a best 
+practice to replicate your Amazon EFS and FSx for Windows File Server 
+file systems to a second Region. You can use AWS DataSync to get this 
+replication. To simplify file transfer between two EFS file systems by 
+using DataSync, you can use the AWS DataSync In-Cloud QuickStart and 
+Scheduler.</p>
+<h3>5.11. Compute Capacity Should Be Quickly Recoverable</h3>
+<p>Obtain and boot new server instances or containers within minutes.</p>
+<p>In the context of DR, it's critical that you can rapidly create 
+virtual machines that you control. By launching instances in separate 
+Availability Zones, you can protect your applications from the failure 
+of a single location.</p>
+<p>You can arrange for automatic recovery of an EC2 instance when a 
+system status check of the underlying hardware fails. The instance is 
+rebooted (on new hardware, if necessary)—but it retains its instance ID,
+ IP addresses, EBS volume attachments, and other configuration details. 
+For a complete recovery, make sure that the instance is configured to 
+automatically start up any services or applications as part of its 
+initialization process.</p>
+<p>Amazon Machine Images (AMIs) are preconfigured with operating 
+systems, and some preconfigured AMIs might also include application 
+stacks. You can also configure your own custom AMIs. In the context of 
+DR, AWS recommends that you configure and identify your own AMIs so that
+ they launch as part of your recovery procedure. Such AMIs should be 
+preconfigured with your operating system of choice, in addition to the 
+appropriate pieces of the application stack.</p>
+<h3>5.12. Strategies for Compute Disaster Recovery</h3>
+<ul>
+<li>Use the Amazon EC2 snapshot capability for backups.</li>
+<li>Snapshots can be performed manually, or scheduled (for example, by using AWS Lambda).</li>
+<li>Use system or instance level system backups infrequently and as a last resort.</li>
+<li>Drives up the cost of storage that is used quickly.</li>
+<li>Prefer automated rebuild from configuration or code repositories instead.</li>
+<li>Cross-region AMI copies.</li>
+<li>Cross-region snapshot copies.</li>
+<li>Consider transient compute architectures.</li>
+<li>Store essential data off the instance.</li>
+</ul>
+<p>For disaster recovery of compute resources, you will probably want to
+ use the Amazon EC2 snapshot capability. Snapshots can be performed 
+manually, or they can be scheduled.</p>
+<p>Although you can create system or instance-level system backups, 
+extensive use of this approach increases your storage costs. A better 
+approach is to configure an automated rebuild process, where your source
+ code is stored in a repository.</p>
+<p>You might want to replicate Amazon S3 across Regions, and you 
+probably also want to replicate your most critical AMIs and snapshots 
+across Regions.</p>
+<p>Finally, consider architecting your use of compute resources to store
+ essential data off of the instances. As you see in the example, your 
+data can be stored in an S3 bucket. When you must do data processing, 
+you can launch one or more EC2 instances from a custom AMI that is 
+preconfigured with application software. As soon as the instance is 
+started, it can pull the needed data from the S3 bucket and process the 
+data. Then, it can write the output data back to Amazon S3 (perhaps to 
+another S3 bucket). After the instance completes its compute tasks, the 
+instance can be terminated. Such an architecture—when it can still meet 
+your business needs—makes it easier to design your disaster recovery 
+strategy. It also can save on costs, because servers that are not in 
+constant use can be terminated and then later re-created when needed.</p>
+<h3>5.13. Networking: Design for Resilience, Recovery</h3>
+<ul>
+<li><strong>Amazon Route 53:</strong><ul>
+<li>Traffic distribution.</li>
+<li>Failover.</li>
+</ul>
+</li>
+<li><strong>Elastic Load Balancing:</strong><ul>
+<li>Load balancing.</li>
+<li>Health checks and failover.</li>
+</ul>
+</li>
+<li><strong>Amazon Virtual Private Cloud (Amazon VPC):</strong><ul>
+<li>Extend your existing on-premises network topology to the cloud.</li>
+</ul>
+</li>
+<li><strong>AWS Direct Connect:</strong><ul>
+<li>Fast, consistent replication and backups of large on-premises environments to the cloud.</li>
+</ul>
+</li>
+</ul>
+<p>When you work to recover from a disaster, it's likely that you must 
+modify network settings to fail your system over to another site. AWS 
+offers several services and features that enable you to manage and 
+modify network settings, a few of which are highlighted next.</p>
+<p>Amazon Route 53 provides load balancing and network routing 
+capabilities that enable you to distribute network traffic. It also 
+provides the ability to fail over between multiple endpoints and even to
+ a static website that is hosted in Amazon S3.</p>
+<p>The Elastic Load Balancing service automatically distributes incoming
+ application traffic across multiple EC2 instances. It enables you to 
+achieve fault tolerance in your applications by providing the 
+load-balancing capacity that is needed in response to incoming 
+application traffic. You can pre-allocate a load balancer so that its 
+Domain Name System (DNS) name is already known, which can simplify 
+implementation of your DR plan.</p>
+<p>You can use Amazon Virtual Private Cloud (Amazon VPC) to extend an 
+existing on-premises network topology to the cloud. This extension can 
+be especially appropriate when you recover enterprise applications that 
+might be hosted on an internal network.</p>
+<p>Finally, AWS Direct Connect simplifies the setup of a dedicated 
+network connection from an on-premises data center to AWS. Using DX can 
+reduce network costs, increase bandwidth throughput, and provide a more 
+consistent network experience than internet-based connections.</p>
+<h3>5.14. Databases: Features That Support Recovery</h3>
+<ul>
+<li><strong>Amazon Relational Database Service (Amazon RDS):</strong><ul>
+<li>Take snapshot data and save it in a separate Region.</li>
+<li>Combine read replicas with Multi-AZ deployments to build a resilient disaster recovery strategy.</li>
+<li>Retain automated backups.</li>
+</ul>
+</li>
+<li><strong>Amazon DynamoDB:</strong><ul>
+<li>Back up entire tables in seconds.</li>
+<li>Use point-in-time-recovery to continuously back up tables for up to 35 days.</li>
+<li>Initiate backups with a single click in the console or a single application programming interface (API) call.</li>
+<li>Use Global Tables to build a multi-region, multi-master database 
+that provides fast local performance for massively scaled globally 
+distributed applications.</li>
+</ul>
+</li>
+</ul>
+<p>AWS provides many database services. Some key features of Amazon RDS 
+and Amazon DynamoDB that are relevant to disaster recovery scenarios are
+ explained next.</p>
+<p>Consider using Amazon RDS in the DR preparation phase to store a copy
+ of your critical data in a database that is already running. Then, use 
+Amazon RDS in the DR recovery phase to run your production database.</p>
+<p>If you implement a multi-region DR plan, Amazon RDS gives you the 
+ability to store snapshot data that was captured from one Region to 
+another Region. You can share a manual snapshot with up to 20 other AWS 
+accounts.</p>
+<p>Combining read replicas with Multi-AZ deployments enables you to 
+build a resilient disaster recovery strategy and simplify your database 
+engine upgrade process. By using Amazon RDS read replicas, you can 
+create one or more read-only copies of your database instance. You can 
+create these copies within the same AWS Region, or in a different AWS 
+Region. Updates to the source database are then asynchronously copied to
+ your read replicas. Read replicas can be promoted to become a 
+standalone database instance, when needed.</p>
+<p>Use Amazon DynamoDB in the preparation phase to copy data to DynamoDB
+ in another Region or to Amazon S3. During the recovery phase of DR, you
+ can scale up in minutes. DynamoDB global tables replicate your DynamoDB
+ tables automatically across your choice of AWS Regions. They resolve 
+update conflicts and enable your applications to stay highly available, 
+even in the unlikely event that an entire Region is isolated or affected
+ by degradation.</p>
+<h3>5.15. Automation Services: Quickly Replicate or Redeploy Environments</h3>
+<ul>
+<li><strong>AWS CloudFormation:</strong><ul>
+<li>Use templates to quickly deploy collections of resources as needed.</li>
+<li>Duplicate production environments in a new Region or VPC in minutes.</li>
+</ul>
+</li>
+<li><strong>AWS Elastic Beanstalk:</strong><ul>
+<li>Quickly redeploy your entire stack in only a few clicks.</li>
+</ul>
+</li>
+<li><strong>AWS OpsWorks:</strong><ul>
+<li>Automatic host replacement.</li>
+<li>Combine it with AWS CloudFormation in the recovery phase.</li>
+<li>Provision a new stack that supports the defined RTO.</li>
+</ul>
+</li>
+</ul>
+<p>When you use automation services, you can quickly replicate or redeploy environments.</p>
+<p>AWS CloudFormation enables you to model and deploy your entire 
+infrastructure in a text file. This template can become the single 
+source of truth for your infrastructure. When you use AWS CloudFormation
+ to manage your entire infrastructure, it also becomes a powerful tool 
+in your disaster recovery planning toolkit. It enables you to duplicate 
+complex production environments in minutes, for example, to a new Region
+ or a new VPC.</p>
+<p>AWS CloudFormation provisions your resources in a repeatable manner, 
+which enables you to build and rebuild your infrastructure and 
+applications. You are not required to perform manual actions or write 
+custom scripts.</p>
+<p>If you use AWS Elastic Beanstalk to host your applications, you can 
+upload an updated application source bundle and deploy it to your AWS 
+Elastic Beanstalk environment. Alternatively, you can redeploy a 
+previously uploaded version of an application. You can also deploy a 
+previously uploaded version of your application to any of its 
+environments.</p>
+<p>Finally, AWS OpsWorks is an application management service that makes
+ it easy to deploy and operate applications of all types and sizes. You 
+can define your environment as a series of layers, and configure each 
+layer as a tier of your application. AWS OpsWorks has automatic host 
+replacement, so if you have an instance failure, it is automatically 
+replaced. You can use AWS OpsWorks in the DR preparation phase to 
+template your environment and combine it with AWS CloudFormation in the 
+DR recovery phase.</p>
+<h2>6. Section 2 Key Takeaways</h2>
+<ul>
+<li>To choose the correct disaster recovery strategy, first identify 
+your recovery point objective (RPO) and recovery time objective (RTO).</li>
+<li>Use features such as S3 Cross-Region Replication, EBS volume snapshots, and Amazon RDS snapshots to protect data.</li>
+<li>Use networking features (such as Route 53 failover and Elastic Load Balancing) to improve application availability.</li>
+<li>Use automation services (such as AWS CloudFormation) as part of your
+ DR strategy to quickly deploy duplicate environments when needed.</li>
+</ul>
+<p>Some key takeaways from this section of the module include:</p>
+<ul>
+<li>To choose the correct disaster recovery strategy, first identify 
+your recovery point objective (RPO) and recovery time objective (RTO).</li>
+<li>Use features such as S3 Cross-Region Replication, EBS volume snapshots, and RDS snapshots to protect data.</li>
+<li>Use networking features—such as Route 53 failover and Elastic Load Balancing—to improve application availability.</li>
+<li>Use automation services—such as AWS CloudFormation—as part of your 
+DR strategy to quickly deploy duplicate environments when necessary.</li>
+</ul>
+<h2>7. Section 3: Disaster Recovery Patterns</h2>
+<h3>7.1. Common Disaster Recovery Patterns on AWS</h3>
+<p>Four disaster recovery patterns:</p>
+<ul>
+<li>Backup and restore.</li>
+<li>Pilot light.</li>
+<li>Warm standby.</li>
+<li>Multi-site.</li>
+</ul>
+<p>Each pattern is suited to a different combination of:</p>
+<ul>
+<li>Recovery point objective.</li>
+<li>Recovery time objective.</li>
+<li>Cost-effectiveness.</li>
+</ul>
+<p>Organizations often use these four common disaster recovery patterns:</p>
+<ul>
+<li>Backup and restore.</li>
+<li>Pilot light.</li>
+<li>Warm standby.</li>
+<li>Multi-site.</li>
+</ul>
+<p>As you will discover in the details that follow, each pattern is 
+well-suited to different requirements. Some of the patterns offer better
+ cost-effectiveness. Others provide a faster RPO and faster RTO, but 
+cost more to maintain.</p>
+<h3>7.2. Backup and Restore Pattern</h3>
+<p>Back up configuration and state data to S3. Implement a lifecycle policy to save on cost.</p>
+<p>The first disaster recovery approach is the backup and restore pattern.</p>
+<p>In most traditional environments, data is backed up to tape and sent 
+offsite regularly. If you use this method, it can take a long time to 
+restore your system when a disaster occurs.</p>
+<p>Amazon S3 provides a more easily accessible destination for backup 
+data that might be needed quickly to perform a restore. Transferring 
+data to and from Amazon S3 is typically done through the network, and is
+ therefore accessible from any location.</p>
+<p>In the example backup scenario, data is copied from the on-premises 
+data center to Amazon S3. AWS DataSync or Amazon S3 Transfer 
+Acceleration can optionally be used as part of this configuration to 
+automate or increase the speed of data transfer. Then, an S3 lifecycle 
+configuration that is applied to the bucket later moves the backup data 
+to less-expensive Amazon S3 storage classes. The backup data moves to 
+Amazon S3 Glacier or Amazon S3 Standard-IA, which saves on cost as the 
+data ages and is not frequently accessed.</p>
+<p>In the example restore scenario, the on-premises data might be 
+temporarily or permanently lost. Then, the backup data can be downloaded
+ from Amazon S3 back to the on-premises servers.</p>
+<p>If your corporate data center remains offline, you can further ensure
+ the ability to restore your data to your servers. You can have Amazon 
+EC2 servers that are ready to go in a VPC in your designated disaster 
+recovery Region. This Region can connect to the S3 bucket that contains 
+your backup application data. It can read that data, and perhaps 
+temporarily host your applications while you work to restore your data 
+center.</p>
+<h3>7.3. AWS Storage Gateway</h3>
+<p>As part of the backup and restore pattern, you might find that it makes sense to use AWS Storage Gateway.</p>
+<p>AWS Storage Gateway is a hybrid storage service that enables your 
+on-premises applications to use AWS Cloud storage. You can use the 
+service for backup and archiving, disaster recovery, cloud data 
+processing, storage tiering, and migration.</p>
+<p>Your applications connect to the service through a virtual machine or
+ hardware gateway appliance by using standard storage protocols. These 
+protocols include NFS, SMB, Virtual Tape Library (VTL), and Internet 
+Small Computer System Interface (iSCSI). The gateway connects to AWS 
+storage services—such as Amazon S3, Amazon S3 Glacier, and Amazon 
+EBS—which provide storage for files, volumes, and virtual tapes. The 
+service includes an optimized data transfer mechanism. It provides 
+bandwidth management, automated network resilience, and efficient data 
+transfer, in addition to a local cache for low-latency on-premises 
+access to your most active data.</p>
+<p>With a file gateway, you store and retrieve objects (by using the NFS
+ or SMB protocol) in Amazon S3. You use a local cache for low-latency 
+access to your most recently used data. When your files are transferred 
+to Amazon S3, they are stored as objects and can be accessed through an 
+NFS mount point.</p>
+<p>The Storage Gateway volume interface presents your applications with 
+block storage disk volumes that can be accessed by using the iSCSI 
+protocol. Data on these volumes is backed up as point-in-time EBS 
+snapshots, which enables you to access it through Amazon EC2, if needed.</p>
+<p>The Storage Gateway tape interface presents the Storage Gateway to 
+your existing backup application as a virtual tape library. This library
+ consists of a virtual media changer and virtual tape drives. You can 
+continue to use your existing backup applications while you write to a 
+collection of virtual tapes. Each virtual tape is stored in Amazon S3. 
+When you no longer require access to data on virtual tapes, your backup 
+application archives it from the virtual tape library into Amazon S3 
+Glacier.</p>
+<h3>7.4. Backup and Restore: Checklist</h3>
+<h4>7.4.1. Preparation Phase</h4>
+<ul>
+<li>Create backups of current systems.</li>
+<li>Store backups in Amazon S3.</li>
+<li>Document the procedure to restore from backups.</li>
+<li>Know:<ul>
+<li>Which AMI to use, and build as needed.</li>
+<li>How to restore the system from backups.</li>
+<li>How to route traffic to the new system.</li>
+<li>How to configure the deployment.</li>
+</ul>
+</li>
+</ul>
+<h4>7.4.2. In Case of Disaster</h4>
+<ul>
+<li>Retrieve backups from Amazon S3.</li>
+<li>Restore required infrastructure:<ul>
+<li>EC2 instances from prepared AMIS.</li>
+<li>Elastic Load Balancing load balancers.</li>
+<li>AWS resources created by an AWS CloudFormation stack—automated deployment to restore or duplicate the environment.</li>
+</ul>
+</li>
+<li>Restore the system from backup.</li>
+<li>Route traffic to the new system.</li>
+<li>Adjust Domain Name System (DNS) records accordingly.</li>
+</ul>
+<p>If you implement the backup and restore disaster recovery pattern, 
+the key steps that you should complete during the preparation phase are:</p>
+<ul>
+<li>Create backups of current systems.</li>
+<li>Store backups in Amazon S3.</li>
+<li>Document the procedure to restore from backups.</li>
+</ul>
+<p>If you implement this pattern, the key steps to complete in case of disaster are:</p>
+<ul>
+<li>Retrieve backups from Amazon S3.</li>
+<li>Start the required infrastructure.</li>
+<li>Restore the system from backups.</li>
+<li>Finally, route traffic to the new system.</li>
+</ul>
+<h3>7.5. Pilot Light Pattern: Preparation Phase</h3>
+<p>The second disaster recovery approach is the pilot light pattern.</p>
+<p>Pilot light describes a disaster recovery pattern where a minimal 
+backup version of your environment is always running. The pilot light 
+analogy comes from a gas heater: a small flame (or the pilot light) is 
+always on, even when the heater is off. The pilot light can quickly 
+ignite the entire furnace to heat a house. In the example pattern, the 
+pilot light is the secondary database that is always running.</p>
+<p>The pilot light scenario is similar to the backup-and-restore 
+scenario. However, recovery time is typically faster because the core 
+pieces of the system are already running and are continually kept 
+up-to-date. When the time comes for recovery, you can rapidly provision a
+ full production environment around the critical core.</p>
+<p>Infrastructure elements for the pilot light itself typically include 
+your database servers. This grouping is the critical core of the system 
+(the pilot light). All other infrastructure pieces can quickly be 
+provisioned around it to restore the complete system. To provision the 
+rest of the infrastructure, you typically bundle preconfigured servers 
+as AMIs that are ready to be started at a moment's notice. (Or they 
+might be instances that are in a stopped state.) When recovery begins, 
+these instances start quickly with their pre-defined role, which enables
+ them to connect to the database.</p>
+<p>This pattern is relatively inexpensive to implement. Regularly 
+changing data must be replicated to the pilot light, the small core 
+around which the full environment starts in the recovery phase. Your 
+less frequently updated data, such as operating systems and 
+applications, can be periodically updated and stored as AMIs.</p>
+<h3>7.6. Pilot Light Pattern: In Case of Disaster</h3>
+<p>Suppose that disaster strikes, and your primary application goes 
+offline. In this case, you can quickly commission the compute resources 
+to run the application or to orchestrate the failover to pilot light 
+resources in AWS. In this example, the secondary database stores 
+critical data. If there is a disaster, the new web server and app server
+ start up and connect to the secondary database. Amazon Route 53 is 
+configured to then route traffic to the new web server.</p>
+<p>The primary environment can exist in an on-premises data center, or 
+in another Region or Availability Zone on AWS. Either way, you can use 
+the pilot light pattern to meet your recovery time objective (RTO).</p>
+<h3>7.7. Pilot Light Pattern: Checklist</h3>
+<h4>7.7.1. Preparation Phase</h4>
+<ul>
+<li>Configure EC2 instances to replicate or mirror servers.</li>
+<li>Ensure that all supporting custom software packages are available.</li>
+<li>Create and maintain AMIs of key servers where fast recovery is needed.</li>
+<li>Regularly run these servers, test them, and apply any software updates and configuration changes.</li>
+<li>Consider automating the provisioning of AWS resources.</li>
+</ul>
+<h4>7.7.2. In Case of Disaster</h4>
+<ul>
+<li>Automatically bring up resources around the replicated core dataset.</li>
+<li>Scale the system as needed to handle current production traffic.</li>
+<li>Switch over to the new system.</li>
+<li>Adjust DNS records to point to AWS.</li>
+</ul>
+<p>If you implement the pilot light disaster recovery pattern, the key 
+steps that you should complete during the preparation phase are:</p>
+<ul>
+<li>Configure the EC2 instances.</li>
+<li>Ensure that all of the supporting custom software packages are available.</li>
+<li>Create and maintain essential AMIs where fast recovery is required.</li>
+<li>Regularly run and test servers, and apply software updates and configuration updates.</li>
+<li>Consider automating the provisioning of AWS resources.</li>
+</ul>
+<p>If you implement the pilot light pattern, the key steps to complete in case of disaster are:</p>
+<ul>
+<li>Automatically bring up resources around the replicated core dataset.</li>
+<li>Scale the system as needed to handle current production traffic.</li>
+<li>Switch over to the new system by adjusting the DNS records to point to the backup deployment.</li>
+</ul>
+<h3>7.8. Warm Standby Pattern: Preparation Phase</h3>
+<p>The third disaster recovery approach is the warm standby pattern.</p>
+<p>The warm standby pattern is like the pilot light, but more resources 
+are already running. The term warm standby describes a disaster recovery
+ scenario where a scaled-down version of a fully functional environment 
+is always running in the cloud. The warm standby solution extends the 
+pilot light elements and preparation. It further decreases the recovery 
+time because some services are always running. By identifying your 
+business-critical systems, you can fully duplicate these systems and 
+have them always on.</p>
+<p>These servers can be running on a minimum-sized fleet of EC2 
+instances with the smallest sizes possible. This solution is not yet 
+scaled to take a full production load, but it is fully functional. 
+Though it exists for DR purposes, you can also use it for non-production
+ work, such as testing, quality assurance, and internal use.</p>
+<p>In the example, two systems are running. The main system might be 
+running in an on-premises data center or an AWS Region, and a 
+low-capacity system is running on AWS. Use Amazon Route 53 to distribute
+ requests between the main system and the backup system.</p>
+<h3>7.9. Warm Standby Pattern: In Case of Disaster</h3>
+<p>In a disaster, if the primary environment is unavailable, Amazon Route 53 switches over to the secondary system.</p>
+<p>The secondary</p>
+<br><h1>AWS Academy Cloud Architecting</h1>
+<h2>Module 13: Building Microservices and Serverless Architectures</h2>
+<h3>1. Contents</h3>
+<ul>
+<li><strong>Module 13: Building Microservices and Serverless Architectures</strong> 4</li>
+</ul>
+<h3>2. Module Overview</h3>
+<h4>2.1. Sections</h4>
+<ol>
+<li>Architectural Need</li>
+<li>Introducing Microservices</li>
+<li>Building Microservice Applications with AWS Container Services</li>
+<li>Introducing Serverless Architectures</li>
+<li>Building Serverless Architectures with AWS Lambda</li>
+<li>Extending Serverless Architectures with Amazon API Gateway</li>
+<li>Orchestrating Microservices with AWS Step Functions</li>
+</ol>
+<h4>2.2. Demonstrations</h4>
+<ul>
+<li>Creating an AWS Lambda function</li>
+<li>Using AWS Lambda with Amazon S3</li>
+</ul>
+<h4>2.3. Labs</h4>
+<ul>
+<li><strong>(Optional)</strong> Guided Lab 1: Breaking a Monolithic Node.js Application into Microservices</li>
+<li>Guided Lab 2: Implementing a Serverless Architecture on AWS</li>
+<li>Challenge Lab: Implementing a Serverless Architecture for the Café</li>
+</ul>
+<h4>2.4. Knowledge Check</h4>
+<p>This module covers the following topics:</p>
+<ul>
+<li>Architectural need</li>
+<li>Introducing microservices</li>
+<li>Building microservice applications with AWS container services</li>
+<li>Introducing serverless architectures</li>
+<li>Building serverless architectures with AWS Lambda</li>
+<li>Extending serverless architectures with Amazon API Gateway</li>
+<li>Orchestrating microservices with AWS Step Functions</li>
+</ul>
+<p><strong>In addition to the above sections, this module includes:</strong></p>
+<ul>
+<li>Two AWS Lambda demonstrations</li>
+<li>An optional guided lab where you refactor a monolithic application into microservices</li>
+<li>A guided lab where you implement a serverless architecture on AWS with Amazon S3, AWS Lambda, Amazon DynamoDB, and Amazon SNS</li>
+<li>A challenge lab where you use AWS Lambda and Amazon Simple 
+Notification Service (Amazon SNS) to generate and send a daily sales 
+report for the café.</li>
+</ul>
+<p>Finally, you will be asked to complete a knowledge check that will 
+test your understanding of key concepts covered in this module.</p>
+<h3>3. Module Objectives</h3>
+<p>At the end of this module, you should be able to:</p>
+<ul>
+<li>Indicate the characteristics of microservices</li>
+<li>Refactor a monolithic application into microservices and use Amazon ECS to deploy the containerized microservices</li>
+<li>Explain serverless architecture</li>
+<li>Implement a serverless architecture with AWS Lambda</li>
+<li>Describe a common architecture for Amazon API Gateway</li>
+<li>Describe the types of workflows that AWS Step Functions supports</li>
+</ul>
+<h3>4. Section 1: Architectural Need</h3>
+<h4>4.1. Introducing Section 1: Architectural Need</h4>
+<h4>4.2. Café Business Requirement</h4>
+<p>The café wants to get daily reports via email about all the orders 
+that were placed on the website. They want this information so they can 
+anticipate demand and bake the correct number of desserts going forward 
+(reducing waste). They also want to identify any patterns in their 
+business (analytics).</p>
+<p>Frank and Martha want to get daily reports via email about all the 
+orders that were placed on the website. Frank wants to anticipate demand
+ so he can bake the correct number of desserts going forward (reducing 
+waste). Martha wants to identify any patterns in the café's business 
+(analytics). Currently, Sofía has set up a cron job on the web server 
+instance that sends these daily order report email messages to Frank and
+ Martha. However, the cron job is resource-intensive and reduces web 
+server performance.</p>
+<p>Olivia advises Sofía and Nikhil that non-business-critical reporting 
+tasks should be kept separate. Sofía and Nikhil want to further decouple
+ the architecture and move the cron job into a managed, serverless 
+environment that will scale well and reduce costs.</p>
+<h3>5. Section 2: Introducing Microservices</h3>
+<h4>5.1. Introducing Section 2: Introducing Microservices</h4>
+<h4>5.2. What are Microservices?</h4>
+<p>Applications that are composed of independent services that communicate over well-defined APIs.</p>
+<p>Microservices are an architectural and organizational approach to 
+software development where applications are composed of independent 
+services that communicate over well-defined application programming 
+interfaces (APIs). This approach is designed to speed up deployment 
+cycles.</p>
+<p>The microservices approach fosters innovation and ownership, and 
+improves the maintainability and scalability of software applications.</p>
+<h4>5.3. Monolithic versus Microservice Applications</h4>
+<p>To understand the benefits of microservices, consider first a monolithic application.</p>
+<p>In the example on the left, the three processes (users, topics, and 
+messages) of a monolithic forum application are tightly coupled. They 
+run as a single service. If one process of the application experiences a
+ spike in demand, the entire architecture must be scaled. Adding or 
+improving features becomes more complex as the code base grows, which 
+limits experimentation and makes it difficult to implement new ideas. 
+The availability of monolithic applications is also at risk because many
+ dependent and tightly coupled processes increase the impact of a single
+ process failure.</p>
+<p>Now, suppose that the same application runs in a microservice 
+architecture. Each process of the application is built as an independent
+ component that runs as a service. The services communicate by using 
+lightweight API operations. Each service performs a single function that
+ can support multiple applications. Because the services run 
+independently, they can be updated, deployed, and scaled to meet the 
+demand for specific functions of an application.</p>
+<p>A microservice architecture provides much quicker iteration, 
+automation, and overall agility. Start fast, fail fast, and recover 
+fast.</p>
+<p>For an overview of microservices on AWS, see What are Microservices?</p>
+<h4>5.4. Characteristics of Microservices</h4>
+<p>Microservices share some common characteristics:</p>
+<ul>
+<li><strong>Decentralized</strong> – Microservice architectures are 
+distributed systems with decentralized data management. They don't rely 
+on a unifying schema in a central database. Each microservice has its 
+own view about data models. Microservices are also decentralized in the 
+way they are developed, deployed, managed, and operated.</li>
+<li><strong>Independent</strong> – Each component service in a 
+microservice architecture can be changed, upgraded, or replaced 
+independently without affecting the function of other services. Services
+ do not need to share any of their code or implementation with other 
+services. Similarly, the teams responsible for different microservices 
+can act independently from each other.</li>
+<li><strong>Specialized</strong> - Each component service is designed 
+for a set of capabilities and focuses on a specific domain. If the code 
+for a particular component service reaches a certain level of 
+complexity, then the service can be split into two or more services.</li>
+<li><strong>Polyglot</strong> - Microservices don't follow a single 
+approach. Teams have the freedom to choose the best tool for their 
+specific problem. As a consequence, microservice architectures take a 
+heterogeneous approach to operating systems, programming languages, data
+ stores, and tools. This approach is called polyglot persistence and 
+programming.</li>
+<li><strong>Black boxes</strong> - Individual component services are 
+designed as black boxes, which mean that the details of their complexity
+ are hidden from other components. Any communication between services 
+happens through well-defined APIs to prevent implicit and hidden 
+dependencies.</li>
+<li><strong>You build it, you run it</strong> – DevOps is a key 
+organizational principle for microservices, where the team responsible 
+for building a service is also responsible for operating and maintaining
+ it in production.</li>
+</ul>
+<h4>5.5. Section 2 Key Takeaways</h4>
+<p>Some key takeaways from this section of the module include:</p>
+<ul>
+<li>Microservice applications are composed of independent services that communicate over well-defined APIS</li>
+<li>Microservices share the following characteristics:<ul>
+<li>Decentralized: Microservices are decentralized in the way they are developed, deployed, managed, and operated</li>
+<li>Independent: Each component service in a microservices architecture 
+can be developed, deployed, operated, and scaled without affecting the 
+function of other services</li>
+<li>Specialized: Each component service is designed for a set of capabilities and focuses on solving a specific problem</li>
+<li>Polyglot: Microservice architectures take a heterogeneous approach 
+to operating systems, programming languages, data stores, and tools</li>
+<li>Black boxes: The details of the complexity of microservice components are hidden from other components</li>
+<li>You build it, you run it: DevOps is a key organizational principle for microservices</li>
+</ul>
+</li>
+</ul>
+<h3>6. Section 3: Building Microservice Applications with AWS Container Services</h3>
+<h4>6.1. Introducing Section 3: Building Microservice Applications with AWS Container Services</h4>
+<h4>6.2. What is a Container?</h4>
+<p>When you build a microservice architecture, you can use containers for the processing power.</p>
+<p>Containers are a method of operating system virtualization that 
+enables you to run an application and its dependencies in 
+resource-isolated processes. A container is a lightweight, standalone 
+software package. It contains everything that a software application 
+needs to run, such as the application code, runtime engine, system 
+tools, system libraries, and configurations.</p>
+<h4>6.3. A Problem that Containers Solve</h4>
+<p>Containers can help ensure that applications deploy quickly, 
+reliably, and consistently, regardless of deployment environment. 
+Containers also give you more granular control over resources, which 
+improves the efficiency of your infrastructure.</p>
+<h4>6.4. Container Terminology</h4>
+<p>A container is created from a read-only template that is called an 
+image. Images are typically built from a Dockerfile, which is a 
+plaintext file that specifies all the components that are included in 
+the container. You can create images from scratch, or you can use images
+ that others created and published to a public or private container 
+registry.</p>
+<p>A container image is the snapshot of the file system that is 
+available to the container. For example, you might have the Debian 
+operating system as a container image. When you run this container, a 
+Debian operating system is available to it. You can also package all 
+your code dependencies in the container image and use it as your code 
+artifact.</p>
+<p>Container images are stored in a registry. You can download the 
+images from the registry and run them on your cluster. Registries can 
+exist in or outside your AWS infrastructure.</p>
+<h4>6.5. Amazon ECS</h4>
+<p>You can run your containers on Amazon Elastic Container Service 
+(Amazon ECS). Amazon ECS is a highly scalable, high-performance, 
+container-management service. It supports Docker containers and enables 
+you to easily run applications on a managed cluster of Amazon Elastic 
+Compute Cloud (Amazon EC2) instances.</p>
+<p>Amazon ECS is a scalable cluster service for hosting containers that:</p>
+<ul>
+<li>Can scale up to thousands of Docker containers in seconds</li>
+<li>Monitors container deployment</li>
+<li>Manages the state of the cluster that runs the containers</li>
+<li>Schedules containers by using a built-in scheduler or third-party scheduler (Apache Mesos, Blox)</li>
+<li>Is extensible by using APIs</li>
+<li>Can be launched with either AWS Fargate or Amazon EC2 launch types</li>
+</ul>
+<p>You can run ECS clusters at scale by mixing Spot Instances with On-Demand Instances and Reserved Instances.</p>
+<h4>6.6. Amazon ECS Orchestrates Containers</h4>
+<p>Amazon ECS is a regional service that simplifies running application 
+containers in a highly available manner across multiple Availability 
+Zones within a Region. You can create ECS clusters in a new or existing 
+virtual private cloud (VPC). A cluster is a logical grouping of 
+resources.</p>
+<p>After a cluster is up and running, you can define task definitions 
+and services that specify which Docker container images to run across 
+your clusters.</p>
+<p>A task definition is a text file in JavaScript Object Notation (JSON)
+ format. It describes one or more containers, up to a maximum of 10, 
+that form your application. You can think of it as a blueprint for your 
+application. Task definitions specify parameters for your 
+application—for example, which containers and launch type to use. Other 
+parameters include which ports should be opened for your application and
+ what data volumes should be used with the containers in the task.</p>
+<p>A service enables you to specify how many copies of your task 
+definition to run and maintain in a cluster. You can optionally use an 
+Elastic Load Balancing load balancer to distribute incoming traffic to 
+containers in your service. Amazon ECS maintains that number of tasks 
+and coordinates task scheduling with the load balancer.</p>
+<p>After you create a task definition for your application, you can 
+specify the number of tasks that will run on your cluster. A task is the
+ instantiation of a task definition within a cluster. When you use 
+Amazon ECS to run tasks, you place them in a cluster. Amazon ECS 
+downloads your container images from a registry that you specify, and 
+runs those images within your cluster.</p>
+<h4>6.7. Amazon ECS Launch Types</h4>
+<p>Amazon ECS offers two launch types for hosting your containerized applications.</p>
+<p>You can use the Fargate launch type to host your cluster on a 
+serverless infrastructure that Amazon ECS manages. You only need to 
+package your application in containers, specify the CPU and memory 
+requirements, define networking and AWS Identity and Access Management 
+(IAM) policies, and launch the application.</p>
+<p>Alternatively, if you want more control, you can use the EC2 launch 
+type to host your tasks on a cluster of EC2 container instances that you
+ manage. A container instance is an EC2 instance that is running the 
+Amazon ECS container agent. You can use Amazon ECS to schedule the 
+placement of containers across your cluster based on your resource 
+needs, isolation policies, and availability requirements. For 
+information about different scheduling options, see Scheduling Amazon 
+ECS Tasks. Amazon ECS keeps track of all the CPU, memory, and other 
+resources in your cluster. It also finds the best server for a container
+ to run on based on your specified resource requirements.</p>
+<p>For more information about the Fargate and EC2 launch types, see Amazon ECS Launch Types.</p>
+<h4>6.8. Amazon ECS Cluster Auto Scaling</h4>
+<p>You can create an Auto Scaling group for an Amazon ECS cluster. The 
+Auto Scaling group contains container instances that you can scale out 
+(and in) by using Amazon CloudWatch alarms. If you configure your Auto 
+Scaling group to remove container instances, any tasks that are running 
+on the removed container instances are stopped. If your tasks are 
+running as part of a service, Amazon ECS restarts those tasks on another
+ instance if the required resources are available. Examples of such 
+required resources include CPU, memory, ports. However, tasks that were 
+started manually are not restarted automatically.</p>
+<p>You can also take advantage of Amazon ECS cluster auto scaling, which
+ gives you more control over how you scale tasks in a cluster. It 
+increases the speed and reliability of cluster scale-out. It gives you 
+control over the amount of spare capacity that is maintained in your 
+cluster, and automatically manages instance termination on scale-in.</p>
+<p>With cluster auto scaling, you can configure Amazon ECS to scale your
+ Auto Scaling group in and out automatically. Cluster auto scaling 
+relies on capacity providers, which link your ECS cluster to the Auto 
+Scaling groups that you want to use. Each Auto Scaling group is 
+associated with a capacity provider, and each capacity provider has only
+ one Auto Scaling group. However, many capacity providers can be 
+associated with one ECS cluster. To scale the entire cluster 
+automatically, each capacity provider manages the scaling of its 
+associated Auto Scaling group.</p>
+<p>For more information about cluster auto scaling, see the Amazon ECS Cluster Auto Scaling AWS News Blog post.</p>
+<h4>6.9. Decomposing Monoliths – Step 1: Create Container Images</h4>
+<p>Again, consider the monolithic forum application that you saw earlier
+ where the entire application runs as a single service. To rearchitect 
+this application by using a microservice architecture, you can run each 
+application process as a separate service within its own container. With
+ a microservice architecture, the services can scale and be updated 
+independently of the others.</p>
+<p>To deploy the monolithic application as a microservice application, 
+first build and tag an image for each service. Then, register the images
+ with Amazon Elastic Container Registry (Amazon ECR).</p>
+<h4>6.10. Decomposing Monoliths – Step 2: Create Service Task Definition and Target Groups</h4>
+<p>Next, choose a launch type and create a new service for each piece of
+ the original monolithic application. Amazon ECS deploys each service 
+into its own container across an ECS cluster. Then, create a target 
+group for each service. The target group tracks the instances and ports 
+of each container that is running for that service.</p>
+<h4>6.11. Decomposing Monoliths – Step 3: Connect Load Balancer to Services</h4>
+<p>Finally, create an Application Load Balancer and configure listener 
+rules to connect to the services. The listener checks for incoming 
+connection requests to your load balancer and uses the rules to route 
+traffic appropriately. In the example, the listener for the Application 
+Load Balancer listens for HTTP service requests on Port 80 and routes 
+them to the appropriate service.</p>
+<h4>6.12. Tools for Building Highly Available Microservice Architectures</h4>
+<p>AWS Cloud Map and AWS App Mesh are two tools that can help you build highly available microservice architectures.</p>
+<p><strong>AWS Cloud Map</strong></p>
+<ul>
+<li>Is a fully managed discovery service for cloud resources</li>
+<li>Can be used to define custom names for application resources</li>
+<li>Maintains updated location of dynamically changing resources, which increases application availability</li>
+</ul>
+<p><strong>AWS App Mesh</strong></p>
+<ul>
+<li>Captures metrics, logs, and traces from all your microservices</li>
+<li>Enables you to export this data to Amazon CloudWatch, AWS X-Ray, and
+ compatible AWS Partner Network (APN) Partner and community tools</li>
+<li>Enables you to control traffic flows between microservices to help ensure that services are highly available</li>
+</ul>
+<p>AWS Cloud Map is a fully managed discovery service for cloud 
+resources. You can use it to define custom names for your application 
+resources (such as databases, queues, microservices, and other cloud 
+resources). AWS Cloud Map maintains the updated location of these 
+dynamically changing resources. This location maintenance increases the 
+availability of your application because your web service always 
+discovers the most up-to-date locations of its resources. You can add 
+and register any resource with minimal manual intervention of mappings. 
+AWS Cloud Map assists with service discovery, continuous integration, 
+and health monitoring of your microservices and applications.</p>
+<p>For more information about AWS Cloud Map, read this AWS Open Source 
+Blog post. To learn more about how you can use AWS Cloud Map to enable 
+your containerized services to discover and connect with each other, 
+read AWS Fargate, Amazon EKS, and Amazon ECS now integrate with AWS 
+Cloud Map.</p>
+<p>When you create your task definitions, you can enable App Mesh 
+integration. AWS App Mesh captures metrics, logs, and traces from all of
+ your microservices. You can export this data to Amazon CloudWatch, AWS 
+X-Ray, and compatible AWS Partner Network (APN) Partner and community 
+tools for monitoring and tracing. AWS App Mesh also enables you to 
+control how traffic flows between your microservices to make sure that 
+every service is highly available during deployments, after failures, 
+and as your application scales.</p>
+<p>App Mesh enables you to configure microservices to connect directly 
+to each other via a proxy instead of requiring code within the 
+application or by using a load balancer. App Mesh uses Envoy, an open 
+source service-mesh proxy, which is deployed alongside your microservice
+ containers.</p>
+<p>For more information about AWS Cloud Map and AWS App Mesh, see this AWS YouTube video.</p>
+<h4>6.13. AWS Fargate</h4>
+<ul>
+<li>Is a fully managed container service</li>
+<li>Works with Amazon Elastic Container Service (Amazon ECS) and Amazon Elastic Kubernetes Service (Amazon EKS)</li>
+<li>Provisions, manages, and scales your container clusters</li>
+<li>Manages runtime environment</li>
+<li>Provides automatic scaling</li>
+</ul>
+<p>In this section, you have learned that Amazon ECS offers two launch types: EC2 and Fargate.</p>
+<p>AWS Fargate is a fully managed container service that works with both
+ Amazon ECS and Amazon Elastic Kubernetes Service (Amazon EKS). It 
+enables you to run containers without needing to manage servers or 
+clusters. With AWS Fargate, you no longer need to provision, configure, 
+and scale clusters of virtual machines to run containers. As a result, 
+you don't need to choose server types, decide when to scale your 
+clusters, or optimize cluster packing. AWS Fargate reduces the need for 
+you to interact with or think about servers or clusters. Fargate enables
+ you to focus on designing and building your applications instead of 
+managing the infrastructure that runs them.</p>
+<h4>6.14. Section 3 Key Takeaways</h4>
+<p>Some key takeaways from this section of the module include:</p>
+<ul>
+<li>Amazon ECS is a highly scalable, high-performance container 
+management service. It supports Docker containers and enables you to 
+easily run applications on a managed cluster of Amazon EC2 instances.</li>
+<li>Cluster auto scaling gives you more control over how you scale tasks within a cluster.</li>
+<li>AWS Cloud Map enables you to define custom names for your 
+application resources. It maintains the updated location of these 
+dynamically changing resources.</li>
+<li>AWS App Mesh is a service mesh that provides application-level 
+networking to make it easy for your services to communicate with each 
+other across multiple types of compute infrastructure.</li>
+<li>AWS Fargate is a fully managed container service that enables you to
+ run containers without needing to manage servers or clusters.</li>
+</ul>
+<h4>6.15. Module 13 – Guided Lab 1: Breaking a Monolithic Node.js Application into Microservices</h4>
+<p>(Optional lab)</p>
+<p>You might choose to complete Module 13 – Guided Lab 1: Breaking a 
+Monolithic Node.js Application into Microservices. This lab is optional.</p>
+<h4>6.16. Guided Lab 1: Tasks</h4>
+<ol>
+<li>Prepare the AWS Cloud9 development environment</li>
+<li>Run a monolithic application on a basic Node.js server</li>
+<li>Containerize the monolith for Amazon ECS</li>
+<li>Deploy the monolith to Amazon ECS</li>
+<li>Refactor the monolith into containerized microservices</li>
+</ol>
+<h4>6.17. Guided Lab 1: Final Product</h4>
+<p>The diagram summarizes what you will have built after you complete the lab.</p>
+<h4>6.18. Begin Module 13 – Guided Lab 1: Breaking a Monolithic Node.js Application into Microservices</h4>
+<p>It is now time to start the optional guided lab.</p>
+<h4>6.19. Guided Lab 1 Debrief: Key Takeaways</h4>
+<p>Your educator might choose to lead a conversation about the key takeaways from this guided lab after you have completed it.</p>
+<h3>7. Section 4: Introducing Serverless Architectures</h3>
+<h4>7.1. Introducing Section 4: Introducing Serverless Architectures</h4>
+<h4>7.2. What Does Serverless Mean?</h4>
+<p>A way for you to build and run applications and services without thinking about servers.</p>
+<p>So far, you have learned that you can use Amazon ECS to build your 
+microservice applications by using containers. Amazon ECS is a container
+ orchestration service where you manage your application code, data 
+source integrations, security configuration, updates, network 
+configuration, firewall, and management tasks. You also learned that you
+ can use the Fargate launch type to host your cluster on a serverless 
+infrastructure that Amazon ECS manages.</p>
+<p>But what does serverless mean?</p>
+<p>Serverless is the native architecture of the cloud that enables you 
+to shift more operational responsibilities to AWS, which can increase 
+your agility and innovation. Serverless enables you to build and run 
+applications and services without thinking about servers. Your 
+application still runs on servers. However, AWS does all the server 
+management tasks, such as server or cluster provisioning, patching, 
+operating system maintenance, and capacity provisioning.</p>
+<h4>7.3. Tenets of Serverless Architectures</h4>
+<p>The tenets that define serverless as an operational model include:</p>
+<ul>
+<li>No infrastructure to provision or manage (no servers to provision, operate, or patch)</li>
+<li>Automatically scales by unit of consumption (scales by unit of work or consumption rather than by server unit)</li>
+<li>Pay-for-value pricing model (you pay only for the duration that a resource runs, rather than by server unit)</li>
+<li>Built-in availability and fault tolerance (no need to architect for availability because it is built into the service)</li>
+</ul>
+<p>For more information about what serverless is, see this AWS website.</p>
+<h4>7.4. Benefits of Serverless</h4>
+<p>Serverless enables you to build modern applications with increased 
+agility and lower total cost of ownership (TCO). By using a serverless 
+architecture, you can focus on your core product. You don't need to 
+worry about managing and operating servers or runtimes, either in the 
+cloud or on premises. This reduced overhead enables you to reclaim time 
+and energy, which you can spend on developing products that scale and 
+are reliable. Finally, serverless architectures enable you to build 
+microservice applications.</p>
+<h4>7.5. AWS Serverless Offerings</h4>
+<p>AWS has many offerings that you can use to build serverless 
+architectures on AWS. So far in this course, you have already learned 
+about several of them.</p>
+<p>The rest of this module focuses on how you can use AWS Lambda, Amazon
+ API Gateway, and AWS Step Functions to build serverless architectures.</p>
+<h4>7.6. Section 4 Key Takeaways</h4>
+<p>Some key takeaways from this section of the module include:</p>
+<ul>
+<li>Serverless computing enables you to build and run applications and services without provisioning or managing servers</li>
+<li>Serverless architectures offer the following benefits:<ul>
+<li>Lower TCO</li>
+<li>You can focus on your application</li>
+<li>You can use them to build microservice applications</li>
+</ul>
+</li>
+</ul>
+<h3>8. Section 5: Building Serverless Architectures with AWS Lambda</h3>
+<h4>8.1. Introducing Section 5: Building Serverless Architectures with AWS Lambda</h4>
+<h4>8.2. AWS Lambda</h4>
+<ul>
+<li>Is a fully managed compute service</li>
+<li>Runs your code on a schedule or in response to events (for example, changes to an Amazon S3 bucket or an Amazon DynamoDB table)</li>
+<li>Supports Java, Go, PowerShell, Node.js, C#, Python, Ruby, and Runtime API</li>
+<li>Can run at edge locations closer to your users</li>
+</ul>
+<p>AWS Lambda is a fully managed compute service that runs your code in 
+response to events and automatically manages the underlying compute 
+resources for you. Lambda runs your code on a high-availability compute 
+infrastructure and performs all administration of the compute resources,
+ including server and operating system maintenance, capacity 
+provisioning, automatic scaling, code monitoring, and logging.</p>
+<p>AWS Lambda natively supports Java, Go, PowerShell, Node.js, C#, 
+Python, and Ruby code, and provides a Runtime API that enables you to 
+use any additional programming languages to author your functions.</p>
+<p>Lambda@Edge is a feature of Amazon CloudFront that enables you to run
+ code closer to users of your application, which improves performance 
+and reduces latency. Lambda@Edge runs your code in response to events 
+that are generated by the Amazon CloudFront content delivery network 
+(CDN). Lambda@Edge enables you to run Node.js and Python Lambda 
+functions to customize content that Amazon CloudFront delivers. For 
+information about how to add HTTP security response headers, read this 
+AWS Networking &amp; Content Delivery Blog post.</p>
+<h4>8.3. How AWS Lambda Works</h4>
+<p>AWS Lambda integrates with other AWS services to invoke Lambda 
+functions. A Lambda function is custom code that you write in one of the
+ languages that Lambda supports. You can configure triggers to invoke a 
+function in response to resource lifecycle events, respond to incoming 
+HTTP requests, consume events from a queue, or run on a schedule.</p>
+<p>An event source is the entity that publishes the event to Lambda. 
+Your Lambda function processes the event, and Lambda runs your Lambda 
+function on your behalf.</p>
+<p>Lambda functions are stateless, which means that they have no 
+affinity to the underlying infrastructure. Lambda can rapidly launch as 
+many copies of the function as needed to scale to the rate of incoming 
+events.</p>
+<h4>8.4. Lambda Functions</h4>
+<p>When you create a Lambda function, you define the permissions for the
+ function and specify which events trigger the function. You also create
+ a deployment package that includes your application code and any 
+dependencies and libraries that are needed to run your code. Finally, 
+you configure runtime parameters such as memory, time out, and 
+concurrency. When your function is invoked, Lambda will run an 
+environment based on the runtime and configuration options that you 
+selected.</p>
+<h4>8.5. Anatomy of a Lambda Function</h4>
+<p>When a Lambda function is invoked, the code begins running at the 
+handler. The handler is a specific code method or function that you 
+create and include in your package. You specify the handler when you 
+create a Lambda function. Each supported language has its own 
+requirements for how a function handler can be defined and referenced 
+within the package. After the handler is successfully invoked inside 
+your Lambda function, the runtime environment belongs to the code you 
+wrote.</p>
+<p>The handler always takes two objects: the event object and the context object.</p>
+<p>The event object provides information about the event that triggered 
+the Lambda function. This event might be a pre-defined object that an 
+AWS service generates, or a custom user-defined object in the form of a 
+serializable string. An example of such a string might be a plain old 
+Java object (POJO) or a JSON stream.</p>
+<p>The contents of the event object include all the data and metadata 
+that your Lambda function needs to drive its logic. The contents and 
+structure of the event object vary, depending on which event source 
+created it. For example, an event that is created by API Gateway 
+contains details that are related to the HTTPS request that was made by 
+the API client—such as path, query string, and request body. However, an
+ event that is created by Amazon includes details about the bucket and 
+the new object.</p>
+<p>The context object is generated by AWS and provides metadata about 
+the runtime environment. The context object enables your function code 
+to interact with the Lambda runtime environment. The contents and 
+structure of the context object vary based on the language runtime that 
+your Lambda function uses.</p>
+<p>However, at a minimum, the context object contains:</p>
+<ul>
+<li>awsRequestId – This property is used to track specific invocations 
+of a Lambda function (important for error reporting or when contacting 
+AWS Support)</li>
+<li>logStreamName – The CloudWatch log stream that your log statements will be sent to</li>
+<li>getRemainingTimeInMillis() – This method returns the number of 
+milliseconds that remain before the running of your function times out</li>
+</ul>
+<h4>8.6. Lambda Function Configuration and Billing</h4>
+<p>Memory and timeout are configurations that determine how your Lambda 
+function performs. These configurations affect your billing. With AWS 
+Lambda, you are charged based on the number of requests for your 
+functions (the total number of requests across all your functions) and 
+the duration (the time it takes for your code to run). The price depends
+ on the amount of memory you allocate to your function.</p>
+<p><strong>Memory</strong> - You specify the amount of memory you want 
+to allocate to your Lambda function. Lambda then allocates CPU power 
+that is proportional to the memory. Lambda is priced so that the cost 
+per 1 ms of function duration increases as the memory configuration 
+increases. For example, say that you have a Lambda function with 256 MB 
+of memory, and that it runs for 110 milliseconds. This function will 
+cost twice as much as a Lambda function with 128 MB of memory that runs 
+for the same time.</p>
+<p><strong>Timeout</strong> - You can control the maximum duration of 
+your function by using the timeout configuration. You can set the 
+timeout value for a function to any value up to 15 minutes. When the 
+specified timeout is reached, AWS Lambda stops the running of your 
+Lambda function. Using a timeout can prevent higher costs that come from
+ long-running functions. You must find the right balance between not 
+letting the function run too long and being able to finish under normal 
+circumstances.</p>
+<p>Follow these best practices:</p>
+<ul>
+<li>Test the performance of your Lambda function to make sure that you 
+choose the optimum memory size configuration. You can view the memory 
+usage for your function in Amazon CloudWatch Logs.</li>
+<li>Load-test your Lambda function to analyze how long your function 
+runs and determine the best timeout value. This is important when your 
+Lambda function makes network calls to resources that might not be able 
+to handle the scaling of Lambda functions.</li>
+</ul>
+<p>See the following resources for information about:</p>
+<ul>
+<li>AWS Lambda limits</li>
+<li>AWS Lambda pricing</li>
+</ul>
+<h4>8.7. Demonstration: Creating an AWS Lambda Function</h4>
+<p>Now, the educator might choose to demonstrate how to create an AWS Lambda function.</p>
+<h4>8.8. AWS Lambda Example: Simulated Slot Machine Browser Game</h4>
+<p>You can create Lambda functions to perform various tasks. This 
+example uses a browser-based game that simulates a slot machine. The 
+game invokes a Lambda function that generates the random results of each
+ slot pull. The function returns those results as the file names of 
+images that are used to display the result. The images are stored in an 
+Amazon S3 bucket that is configured to function as a static web host for
+ the HTML, CSS, and other assets that are needed to present the 
+application experience.</p>
+<h4>8.9. Event-Based Lambda Function Example: Order Processing</h4>
+<p>This example shows how Lambda can be used in a solution for order processing.</p>
+<p>In this architecture:</p>
+<ol>
+<li>A customer uploads a transactions file to an S3 bucket, which triggers the running of a Lambda function.</li>
+<li>A Lambda function processes the transactions file and updates the Customer and Transactions DynamoDB tables.</li>
+<li>Changes to the Transactions DynamoDB table trigger a second Lambda 
+function to aggregate the transactions and update the totals in the 
+Transaction total DynamoDB table. It also pushes a message to the 
+HighBalancerAlert SNS topic.</li>
+<li>The HighBalancerAlert SNS topic sends an email notification to the 
+customer, and updates the CreditCollection and CustomerNotify SQS queues
+ for payment processing.</li>
+</ol>
+<h4>8.10. Lambda Layers</h4>
+<ul>
+<li>Enable functions to share code easily – You can upload a layer one time and reference it in any function</li>
+<li>Promote separation of responsibilities – Developers can iterate faster on writing business logic</li>
+<li>Enable you to keep your deployment packages small</li>
+<li>Limits:<ul>
+<li>Up to five layers</li>
+<li>250 MB</li>
+</ul>
+</li>
+</ul>
+<p>When you build serverless applications, it is common to have code 
+that is shared across Lambda functions. It can be custom code that two 
+or more functions use, or a standard library that you add to simplify 
+the implementation of your business logic.</p>
+<p>Previously, you packaged and deployed this shared code together with 
+all the functions that used it. Now, you can configure your Lambda 
+function to include additional code and content as layers. A layer is a 
+.zip archive that contains libraries, a custom runtime, or other 
+dependencies.</p>
+<p>With Lambda layers, functions can share code. Developers use layers 
+to upload code one time and reuse it multiple times. With layers, you 
+can use libraries in your function without needing to include them in 
+your deployment package.</p>
+<p>Sharing code this way can help promote the separation of 
+responsibilities. One person can be responsible for managing the core 
+library. Another person can be responsible for using and building on top
+ of the library code to build application logic.</p>
+<p>Layers enable you to keep your deployment package small, which makes development easier.</p>
+<p>A function can use up to five layers at a time. The total unzipped 
+size of the function and all layers can't exceed the unzipped deployment
+ package size limit of 250 MB.</p>
+<p>For more information about layers, see AWS Lambda Layers.</p>
+<h4>8.11. Demonstration: Using AWS Lambda with Amazon S3</h4>
+<p>Now, the educator might choose to demonstrate how to configure an Amazon S3 event to trigger a Lambda function.</p>
+<h4>8.12. Section 5 Key Takeaways</h4>
+<p>Some key takeaways from this section of the module include:</p>
+<ul>
+<li>Lambda is a serverless compute service that provides built-in fault tolerance and automatic scaling.</li>
+<li>A Lambda function is custom code that you write that processes events.</li>
+<li>A Lambda function is invoked by a handler, which takes an event object and context object as parameters.</li>
+<li>An event source is an AWS service or developer-created application that triggers a Lambda function to run.</li>
+<li>Lambda layers enable functions to share code and keep deployment packages small.</li>
+</ul>
+<h3>9. Module 13 – Guided Lab 2: Implementing a Serverless Architecture on AWS</h3>
+<p>You will now complete Module 13 – Guided Lab 2: Implementing a Serverless Architecture on AWS.</p>
+<h4>9.1. Guided Lab 2: Tasks</h4>
+<ol>
+<li>Create a Lambda function to load data</li>
+<li>Configure an Amazon S3 event</li>
+<li>Test the loading process</li>
+<li>Configure notifications</li>
+<li>Create a Lambda function to send notifications</li>
+<li>Test the system</li>
+</ol>
+<h4>9.2. Guided Lab 2: Final Product</h4>
+<p>The diagram summarizes what you will have built after you complete the lab.</p>
+<h4>9.3. Begin Module 13 – Guided Lab 2: Implementing a Serverless Architecture on AWS</h4>
+<p>It is now time to start the guided lab.</p>
+<h4>9.4. Guided Lab 2 Debrief: Key Takeaways</h4>
+<p>Your educator might choose to lead a conversation about the key takeaways from this guided lab after you have completed it.</p>
+<h3>10. Section 6: Extending Serverless Architectures with Amazon API Gateway</h3>
+<h4>10.1. Introducing Section 6: Extending Serverless Architectures with Amazon API Gateway</h4>
+<h4>10.2. Amazon API Gateway</h4>
+<ul>
+<li>Enables you to create, publish, maintain, monitor, and secure APIs 
+that act as entry points to backend resources for your applications</li>
+<li>Handles up to hundreds of thousands of concurrent API calls</li>
+<li>Can handle workloads that run on:<ul>
+<li>Amazon EC2</li>
+<li>Lambda</li>
+<li>Any web application</li>
+<li>Real-time communication applications</li>
+</ul>
+</li>
+<li>Can host and use multiple versions and stages of your APIs</li>
+</ul>
+<p>Amazon API Gateway is a fully managed service that enables you to 
+create, publish, maintain, monitor, and secure APIs at any scale. You 
+can use it to create Representational State Transfer (RESTful) and 
+WebSocket APIs that act as an entry point for applications so they can 
+access backend resources. Applications can then access data, business 
+logic, or functionality from your backend services. Such services 
+include applications that run on Amazon EC2, code that runs on Lambda, 
+any web application, or real-time communication applications.</p>
+<p>API Gateway handles all the tasks that are involved in accepting and 
+processing up to hundreds of thousands of concurrent API calls. Such 
+calls might include traffic management, authorization and access 
+control, monitoring, and API version management. API Gateway has no 
+minimum fees or startup costs. You pay only for the API calls you 
+receive and the amount of data that is transferred out. With the API 
+Gateway tiered-pricing model, you can reduce your cost as your API usage
+ scales.</p>
+<p>You can use API Gateway to host multiple versions and stages of your APIs.</p>
+<h4>10.3. Amazon API Gateway Security</h4>
+<p>When you make your APIs publicly available, you are exposed to 
+attackers that try to exploit your services. With Amazon API Gateway, 
+you can protect your APIs in several ways.</p>
+<p>With Amazon API Gateway, you can optionally set your API methods to 
+require authorization. When you set up a method to require 
+authorization, you can use AWS Signature Version 4 or Lambda authorizers
+ to support your own bearer token authentication strategy. AWS Signature
+ Version 4 is the process to add authentication information to AWS 
+requests sent through HTTP. For security, most requests to AWS must be 
+signed with an access key, which consists of an access key ID and secret
+ access key. You use these AWS credentials to sign requests to your 
+service and authorize access, like other AWS services. You can retrieve 
+temporary credentials that are associated with a role in your AWS 
+account by using Amazon Cognito. A Lambda authorizer is a Lambda 
+function that authorizes access to APIs by using a bearer token 
+authentication strategy like OAuth.</p>
+<p>You can also apply a resource policy to an API to restrict access to a
+ specific Amazon VPC or VPC endpoint. You can give an Amazon VPC or VPC 
+endpoint from a different account access to the private API by using a 
+resource policy.</p>
+<p>Amazon API Gateway supports throttling settings for each method or 
+route in your APIs. You can set a standard rate limit and a burst rate 
+limit per second for each method in your REST APIs and each route in 
+WebSocket APIs.</p>
+<p>Additionally, you can use AWS WAF to secure your API Gateway APIs. 
+AWS WAF is a web application firewall that helps protect your web 
+applications from common web exploits that could affect availability, 
+compromise security, or consume excessive resources</p>
+</div>
+
+
+    <script src="Gemini%20Response_files/marked.min.js"></script>
+    <script>
+        // Embed JSON data as a JavaScript object
+        const data = {
+            directory: "/home/ansarimn/Downloads/tools and projects/projects/process pdfs/ex-input files/",
+            responses: ["total input tokens: 81760", "total output tokens: 16384", "# AWS Academy Cloud Architecting - Module 14: Planning for Disaster\n\n## 1. Contents\n\n- Module 14: Planning for Disaster\n\n## 2. Module Overview\n\n- **Sections:**\n    - 2.1. Architectural need\n    - 2.2. Disaster planning strategies\n    - 2.3. Disaster recovery patterns\n- **Lab:**\n    - Guided Lab: Hybrid Storage and Data Migration with AWS Storage Gateway File Gateway\n- **Knowledge check:**\n\n## 3. Module Objectives\n\nAt the end of this module, you should be able to:\n- Identify strategies for disaster planning.\n- Define recovery point objective (RPO) and recovery time objective (RTO).\n- Describe four common patterns for backup and disaster recovery and how to implement them.\n- Use AWS Storage Gateway for on-premises-to-cloud backup solutions.\n\n## 4. Section 1: Architectural Need\n\n### 4.1. Caf\u00e9 Business Requirement\n\nIf the caf\u00e9\u0027s infrastructure ever becomes unavailable, the staff must be able to get their applications running again within an amount of time that is acceptable to the business. They need an architecture that supports their disaster recovery plans while also optimizing for cost.\n\nThe caf\u00e9 has implemented several applications that run on AWS and is storing a significant amount of business-critical data in the AWS Cloud.  Sof\u00eda, a member of the caf\u00e9\u0027s team, realizes that if the caf\u00e9\u0027s infrastructure ever becomes unavailable, they must be able to get their applications running and accessible within an acceptable time frame. Currently, the caf\u00e9\u0027s staff hasn\u0027t developed any comprehensive disaster recovery plans.\n\nSof\u00eda raised this concern with Frank and Martha. They all agreed that it\u0027s important to put backup and disaster recovery plans into place. Their objective is to implement an architecture that supports their disaster recovery time objectives while optimizing for cost. They also agreed that as their revenue grows, they will be able to afford a solution that supports a shorter recovery time objective.\n\nIn this module, you will learn about key AWS service features that support data backup and disaster recovery. With an understanding of these features, you should be able to help the caf\u00e9 meet this essential business requirement.\n\n## 5. Section 2: Disaster Planning Strategies\n\n### 5.1. Planning for Failures\n\n\"Everything fails, all the time.\" -Werner Vogels\n\nAWS Chief Technology Officer (CTO), Werner Vogels, has famously stated on more than one occasion that, \"Everything fails, all the time.\" This statement has been influential in cloud computing architectural design because it highlights a critical truth: failure is inevitable.\n\nWe should not consider failure as an unlikely aberration. Instead, we should assume that failures, both large and small, can and will occur. How do we prepare for these events?\n\nFailures can be categorized into three types:\n\n- **Small-scale event:** A single server stopped responding or went offline.\n- **Large-scale event:** Multiple resources were affected, perhaps even across Availability Zones within a Region.\n- **Colossal scale event:** The failure is widespread, affecting a large number of users and systems.\n\nTo minimize the impact of a disaster, organizations must invest time and resources to plan and prepare, train employees, and document and update processes. The amount of investment for disaster planning for a particular system can vary dramatically, depending on the cost of a potential outage.\n\n### 5.2. Avoiding and Planning for Disaster\n\nWe can work to avoid and plan for disaster in three ways:\n\n- **High availability:** Provides redundancy and fault tolerance. A system is highly available when it can withstand the failure of one or multiple components (e.g., hard disks, servers, or network connectivity). Production systems typically have defined uptime requirements.\n- **Backup:** Critical to protecting data and ensuring business continuity. However, it can be challenging to implement. The pace at which data is generated is growing exponentially, while the density and durability of local disks are not experiencing the same growth rate. Even so, it is essential to keep your critical data backed up in case of disaster.\n- **Disaster recovery (DR):** About preparing for and recovering from a disaster. A disaster is any event that has a negative impact on a company\u0027s business continuity or finances. Such events include hardware or software failure, a network outage, a power outage, or physical damage to a building (like fire or flooding). The cause can be human error, or some other significant event. Disaster recovery is a set of policies and procedures that enable the recovery or continuation of vital technology infrastructure and systems after any disaster.\n\n### 5.3. Selected AWS Well-Architected Framework Design Principles\n\n#### 5.3.1. Operational Excellence Pillar\n\n- Anticipate failure.\n- Refine operational procedures frequently.\n\n#### 5.3.2. Reliability Pillar\n\n- Test recovery procedures.\n- Automatically recover from failure.\n\nConsider some design principles that relate to the topic of disaster recovery.\n\nThe **Operational Excellence pillar** of the AWS Well-Architected Framework emphasizes the importance of anticipating failure. It recommends performing pre-mortem exercises to identify potential sources of failure so that they can be removed or mitigated. You must test your failure scenarios and validate your understanding of their impact. The AWS Well-Architected Framework also describes the benefits of refining your operational procedures frequently to look for opportunities to improve them. Then, as you evolve your workload, you can evolve your procedures accordingly.\n\nThe **Reliability pillar** describes the importance of designing systems that can recover from infrastructure or service disruptions, and mitigating disruptions such as misconfigurations or transient network issues.\n\nOne of the design principles it mentions is to **test recovery procedures**. Test how your system fails and validate your recovery procedures. You can use automation to simulate different failures or recreate scenarios that led to previous failures. This testing exposes failure pathways that you can test and fix before a real failure scenario. It reduces the risk of components that have not been tested before they fail.\n\nAnother principle of design is to **automatically recover from failure**. By monitoring a system for key performance indicators (KPIs), you can trigger automation when a threshold is breached. These KPIs should be a measure of business value, not the technical aspects of how the service operates. Your automation could provide notifications and tracking of failures, and for automated recovery processes that work around or repair the failure.\n\n### 5.4. Recovery Point Objective (RPO)\n\n**Recovery point objective (RPO)** is the maximum acceptable amount of data loss, measured in time.\n\n**How often must your data be backed up?**\n\n**Example RPO:** The business can recover from losing (at most) the last 8 hours of data.\n\nOrganizations of all sizes, large and small, often have a Business Continuity Plan (BCP). A typical part of the BCP is to provide for IT Service Continuity, including IT disaster recovery planning.\n\nOne of the most important measures of a disaster recovery plan is to define your RPO. To calculate RPO, first determine how much data loss is acceptable, according to your BCP. Then, figure out how quickly that data loss might occur, as a time measurement.\n\nFor example, suppose you determine that the data your application generates is important but not critical, so that losing 800 records would be acceptable. You further calculate that even during peak times, no more than 100 records are created in an hour. In this scenario, you decide that an RPO of 8 hours is sufficient to meet your needs. If you then implement a disaster recovery plan that meets this RPO, you are sure to do data backups at least every 8 hours. Then, if a disaster occurs at 22:00, the system should be able to recover all data that was in the system before 14:00 PM.\n\n### 5.5. Recovery Time Objective (RTO)\n\n**Recovery time objective (RTO)** is the maximum acceptable amount of time after a disaster strikes that a business process can remain out of commission.\n\n**How quickly must your applications and data be recovered?**\n\n**Example RTO:** The application can be unavailable for a maximum of 1 hour.\n\nAnother important measure of a disaster recovery plan is to define the RTO. RTO is the time it takes after a disruption to restore your applications and recover your data. To continue the previous example, suppose a disaster occurs at 22:00 and the RTO is 1 hour. In that scenario, the DR process should restore the business process to the acceptable service level by 23:00.\n\nA company typically decides on acceptable RPO and RTO, and bases its decision on the financial impact to the business when systems are unavailable. The company determines financial impact by considering many factors, including loss of business and damage to its reputation because of downtime and the lack of systems availability.\n\nIT organizations then plan solutions to provide cost-effective system recovery. The solutions are based on the RPO within the timeline and the service level that the RTO establishes.\n\n### 5.6. Plan for Disaster Recovery\n\nBe intentional about where your data is stored and where your applications run.\n\nTo properly scope your disaster recovery planning, you must look holistically at your use of AWS. Most organizations use a combination of services that can be broadly categorized as encompassing these five service categories areas:\n\n- Storage\n- Compute\n- Networking\n- Databases\n- Deployment orchestration services\n\nIf a disaster occurs, your RPO and RTO will guide your backup-and-restore plans and procedures across each of these service areas. They will also likely affect your production deployment architecture.\n\nIt is also important to keep in mind that, although it\u0027s unlikely for a Region to be unavailable, it is within the realm of possibility. If some large-scale event affects a Region\u2014for instance, a meteor strike\u2014would your data still be available? Would your applications still be accessible? AWS provides multiple Regions around the world. Thus, you can choose the most appropriate location for your disaster recovery site, in addition to the site where your system is fully deployed.\n\n### 5.7. Storage and Backup Building Blocks\n\nThe following services are referenced in the diagram:\n\n- Amazon Elastic Block Store (Amazon EBS)\n- Amazon Elastic Compute Cloud (Amazon EC2)\n- Amazon Elastic File System (Amazon EFS)\n- Amazon Simple Storage Service (Amazon S3)\n- Amazon Simple Storage Service Glacier (Amazon S3 Glacier)\n\nTo start your disaster planning in detail, look at the data storage layer (postponing the discussion of the database layer for the moment).\n\nYour AWS Cloud storage can consist of a combination of block storage, file system storage, and object storage. Meanwhile, your organization might also use AWS services that connect the on-premises data center to the AWS Cloud.\n\nIn the next few slides, you will learn about high-level best practices for each of these three areas.\n\nOne service that you might not be familiar with is AWS DataSync. AWS DataSync provides movement of large amounts of data online between on-premises storage and Amazon S3, Amazon EFS, or Amazon FSx for Windows File Server. It supports scripted copy jobs and scheduled data transfers from on-premises Network File Systems (NFS) and Server Message Block (SMB) storage. It can also optionally use AWS Direct Connect links.\n\n### 5.8. Best Practice: S3 Cross-Region Replication\n\nMost S3 storage classes replicate data across Availability Zones within a single Region.\n\n- Configure S3 cross-Region replication for higher-level data security.\n- Automatically, asynchronously replicates objects created after you add the replication configuration.\n- Can also help meet compliance requirements and reduce latency for users who are accessing objects.\n\nFor many organizations, the bulk of their data that is stored on AWS is in Amazon S3, which provides object storage.\n\nRecall that S3 buckets exist in a specific AWS Region. You choose the Region when you create the bucket. Amazon S3 provides 11 9s (99.999999999 percent) of durability for S3 Standard, S3 Standard-IA, S3 One Zone-IA, and Amazon S3 Glacier storage classes. Amazon S3 Standard, S3 Standard-IA, and Amazon S3 Glacier are all designed to sustain data if an entire Amazon S3 Availability Zone loss occurs. They provide this stability by automatically storing your objects across a minimum of three Availability Zones, each separated miles apart, across a single AWS Region.\n\nFor critical applications and data scenarios where you want a higher level of data security, it is a best practice to configure S3 cross-Region replication. To enable the replication, you add a replication configuration to your source bucket. The minimum configuration must indicate the destination bucket where you want Amazon S3 to replicate all objects, or a subset of all objects. It must also include an AWS Identity and Access Management (IAM) role that grants Amazon S3 permissions to copy the objects to the destination bucket.\n\nCopied objects retain their metadata. The destination bucket can belong to another storage class. For example, the contents of an S3 Standard bucket might be replicated to an Amazon S3 Glacier bucket. You can assign different ownership to the objects in the destination bucket. You can also use S3 Replication Time Control (S3 RTC) to replicate your data across different Regions in a predictable time frame. S3 RTC replicates four 9s (99.99 percent) of new objects stored in Amazon S3 within 15 minutes (backed by a service-level agreement).\n\n### 5.9. Best Practice: EBS Volume Snapshots\n\nCreate point-in-time snapshots of EBS volumes.\n\n- Snapshots provide incremental backups (they back up the blocks that changed since the previous snapshot).\n- Snapshots enable you to restore data to a new EBS volume.\n- Use Amazon Data Lifecycle Manager to automate the creation, retention, and deletion of snapshots.\n- You cannot snapshot instance storage.\n\nRegarding block storage, you can back up the data that is on EBS volumes to Amazon S3 by taking point-in-time snapshots. Snapshots are incremental backups, which means that it saves only the blocks on the device that have changed since your most recent snapshot. This architecture minimizes the time that is required to create the snapshot, and it saves on storage costs by not duplicating data.\n\nEach snapshot contains all the information that is needed to restore your data (from the moment when the snapshot was taken) to a new EBS volume. When you create an EBS volume that is based on a snapshot, the new volume begins as an exact replica of the original volume. This original volume was used to create the snapshot. The replicated volume loads data in the background so that you can begin to use it immediately. If you access data that has not been loaded yet, the volume immediately downloads the requested data from Amazon S3. Then, it continues to load the rest of the volume\u0027s data in the background.\n\nAmazon EBS volumes provide off-instance storage that persists independently from the life of an instance, and is replicated across multiple servers in an Availability Zone. Volumes prevent the loss of data from the failure of any single component. After you create a snapshot, it finishes copying to Amazon S3 (when the snapshot status is completed). Then, you can copy it from one AWS Region to another, or within the same Region.\n\nYou can use Amazon Data Lifecycle Manager to automate the creation, retention, and deletion of snapshots that back up your EBS volumes. Automating snapshot management helps you to:\n\n- Protect valuable data by enforcing a regular backup schedule.\n- Retain backups as required by auditors or internal compliance.\n- Reduce storage costs by deleting outdated backups.\n\nYou cannot create snapshots of EC2 instance store volumes. However, if you must back up data from an instance store, you can create a new EBS volume and format it. Then, mount the new volume to the EC2 instance guest OS and copy the data on your instance store volume to the EBS volume.\n\nRecall that instance store volumes provide temporary block-level storage that works well for information that changes frequently, such as buffers, caches, and scratch data. You might find that you must back up data from an instance store. If so, you might want to rethink why you are storing that data on an instance store volume in the first place.\n\n### 5.10. Best Practice: File System Replication\n\nIt is also a best practice to replicate your file storage.\n\nAWS DataSync makes data move faster between two EFS or Amazon FSx Windows File Server file systems, or between on-premises storage and AWS file storage. You can use DataSync to transfer datasets over DX or the internet. Use the service for one-time data migrations or ongoing workflows for data protection and recovery.\n\nYou can learn more about how to use AWS Backup to manage EBS volume backups and to automate backups of EFS file systems. See the Scheduling automated backups using Amazon EFS and AWS Backup blog for details.\n\nFSx for Windows File Server takes daily automatic backups of your file systems, and it enables you to take more backups at any point. Amazon FSx stores the backups in Amazon S3. The daily backup window is a 30-minute window that you specify when you create a file system. The daily backup retention period that is specified for your file system determines the number of days that your daily automatic backups are kept. (This number is 7 days by default.)\n\nLike most Amazon S3 storage classes replicate data across Availability Zones, so do Amazon EFS and FSx for Windows File Server file systems. Your disaster recovery requirements might specify that you need a multi-region recovery solution. In that case, it is a best practice to replicate your Amazon EFS and FSx for Windows File Server file systems to a second Region. You can use AWS DataSync to get this replication. To simplify file transfer between two EFS file systems by using DataSync, you can use the AWS DataSync In-Cloud QuickStart and Scheduler.\n\n### 5.11. Compute Capacity Should Be Quickly Recoverable\n\nObtain and boot new server instances or containers within minutes.\n\nIn the context of DR, it\u0027s critical that you can rapidly create virtual machines that you control. By launching instances in separate Availability Zones, you can protect your applications from the failure of a single location.\n\nYou can arrange for automatic recovery of an EC2 instance when a system status check of the underlying hardware fails. The instance is rebooted (on new hardware, if necessary)\u2014but it retains its instance ID, IP addresses, EBS volume attachments, and other configuration details. For a complete recovery, make sure that the instance is configured to automatically start up any services or applications as part of its initialization process.\n\nAmazon Machine Images (AMIs) are preconfigured with operating systems, and some preconfigured AMIs might also include application stacks. You can also configure your own custom AMIs. In the context of DR, AWS recommends that you configure and identify your own AMIs so that they launch as part of your recovery procedure. Such AMIs should be preconfigured with your operating system of choice, in addition to the appropriate pieces of the application stack.\n\n### 5.12. Strategies for Compute Disaster Recovery\n\n- Use the Amazon EC2 snapshot capability for backups.\n- Snapshots can be performed manually, or scheduled (for example, by using AWS Lambda).\n- Use system or instance level system backups infrequently and as a last resort.\n- Drives up the cost of storage that is used quickly.\n- Prefer automated rebuild from configuration or code repositories instead.\n- Cross-region AMI copies.\n- Cross-region snapshot copies.\n- Consider transient compute architectures.\n- Store essential data off the instance.\n\nFor disaster recovery of compute resources, you will probably want to use the Amazon EC2 snapshot capability. Snapshots can be performed manually, or they can be scheduled.\n\nAlthough you can create system or instance-level system backups, extensive use of this approach increases your storage costs. A better approach is to configure an automated rebuild process, where your source code is stored in a repository.\n\nYou might want to replicate Amazon S3 across Regions, and you probably also want to replicate your most critical AMIs and snapshots across Regions.\n\nFinally, consider architecting your use of compute resources to store essential data off of the instances. As you see in the example, your data can be stored in an S3 bucket. When you must do data processing, you can launch one or more EC2 instances from a custom AMI that is preconfigured with application software. As soon as the instance is started, it can pull the needed data from the S3 bucket and process the data. Then, it can write the output data back to Amazon S3 (perhaps to another S3 bucket). After the instance completes its compute tasks, the instance can be terminated. Such an architecture\u2014when it can still meet your business needs\u2014makes it easier to design your disaster recovery strategy. It also can save on costs, because servers that are not in constant use can be terminated and then later re-created when needed.\n\n### 5.13. Networking: Design for Resilience, Recovery\n\n- **Amazon Route 53:**\n    - Traffic distribution.\n    - Failover.\n- **Elastic Load Balancing:**\n    - Load balancing.\n    - Health checks and failover.\n- **Amazon Virtual Private Cloud (Amazon VPC):**\n    - Extend your existing on-premises network topology to the cloud.\n- **AWS Direct Connect:**\n    - Fast, consistent replication and backups of large on-premises environments to the cloud.\n\nWhen you work to recover from a disaster, it\u0027s likely that you must modify network settings to fail your system over to another site. AWS offers several services and features that enable you to manage and modify network settings, a few of which are highlighted next.\n\nAmazon Route 53 provides load balancing and network routing capabilities that enable you to distribute network traffic. It also provides the ability to fail over between multiple endpoints and even to a static website that is hosted in Amazon S3.\n\nThe Elastic Load Balancing service automatically distributes incoming application traffic across multiple EC2 instances. It enables you to achieve fault tolerance in your applications by providing the load-balancing capacity that is needed in response to incoming application traffic. You can pre-allocate a load balancer so that its Domain Name System (DNS) name is already known, which can simplify implementation of your DR plan.\n\nYou can use Amazon Virtual Private Cloud (Amazon VPC) to extend an existing on-premises network topology to the cloud. This extension can be especially appropriate when you recover enterprise applications that might be hosted on an internal network.\n\nFinally, AWS Direct Connect simplifies the setup of a dedicated network connection from an on-premises data center to AWS. Using DX can reduce network costs, increase bandwidth throughput, and provide a more consistent network experience than internet-based connections.\n\n### 5.14. Databases: Features That Support Recovery\n\n- **Amazon Relational Database Service (Amazon RDS):**\n    - Take snapshot data and save it in a separate Region.\n    - Combine read replicas with Multi-AZ deployments to build a resilient disaster recovery strategy.\n    - Retain automated backups.\n- **Amazon DynamoDB:**\n    - Back up entire tables in seconds.\n    - Use point-in-time-recovery to continuously back up tables for up to 35 days.\n    - Initiate backups with a single click in the console or a single application programming interface (API) call.\n    - Use Global Tables to build a multi-region, multi-master database that provides fast local performance for massively scaled globally distributed applications.\n\nAWS provides many database services. Some key features of Amazon RDS and Amazon DynamoDB that are relevant to disaster recovery scenarios are explained next.\n\nConsider using Amazon RDS in the DR preparation phase to store a copy of your critical data in a database that is already running. Then, use Amazon RDS in the DR recovery phase to run your production database.\n\nIf you implement a multi-region DR plan, Amazon RDS gives you the ability to store snapshot data that was captured from one Region to another Region. You can share a manual snapshot with up to 20 other AWS accounts.\n\nCombining read replicas with Multi-AZ deployments enables you to build a resilient disaster recovery strategy and simplify your database engine upgrade process. By using Amazon RDS read replicas, you can create one or more read-only copies of your database instance. You can create these copies within the same AWS Region, or in a different AWS Region. Updates to the source database are then asynchronously copied to your read replicas. Read replicas can be promoted to become a standalone database instance, when needed.\n\nUse Amazon DynamoDB in the preparation phase to copy data to DynamoDB in another Region or to Amazon S3. During the recovery phase of DR, you can scale up in minutes. DynamoDB global tables replicate your DynamoDB tables automatically across your choice of AWS Regions. They resolve update conflicts and enable your applications to stay highly available, even in the unlikely event that an entire Region is isolated or affected by degradation.\n\n### 5.15. Automation Services: Quickly Replicate or Redeploy Environments\n\n- **AWS CloudFormation:**\n    - Use templates to quickly deploy collections of resources as needed.\n    - Duplicate production environments in a new Region or VPC in minutes.\n- **AWS Elastic Beanstalk:**\n    - Quickly redeploy your entire stack in only a few clicks.\n- **AWS OpsWorks:**\n    - Automatic host replacement.\n    - Combine it with AWS CloudFormation in the recovery phase.\n    - Provision a new stack that supports the defined RTO.\n\nWhen you use automation services, you can quickly replicate or redeploy environments.\n\nAWS CloudFormation enables you to model and deploy your entire infrastructure in a text file. This template can become the single source of truth for your infrastructure. When you use AWS CloudFormation to manage your entire infrastructure, it also becomes a powerful tool in your disaster recovery planning toolkit. It enables you to duplicate complex production environments in minutes, for example, to a new Region or a new VPC.\n\nAWS CloudFormation provisions your resources in a repeatable manner, which enables you to build and rebuild your infrastructure and applications. You are not required to perform manual actions or write custom scripts.\n\nIf you use AWS Elastic Beanstalk to host your applications, you can upload an updated application source bundle and deploy it to your AWS Elastic Beanstalk environment. Alternatively, you can redeploy a previously uploaded version of an application. You can also deploy a previously uploaded version of your application to any of its environments.\n\nFinally, AWS OpsWorks is an application management service that makes it easy to deploy and operate applications of all types and sizes. You can define your environment as a series of layers, and configure each layer as a tier of your application. AWS OpsWorks has automatic host replacement, so if you have an instance failure, it is automatically replaced. You can use AWS OpsWorks in the DR preparation phase to template your environment and combine it with AWS CloudFormation in the DR recovery phase.\n\n## 6. Section 2 Key Takeaways\n\n- To choose the correct disaster recovery strategy, first identify your recovery point objective (RPO) and recovery time objective (RTO).\n- Use features such as S3 Cross-Region Replication, EBS volume snapshots, and Amazon RDS snapshots to protect data.\n- Use networking features (such as Route 53 failover and Elastic Load Balancing) to improve application availability.\n- Use automation services (such as AWS CloudFormation) as part of your DR strategy to quickly deploy duplicate environments when needed.\n\nSome key takeaways from this section of the module include:\n\n- To choose the correct disaster recovery strategy, first identify your recovery point objective (RPO) and recovery time objective (RTO).\n- Use features such as S3 Cross-Region Replication, EBS volume snapshots, and RDS snapshots to protect data.\n- Use networking features\u2014such as Route 53 failover and Elastic Load Balancing\u2014to improve application availability.\n- Use automation services\u2014such as AWS CloudFormation\u2014as part of your DR strategy to quickly deploy duplicate environments when necessary.\n\n## 7. Section 3: Disaster Recovery Patterns\n\n### 7.1. Common Disaster Recovery Patterns on AWS\n\nFour disaster recovery patterns:\n\n- Backup and restore.\n- Pilot light.\n- Warm standby.\n- Multi-site.\n\nEach pattern is suited to a different combination of:\n\n- Recovery point objective.\n- Recovery time objective.\n- Cost-effectiveness.\n\nOrganizations often use these four common disaster recovery patterns:\n\n- Backup and restore.\n- Pilot light.\n- Warm standby.\n- Multi-site.\n\nAs you will discover in the details that follow, each pattern is well-suited to different requirements. Some of the patterns offer better cost-effectiveness. Others provide a faster RPO and faster RTO, but cost more to maintain.\n\n### 7.2. Backup and Restore Pattern\n\nBack up configuration and state data to S3. Implement a lifecycle policy to save on cost.\n\nThe first disaster recovery approach is the backup and restore pattern.\n\nIn most traditional environments, data is backed up to tape and sent offsite regularly. If you use this method, it can take a long time to restore your system when a disaster occurs.\n\nAmazon S3 provides a more easily accessible destination for backup data that might be needed quickly to perform a restore. Transferring data to and from Amazon S3 is typically done through the network, and is therefore accessible from any location.\n\nIn the example backup scenario, data is copied from the on-premises data center to Amazon S3. AWS DataSync or Amazon S3 Transfer Acceleration can optionally be used as part of this configuration to automate or increase the speed of data transfer. Then, an S3 lifecycle configuration that is applied to the bucket later moves the backup data to less-expensive Amazon S3 storage classes. The backup data moves to Amazon S3 Glacier or Amazon S3 Standard-IA, which saves on cost as the data ages and is not frequently accessed.\n\nIn the example restore scenario, the on-premises data might be temporarily or permanently lost. Then, the backup data can be downloaded from Amazon S3 back to the on-premises servers.\n\nIf your corporate data center remains offline, you can further ensure the ability to restore your data to your servers. You can have Amazon EC2 servers that are ready to go in a VPC in your designated disaster recovery Region. This Region can connect to the S3 bucket that contains your backup application data. It can read that data, and perhaps temporarily host your applications while you work to restore your data center.\n\n### 7.3. AWS Storage Gateway\n\nAs part of the backup and restore pattern, you might find that it makes sense to use AWS Storage Gateway.\n\nAWS Storage Gateway is a hybrid storage service that enables your on-premises applications to use AWS Cloud storage. You can use the service for backup and archiving, disaster recovery, cloud data processing, storage tiering, and migration.\n\nYour applications connect to the service through a virtual machine or hardware gateway appliance by using standard storage protocols. These protocols include NFS, SMB, Virtual Tape Library (VTL), and Internet Small Computer System Interface (iSCSI). The gateway connects to AWS storage services\u2014such as Amazon S3, Amazon S3 Glacier, and Amazon EBS\u2014which provide storage for files, volumes, and virtual tapes. The service includes an optimized data transfer mechanism. It provides bandwidth management, automated network resilience, and efficient data transfer, in addition to a local cache for low-latency on-premises access to your most active data.\n\nWith a file gateway, you store and retrieve objects (by using the NFS or SMB protocol) in Amazon S3. You use a local cache for low-latency access to your most recently used data. When your files are transferred to Amazon S3, they are stored as objects and can be accessed through an NFS mount point.\n\nThe Storage Gateway volume interface presents your applications with block storage disk volumes that can be accessed by using the iSCSI protocol. Data on these volumes is backed up as point-in-time EBS snapshots, which enables you to access it through Amazon EC2, if needed.\n\nThe Storage Gateway tape interface presents the Storage Gateway to your existing backup application as a virtual tape library. This library consists of a virtual media changer and virtual tape drives. You can continue to use your existing backup applications while you write to a collection of virtual tapes. Each virtual tape is stored in Amazon S3. When you no longer require access to data on virtual tapes, your backup application archives it from the virtual tape library into Amazon S3 Glacier.\n\n### 7.4. Backup and Restore: Checklist\n\n#### 7.4.1. Preparation Phase\n\n- Create backups of current systems.\n- Store backups in Amazon S3.\n- Document the procedure to restore from backups.\n- Know:\n    - Which AMI to use, and build as needed.\n    - How to restore the system from backups.\n    - How to route traffic to the new system.\n    - How to configure the deployment.\n\n#### 7.4.2. In Case of Disaster\n\n- Retrieve backups from Amazon S3.\n- Restore required infrastructure:\n    - EC2 instances from prepared AMIS.\n    - Elastic Load Balancing load balancers.\n    - AWS resources created by an AWS CloudFormation stack\u2014automated deployment to restore or duplicate the environment.\n- Restore the system from backup.\n- Route traffic to the new system.\n- Adjust Domain Name System (DNS) records accordingly.\n\nIf you implement the backup and restore disaster recovery pattern, the key steps that you should complete during the preparation phase are:\n\n- Create backups of current systems.\n- Store backups in Amazon S3.\n- Document the procedure to restore from backups.\n\nIf you implement this pattern, the key steps to complete in case of disaster are:\n\n- Retrieve backups from Amazon S3.\n- Start the required infrastructure.\n- Restore the system from backups.\n- Finally, route traffic to the new system.\n\n### 7.5. Pilot Light Pattern: Preparation Phase\n\nThe second disaster recovery approach is the pilot light pattern.\n\nPilot light describes a disaster recovery pattern where a minimal backup version of your environment is always running. The pilot light analogy comes from a gas heater: a small flame (or the pilot light) is always on, even when the heater is off. The pilot light can quickly ignite the entire furnace to heat a house. In the example pattern, the pilot light is the secondary database that is always running.\n\nThe pilot light scenario is similar to the backup-and-restore scenario. However, recovery time is typically faster because the core pieces of the system are already running and are continually kept up-to-date. When the time comes for recovery, you can rapidly provision a full production environment around the critical core.\n\nInfrastructure elements for the pilot light itself typically include your database servers. This grouping is the critical core of the system (the pilot light). All other infrastructure pieces can quickly be provisioned around it to restore the complete system. To provision the rest of the infrastructure, you typically bundle preconfigured servers as AMIs that are ready to be started at a moment\u0027s notice. (Or they might be instances that are in a stopped state.) When recovery begins, these instances start quickly with their pre-defined role, which enables them to connect to the database.\n\nThis pattern is relatively inexpensive to implement. Regularly changing data must be replicated to the pilot light, the small core around which the full environment starts in the recovery phase. Your less frequently updated data, such as operating systems and applications, can be periodically updated and stored as AMIs.\n\n### 7.6. Pilot Light Pattern: In Case of Disaster\n\nSuppose that disaster strikes, and your primary application goes offline. In this case, you can quickly commission the compute resources to run the application or to orchestrate the failover to pilot light resources in AWS. In this example, the secondary database stores critical data. If there is a disaster, the new web server and app server start up and connect to the secondary database. Amazon Route 53 is configured to then route traffic to the new web server.\n\nThe primary environment can exist in an on-premises data center, or in another Region or Availability Zone on AWS. Either way, you can use the pilot light pattern to meet your recovery time objective (RTO).\n\n### 7.7. Pilot Light Pattern: Checklist\n\n#### 7.7.1. Preparation Phase\n\n- Configure EC2 instances to replicate or mirror servers.\n- Ensure that all supporting custom software packages are available.\n- Create and maintain AMIs of key servers where fast recovery is needed.\n- Regularly run these servers, test them, and apply any software updates and configuration changes.\n- Consider automating the provisioning of AWS resources.\n\n#### 7.7.2. In Case of Disaster\n\n- Automatically bring up resources around the replicated core dataset.\n- Scale the system as needed to handle current production traffic.\n- Switch over to the new system.\n- Adjust DNS records to point to AWS.\n\nIf you implement the pilot light disaster recovery pattern, the key steps that you should complete during the preparation phase are:\n\n- Configure the EC2 instances.\n- Ensure that all of the supporting custom software packages are available.\n- Create and maintain essential AMIs where fast recovery is required.\n- Regularly run and test servers, and apply software updates and configuration updates.\n- Consider automating the provisioning of AWS resources.\n\nIf you implement the pilot light pattern, the key steps to complete in case of disaster are:\n\n- Automatically bring up resources around the replicated core dataset.\n- Scale the system as needed to handle current production traffic.\n- Switch over to the new system by adjusting the DNS records to point to the backup deployment.\n\n### 7.8. Warm Standby Pattern: Preparation Phase\n\nThe third disaster recovery approach is the warm standby pattern.\n\nThe warm standby pattern is like the pilot light, but more resources are already running. The term warm standby describes a disaster recovery scenario where a scaled-down version of a fully functional environment is always running in the cloud. The warm standby solution extends the pilot light elements and preparation. It further decreases the recovery time because some services are always running. By identifying your business-critical systems, you can fully duplicate these systems and have them always on.\n\nThese servers can be running on a minimum-sized fleet of EC2 instances with the smallest sizes possible. This solution is not yet scaled to take a full production load, but it is fully functional. Though it exists for DR purposes, you can also use it for non-production work, such as testing, quality assurance, and internal use.\n\nIn the example, two systems are running. The main system might be running in an on-premises data center or an AWS Region, and a low-capacity system is running on AWS. Use Amazon Route 53 to distribute requests between the main system and the backup system.\n\n### 7.9. Warm Standby Pattern: In Case of Disaster\n\nIn a disaster, if the primary environment is unavailable, Amazon Route 53 switches over to the secondary system.\n\nThe secondary", "# AWS Academy Cloud Architecting\n\n## Module 13: Building Microservices and Serverless Architectures\n\n### 1. Contents\n\n- **Module 13: Building Microservices and Serverless Architectures** 4\n\n### 2. Module Overview\n\n#### 2.1. Sections\n\n1. Architectural Need\n2. Introducing Microservices\n3. Building Microservice Applications with AWS Container Services\n4. Introducing Serverless Architectures\n5. Building Serverless Architectures with AWS Lambda\n6. Extending Serverless Architectures with Amazon API Gateway\n7. Orchestrating Microservices with AWS Step Functions\n\n#### 2.2. Demonstrations\n\n- Creating an AWS Lambda function\n- Using AWS Lambda with Amazon S3\n\n#### 2.3. Labs\n\n- **(Optional)** Guided Lab 1: Breaking a Monolithic Node.js Application into Microservices\n- Guided Lab 2: Implementing a Serverless Architecture on AWS\n- Challenge Lab: Implementing a Serverless Architecture for the Caf\u00e9\n\n#### 2.4. Knowledge Check\n\nThis module covers the following topics:\n\n- Architectural need\n- Introducing microservices\n- Building microservice applications with AWS container services\n- Introducing serverless architectures\n- Building serverless architectures with AWS Lambda\n- Extending serverless architectures with Amazon API Gateway\n- Orchestrating microservices with AWS Step Functions\n\n**In addition to the above sections, this module includes:**\n\n- Two AWS Lambda demonstrations\n- An optional guided lab where you refactor a monolithic application into microservices\n- A guided lab where you implement a serverless architecture on AWS with Amazon S3, AWS Lambda, Amazon DynamoDB, and Amazon SNS\n- A challenge lab where you use AWS Lambda and Amazon Simple Notification Service (Amazon SNS) to generate and send a daily sales report for the caf\u00e9.\n\nFinally, you will be asked to complete a knowledge check that will test your understanding of key concepts covered in this module.\n\n### 3. Module Objectives\n\nAt the end of this module, you should be able to:\n\n- Indicate the characteristics of microservices\n- Refactor a monolithic application into microservices and use Amazon ECS to deploy the containerized microservices\n- Explain serverless architecture\n- Implement a serverless architecture with AWS Lambda\n- Describe a common architecture for Amazon API Gateway\n- Describe the types of workflows that AWS Step Functions supports\n\n### 4. Section 1: Architectural Need\n\n#### 4.1. Introducing Section 1: Architectural Need\n\n#### 4.2. Caf\u00e9 Business Requirement\n\nThe caf\u00e9 wants to get daily reports via email about all the orders that were placed on the website. They want this information so they can anticipate demand and bake the correct number of desserts going forward (reducing waste). They also want to identify any patterns in their business (analytics).\n\nFrank and Martha want to get daily reports via email about all the orders that were placed on the website. Frank wants to anticipate demand so he can bake the correct number of desserts going forward (reducing waste). Martha wants to identify any patterns in the caf\u00e9\u0027s business (analytics). Currently, Sof\u00eda has set up a cron job on the web server instance that sends these daily order report email messages to Frank and Martha. However, the cron job is resource-intensive and reduces web server performance.\n\nOlivia advises Sof\u00eda and Nikhil that non-business-critical reporting tasks should be kept separate. Sof\u00eda and Nikhil want to further decouple the architecture and move the cron job into a managed, serverless environment that will scale well and reduce costs.\n\n### 5. Section 2: Introducing Microservices\n\n#### 5.1. Introducing Section 2: Introducing Microservices\n\n#### 5.2. What are Microservices?\n\nApplications that are composed of independent services that communicate over well-defined APIs.\n\nMicroservices are an architectural and organizational approach to software development where applications are composed of independent services that communicate over well-defined application programming interfaces (APIs). This approach is designed to speed up deployment cycles.\n\nThe microservices approach fosters innovation and ownership, and improves the maintainability and scalability of software applications.\n\n#### 5.3. Monolithic versus Microservice Applications\n\nTo understand the benefits of microservices, consider first a monolithic application.\n\nIn the example on the left, the three processes (users, topics, and messages) of a monolithic forum application are tightly coupled. They run as a single service. If one process of the application experiences a spike in demand, the entire architecture must be scaled. Adding or improving features becomes more complex as the code base grows, which limits experimentation and makes it difficult to implement new ideas. The availability of monolithic applications is also at risk because many dependent and tightly coupled processes increase the impact of a single process failure.\n\nNow, suppose that the same application runs in a microservice architecture. Each process of the application is built as an independent component that runs as a service. The services communicate by using lightweight API operations. Each service performs a single function that can support multiple applications. Because the services run independently, they can be updated, deployed, and scaled to meet the demand for specific functions of an application.\n\nA microservice architecture provides much quicker iteration, automation, and overall agility. Start fast, fail fast, and recover fast.\n\nFor an overview of microservices on AWS, see What are Microservices?\n\n#### 5.4. Characteristics of Microservices\n\nMicroservices share some common characteristics:\n\n- **Decentralized** \u2013 Microservice architectures are distributed systems with decentralized data management. They don\u0027t rely on a unifying schema in a central database. Each microservice has its own view about data models. Microservices are also decentralized in the way they are developed, deployed, managed, and operated.\n- **Independent** \u2013 Each component service in a microservice architecture can be changed, upgraded, or replaced independently without affecting the function of other services. Services do not need to share any of their code or implementation with other services. Similarly, the teams responsible for different microservices can act independently from each other.\n- **Specialized** - Each component service is designed for a set of capabilities and focuses on a specific domain. If the code for a particular component service reaches a certain level of complexity, then the service can be split into two or more services.\n- **Polyglot** - Microservices don\u0027t follow a single approach. Teams have the freedom to choose the best tool for their specific problem. As a consequence, microservice architectures take a heterogeneous approach to operating systems, programming languages, data stores, and tools. This approach is called polyglot persistence and programming.\n- **Black boxes** - Individual component services are designed as black boxes, which mean that the details of their complexity are hidden from other components. Any communication between services happens through well-defined APIs to prevent implicit and hidden dependencies.\n- **You build it, you run it** \u2013 DevOps is a key organizational principle for microservices, where the team responsible for building a service is also responsible for operating and maintaining it in production.\n\n#### 5.5. Section 2 Key Takeaways\n\nSome key takeaways from this section of the module include:\n\n- Microservice applications are composed of independent services that communicate over well-defined APIS\n- Microservices share the following characteristics:\n    - Decentralized: Microservices are decentralized in the way they are developed, deployed, managed, and operated\n    - Independent: Each component service in a microservices architecture can be developed, deployed, operated, and scaled without affecting the function of other services\n    - Specialized: Each component service is designed for a set of capabilities and focuses on solving a specific problem\n    - Polyglot: Microservice architectures take a heterogeneous approach to operating systems, programming languages, data stores, and tools\n    - Black boxes: The details of the complexity of microservice components are hidden from other components\n    - You build it, you run it: DevOps is a key organizational principle for microservices\n\n### 6. Section 3: Building Microservice Applications with AWS Container Services\n\n#### 6.1. Introducing Section 3: Building Microservice Applications with AWS Container Services\n\n#### 6.2. What is a Container?\n\nWhen you build a microservice architecture, you can use containers for the processing power.\n\nContainers are a method of operating system virtualization that enables you to run an application and its dependencies in resource-isolated processes. A container is a lightweight, standalone software package. It contains everything that a software application needs to run, such as the application code, runtime engine, system tools, system libraries, and configurations.\n\n#### 6.3. A Problem that Containers Solve\n\nContainers can help ensure that applications deploy quickly, reliably, and consistently, regardless of deployment environment. Containers also give you more granular control over resources, which improves the efficiency of your infrastructure.\n\n#### 6.4. Container Terminology\n\nA container is created from a read-only template that is called an image. Images are typically built from a Dockerfile, which is a plaintext file that specifies all the components that are included in the container. You can create images from scratch, or you can use images that others created and published to a public or private container registry.\n\nA container image is the snapshot of the file system that is available to the container. For example, you might have the Debian operating system as a container image. When you run this container, a Debian operating system is available to it. You can also package all your code dependencies in the container image and use it as your code artifact.\n\nContainer images are stored in a registry. You can download the images from the registry and run them on your cluster. Registries can exist in or outside your AWS infrastructure.\n\n#### 6.5. Amazon ECS\n\nYou can run your containers on Amazon Elastic Container Service (Amazon ECS). Amazon ECS is a highly scalable, high-performance, container-management service. It supports Docker containers and enables you to easily run applications on a managed cluster of Amazon Elastic Compute Cloud (Amazon EC2) instances.\n\nAmazon ECS is a scalable cluster service for hosting containers that:\n\n- Can scale up to thousands of Docker containers in seconds\n- Monitors container deployment\n- Manages the state of the cluster that runs the containers\n- Schedules containers by using a built-in scheduler or third-party scheduler (Apache Mesos, Blox)\n- Is extensible by using APIs\n- Can be launched with either AWS Fargate or Amazon EC2 launch types\n\nYou can run ECS clusters at scale by mixing Spot Instances with On-Demand Instances and Reserved Instances.\n\n#### 6.6. Amazon ECS Orchestrates Containers\n\nAmazon ECS is a regional service that simplifies running application containers in a highly available manner across multiple Availability Zones within a Region. You can create ECS clusters in a new or existing virtual private cloud (VPC). A cluster is a logical grouping of resources.\n\nAfter a cluster is up and running, you can define task definitions and services that specify which Docker container images to run across your clusters.\n\nA task definition is a text file in JavaScript Object Notation (JSON) format. It describes one or more containers, up to a maximum of 10, that form your application. You can think of it as a blueprint for your application. Task definitions specify parameters for your application\u2014for example, which containers and launch type to use. Other parameters include which ports should be opened for your application and what data volumes should be used with the containers in the task.\n\nA service enables you to specify how many copies of your task definition to run and maintain in a cluster. You can optionally use an Elastic Load Balancing load balancer to distribute incoming traffic to containers in your service. Amazon ECS maintains that number of tasks and coordinates task scheduling with the load balancer.\n\nAfter you create a task definition for your application, you can specify the number of tasks that will run on your cluster. A task is the instantiation of a task definition within a cluster. When you use Amazon ECS to run tasks, you place them in a cluster. Amazon ECS downloads your container images from a registry that you specify, and runs those images within your cluster.\n\n#### 6.7. Amazon ECS Launch Types\n\nAmazon ECS offers two launch types for hosting your containerized applications.\n\nYou can use the Fargate launch type to host your cluster on a serverless infrastructure that Amazon ECS manages. You only need to package your application in containers, specify the CPU and memory requirements, define networking and AWS Identity and Access Management (IAM) policies, and launch the application.\n\nAlternatively, if you want more control, you can use the EC2 launch type to host your tasks on a cluster of EC2 container instances that you manage. A container instance is an EC2 instance that is running the Amazon ECS container agent. You can use Amazon ECS to schedule the placement of containers across your cluster based on your resource needs, isolation policies, and availability requirements. For information about different scheduling options, see Scheduling Amazon ECS Tasks. Amazon ECS keeps track of all the CPU, memory, and other resources in your cluster. It also finds the best server for a container to run on based on your specified resource requirements.\n\nFor more information about the Fargate and EC2 launch types, see Amazon ECS Launch Types.\n\n#### 6.8. Amazon ECS Cluster Auto Scaling\n\nYou can create an Auto Scaling group for an Amazon ECS cluster. The Auto Scaling group contains container instances that you can scale out (and in) by using Amazon CloudWatch alarms. If you configure your Auto Scaling group to remove container instances, any tasks that are running on the removed container instances are stopped. If your tasks are running as part of a service, Amazon ECS restarts those tasks on another instance if the required resources are available. Examples of such required resources include CPU, memory, ports. However, tasks that were started manually are not restarted automatically.\n\nYou can also take advantage of Amazon ECS cluster auto scaling, which gives you more control over how you scale tasks in a cluster. It increases the speed and reliability of cluster scale-out. It gives you control over the amount of spare capacity that is maintained in your cluster, and automatically manages instance termination on scale-in.\n\nWith cluster auto scaling, you can configure Amazon ECS to scale your Auto Scaling group in and out automatically. Cluster auto scaling relies on capacity providers, which link your ECS cluster to the Auto Scaling groups that you want to use. Each Auto Scaling group is associated with a capacity provider, and each capacity provider has only one Auto Scaling group. However, many capacity providers can be associated with one ECS cluster. To scale the entire cluster automatically, each capacity provider manages the scaling of its associated Auto Scaling group.\n\nFor more information about cluster auto scaling, see the Amazon ECS Cluster Auto Scaling AWS News Blog post.\n\n#### 6.9. Decomposing Monoliths \u2013 Step 1: Create Container Images\n\nAgain, consider the monolithic forum application that you saw earlier where the entire application runs as a single service. To rearchitect this application by using a microservice architecture, you can run each application process as a separate service within its own container. With a microservice architecture, the services can scale and be updated independently of the others.\n\nTo deploy the monolithic application as a microservice application, first build and tag an image for each service. Then, register the images with Amazon Elastic Container Registry (Amazon ECR).\n\n#### 6.10. Decomposing Monoliths \u2013 Step 2: Create Service Task Definition and Target Groups\n\nNext, choose a launch type and create a new service for each piece of the original monolithic application. Amazon ECS deploys each service into its own container across an ECS cluster. Then, create a target group for each service. The target group tracks the instances and ports of each container that is running for that service.\n\n#### 6.11. Decomposing Monoliths \u2013 Step 3: Connect Load Balancer to Services\n\nFinally, create an Application Load Balancer and configure listener rules to connect to the services. The listener checks for incoming connection requests to your load balancer and uses the rules to route traffic appropriately. In the example, the listener for the Application Load Balancer listens for HTTP service requests on Port 80 and routes them to the appropriate service.\n\n#### 6.12. Tools for Building Highly Available Microservice Architectures\n\nAWS Cloud Map and AWS App Mesh are two tools that can help you build highly available microservice architectures.\n\n**AWS Cloud Map**\n\n- Is a fully managed discovery service for cloud resources\n- Can be used to define custom names for application resources\n- Maintains updated location of dynamically changing resources, which increases application availability\n\n**AWS App Mesh**\n\n- Captures metrics, logs, and traces from all your microservices\n- Enables you to export this data to Amazon CloudWatch, AWS X-Ray, and compatible AWS Partner Network (APN) Partner and community tools\n- Enables you to control traffic flows between microservices to help ensure that services are highly available\n\nAWS Cloud Map is a fully managed discovery service for cloud resources. You can use it to define custom names for your application resources (such as databases, queues, microservices, and other cloud resources). AWS Cloud Map maintains the updated location of these dynamically changing resources. This location maintenance increases the availability of your application because your web service always discovers the most up-to-date locations of its resources. You can add and register any resource with minimal manual intervention of mappings. AWS Cloud Map assists with service discovery, continuous integration, and health monitoring of your microservices and applications.\n\nFor more information about AWS Cloud Map, read this AWS Open Source Blog post. To learn more about how you can use AWS Cloud Map to enable your containerized services to discover and connect with each other, read AWS Fargate, Amazon EKS, and Amazon ECS now integrate with AWS Cloud Map.\n\nWhen you create your task definitions, you can enable App Mesh integration. AWS App Mesh captures metrics, logs, and traces from all of your microservices. You can export this data to Amazon CloudWatch, AWS X-Ray, and compatible AWS Partner Network (APN) Partner and community tools for monitoring and tracing. AWS App Mesh also enables you to control how traffic flows between your microservices to make sure that every service is highly available during deployments, after failures, and as your application scales.\n\nApp Mesh enables you to configure microservices to connect directly to each other via a proxy instead of requiring code within the application or by using a load balancer. App Mesh uses Envoy, an open source service-mesh proxy, which is deployed alongside your microservice containers.\n\nFor more information about AWS Cloud Map and AWS App Mesh, see this AWS YouTube video.\n\n#### 6.13. AWS Fargate\n\n- Is a fully managed container service\n- Works with Amazon Elastic Container Service (Amazon ECS) and Amazon Elastic Kubernetes Service (Amazon EKS)\n- Provisions, manages, and scales your container clusters\n- Manages runtime environment\n- Provides automatic scaling\n\nIn this section, you have learned that Amazon ECS offers two launch types: EC2 and Fargate.\n\nAWS Fargate is a fully managed container service that works with both Amazon ECS and Amazon Elastic Kubernetes Service (Amazon EKS). It enables you to run containers without needing to manage servers or clusters. With AWS Fargate, you no longer need to provision, configure, and scale clusters of virtual machines to run containers. As a result, you don\u0027t need to choose server types, decide when to scale your clusters, or optimize cluster packing. AWS Fargate reduces the need for you to interact with or think about servers or clusters. Fargate enables you to focus on designing and building your applications instead of managing the infrastructure that runs them.\n\n#### 6.14. Section 3 Key Takeaways\n\nSome key takeaways from this section of the module include:\n\n- Amazon ECS is a highly scalable, high-performance container management service. It supports Docker containers and enables you to easily run applications on a managed cluster of Amazon EC2 instances.\n- Cluster auto scaling gives you more control over how you scale tasks within a cluster.\n- AWS Cloud Map enables you to define custom names for your application resources. It maintains the updated location of these dynamically changing resources.\n- AWS App Mesh is a service mesh that provides application-level networking to make it easy for your services to communicate with each other across multiple types of compute infrastructure.\n- AWS Fargate is a fully managed container service that enables you to run containers without needing to manage servers or clusters.\n\n#### 6.15. Module 13 \u2013 Guided Lab 1: Breaking a Monolithic Node.js Application into Microservices \n\n(Optional lab)\n\nYou might choose to complete Module 13 \u2013 Guided Lab 1: Breaking a Monolithic Node.js Application into Microservices. This lab is optional.\n\n#### 6.16. Guided Lab 1: Tasks\n\n1. Prepare the AWS Cloud9 development environment\n2. Run a monolithic application on a basic Node.js server\n3. Containerize the monolith for Amazon ECS\n4. Deploy the monolith to Amazon ECS\n5. Refactor the monolith into containerized microservices\n\n#### 6.17. Guided Lab 1: Final Product\n\nThe diagram summarizes what you will have built after you complete the lab.\n\n#### 6.18. Begin Module 13 \u2013 Guided Lab 1: Breaking a Monolithic Node.js Application into Microservices\n\nIt is now time to start the optional guided lab.\n\n#### 6.19. Guided Lab 1 Debrief: Key Takeaways\n\nYour educator might choose to lead a conversation about the key takeaways from this guided lab after you have completed it.\n\n### 7. Section 4: Introducing Serverless Architectures\n\n#### 7.1. Introducing Section 4: Introducing Serverless Architectures\n\n#### 7.2. What Does Serverless Mean?\n\nA way for you to build and run applications and services without thinking about servers.\n\nSo far, you have learned that you can use Amazon ECS to build your microservice applications by using containers. Amazon ECS is a container orchestration service where you manage your application code, data source integrations, security configuration, updates, network configuration, firewall, and management tasks. You also learned that you can use the Fargate launch type to host your cluster on a serverless infrastructure that Amazon ECS manages.\n\nBut what does serverless mean?\n\nServerless is the native architecture of the cloud that enables you to shift more operational responsibilities to AWS, which can increase your agility and innovation. Serverless enables you to build and run applications and services without thinking about servers. Your application still runs on servers. However, AWS does all the server management tasks, such as server or cluster provisioning, patching, operating system maintenance, and capacity provisioning.\n\n#### 7.3. Tenets of Serverless Architectures\n\nThe tenets that define serverless as an operational model include:\n\n- No infrastructure to provision or manage (no servers to provision, operate, or patch)\n- Automatically scales by unit of consumption (scales by unit of work or consumption rather than by server unit)\n- Pay-for-value pricing model (you pay only for the duration that a resource runs, rather than by server unit)\n- Built-in availability and fault tolerance (no need to architect for availability because it is built into the service)\n\nFor more information about what serverless is, see this AWS website.\n\n#### 7.4. Benefits of Serverless\n\nServerless enables you to build modern applications with increased agility and lower total cost of ownership (TCO). By using a serverless architecture, you can focus on your core product. You don\u0027t need to worry about managing and operating servers or runtimes, either in the cloud or on premises. This reduced overhead enables you to reclaim time and energy, which you can spend on developing products that scale and are reliable. Finally, serverless architectures enable you to build microservice applications.\n\n#### 7.5. AWS Serverless Offerings\n\nAWS has many offerings that you can use to build serverless architectures on AWS. So far in this course, you have already learned about several of them.\n\nThe rest of this module focuses on how you can use AWS Lambda, Amazon API Gateway, and AWS Step Functions to build serverless architectures.\n\n#### 7.6. Section 4 Key Takeaways\n\nSome key takeaways from this section of the module include:\n\n- Serverless computing enables you to build and run applications and services without provisioning or managing servers\n- Serverless architectures offer the following benefits:\n    - Lower TCO\n    - You can focus on your application\n    - You can use them to build microservice applications\n\n### 8. Section 5: Building Serverless Architectures with AWS Lambda\n\n#### 8.1. Introducing Section 5: Building Serverless Architectures with AWS Lambda\n\n#### 8.2. AWS Lambda\n\n- Is a fully managed compute service\n- Runs your code on a schedule or in response to events (for example, changes to an Amazon S3 bucket or an Amazon DynamoDB table)\n- Supports Java, Go, PowerShell, Node.js, C#, Python, Ruby, and Runtime API\n- Can run at edge locations closer to your users\n\nAWS Lambda is a fully managed compute service that runs your code in response to events and automatically manages the underlying compute resources for you. Lambda runs your code on a high-availability compute infrastructure and performs all administration of the compute resources, including server and operating system maintenance, capacity provisioning, automatic scaling, code monitoring, and logging.\n\nAWS Lambda natively supports Java, Go, PowerShell, Node.js, C#, Python, and Ruby code, and provides a Runtime API that enables you to use any additional programming languages to author your functions.\n\nLambda@Edge is a feature of Amazon CloudFront that enables you to run code closer to users of your application, which improves performance and reduces latency. Lambda@Edge runs your code in response to events that are generated by the Amazon CloudFront content delivery network (CDN). Lambda@Edge enables you to run Node.js and Python Lambda functions to customize content that Amazon CloudFront delivers. For information about how to add HTTP security response headers, read this AWS Networking \u0026 Content Delivery Blog post.\n\n#### 8.3. How AWS Lambda Works\n\nAWS Lambda integrates with other AWS services to invoke Lambda functions. A Lambda function is custom code that you write in one of the languages that Lambda supports. You can configure triggers to invoke a function in response to resource lifecycle events, respond to incoming HTTP requests, consume events from a queue, or run on a schedule.\n\nAn event source is the entity that publishes the event to Lambda. Your Lambda function processes the event, and Lambda runs your Lambda function on your behalf.\n\nLambda functions are stateless, which means that they have no affinity to the underlying infrastructure. Lambda can rapidly launch as many copies of the function as needed to scale to the rate of incoming events.\n\n#### 8.4. Lambda Functions\n\nWhen you create a Lambda function, you define the permissions for the function and specify which events trigger the function. You also create a deployment package that includes your application code and any dependencies and libraries that are needed to run your code. Finally, you configure runtime parameters such as memory, time out, and concurrency. When your function is invoked, Lambda will run an environment based on the runtime and configuration options that you selected.\n\n#### 8.5. Anatomy of a Lambda Function\n\nWhen a Lambda function is invoked, the code begins running at the handler. The handler is a specific code method or function that you create and include in your package. You specify the handler when you create a Lambda function. Each supported language has its own requirements for how a function handler can be defined and referenced within the package. After the handler is successfully invoked inside your Lambda function, the runtime environment belongs to the code you wrote.\n\nThe handler always takes two objects: the event object and the context object.\n\nThe event object provides information about the event that triggered the Lambda function. This event might be a pre-defined object that an AWS service generates, or a custom user-defined object in the form of a serializable string. An example of such a string might be a plain old Java object (POJO) or a JSON stream.\n\nThe contents of the event object include all the data and metadata that your Lambda function needs to drive its logic. The contents and structure of the event object vary, depending on which event source created it. For example, an event that is created by API Gateway contains details that are related to the HTTPS request that was made by the API client\u2014such as path, query string, and request body. However, an event that is created by Amazon includes details about the bucket and the new object.\n\nThe context object is generated by AWS and provides metadata about the runtime environment. The context object enables your function code to interact with the Lambda runtime environment. The contents and structure of the context object vary based on the language runtime that your Lambda function uses.\n\nHowever, at a minimum, the context object contains:\n\n- awsRequestId \u2013 This property is used to track specific invocations of a Lambda function (important for error reporting or when contacting AWS Support)\n- logStreamName \u2013 The CloudWatch log stream that your log statements will be sent to\n- getRemainingTimeInMillis() \u2013 This method returns the number of milliseconds that remain before the running of your function times out\n\n#### 8.6. Lambda Function Configuration and Billing\n\nMemory and timeout are configurations that determine how your Lambda function performs. These configurations affect your billing. With AWS Lambda, you are charged based on the number of requests for your functions (the total number of requests across all your functions) and the duration (the time it takes for your code to run). The price depends on the amount of memory you allocate to your function.\n\n**Memory** - You specify the amount of memory you want to allocate to your Lambda function. Lambda then allocates CPU power that is proportional to the memory. Lambda is priced so that the cost per 1 ms of function duration increases as the memory configuration increases. For example, say that you have a Lambda function with 256 MB of memory, and that it runs for 110 milliseconds. This function will cost twice as much as a Lambda function with 128 MB of memory that runs for the same time.\n\n**Timeout** - You can control the maximum duration of your function by using the timeout configuration. You can set the timeout value for a function to any value up to 15 minutes. When the specified timeout is reached, AWS Lambda stops the running of your Lambda function. Using a timeout can prevent higher costs that come from long-running functions. You must find the right balance between not letting the function run too long and being able to finish under normal circumstances.\n\nFollow these best practices:\n\n- Test the performance of your Lambda function to make sure that you choose the optimum memory size configuration. You can view the memory usage for your function in Amazon CloudWatch Logs.\n- Load-test your Lambda function to analyze how long your function runs and determine the best timeout value. This is important when your Lambda function makes network calls to resources that might not be able to handle the scaling of Lambda functions.\n\nSee the following resources for information about:\n\n- AWS Lambda limits\n- AWS Lambda pricing\n\n#### 8.7. Demonstration: Creating an AWS Lambda Function\n\nNow, the educator might choose to demonstrate how to create an AWS Lambda function.\n\n#### 8.8. AWS Lambda Example: Simulated Slot Machine Browser Game\n\nYou can create Lambda functions to perform various tasks. This example uses a browser-based game that simulates a slot machine. The game invokes a Lambda function that generates the random results of each slot pull. The function returns those results as the file names of images that are used to display the result. The images are stored in an Amazon S3 bucket that is configured to function as a static web host for the HTML, CSS, and other assets that are needed to present the application experience.\n\n#### 8.9. Event-Based Lambda Function Example: Order Processing\n\nThis example shows how Lambda can be used in a solution for order processing.\n\nIn this architecture:\n\n1. A customer uploads a transactions file to an S3 bucket, which triggers the running of a Lambda function.\n2. A Lambda function processes the transactions file and updates the Customer and Transactions DynamoDB tables.\n3. Changes to the Transactions DynamoDB table trigger a second Lambda function to aggregate the transactions and update the totals in the Transaction total DynamoDB table. It also pushes a message to the HighBalancerAlert SNS topic.\n4. The HighBalancerAlert SNS topic sends an email notification to the customer, and updates the CreditCollection and CustomerNotify SQS queues for payment processing.\n\n#### 8.10. Lambda Layers\n\n- Enable functions to share code easily \u2013 You can upload a layer one time and reference it in any function\n- Promote separation of responsibilities \u2013 Developers can iterate faster on writing business logic\n- Enable you to keep your deployment packages small\n- Limits:\n    - Up to five layers\n    - 250 MB\n\nWhen you build serverless applications, it is common to have code that is shared across Lambda functions. It can be custom code that two or more functions use, or a standard library that you add to simplify the implementation of your business logic.\n\nPreviously, you packaged and deployed this shared code together with all the functions that used it. Now, you can configure your Lambda function to include additional code and content as layers. A layer is a .zip archive that contains libraries, a custom runtime, or other dependencies.\n\nWith Lambda layers, functions can share code. Developers use layers to upload code one time and reuse it multiple times. With layers, you can use libraries in your function without needing to include them in your deployment package.\n\nSharing code this way can help promote the separation of responsibilities. One person can be responsible for managing the core library. Another person can be responsible for using and building on top of the library code to build application logic.\n\nLayers enable you to keep your deployment package small, which makes development easier.\n\nA function can use up to five layers at a time. The total unzipped size of the function and all layers can\u0027t exceed the unzipped deployment package size limit of 250 MB.\n\nFor more information about layers, see AWS Lambda Layers.\n\n#### 8.11. Demonstration: Using AWS Lambda with Amazon S3\n\nNow, the educator might choose to demonstrate how to configure an Amazon S3 event to trigger a Lambda function.\n\n#### 8.12. Section 5 Key Takeaways\n\nSome key takeaways from this section of the module include:\n\n- Lambda is a serverless compute service that provides built-in fault tolerance and automatic scaling.\n- A Lambda function is custom code that you write that processes events.\n- A Lambda function is invoked by a handler, which takes an event object and context object as parameters.\n- An event source is an AWS service or developer-created application that triggers a Lambda function to run.\n- Lambda layers enable functions to share code and keep deployment packages small.\n\n### 9. Module 13 \u2013 Guided Lab 2: Implementing a Serverless Architecture on AWS\n\nYou will now complete Module 13 \u2013 Guided Lab 2: Implementing a Serverless Architecture on AWS.\n\n#### 9.1. Guided Lab 2: Tasks\n\n1. Create a Lambda function to load data\n2. Configure an Amazon S3 event\n3. Test the loading process\n4. Configure notifications\n5. Create a Lambda function to send notifications\n6. Test the system\n\n#### 9.2. Guided Lab 2: Final Product\n\nThe diagram summarizes what you will have built after you complete the lab.\n\n#### 9.3. Begin Module 13 \u2013 Guided Lab 2: Implementing a Serverless Architecture on AWS\n\nIt is now time to start the guided lab.\n\n#### 9.4. Guided Lab 2 Debrief: Key Takeaways\n\nYour educator might choose to lead a conversation about the key takeaways from this guided lab after you have completed it.\n\n### 10. Section 6: Extending Serverless Architectures with Amazon API Gateway\n\n#### 10.1. Introducing Section 6: Extending Serverless Architectures with Amazon API Gateway\n\n#### 10.2. Amazon API Gateway\n\n- Enables you to create, publish, maintain, monitor, and secure APIs that act as entry points to backend resources for your applications\n- Handles up to hundreds of thousands of concurrent API calls\n- Can handle workloads that run on:\n    - Amazon EC2\n    - Lambda\n    - Any web application\n    - Real-time communication applications\n- Can host and use multiple versions and stages of your APIs\n\nAmazon API Gateway is a fully managed service that enables you to create, publish, maintain, monitor, and secure APIs at any scale. You can use it to create Representational State Transfer (RESTful) and WebSocket APIs that act as an entry point for applications so they can access backend resources. Applications can then access data, business logic, or functionality from your backend services. Such services include applications that run on Amazon EC2, code that runs on Lambda, any web application, or real-time communication applications.\n\nAPI Gateway handles all the tasks that are involved in accepting and processing up to hundreds of thousands of concurrent API calls. Such calls might include traffic management, authorization and access control, monitoring, and API version management. API Gateway has no minimum fees or startup costs. You pay only for the API calls you receive and the amount of data that is transferred out. With the API Gateway tiered-pricing model, you can reduce your cost as your API usage scales.\n\nYou can use API Gateway to host multiple versions and stages of your APIs.\n\n#### 10.3. Amazon API Gateway Security\n\nWhen you make your APIs publicly available, you are exposed to attackers that try to exploit your services. With Amazon API Gateway, you can protect your APIs in several ways.\n\nWith Amazon API Gateway, you can optionally set your API methods to require authorization. When you set up a method to require authorization, you can use AWS Signature Version 4 or Lambda authorizers to support your own bearer token authentication strategy. AWS Signature Version 4 is the process to add authentication information to AWS requests sent through HTTP. For security, most requests to AWS must be signed with an access key, which consists of an access key ID and secret access key. You use these AWS credentials to sign requests to your service and authorize access, like other AWS services. You can retrieve temporary credentials that are associated with a role in your AWS account by using Amazon Cognito. A Lambda authorizer is a Lambda function that authorizes access to APIs by using a bearer token authentication strategy like OAuth.\n\nYou can also apply a resource policy to an API to restrict access to a specific Amazon VPC or VPC endpoint. You can give an Amazon VPC or VPC endpoint from a different account access to the private API by using a resource policy.\n\nAmazon API Gateway supports throttling settings for each method or route in your APIs. You can set a standard rate limit and a burst rate limit per second for each method in your REST APIs and each route in WebSocket APIs.\n\nAdditionally, you can use AWS WAF to secure your API Gateway APIs. AWS WAF is a web application firewall that helps protect your web applications from common web exploits that could affect availability, compromise security, or consume excessive resources"]
+        };
+
+        const tokens = data.responses.slice (0, 2);
+        const only_responses = data.responses.slice (2);
+
+
+        // Use the embedded data in your JavaScript code
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log(data);
+            document.getElementById('heading').textContent = "Selected directory: ";
+            document.getElementById('directory').textContent = data.directory;
+            document.getElementById('tokens').innerHTML = tokens.map (item => `<div class="class-tokens">${item}</div>`).join('');
+
+            // Convert markdown to HTML and inject into the element
+            const markdownHtml = only_responses.map(md => marked.parse(md)).join('<br>'); // Join with <br> for spacing
+            document.getElementById('only_responses').innerHTML = markdownHtml;
+        });
+
+    </script>
+
+</body></html>

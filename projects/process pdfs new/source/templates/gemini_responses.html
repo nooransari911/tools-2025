@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Gemini Response</title>
+
+        <style>
+        body {
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            min-height: 100vh;
+            background-color: #000000; /* Dark background */
+            color: #eee; /* Light text color */
+            margin: 0; /* Remove default margin */
+            padding: 0 20px; /* Add some padding for smaller screens */
+        }
+
+        h1 {
+            text-align: left;
+            margin-bottom: 80px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: cyan; /* Cyan heading */
+        }
+        h2 {
+            text-align: left;
+            margin: 20px 0;
+            font-weight: 600;
+            letter-spacing: 2px;  /* Increased spacing */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        ul {
+            text-align: left;
+            list-style: none; /* Remove default list styling */
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            text-align: left;
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+
+        .class-tokens {
+            text-align: left;
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+            max-width: 500px;
+        }
+
+
+
+        /* Style for the markdown content */
+        .markdown {
+            width: 100%;
+            max-width: 1200px;
+            padding-left: 20px;
+        }
+
+        .markdown ul {
+            list-style: disc; /* Use disc bullets for lists */
+            padding-left: 20px;
+        }
+
+        .markdown li {
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .markdown h1 {
+            text-align: left;
+            margin-top: 200px;
+             margin-bottom: 20px;
+             margin-right: 0px;
+             margin-left: 0px;
+            font-weight: 600;
+            letter-spacing: 2px;  /* Increased spacing */
+            color: rgb(0, 255, 255); /* Cyan heading */
+        }
+         .markdown h2 {
+            text-align: left;
+            margin-top: 80px;
+             margin-bottom: 20px;
+             margin-right: 0px;
+             margin-left: 0px;
+            font-weight: 600;
+            letter-spacing: 2px;  /* Increased spacing */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        /* Style for br elements to maintain spacing */
+        br {
+            margin: 20px 0;
+        }
+    </style>
+
+</head>
+<body>
+    <h2 id="heading"></h2> <!-- Element with ID 'heading' -->
+    <h2 id="directory"></h2> <!-- Element with ID 'directory' -->
+    <h2 id="tokens"></h2> <!-- Element with ID 'directory' -->
+    <h2 id="elapsed_time"></h2> <!-- Element with ID 'directory' -->
+    <div id="only_responses" class="markdown"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        // Embed JSON data as a JavaScript object
+        const data = {
+            directory: "{{ directory | safe }}",
+            responses: {{ responses|tojson|safe }},
+            elapsed_time: "{{ elapsed_time }}"
+        };
+
+        const tokens = data.responses.slice (0, 2);
+        const only_responses = data.responses.slice (2);
+
+
+        // Use the embedded data in your JavaScript code
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log(data);
+            document.getElementById('heading').textContent = "Selected directory: ";
+            document.getElementById('directory').textContent = data.directory;
+            document.getElementById('tokens').innerHTML = tokens.map (item => `<div class="class-tokens">${item}</div>`).join('');
+            document.getElementById('elapsed_time').innerHTML = `<div class="class-tokens">${data.elapsed_time} seconds</div>`;
+
+            // Convert markdown to HTML and inject into the element
+            const markdownHtml = only_responses.map(md => marked.parse(md)).join('<br>'); // Join with <br> for spacing
+            document.getElementById('only_responses').innerHTML = markdownHtml;
+        });
+
+    </script>
+</body>
+</html>

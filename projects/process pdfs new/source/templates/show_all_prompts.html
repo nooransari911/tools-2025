@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show All Prompts</title>
+    <style>
+        body {
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: left;
+            padding-left: 40px;
+            min-height: 100vh;
+            background-color: #000000; /* Dark background */
+            color: #eee; /* Light text color */
+        }
+
+
+        h1 {
+            text-align: left;
+            margin-bottom: 80px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: cyan; /* Cyan heading */
+        }
+
+        h2 {
+            text-align: left;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        h4 {
+            text-align: left;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        .prompts {
+            text-align: left;
+            background-color: #1e1e1e; /* Darker grey background for list items */
+            color: #eee; /* Light text color */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            padding: 40px;
+            margin-bottom: 80px;
+            max-width: 1200px;
+        }
+
+    </style>
+</head>
+<body>
+    <br><br>
+    {% if prompt_list %}
+        <h1>List of prompts</h1>
+        <br><br>
+        {% for prompt in prompt_list %}
+            <h2>Prompt {{ loop.index }}</h2>
+            <div class="prompts">{{ prompt }}</div>
+            <br><br>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

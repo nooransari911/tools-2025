@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results Page</title>
+    <link rel="stylesheet" href="styles/styles.css"> <!-- Link to your styles.css -->
+</head>
+<body>
+    <header>
+        <h1>Test Results</h1> <!-- Main title of the page -->
+    </header>
+
+    <main id="files-list">
+        <!-- Dynamic content will be injected here using the JavaScript -->
+    </main>
+
+    <!-- Link to Prism JS for syntax highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        const data = {
+            directory: "example-directory",
+            responses: `
+# Sample Code
+
+This is a simple C program that prints "Hello, World!" to the console.
+
+\`\`\`c
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!");
+    return 0;
+}
+\`\`\`
+
+Some additional explanation goes here. Markdown allows you to **bold**, *italic*, and create lists:
+
+- First item
+- Second item
+- Third item
+
+# Another Section
+
+This section demonstrates how you can add more text or examples.
+
+\`\`\`c
+#include <stdlib.h>
+
+int main() {
+    printf("Another Example!");
+    return 0;
+}
+\`\`\`
+            `,
+            total_time: "5.32",
+            iint: "123",
+            oint: "456"
+        };
+
+        // Function to copy content to clipboard
+        function copyToClipboard(content) {
+            const textArea = document.createElement('textarea');
+            textArea.value = content;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            // alert('Copied to clipboard!');
+        }
+
+        // Render content and add Copy buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            const filesList = document.getElementById('files-list');
+            const markdownHtml = marked.parse(data.responses);
+            const responsesElement = document.createElement('div');
+            responsesElement.classList.add('markdown');
+            responsesElement.innerHTML = markdownHtml;
+            filesList.appendChild(responsesElement);
+
+            // Find all h1 headings and attach "Copy" buttons
+            const headings = responsesElement.querySelectorAll('h1');
+
+            headings.forEach((heading) => {
+                // Create a container for the heading and button
+                const headerContainer = document.createElement('div');
+                headerContainer.classList.add('header-container');
+
+                // Clone the heading into the container
+                const clonedHeading = heading.cloneNode(true);
+
+                // Create the copy button
+                const copyButton = document.createElement('button');
+                copyButton.textContent = 'Copy';
+                copyButton.classList.add('copy-button');
+
+                // Collect content under this heading
+                let contentToCopy = heading.outerHTML;
+                let nextElement = heading.nextElementSibling;
+                while (nextElement && nextElement.tagName !== 'H1') {
+                    contentToCopy += nextElement.outerHTML;
+                    nextElement = nextElement.nextElementSibling;
+                }
+
+                // Attach copy functionality
+                copyButton.onclick = () => {
+                    copyToClipboard(contentToCopy);
+                };
+
+                // Add heading and button to the header container
+                headerContainer.appendChild(clonedHeading);
+                headerContainer.appendChild(copyButton);
+
+                // Insert the container into the DOM
+                heading.replaceWith(headerContainer);
+            });
+
+            // Highlight code blocks
+            Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}"> <!-- Link to your styles.css -->
+</head>
+<body>
+    <header>
+        <h1>Results</h1> <!-- Main title of the page -->
+    </header>
+
+    <main id="files-list">
+        <!-- Dynamic content will be injected here using the JavaScript -->
+    </main>
+
+    <!-- Link to Prism JS for syntax highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/turndown@7.0.0/turndown.min.js"></script> <!-- Turndown library -->
+
+    <script>
+        // Assuming these values come from your templating engine or some dynamic source
+        const data = {
+            directory: "{{ directory | safe }}",
+            responses: {{ responses | tojson | safe }},
+            total_time: "{{ total_time }}",
+            iint: "{{ iint }}",
+            oint: "{{ oint }}"
+        };
+
+        // Function to copy content to clipboard
+        function copyToClipboard(content) {
+            const textArea = document.createElement('textarea');
+            textArea.value = content; // Set the content to the text area
+            document.body.appendChild(textArea); // Append it to the body (it's invisible)
+            textArea.select(); // Select the content
+            document.execCommand('copy'); // Copy the content to clipboard
+            document.body.removeChild(textArea); // Remove the text area
+        }
+
+        // Function to split markdown into sections based on headings
+        function splitMarkdownIntoSections(markdown) {
+            const sections = [];
+            const regex = /^(#{1,1})\s+(.*)$/gm; // Regex to match all headers (h1-h6)
+            let match;
+            let lastIndex = 0;
+
+            while ((match = regex.exec(markdown)) !== null) {
+                const headerLevel = match[1].length; // Header level (h1 = 1, h2 = 2, etc.)
+                const headerText = match[2]; // The text of the header
+                const sectionStartIndex = match.index;
+                const nextHeaderIndex = regex.lastIndex;
+
+                // Slice the markdown into the section
+                const sectionContent = markdown.slice(lastIndex, sectionStartIndex).trim();
+
+                // Save the section data
+                if (sectionContent) {
+                    sections.push({
+                        header: headerText,
+                        content: sectionContent,
+                        headerLevel: headerLevel
+                    });
+                }
+
+                lastIndex = nextHeaderIndex;
+            }
+
+            // Add the last section if any
+            const remainingContent = markdown.slice(lastIndex).trim();
+            if (remainingContent) {
+                sections.push({
+                    header: "Remaining Section",
+                    content: remainingContent,
+                    headerLevel: 1
+                });
+            }
+
+            return sections;
+        }
+
+        // Use marked.js to parse the markdown responses
+        document.addEventListener('DOMContentLoaded', () => {
+            const filesList = document.getElementById('files-list');
+            const totalTimeElement = document.createElement('h2');
+            totalTimeElement.textContent = `Total Time: ${data.total_time} seconds`;
+            filesList.appendChild(totalTimeElement);
+
+            // Parse the markdown responses and split into sections
+            const sections = splitMarkdownIntoSections(data.responses);
+
+            // Create sections dynamically
+            sections.forEach(section => {
+                const sectionContainer = document.createElement('div');
+                sectionContainer.classList.add('section');
+
+                const headerElement = document.createElement('h2');
+                headerElement.textContent = section.header;
+
+                // Create the "Copy as Markdown" button next to each heading
+                const copyButton = document.createElement('button');
+                copyButton.textContent = 'Copy as Markdown';
+                copyButton.onclick = () => {
+                    copyToClipboard(section.content); // Copy the markdown content
+                };
+
+                // Append the header and copy button
+                sectionContainer.appendChild(headerElement);
+                sectionContainer.appendChild(copyButton);
+
+                // Add the section content as markdown (rendered using marked)
+                const sectionContentElement = document.createElement('div');
+                sectionContentElement.classList.add('section-content');
+                sectionContentElement.innerHTML = marked.parse(section.content);
+
+                // Append the content and the button to the section
+                sectionContainer.appendChild(sectionContentElement);
+                filesList.appendChild(sectionContainer);
+            });
+
+            // Optional: Highlight all code blocks in markdown content using Prism.js
+            Prism.highlightAll();
+        });
+    </script>
+
+</body>
+</html>

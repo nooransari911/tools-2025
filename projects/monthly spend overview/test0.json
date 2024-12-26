@@ -1,0 +1,104 @@
+ * Serving Flask app 'test0'
+ * Debug mode: on
+
+
+Df is:
+                   payee  total_spent  total_deposited
+0   ME DC SI 419188XXXXX       311.63              NaN
+1   UPI-BIGBASKET-BIGBAS       525.80              NaN
+2   UPI-LALABHAI KANABHA       143.00              NaN
+3   UPI-CHANDRASHEKHAR M        70.00              NaN
+4   50100305965609-TPT-H          NaN           5000.0
+5   UPI-RISHABH  SINGH-Q      3500.00              NaN
+6   UPI-SANDIP SHRIRANG         60.00              NaN
+7   UPI-AYUSH PRINT SOLU        30.00              NaN
+8   UPI-SHREE SWAMI SAMA        80.00              NaN
+9   UPI-AAKASH VASANT KH        15.00              NaN
+10  UPI-AMOL RAJENDRA SH        30.00              NaN
+11  UPI-KHUSHI CATERING         30.00              NaN
+12  UPI-OLACABS-OLACABS.       136.00              NaN
+
+
+Df is:
+                   payee  total_spent  total_deposited
+0   ME DC SI 419188XXXXX       311.63              NaN
+1   UPI-BIGBASKET-BIGBAS       525.80              NaN
+2   UPI-LALABHAI KANABHA       143.00              NaN
+3   UPI-CHANDRASHEKHAR M        70.00              NaN
+4   50100305965609-TPT-H          NaN           5000.0
+5   UPI-RISHABH  SINGH-Q      3500.00              NaN
+6   UPI-SANDIP SHRIRANG         60.00              NaN
+7   UPI-AYUSH PRINT SOLU        30.00              NaN
+8   UPI-SHREE SWAMI SAMA        80.00              NaN
+9   UPI-AAKASH VASANT KH        15.00              NaN
+10  UPI-AMOL RAJENDRA SH        30.00              NaN
+11  UPI-KHUSHI CATERING         30.00              NaN
+12  UPI-OLACABS-OLACABS.       136.00              NaN
+
+
+Df is:
+                   payee  total_spent  total_deposited
+0   ME DC SI 419188XXXXX       311.63              NaN
+1   UPI-BIGBASKET-BIGBAS       525.80              NaN
+2   UPI-LALABHAI KANABHA       143.00              NaN
+3   UPI-CHANDRASHEKHAR M        70.00              NaN
+4   50100305965609-TPT-H          NaN           5000.0
+5   UPI-RISHABH  SINGH-Q      3500.00              NaN
+6   UPI-SANDIP SHRIRANG         60.00              NaN
+7   UPI-AYUSH PRINT SOLU        30.00              NaN
+8   UPI-SHREE SWAMI SAMA        80.00              NaN
+9   UPI-AAKASH VASANT KH        15.00              NaN
+10  UPI-AMOL RAJENDRA SH        30.00              NaN
+11  UPI-KHUSHI CATERING         30.00              NaN
+12  UPI-OLACABS-OLACABS.       136.00              NaN
+
+
+Df is:
+                   payee  total_spent  total_deposited
+0   ME DC SI 419188XXXXX       311.63              NaN
+1   UPI-BIGBASKET-BIGBAS       525.80              NaN
+2   UPI-LALABHAI KANABHA       143.00              NaN
+3   UPI-CHANDRASHEKHAR M        70.00              NaN
+4   50100305965609-TPT-H          NaN           5000.0
+5   UPI-RISHABH  SINGH-Q      3500.00              NaN
+6   UPI-SANDIP SHRIRANG         60.00              NaN
+7   UPI-AYUSH PRINT SOLU        30.00              NaN
+8   UPI-SHREE SWAMI SAMA        80.00              NaN
+9   UPI-AAKASH VASANT KH        15.00              NaN
+10  UPI-AMOL RAJENDRA SH        30.00              NaN
+11  UPI-KHUSHI CATERING         30.00              NaN
+12  UPI-OLACABS-OLACABS.       136.00              NaN
+
+
+Df is:
+                   payee  total_spent  total_deposited
+0   ME DC SI 419188XXXXX       311.63              NaN
+1   UPI-BIGBASKET-BIGBAS       525.80              NaN
+2   UPI-LALABHAI KANABHA       143.00              NaN
+3   UPI-CHANDRASHEKHAR M        70.00              NaN
+4   50100305965609-TPT-H          NaN           5000.0
+5   UPI-RISHABH  SINGH-Q      3500.00              NaN
+6   UPI-SANDIP SHRIRANG         60.00              NaN
+7   UPI-AYUSH PRINT SOLU        30.00              NaN
+8   UPI-SHREE SWAMI SAMA        80.00              NaN
+9   UPI-AAKASH VASANT KH        15.00              NaN
+10  UPI-AMOL RAJENDRA SH        30.00              NaN
+11  UPI-KHUSHI CATERING         30.00              NaN
+12  UPI-OLACABS-OLACABS.       136.00              NaN
+
+
+Df is:
+                   payee  total_spent  total_deposited
+0   ME DC SI 419188XXXXX       311.63              NaN
+1   UPI-BIGBASKET-BIGBAS       525.80              NaN
+2   UPI-LALABHAI KANABHA       143.00              NaN
+3   UPI-CHANDRASHEKHAR M        70.00              NaN
+4   50100305965609-TPT-H          NaN           5000.0
+5   UPI-RISHABH  SINGH-Q      3500.00              NaN
+6   UPI-SANDIP SHRIRANG         60.00              NaN
+7   UPI-AYUSH PRINT SOLU        30.00              NaN
+8   UPI-SHREE SWAMI SAMA        80.00              NaN
+9   UPI-AAKASH VASANT KH        15.00              NaN
+10  UPI-AMOL RAJENDRA SH        30.00              NaN
+11  UPI-KHUSHI CATERING         30.00              NaN
+12  UPI-OLACABS-OLACABS.       136.00              NaN

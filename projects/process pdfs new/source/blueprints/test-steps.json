@@ -1,0 +1,88 @@
+{
+    "tests": [
+        {
+            "method": "POST",
+            "url": "/delete-files",
+            "data": null,
+            "form_html": null
+        },
+        {
+            "method": "GET",
+            "url": "/prompts",
+            "data": null,
+            "form_html": "<form method=\"post\" enctype=\"multipart/form-data\"><h1>Enter Absolute Path of Directory</h1><label for=\"prompt\"><h2>Enter prompt to add</h2></label><input type=\"text\" name=\"prompt\" id=\"prompt\"/><input type=\"submit\" value=\"Submit\"></form>"
+        },
+        {
+            "method": "POST",
+            "url": "/prompts",
+            "data": {
+                "prompt": "You need to reorganize content in these markdown files. Goals: 1) most important: information should not be lost; preserve all details; 2) some heading names are wrong. They don't reflect content. Fix them; 3) remove garbage text like copyright notices. Replace them if needed; 4) Mild effect: make it more readable by using adding heading levels, rewriting, adding content/explanation, etc. as deemed necessary. Avoid excessive bullet points or excessively small paragraphs. Limit doing this;  5) Elaborate and add content where deemed necessary;"
+            },
+            "form_html": null
+        },
+        {
+            "method": "POST",
+            "url": "/test/split",
+            "data": {
+                "dir": "/home/ansarimn/Downloads/tools and projects/projects/process pdfs/ex-input files/"
+            },
+            "form_html": null
+        },
+        {
+            "method": "GET",
+            "url": "/",
+            "data": null,
+            "form_html": "<form method=\"post\" enctype=\"multipart/form-data\"><h1>Enter Absolute Path of Directory</h1><label for=\"dir\"><h2>Enter directory</h2></label><input type=\"text\" name=\"dir\" id=\"dir\" required/><input type=\"submit\" value=\"Submit\"></form>"
+        },
+        {
+            "method": "POST",
+            "url": "/",
+            "data": {
+                "dir": "/home/ansarimn/Downloads/tools and projects/projects/process pdfs/ex-input files/segments/"
+            },
+            "form_html": null
+        },
+        {
+            "method": "GET",
+            "url": "/results",
+            "data": null,
+            "form_html": null
+        },
+        {
+            "method": "POST",
+            "url": "/results",
+            "data": {
+                "dir": "/home/ansarimn/Downloads/tools and projects/projects/process pdfs/ex-input files/segments/"
+            },
+            "form_html": null
+        },
+        {
+            "method": "GET",
+            "url": "/parallel/",
+            "data": null,
+            "form_html": "<form method=\"post\" enctype=\"multipart/form-data\"><h1>Enter Absolute Path of Directory</h1><label for=\"dir\"><h2>Enter directory</h2></label><input type=\"text\" name=\"dir\" id=\"dir\" required/><input type=\"submit\" value=\"Submit\"></form>"
+        },
+        {
+            "method": "POST",
+            "url": "/parallel/",
+            "data": {
+                "dir": "/home/ansarimn/Downloads/tools and projects/projects/process pdfs/ex-input files/segments/"
+            },
+            "form_html": null
+        },
+        {
+            "method": "GET",
+            "url": "/parallel/results",
+            "data": null,
+            "form_html": "<form method=\"post\" enctype=\"multipart/form-data\"><h1>Enter Absolute Path of Directory</h1><label for=\"dir\"><h2>Enter directory</h2></label><input type=\"text\" name=\"dir\" id=\"dir\" required/><input type=\"submit\" value=\"Submit\"></form>"
+        },
+        {
+            "method": "POST",
+            "url": "/parallel/results",
+            "data": {
+                "dir": "/home/ansarimn/Downloads/tools and projects/projects/process pdfs/ex-input files/segments/"
+            },
+            "form_html": null
+        }
+    ]
+}

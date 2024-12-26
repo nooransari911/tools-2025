@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Heading Form</title>
+</head>
+<body>
+    <h1>Enter Headings for Images</h1>
+
+    <form method="POST">
+        {% for image in images %}
+            <div>
+                <br><br>
+                <img src={{image}} width="400">
+                <br><br>
+                <label for="{{image}}">Heading for {{ image }}:</label>
+                <br><br>
+                <input type="text" id="{{image}}" name="{{image}}" required>
+            </div>
+        {% endfor %}
+        <br>
+        <button type="submit">Generate Document</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,6 @@
+BigQuery table optimum-task-411411.job_guide.langchain_vector_store initialized/validated as persistent storage. Access via BigQuery console:
+ https://console.cloud.google.com/bigquery?project=optimum-task-411411&ws=!1m5!1m4!4m3!1soptimum-task-411411!2sjob_guide!3slangchain_vector_store
+
+
+Similarty Search Results for network:
+knowing people, but about being known by the right people. Your network can be the difference between struggling to find a job and having multiple offers on the table! building a strong network within top startups, you make it easier for them to bring you on board. Leverage your network to get introductions, referrals, and insider info. This is not just about On networking:  Think of your network as leverage. Most hires in startups are made through connections, with people bringing in others they know. Companies even pay bonuses for good referrals. By and more discord communities of students upskilling and sharing progress with each other On AI:  Most people around you are still very slow to adopt AI, but if you can leverage these tools to improve workflows, the hard work you need to put in can be reduced by 50%. This makes you far

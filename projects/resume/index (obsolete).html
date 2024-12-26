@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Viewer</title>
+    <link href="styles.css" type="text/css" rel="stylesheet" media="screen">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #content {
+            max-width: 800px;
+            margin: auto;
+        }
+        .row {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .left-column {
+            width: 30%;
+            padding-right: 20px;
+            font-weight: bold;
+        }
+        .date-column {
+            width: 20%;
+            text-align: center;
+            padding-right: 20px;
+        }
+        .right-column {
+            width: 50%;
+        }
+        .project-item {
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+        .heading {
+            margin-left: 10px;
+            width: 10%;
+            text-align: right;
+        }
+        .date {
+            margin-left: 60px;
+            width: 10%;
+            text-align: right;
+        }
+        .content {
+            margin-left: 100px;
+            width: 100%;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Basic rendered</h1>
+    <div id="basic"></div>
+    <h1>Advanced rendered</h1>
+    <div id="content" class="content"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            async function loadMarkdown() {
+                try {
+                    const response = await fetch('resume.md');
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const markdown = await response.text();
+                    const html = marked.parse(markdown);
+                    document.getElementById('basic').innerHTML = html;
+
+                    extractHeadingsAndContent();
+                } catch (error) {
+                    console.error('Error loading the Markdown file:', error);
+                }
+            }
+
+        function extractHeadingsAndContent() {
+            const outputDiv = document.getElementById('basic');
+            const h2Headings = outputDiv.querySelectorAll('h2');
+
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = ''; // Clear existing content
+
+            h2Headings.forEach((heading) => {
+                const headingText = heading.innerText; // Get H2 heading text
+                console.log(`H2 heading text: ${headingText}`);
+
+                // Create new div for H2 heading
+                const newHeadingDiv = document.createElement('div');
+                newHeadingDiv.className = 'heading';
+                newHeadingDiv.innerText = headingText;
+
+                // Create a container for H3 headings
+                const h3Container = document.createElement('div');
+                h3Container.className = 'h3-container';
+
+                let nextElement = heading.nextElementSibling; // Start with the next sibling
+                let content = ''; // Initialize content for this H2
+
+                // Process H3 headings and their associated content
+                while (nextElement && nextElement.tagName !== 'H2') {
+                    if (nextElement.tagName === 'H3') {
+                        const h3Text = nextElement.innerText; // Get H3 heading text
+                        console.log(`H3 heading text (date): ${h3Text}`);
+
+                        // Create new div for H3 heading
+                        const newDateDiv = document.createElement('div');
+                        newDateDiv.className = 'date';
+                        newDateDiv.innerText = h3Text;
+
+                        // Append H3 heading div to the H3 container
+                        h3Container.appendChild(newDateDiv);
+
+                        // Move to the next sibling to gather H3 content
+                        let nextContentElement = nextElement.nextElementSibling;
+
+                        // Gather content until we reach another H3 or H2
+                        while (nextContentElement && nextContentElement.tagName !== 'H3' && nextContentElement.tagName !== 'H2') {
+                            content += nextContentElement.outerHTML; // Collect the HTML of the content
+                            nextContentElement = nextContentElement.nextElementSibling; // Move to the next sibling
+                        }
+                    } else {
+                        content += nextElement.outerHTML; // Collect the HTML of non-H3 content
+                    }
+
+                    nextElement = nextElement.nextElementSibling; // Move to the next sibling
+                }
+
+                // Create new div for H2 content (excluding H3 content)
+                const newContentDiv = document.createElement('div');
+                newContentDiv.className = 'content';
+                newContentDiv.innerHTML = content;
+
+                // Append the new heading, H3 container, and content divs to the main content area
+                contentDiv.appendChild(newHeadingDiv);
+                contentDiv.appendChild(h3Container); // Append the H3 container
+                contentDiv.appendChild(newContentDiv); // Append the H2 content
+            });
+        }
+
+
+            // Load the Markdown content when the page loads
+            loadMarkdown();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Response</title>
+    <style>
+        :root {
+            --primary-bg-light: #f4f4f9;
+            --primary-bg-dark: #1e1e2f;
+            --text-color-light: #2c2c2c;
+            --text-color-dark: #f1f1f1;
+            --border-color-light: #ddd;
+            --border-color-dark: #555;
+            --highlight-color-light: #007bff;
+            --highlight-color-dark: #4dd0e1;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: var(--primary-bg-light);
+            color: var(--text-color-light);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color-light);
+        }
+
+        h1, h2 {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        h1 {
+            letter-spacing: 4px;
+            color: cyan;
+        }
+
+        h2 {
+            margin-top: 20px;
+            letter-spacing: 2px;
+            color: magenta;
+        }
+
+        .class-tokens {
+            background-color: var(--primary-bg-dark);
+            color: var(--text-color-dark);
+            border: 1px solid var(--border-color-dark);
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .markdown {
+            padding-left: 20px;
+        }
+
+        .markdown ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+
+        .markdown li {
+            background-color: #1e1e1e;
+            color: var(--text-color-dark);
+            border: 1px solid var(--border-color-dark);
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: var(--primary-bg-dark);
+            color: var(--text-color-dark);
+        }
+
+        body.dark-mode .container {
+            background-color: #2a2a3b;
+            border-color: var(--border-color-dark);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .class-tokens {
+            background-color: var(--primary-bg-light);
+            color: var(--text-color-light);
+        }
+
+        /* Toggle Button */
+        .toggle-mode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: var(--highlight-color-light);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark-mode .toggle-mode {
+            background-color: var(--highlight-color-dark);
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-mode" onclick="toggleMode()">Switch Mode</button>
+
+    <div class="container">
+        <h1>Gemini Response</h1>
+        <div id="total_time"></div> <!-- Total time -->
+        <div id="responses" class="markdown"></div> <!-- Markdown responses -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        const data = {
+            directory: "{{ directory | safe }}",
+            responses: {{ responses|tojson|safe }},
+            total_time: "{{ total_time }}",
+            iint: "{{ iint }}",
+            oint: "{{ oint }}"
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log(data);
+            document.getElementById('total_time').innerHTML = `${data.total_time} seconds`;
+
+            const markdownHtml = marked.parse(data.responses);
+            document.getElementById('responses').innerHTML = markdownHtml;
+        });
+
+        function toggleMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
