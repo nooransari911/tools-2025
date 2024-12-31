@@ -94,7 +94,7 @@ def gen_response(prompts, record):
         try:
             # Call the Gemini API to generate a response based on the combined record and prompt list
             gemini_response = model.generate_content(record)
-            logger.info(f"Successfully generated response for prompt: {prompt}".rstrip())
+            # logger.info(f"Successfully generated response for prompt: {prompt}".rstrip())
         except Exception as e:
             # Log and handle errors appropriately
             logger.error(f"Error generating response for prompt '{prompt}': {e}")
@@ -226,10 +226,24 @@ def res_agg (base_responses):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-
+    
     prompts = ""
-    prompts = f"{base_prompt} {agg_prompt}"
+    custom_agg = input("Enter your custom aggregation prompt if any: ").strip()  # Take user input and strip any extra spaces
 
+    # Append only if custom_agg is not empty
+    if custom_agg:
+        prompts = f"{base_prompt} {agg_prompt} {custom_agg}"
+    else:
+        prompts = f"{base_prompt} {agg_prompt}"
+
+    # Log the created prompt
+    logger.info(f"Aggregate prompt <agg prompt>: {prompts}")
+
+    # Optionally print the result
+    # print(prompts)
+
+    base_responses.append(prompts)
+    
     base_responses.append (prompts)
     
     # global model
@@ -292,7 +306,9 @@ def main():
         user_input = input('Enter a prompt (or "done" to finish): ')
         if user_input.lower() == 'done':
             break
-        prompts.append(f"{prepend_string} {user_input}")
+        prompt = f"{prepend_string} {user_input}"
+        prompts.append(prompt)
+        logger.info(f"Prompt added <prompt>: {prompt}")
 
 
 
@@ -323,7 +339,8 @@ def main():
 
     # Output results
     for i, responses in enumerate(all_responses):
-        logger.info(f"Responses for record {i + 1}:\n{responses}".rstrip())
+        # logger.info(f"Responses for record {i + 1}:\n{responses}".rstrip())
+        pass
     # for i, responses in enumerate(all_responses):
     #     print(f"{responses.rstrip()}")
 
@@ -338,7 +355,7 @@ def main():
     # Clean and print all responses, then copy them to the clipboard
     cleaned_responses = "\n\n".join(responses.rstrip() for responses in all_responses)
     # logger.info(cleaned_responses)
-    print(cleaned_responses)  # Print the cleaned responses
+    # print(cleaned_responses)  # Print the cleaned responses
     # pyperclip.copy(cleaned_responses)  # Copy them to the clipboard
 
 
