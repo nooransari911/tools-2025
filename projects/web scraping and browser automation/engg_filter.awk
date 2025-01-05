@@ -11,8 +11,10 @@ BEGIN {
 
 
 
-# Exclude unwanted roles based on title
+# Process the "Ilist.txt" file
 {
-    if ($1 !~ /(marketing|business development|lead generation|brand|campus|ambassador|sales|field executive|growth|hr|accounting|law|legal|fundraising|public relations|customer service|customer support|quality|volunteering|charity|social|reels|instagram|youtube|facebook|community|crowd|anchor|host|stage|2D|3D|content|translate|transcription|trader|blog|video|audio|graphic|animation|blender|editing|writing|creative|copywriting|subject matter expert|upsc|uspc|prelims|biology|nutrition|diet|french|language|trainer|front end|ui|ux|java|react|wordpress|android|ios)/)
-        print $0
+    # Apply the usual filter and ensure the line is not in "Iapplied.txt"
+    if ($1 !~ /marketing|brand|sales|growth|lead generation|business development|field executive|campus ambassador|hr|accounting|law|legal|fundraising|public relations|customer service|customer support|quality|volunteering|charity|social|community|crowd|reels|instagram|youtube|facebook|video|audio|anchor|host|stage|blog|content|graphic|animation|blender|editing|writing|creative|copywriting|translate|transcription|subject matter expert|language|trainer|biology|nutrition|diet|french|upsc|uspc|prelims|front end|ui|ux|java|react|wordpress|android|ios|2D|3D|trader|flutter|nodejs|node\.js|shopify|power bi|human resources|humanities|yoga|operations/) {
+            print $0
+    }
 }

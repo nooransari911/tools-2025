@@ -7,6 +7,8 @@ python3 ./play_parallel.py
 # Infinite loop to allow the user to select options indefinitely
 while true; do
     # Display the menu for user selection
+    echo ""
+    echo ""
     echo "Select an option:"
     echo "1. Show New Posts"
     echo "2. Show All Posts"
@@ -18,7 +20,7 @@ while true; do
         1)
             echo "Showing New Posts..."
             # Run awk command for new posts
-            awk -f engg_app_filter.awk Iapplied.txt Ilist.txt | fzf -m
+            awk -f engg_app_filter.awk Iapplied.txt Ilist.txt | fzf -m | tee -a Iapplied.txt
             ;;
         2)
             echo "Showing All Posts..."
