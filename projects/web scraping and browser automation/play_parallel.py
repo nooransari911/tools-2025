@@ -73,7 +73,7 @@ def parallel_scraping(urls):
     # Write results to a file
     with open('Ilist.txt', 'w') as file:
         for internship in unique_internships:
-            file.write(f"https://internshala.com{internship['href']}\n{internship['text']}\n\n")
+            file.write(f"{internship['text']}: https://internshala.com{internship['href']}\n")
 
 
 # Wrapper function to run asyncio event loop in a process
