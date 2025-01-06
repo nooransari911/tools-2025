@@ -88,7 +88,8 @@ if __name__ == '__main__':
         'https://internshala.com/internships/work-from-home-internships',
         'https://internshala.com/internships/work-from-home-internships/page-2/',
         'https://internshala.com/internships/work-from-home-internships/page-3/',
-        'https://internshala.com/internships/work-from-home-internships/page-4/'
+        'https://internshala.com/internships/work-from-home-internships/page-4/',
+        'https://internshala.com/internships/keywords-electronics/'
         # Add more URLs here as needed
     ]
 
