@@ -20,12 +20,12 @@ while true; do
         1)
             echo "Showing New Posts..."
             # Run awk command for new posts
-            awk -f engg_app_filter.awk Iapplied.txt Ilist.txt | fzf -m | tee -a Iapplied.txt
+            awk -f engg_app_filter.awk Iapplied.txt Ilist.txt | fzf -e -m | tee -a Iapplied.txt
             ;;
         2)
             echo "Showing All Posts..."
             # Run awk command for all posts
-            awk -f engg_filter.awk Ilist.txt | fzf -m
+            awk -f engg_filter.awk Ilist.txt | fzf -e -m
             ;;
         3)
             echo "Exiting..."
