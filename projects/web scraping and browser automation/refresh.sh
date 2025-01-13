@@ -20,8 +20,10 @@ while true; do
         1)
             echo "Showing New Posts..."
             # Run awk command for new posts
-            awk -f engg_app_filter.awk Iapplied.txt Ilist.txt | fzf -e -m | tee -a Iapplied.txt
+            awk -f engg_app_filter.awk Iapplied.txt Ilist.txt | fzf -e -m | tee -a Iapplied.txt | awk -F ': ' '{print $2}' | python3 open_select.py
             ;;
+
+
         2)
             echo "Showing All Posts..."
             # Run awk command for all posts
