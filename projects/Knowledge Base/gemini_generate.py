@@ -60,7 +60,7 @@ def log_entry_exit(func):
 # Initialize the API once
 def configure_genai():
     genai.configure(api_key=os.environ["API_KEY_PAID"])
-    return genai.GenerativeModel(os.environ["GEMINI_20_FL"])
+    return genai.GenerativeModel(os.environ["GEMINI_1206"])
 
 
 
