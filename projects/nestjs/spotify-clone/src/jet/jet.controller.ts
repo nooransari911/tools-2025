@@ -10,7 +10,7 @@ import { AllExceptionsFilter, ValidationExceptionFilter } from './exceptions/pri
 
 
 @Controller ('jet')
-@UseFilters (JetExFilter, ValidationExceptionFilter,AllExceptionsFilter)
+@UseFilters (JetExFilter, ValidationExceptionFilter, AllExceptionsFilter)
 export class JetController {
 
 
