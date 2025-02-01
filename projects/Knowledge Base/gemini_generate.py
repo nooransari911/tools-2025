@@ -175,11 +175,13 @@ def parallelize_processing(records, prompts):
 
 
 def files_content ():
-    md_directory = './md/'
+    # md_directory = './md/'
+    md_directory = './files/'
 
     try:
         # Get all .md files in the directory
-        records = [open(os.path.join(md_directory, f), 'r').read() for f in os.listdir(md_directory) if f.endswith('.md')]
+        # records = [open(os.path.join(md_directory, f), 'r').read() for f in os.listdir(md_directory) if f.endswith('.md')]
+        records = [open(os.path.join(md_directory, f), 'r').read() for f in os.listdir(md_directory)]
         return records
     except FileNotFoundError:
         logger.error(f"Directory not found: {md_directory}")
@@ -359,7 +361,7 @@ def main():
     # pyperclip.copy(cleaned_responses)  # Copy them to the clipboard
 
 
-    with open("links_base.md", "w") as file:
+    with open("output_response.md", "w") as file:
         file.write(cleaned_responses + "\n\n")
 
 

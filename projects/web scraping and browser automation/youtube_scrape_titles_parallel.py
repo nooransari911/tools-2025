@@ -4,11 +4,19 @@ import os
 import csv
 import concurrent.futures
 import googleapiclient.discovery
+from dotenv import load_dotenv
+
+
+
+load_dotenv()
+
+
+
 
 def fetch_response_for_chunk(video_ids_chunk):
     api_service_name = "youtube"
     api_version = "v3"
-    API_KEY = "AIzaSyAE0E5_14qSagw-4fl_yiM1LlvJ4VGhra4"
+    API_KEY = os.environ["API_KEY_GENERIC"]
 
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, developerKey=API_KEY)
