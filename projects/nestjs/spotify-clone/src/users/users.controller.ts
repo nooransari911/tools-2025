@@ -36,9 +36,9 @@ export class UsersController {
 
     @Get ('post-user')
     async function_user_post_id (
-        @Query () user: User
+        @Query ('id', ParseIntPipe) id: number
     ): Promise <OperationResult>  {
-        const hit_post_promise: Promise <OperationResult> = this.userservice.post_user_id (user.id);
+        const hit_post_promise: Promise <OperationResult> = this.userservice.post_user_id (id);
 
         const await_promise: OperationResult = await hit_post_promise;
 
@@ -55,6 +55,19 @@ export class UsersController {
         const await_promise: OperationResult = await hit_post_promise;
         return await_promise;
     }
+
+
+
+    @Post ('post-user-batch')
+    async function_user_post_body_batch (
+        @Body () body: User []
+    ): Promise <OperationResult> {
+        const hit_post_promise: Promise <OperationResult> = this.userservice.post_user_batch (body);
+        const await_promise: OperationResult = await hit_post_promise;
+        return await_promise;
+    }
+
+
 
 
     @Delete ('delete-user')

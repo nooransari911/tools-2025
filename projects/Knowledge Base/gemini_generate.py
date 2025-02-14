@@ -60,7 +60,7 @@ def log_entry_exit(func):
 # Initialize the API once
 def configure_genai():
     genai.configure(api_key=os.environ["API_KEY_PAID"])
-    return genai.GenerativeModel(os.environ["GEMINI_1206"])
+    return genai.GenerativeModel(os.environ["GEMINI_20_PRO"])
 
 
 
@@ -360,7 +360,7 @@ def main():
     # print(cleaned_responses)  # Print the cleaned responses
     # pyperclip.copy(cleaned_responses)  # Copy them to the clipboard
 
-
+    # print (cleaned_responses)
     with open("output_response.md", "w") as file:
         file.write(cleaned_responses + "\n\n")
 

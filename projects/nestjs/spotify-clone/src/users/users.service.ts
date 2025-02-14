@@ -33,6 +33,14 @@ export class UsersService {
     }
 
 
+
+    async post_user_batch (user: User []): Promise <OperationResult> {
+        const opres: OperationResult = await this.commonservice.post_to_db_obj_batch <User> (user);
+        return opres;
+    }
+
+
+
     async delete_user (id: number): Promise <OperationResult> {
         const opres: OperationResult = await this.commonservice.delete_in_db (id);
         return opres;

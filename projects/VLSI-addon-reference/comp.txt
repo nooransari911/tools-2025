@@ -1,0 +1,109 @@
+Semiconductors:
+
+    CD4060 Binary Counter with Oscillator: x 1
+
+    LM393 Comparator: x 1
+
+    BC558 PNP Transistor: x 1
+
+    BC546 NPN Transistor: x 2
+
+    1N4007 Rectifier Diode: x 2
+
+    1N4148 Signal Diode: x 2
+
+    5mm White LED: x 1
+
+    5mm Green LED: x 1
+
+    5mm Red LED: x 1
+
+    IRF540 MOSFET: x 1
+
+Resistors (1/4 Watt, ±5% unless otherwise specified):
+
+    100Ω: x 1
+
+    390Ω (1 Watt): x 1
+
+    470Ω: x 2
+
+    1kΩ: x 1
+
+    3.3kΩ: x 1
+
+    4.7kΩ: x 5
+
+    10kΩ: x 6
+
+    22kΩ: x 2
+
+    47kΩ: x 1
+
+    1MΩ: x 2
+
+    1.2MΩ: x 3
+
+    4.7MΩ: x 1
+
+Potentiometers:
+
+    1kΩ Potentiometer: x 1
+
+    2.2MΩ Potentiometer: x 1
+
+Capacitors:
+
+    47nF Ceramic Disk: x 1
+
+    0.1µF Ceramic Disk: x 1
+
+    0.47µF Ceramic Disk: x1
+
+    1000µF, 63V Electrolytic: x 1
+
+    4700µF, 16V Electrolytic: x 1
+
+Miscellaneous:
+
+    Buzzer: x 1
+
+    On/Off Switch: x 1
+
+    Push-to-On Switch: x 1
+
+    3-Pin Connector: x 4
+
+    AC to DC Converter (48V, 2A): x 1
+
+    DC to DC Converter (XL7015): x 1
+
+    Stainless Steel Box: x 1
+
+    15mm Copper Wire (5mm diameter): Specify Length Needed
+
+    Heater Coil (1800-watt): x 1
+
+    Small Wooden Battens: x 3
+
+    Teflon Wires: Specify Length Needed
+
+    Heatsink for IRF540: x 1
+
+    10mm Thick Polyurethane Foam: Specify Dimensions Needed
+
+    Thermistor (10k NTC): x 1
+
+    Nuts, Bolts, Wire, etc.: As Needed
+
+    Casserole with Stainless Steel Interior (200mm dia x 80mm depth): x 1
+
+    Banana Clips: x 4
+
+    3-Leg Heater Support: x 1
+
+    18V, 30W Solar Panels (Optional): x 3
+
+    Millets: x 1 (150 grams)
+
+    3-Pin Socket: x 1

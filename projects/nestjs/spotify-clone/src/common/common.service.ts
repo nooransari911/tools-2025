@@ -35,6 +35,14 @@ export class CommonService {
     public src_db_base_url = "http://localhost:7000";
     public dest_db_base_url = "http://localhost:8000";
     public self_base_url = "http://localhost:3000";
+    public success_str            : string    = "successful";
+    public fail_not_found_str     : string    = "Not Found";
+    public fail_internal_str      : string    = "Internal Server Error";
+    public fail_badreq_str        : string    = "Bad Request";
+    public success_code           : number    = 200;
+    public fail_not_found_code    : number    = 404;
+    public fail_internal_code     : number    = 500;
+    public fail_badreq_code       : number    = 400;
 
 
 
@@ -113,8 +121,8 @@ export class CommonService {
             const obj_promise = await axios.post (`${this.dest_db_base_url}/checkout`, obj);
 
             return {
-                message: "success",
-                StatusCode: 200
+                message: this.success_str,
+                StatusCode: this.success_code
             }
         }
         
@@ -124,6 +132,34 @@ export class CommonService {
 
 
     }
+
+
+    async post_to_db_obj_batch <T> (objs: T []): Promise <OperationResult> {
+        try {
+            const all_promises: Promise <AxiosResponse <T>> [] = objs.map (obj =>
+                axios.post <T> (`${this.dest_db_base_url}/checkout`, obj)
+            );
+
+            const await_promises: AxiosResponse <T> [] = await Promise.all (all_promises);
+
+            const opress: OperationResult = {
+                message: this.success_str,
+                StatusCode: this.success_code
+            }
+
+            return opress
+        }
+
+
+        catch (error) {
+            throw new InternalServerExc ("Failed to add users batch");
+        }
+        
+    }
+
+    
+
+
 
 
 
@@ -137,8 +173,8 @@ export class CommonService {
 
 
             return {
-                message: "successfully deleted",
-                StatusCode: 200
+                message: this.success_str,
+                StatusCode: this.success_code
                 
             }
         }
