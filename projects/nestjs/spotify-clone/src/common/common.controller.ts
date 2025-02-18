@@ -14,7 +14,7 @@ export class CommonController {
     constructor (private readonly commonservice: CommonService) {};
 
 
-    @Get ('get-hello')
+    @Get ('hello')
     function_get_hello () {
         return this.commonservice.hello_world_html_string;
     }

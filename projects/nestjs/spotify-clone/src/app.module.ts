@@ -7,13 +7,17 @@ import { JetModule } from './jet/jet.module';
 import { LoggerMiddleware } from './jet/jet.middleware';
 import { UsersModule } from './users/users.module';
 import { CommonModule } from './common/common.module';
+import { CommonController } from './common/common.controller';
+import { CommonService } from './common/common.service';
 
 
 @Module({
   imports: [JetModule, UsersModule, CommonModule],
-  controllers: [AppController, JetController],
-  providers: [AppService, JetService],
+  controllers: [AppController, JetController, CommonController],
+  providers: [AppService, JetService, CommonService],
 })
+
+
 export class AppModule implements NestModule{
   configure (consumer: MiddlewareConsumer) {
     consumer
