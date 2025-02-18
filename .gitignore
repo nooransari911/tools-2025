@@ -91,3 +91,73 @@ static-manifest*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 /projects/nestjs/spotify-clone/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+
+
+
+
+
+
+
+
+# compiled output
+/projects/nestjs/backend/dist
+/projects/nestjs/backend/node_modules
+/projects/nestjs/backend/build
+
+# Logs
+/projects/nestjs/backend/logs
+/projects/nestjs/backend/*.log
+/projects/nestjs/backend/npm-debug.log*
+/projects/nestjs/backend/pnpm-debug.log*
+/projects/nestjs/backend/yarn-debug.log*
+/projects/nestjs/backend/yarn-error.log*
+/projects/nestjs/backend/lerna-debug.log*
+
+# OS
+/projects/nestjs/backend/.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+/projects/nestjs/backend/.project
+/projects/nestjs/backend/.classpath
+/projects/nestjs/backend/.c9/
+/projects/nestjs/backend/*.launch
+/projects/nestjs/backend/.settings/
+/projects/nestjs/backend/*.sublime-workspace
+
+# IDE - VSCode
+/projects/nestjs/backend/.vscode/*
+/projects/nestjs/backend/!.vscode/settings.json
+/projects/nestjs/backend/!.vscode/tasks.json
+/projects/nestjs/backend/!.vscode/launch.json
+/projects/nestjs/backend/!.vscode/extensions.json
+
+# dotenv environment variable files
+/projects/nestjs/backend/.env
+/projects/nestjs/backend/.env.development.local
+/projects/nestjs/backend/.env.test.local
+/projects/nestjs/backend/.env.production.local
+/projects/nestjs/backend/.env.local
+
+# temp directory
+/projects/nestjs/backend/.temp
+/projects/nestjs/backend/.tmp
+
+# Runtime data
+/projects/nestjs/backend/pids
+/projects/nestjs/backend/*.pid
+/projects/nestjs/backend/*.seed
+/projects/nestjs/backend/*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+/projects/nestjs/backend/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+
+
+
+
+
