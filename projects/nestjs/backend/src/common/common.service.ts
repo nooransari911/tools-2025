@@ -30,6 +30,7 @@ export class CommonService {
             </head>
             <body>
                 <h1>Hello World</h1>
+                <br><br>
             </body>
         </html>
     `;
@@ -94,7 +95,7 @@ export class CommonService {
         }
 
 
-        req_headers_string += "</ul></p>";
+        req_headers_string += "</ul></p><br><br>";
         // console.log (req_headers_string);
 
 
@@ -130,7 +131,7 @@ export class CommonService {
         }
 
 
-        res_headers_string += "</ul></p>";
+        res_headers_string += "</ul></p><br><br>";
         // console.log (res_headers_string);
 
 
