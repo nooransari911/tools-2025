@@ -51,6 +51,12 @@ export class CommonService {
 
 
 
+
+
+
+
+
+
     async jets_france_from_route (): Promise <fighterjet []> {
         const response_france: AxiosResponse <fighterjet []> = await axios.get <fighterjet[]> (`${this.self_base_url}/jet/france/`);
         return response_france.data;

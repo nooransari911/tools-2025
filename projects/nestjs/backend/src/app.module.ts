@@ -9,10 +9,11 @@ import { UsersModule } from './users/users.module';
 import { CommonModule } from './common/common.module';
 import { CommonController } from './common/common.controller';
 import { CommonService } from './common/common.service';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
-  imports: [JetModule, UsersModule, CommonModule],
+  imports: [JetModule, UsersModule, CommonModule, AuthModule],
   controllers: [AppController, JetController, CommonController],
   providers: [AppService, JetService, CommonService],
 })
