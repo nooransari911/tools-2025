@@ -1,0 +1,2 @@
+- use google takeout to download all playlists
+- use `all videos one playlists.js` to download liked videos

@@ -1,0 +1,163 @@
+optimum-task-411411-3f4dc520069f.json
+static-manifest*
+/projects/compile image/static
+/projects/py_web_dev/static
+/projects/compile image/venv
+/projects/py_web_dev/venv
+/projects/py_web_dev/__pycache__
+/projects/py_web_dev/.idea
+/projects/DArchive
+*.mp4
+*.pdf
+*.part
+*.ytdl
+**/venv/
+**/ex-*
+**/.env*
+/projects/resume/resume.md
+/projects/resume/index.html
+/projects/resume/spam.sh
+/projects/AWS/S3 Static Website/*.md
+**/automation
+/projects/Knowledge Base/*.md
+/projects/Knowledge Base/*.log
+/projects/Knowledge Base/README.md
+**/private/
+
+
+
+
+
+
+
+
+
+
+
+# compiled output
+/projects/nestjs/spotify-clone/dist
+/projects/nestjs/spotify-clone/node_modules
+/projects/nestjs/spotify-clone/build
+
+# Logs
+/projects/nestjs/spotify-clone/logs
+/projects/nestjs/spotify-clone/*.log
+/projects/nestjs/spotify-clone/npm-debug.log*
+/projects/nestjs/spotify-clone/pnpm-debug.log*
+/projects/nestjs/spotify-clone/yarn-debug.log*
+/projects/nestjs/spotify-clone/yarn-error.log*
+/projects/nestjs/spotify-clone/lerna-debug.log*
+
+# OS
+/projects/nestjs/spotify-clone/.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+/projects/nestjs/spotify-clone/.project
+/projects/nestjs/spotify-clone/.classpath
+/projects/nestjs/spotify-clone/.c9/
+/projects/nestjs/spotify-clone/*.launch
+/projects/nestjs/spotify-clone/.settings/
+/projects/nestjs/spotify-clone/*.sublime-workspace
+
+# IDE - VSCode
+/projects/nestjs/spotify-clone/.vscode/*
+/projects/nestjs/spotify-clone/!.vscode/settings.json
+/projects/nestjs/spotify-clone/!.vscode/tasks.json
+/projects/nestjs/spotify-clone/!.vscode/launch.json
+/projects/nestjs/spotify-clone/!.vscode/extensions.json
+
+# dotenv environment variable files
+/projects/nestjs/spotify-clone/.env
+/projects/nestjs/spotify-clone/.env.development.local
+/projects/nestjs/spotify-clone/.env.test.local
+/projects/nestjs/spotify-clone/.env.production.local
+/projects/nestjs/spotify-clone/.env.local
+
+# temp directory
+/projects/nestjs/spotify-clone/.temp
+/projects/nestjs/spotify-clone/.tmp
+
+# Runtime data
+/projects/nestjs/spotify-clone/pids
+/projects/nestjs/spotify-clone/*.pid
+/projects/nestjs/spotify-clone/*.seed
+/projects/nestjs/spotify-clone/*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+/projects/nestjs/spotify-clone/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+
+
+
+
+
+
+
+
+# compiled output
+/projects/nestjs/backend/dist
+/projects/nestjs/backend/node_modules
+/projects/nestjs/backend/build
+
+# Logs
+/projects/nestjs/backend/logs
+/projects/nestjs/backend/*.log
+/projects/nestjs/backend/npm-debug.log*
+/projects/nestjs/backend/pnpm-debug.log*
+/projects/nestjs/backend/yarn-debug.log*
+/projects/nestjs/backend/yarn-error.log*
+/projects/nestjs/backend/lerna-debug.log*
+
+# OS
+/projects/nestjs/backend/.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+/projects/nestjs/backend/.project
+/projects/nestjs/backend/.classpath
+/projects/nestjs/backend/.c9/
+/projects/nestjs/backend/*.launch
+/projects/nestjs/backend/.settings/
+/projects/nestjs/backend/*.sublime-workspace
+
+# IDE - VSCode
+/projects/nestjs/backend/.vscode/*
+/projects/nestjs/backend/!.vscode/settings.json
+/projects/nestjs/backend/!.vscode/tasks.json
+/projects/nestjs/backend/!.vscode/launch.json
+/projects/nestjs/backend/!.vscode/extensions.json
+
+# dotenv environment variable files
+/projects/nestjs/backend/.env
+/projects/nestjs/backend/.env.development.local
+/projects/nestjs/backend/.env.test.local
+/projects/nestjs/backend/.env.production.local
+/projects/nestjs/backend/.env.local
+
+# temp directory
+/projects/nestjs/backend/.temp
+/projects/nestjs/backend/.tmp
+
+# Runtime data
+/projects/nestjs/backend/pids
+/projects/nestjs/backend/*.pid
+/projects/nestjs/backend/*.seed
+/projects/nestjs/backend/*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+/projects/nestjs/backend/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+
+
+
+
+

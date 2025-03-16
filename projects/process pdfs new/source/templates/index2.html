@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Directory</title>
+</head>
+<body>
+    <h1>Select a Directory</h1>
+    <form id="directoryForm" action="/directory" method="POST" enctype="multipart/form-data">
+        <input type="file" id="directoryInput" name="directory" webkitdirectory mozdirectory msdirectory odirectory directory />
+        <button type="submit">Browse</button>
+    </form>
+</body>
+</html>

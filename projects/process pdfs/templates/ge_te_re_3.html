@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test results</title>
+
+    <style>
+            body {
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: left;
+            padding-left: 40px;
+            min-height: 100vh;
+            background-color: #000000; /* Dark background */
+            color: #eee; /* Light text color */
+        }
+
+
+        h1 {
+            text-align: left;
+            margin-bottom: 80px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: #00ffff; /* Cyan heading */
+        }
+
+        h2 {
+            text-align: left;
+            margin-bottom: 10px;
+            margin-top: 40px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        h4 {
+            text-align: left;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ffffff;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333333;
+            color: rgb(255, 0, 128);
+        }
+
+        td {
+            background-color: #282c34;
+            color: #ffffff;
+        }
+
+        .summary {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #00ff99;
+        }
+
+
+        #status {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+
+
+<body>
+
+        <h1>Test Results</h1>
+        <h2 id="heading0"></h2>
+        <table id="table0">
+            <thead>
+                <tr>
+                    <th id="table0_thleft"></th>
+                    <th id="table0_thright"></th>
+                </tr>
+            </thead>
+            <tbody id="table0_body"></tbody>
+        </table>
+
+        <h2 id="heading1"></h2>
+        <table id="table1">
+            <thead>
+                <tr>
+                    <th id="table1_thleft"></th>
+                    <th id="table1_thright"></th>
+                </tr>
+            </thead>
+            <tbody id="table1_body"></tbody>
+        </table>
+
+
+
+      <div class="summary" id="summaryText"></div>
+
+            <script>
+                const eventSource = new EventSource("{{ url_for('events.sse_stream_process') }}");
+
+                eventSource.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    console.log(data);  // Log the response
+
+                    // Update H2 headings
+                    document.querySelectorAll('h2').forEach((h2, index) => {
+                        if (data.h2_data[index]) {
+                            h2.textContent = data.h2_data[index].split(": ")[1] || 'No Data';
+                        }
+                    });
+
+                    // Update table headers and data
+                    Object.keys(data).forEach(key => {
+                        if (key.startsWith('table') && key.endsWith('_headers')) {
+                            const tableIndex = key.match(/table(\d+)/)[1];
+                            const tableHeaders = data[key];
+                            document.querySelector(`#table${tableIndex}_thleft`).textContent = tableHeaders[0]?.split(": ")[1] || 'No Data';
+                            document.querySelector(`#table${tableIndex}_thright`).textContent = tableHeaders[1]?.split(": ")[1] || 'No Data';
+                        }
+                        if (key.startsWith('table') && key.endsWith('_data')) {
+                            const tableIndex = key.match(/table(\d+)/)[1];
+                            const tableData = data[key];
+                            const tableBody = document.querySelector(`#table${tableIndex}_body`);
+                            tableBody.innerHTML = '';  // Clear existing rows
+
+                            if (Array.isArray(tableData)) {
+                                tableData.forEach(item => {
+                                    // Split the item into label and list part
+                                    const [label, listPart] = item.split(": ");
+                                    if (listPart) {
+                                        // Remove square brackets and extra spaces from the list part
+                                        const numbers = listPart.replace(/[\[\]\s]/g, '').split(',');
+                                        numbers.forEach(number => {
+                                            // Create a new row for each number
+                                            const row = `<tr><td>${label || 'No Data'}</td><td>${number || 'No Data'}</td></tr>`;
+                                            // Insert the row into the table body
+                                            tableBody.insertAdjacentHTML('beforeend', row);
+                                        });
+                                    } else {
+                                        // Handle case where item does not have a list part
+                                        tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="2">Invalid Data</td></tr>');
+                                    }
+                                });
+                            } else {
+                                // If tableData is not an array, show a single "No Data" row
+                                tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="2">No Data</td></tr>');
+                            }
+                        }
+                    });
+                };
+
+                eventSource.onerror = function(event) {
+                    console.error('Error occurred:', event);
+
+                    // Only display error if the connection is permanently closed
+                    if (eventSource.readyState === EventSource.CLOSED) {
+                        statusDiv.textContent = 'Error connecting to server.';
+                    } else if (eventSource.readyState === EventSource.CONNECTING) {
+                        // Ignore transient connection issues
+                        console.log('Reconnecting...');
+                    }
+                };
+            </script>
+
+</body>
+
+
+
+
+
+</html>

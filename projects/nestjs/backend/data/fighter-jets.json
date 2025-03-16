@@ -1,0 +1,30 @@
+[
+  {
+    "country": "france",
+    "block": "NATO",
+    "name": "rafale",
+    "manufacturer": "dassault",
+    "gen": "4.5",
+    "role": "multirole",
+    "mtow": "24"
+  },
+
+  {
+    "country": "china",
+    "block": "SCO",
+    "name": "J20",
+    "manufacturer": "chengdu",
+    "gen": "5",
+    "role": "air superiority",
+    "mtow": "35"
+  },
+  {
+    "country": "china",
+    "block": "SCO",
+    "name": "J15",
+    "manufacturer": "shenyang",
+    "gen": "4.5",
+    "role": "air superiority",
+    "mtow": "30"
+  }
+]

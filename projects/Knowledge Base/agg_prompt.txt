@@ -1,0 +1,69 @@
+this content is out-of-order. i will give you the top headings, split the whole content based on these headings, then rearrange them in the order i give. order: project identification onwards is first part, followed by project appraisal onwards, followed by Determinants of project success as per iron triangle, followed by Project Life Cycle Phases, followed by Project Planning, followed by Organization Structure. besides rearranging, repeat as-is; don't modify anything
+
+
+
+
+Based on this notes Answer these questions. These are from a question paper; total paper is 30 marks, marks for questions are indicated in (). I expect highest level of detail as these are supposed to super long (min 1-2 pages in handwritten) answers, don't give short answers. If needed, you can use your knowledge to fill in gaps. I want detail, but don't overcomplicate it. Use simple language. <exact question number, say Q.4 A> Explain why understanding the project life cycle is essential for project managers and how it influences project planning and execution. (7) Q.1 B Elaborate impact of delays in project completion and how project management processes helps in reducing risk of delays. (8)
+
+
+Based on this notes Answer these questions. These are from a question paper; total paper is 30 marks, marks for questions are indicated in (). I expect highest level of detail as these are supposed to super long (min 1-2 pages in handwritten) answers, don't give short answers. If needed, you can use your knowledge to fill in gaps. I want detail, but don't overcomplicate it. Use simple language. Q.2 A Explain how processes are repetitive and ongoing, while projects are temporary endeavors with specific objectives, deliverables, and timelines. (7) Q.2 B Elaborate processes to estimate delays in achieving project objectives. (8)
+
+
+
+Based on this notes Answer these questions. These are from a question paper; total paper is 30 marks, marks for questions are indicated in (). I expect highest level of detail as these are supposed to super long (min 1-2 pages in handwritten) answers, don't give short answers. If needed, you can use your knowledge to fill in gaps. I want detail, but don't overcomplicate it. Use simple language. Q.3 A Explain the criteria and methods used for identifying and evaluating potential projects, considering factors such as strategic alignment, feasibility, and organizational priorities. (7) Q.3 B What are factors to be considered during feasibility studies, elaborate your answer with Pune metro project (8)
+
+
+
+
+
+Based on this notes Answer these questions. These are from a question paper; total paper is 30 marks, marks for questions are indicated in (). I expect highest level of detail as these are supposed to super long (min 1-2 pages in handwritten) answers, don't give short answers. If needed, you can use your knowledge to fill in gaps. I want detail, but don't overcomplicate it. Use simple language. Q.4 A With perspective of Pune metro project, elaborate project success as per iron triangle. (7) Q.4 B Elaborate role of Economic and Market Analysis during feasibility and opportunity studies (8)
+
+
+
+
+# Master
+You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # <exact question number, say Q.4 A>: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
+
+
+
+Use Markdown. Structure correctly. Headings start from level H1, use - for bullet points, 4 spaces for tabs.
+
+1. Concise and Focused Responses: Provide direct answers, avoiding lengthy, irrelevant details. The core of the response should be substantial and address the prompt directly.
+2. Avoid Bloat: Do not over-explain or include unnecessary information.
+3. Appropriate Detail Level: Provide the correct amount of detail as implied or directly requested by the prompt. Avoid giving too much or too little information.
+
+Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. Provide in-depth explanations and relevant details. Write in clear, simple language. Don't overcomplicate. Stay on topic; don't ramble or go on  a tangent. Have a proper logical flow and high clarity. Organize the notes in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability.
+
+
+
+
+
+
+
+
+# With units:
+You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # <exact question number, say Q.4 A>: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit I Attacks on Computers and Computer Security: Introduction, The need for security, Security approaches, Principles of security, Types of Security attacks, Security services, Security Mechanisms, A model for Network Security
+
+
+You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # <exact question number, say Q.4 A>: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit II Cryptography-Concepts and Techniques: Introduction, plain text and cipher text, substitution techniques, transposition techniques, encryption and decryption, symmetric and asymmetric key cryptography, stenography, key range and key size, possible types of attacks.
+
+
+
+
+Generate comprehensive, detailed, and well-structured notes from the provided Ansys electromagnetics course PPT content. The notes should have a lot of depth and detail, covering all key concepts, principles, equations, and examples presented in the PPT. Ensure the notes are accurate, clear, and organized logically. The notes should primarily use Markdown formatting, but feel free to embed/use HTML if needed for better presentation of equations or other elements.
+
+
+
+
+Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading. Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements.
+
+
+
+Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename. The unit number H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+
+
+Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename. The unit number H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Embed/use HTML if needed for better presentation of equations or other elements.
+
+
+
+

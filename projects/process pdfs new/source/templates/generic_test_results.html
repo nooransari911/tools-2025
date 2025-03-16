@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test results</title>
+
+    <style>
+            body {
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: left;
+            padding-left: 40px;
+            min-height: 100vh;
+            background-color: #000000; /* Dark background */
+            color: #eee; /* Light text color */
+        }
+
+
+        h1 {
+            text-align: left;
+            margin-bottom: 80px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: #00ffff; /* Cyan heading */
+        }
+
+        h2 {
+            text-align: left;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        h4 {
+            text-align: left;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ffffff;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333333;
+            color: rgb(255, 0, 128);
+        }
+
+        td {
+            background-color: #282c34;
+            color: #ffffff;
+        }
+
+        .summary {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #00ff99;
+        }
+
+
+        #status {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+
+
+<body>
+
+      <h1>Test Results</h1>
+      <h2 id="h2-element-0"></h2>
+      <h2 id="h2-element-1"></h2>
+
+
+      <table id="table0">
+            <thead>
+                <tr>
+                    <th>{{ thleft }}</th>
+                    <th>{{ thright }}</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody0">
+                <!-- Table rows will be dynamically inserted here -->
+            </tbody>
+      </table>
+
+
+      <table id="table1">
+            <thead>
+                <tr>
+                    <th>{{ thleft }}</th>
+                    <th>{{ thright }}</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody1">
+                <!-- Table rows will be dynamically inserted here -->
+            </tbody>
+      </table>
+
+
+
+
+      <div class="summary" id="summaryText">Summary: Loading...</div>
+
+            <script>
+                var directory = "{{ directory }}";
+                var route = "{{ route }}";
+
+
+                fetch(route)
+                    .then(response => response.json())
+                    .then(jsonData => {
+                        populateTable(jsonData); // Pass the JSON data to populateTable
+                    })
+                    .catch(error => console.error('Error fetching JSON:', error));
+
+                document.getElementById('h2-element-0').textContent = "Target for list PROCESS_L0" + jsonData.L0_target;
+                document.getElementById('h2-element-1').textContent = "Target for list PROCESS_L1" + jsonData.L1_target;
+
+
+
+
+                // Function to populate the table with the detailed output
+                function populateTable(jsonData) {
+                    const tableBody = document.getElementById('tableBody');
+
+                    jsonData.detailed_output.forEach(entry => {
+                        const splitEntry = entry.split(': ');
+                        const request = splitEntry[0].trim();
+                        const status = splitEntry[1].trim();
+
+                        const row = `
+                            <tr>
+                                <td>${request}</td>
+                                <td>${status}</td>
+                            </tr>
+                        `;
+
+                        tableBody.innerHTML += row;
+                    });
+
+                    // Set the summary text
+                    document.getElementById('summaryText').textContent = "Summary: " + jsonData.summary;
+                }
+
+                // Call the split function when the page loads
+                window.onload = split;
+            </script>
+
+</body>
+
+
+
+
+
+</html>

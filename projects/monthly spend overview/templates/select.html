@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Select year/month</title>
+  <style>
+    body {
+      font-family: 'Source Code Pro', monospace;
+      background-color: #000000; /* Dark background */
+      color: #eee; /* Light text color */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem; /* Add some breathing room around the entire page */
+    }
+
+    .container {
+      background-color: #1e1e1e; /* Darker grey background */
+      padding: 50px 60px; /* Increase padding for more spacious feel */
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Darker shadow */
+      text-align: center;
+    }
+
+    h1 {
+      color: #00ffff; /* Softer cyan than rgb (0, 255, 255)*/
+      font-size: 2.5rem; /* Make the heading larger */
+      letter-spacing: 6px;  /* Increases spacing by 6 pixels */
+      margin-bottom: 80px;  /* Increase spacing below heading */
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 1.1rem; /* Make labels a bit larger */
+    }
+
+    select {
+      width: 100%;
+      padding: 14px 16px; /* Increase padding within select boxes */
+      border: 1px solid #555; /* Darker border */
+      border-radius: 6px;
+      margin-bottom: 25px;  /* Increase spacing between select elements */
+      background-color: #2b2b2b; /* Dark select background */
+      color: #eee;
+      font-size: 1.05rem; /* Slightly larger font size */
+    }
+
+    input[type="submit"] {
+      background-color: rgb(255, 0, 128); /* #f06292 is softer magenta than rgb (255, 0, 128)*/
+      color: white;
+      padding: 14px 32px; /* Increase button padding */
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem; /* Make the button text a bit larger */
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #ec407a; /* Slightly darker softer magenta on hover*/
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Select year/month</h1>
+    <form method="POST" action="/">
+      <label for="option">Select Option:</label>
+      <select name="option" id="option">
+        <option value="month">Month</option>
+        <option value="year">Year</option>
+      </select><br><br>
+
+      <label for="year">Year:</label>
+      <select name="year" id="year">
+        {% for year in years %}
+          <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+      </select><br><br>
+
+      <label for="month">Month:</label>
+      <select name="month" id="month">
+        {% for month in months %}
+          <option value="{{ month }}">{{ month }}</option>
+        {% endfor %}
+      </select><br><br>
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory Selector</title>
+    <style>
+        body {
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000000; /* Dark background */
+            color: #eee; /* Light text color */
+        }
+
+        form {
+            background-color: #1e1e1e; /* Darker grey for form background */
+            padding: 80px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Darker shadow */
+            width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 80px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: cyan; /* Cyan heading */
+        }
+
+        h2 {
+            text-align: left;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 4px;  /* Increases spacing by 4 pixels */
+            color: rgb(255, 0, 128); /* Magenta heading */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 24px);
+            padding: 20px;
+            margin-bottom: 80px;
+            border: 1px solid #555; /* Darker border */
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #2b2b2b; /* Dark input background */
+            color: #eee;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(255, 0, 128); /* Magenta submit button */
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(220, 0, 108); /* Darker magenta on hover */
+        }
+
+        .response {
+            margin-top: 20px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <h1>Enter Absolute Path of Directory</h1>
+        <label for="dir"><h2>Enter directory</h2></label>
+        <input type="text" name="dir" id="dir" required/>
+        <input type="submit" value="Submit">
+    </form>
+
+
+
+
+    <br><br><br><br>
+    <h2>{{ heading }}</h2>
+    {% if dir %}
+        <h4>{{ dir }}</h4>
+    {% endif %}
+
+
+    <br><br><br><br>
+    {% if files_info %}
+        <h2>List of files uploaded to GenAI</h2>
+        {% for file_info in files_info %}
+            <h4>{{ file_info }}</h4>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

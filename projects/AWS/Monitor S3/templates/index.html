@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>S3 Inventory</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+    #plotly-chart {
+        width: 90%; /* Make chart take up 90% of container width */
+        margin: 40px auto; /* Center the chart horizontally */
+    }
+
+    table {
+        width: 80%; /* Adjust table width */
+        margin-bottom: 30px; /* Add space below the table */
+    }
+
+    .container {
+        padding: 40px; /* Add padding to the container */
+    }
+
+    /* Example to make table text larger */
+    table th, table td {
+        font-size: 16px;
+    }
+</style>
+</head>
+<body class="bg-dark text-light">
+<div class="container">
+    <h1>S3 Inventory Visualizer</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv">
+        <input type="submit" value="Upload">
+    </form>
+
+    {% if table %}
+        <h2>Aggregated Data</h2>
+        {{ table | safe }}
+    {% endif %}
+
+    <div id="plotly-chart"></div>  <!--- Give the div a specific ID -->
+    <script>
+        var graphJSON = {{ graph_json | safe }};
+        if (graphJSON && Object.keys(graphJSON).length !== 0) { // Check if it's not empty
+          Plotly.newPlot('plotly-chart', graphJSON);  // Target the div with the correct ID
+        }
+    </script>
+
+</div>
+</body>
+</html>
