@@ -41,7 +41,8 @@ echo "$(date '+%Y-%m-%d %H:%M:%S') Pushing main dir"
 ssh -T git@github.com
 git add .gitignore
 git add .
-git remote add origin git@github.com:nooransari911/tools-2025.git
+git remote set-url origin git@github.com:nooransari911/tools-2025.git
+# git remote add origin git@github.com:nooransari911/tools-2025.git
 echo "Starting commit;"
 git commit -m "$commit_message_tools"
 echo ""
