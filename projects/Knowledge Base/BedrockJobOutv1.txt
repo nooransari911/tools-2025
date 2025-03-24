@@ -1,0 +1,37 @@
+RECORD-ID-f59f28d6d5e1ed3e80a6340e4ff5a5d0 :  This is a collection of lecture/course materials about antenna theory and electromagnetics, covering three main topics:
+
+1. Half-Wave Dipole Antenna Design - Basic principles and characteristics of dipole antennas
+2. Antenna Types - Covering horn, Yagi, slot and rectangular patch antennas
+3. Antenna Theory topics:
+   - Antenna figures of merit (efficiency, bandwidth etc.)
+   - Theory of radiation (electromagnetic principles)
+   - Two-antenna systems (transmission between antennas)
+
+It appears to be university-level electromagnetic/RF engineering course material, drawing from standard textbooks in the field like Balanis' Antenna Theory and Pozar's Microwave Engineering.
+
+
+
+RECORD-ID-281e55ad9d58d4b92b60c4c7813c47ee :  This is electromagnetic theory content from an Ansys training course. It covers four main topics:
+
+# Key Topics
+
+1. Maxwell's Equations and Constitutive Relations 
+- Core electromagnetic theory equations
+- How materials interact with electromagnetic fields
+
+2. Wave Equations
+- Mathematical description of electromagnetic wave propagation
+- Derivations and solutions for electromagnetic waves
+
+3. Electromagnetic Wave Propagation
+- How electromagnetic waves behave and move through space
+- Phase velocity, wavelength, and other wave properties
+
+4. Boundary Conditions
+- How electromagnetic fields behave at interfaces between different materials
+- Rules governing field behavior at boundaries
+
+The material appears to be university/graduate level electromagnetic theory intended as foundation for using Ansys electromagnetic simulation software.
+
+
+

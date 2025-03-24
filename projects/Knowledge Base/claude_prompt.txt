@@ -1,0 +1,31 @@
+an aws service creates output file in s3. the path of file is like: bucket-name/some-random-string/filename. everytime the service is run, the service uses a new random string and uses that as prefix to create a new file.
+
+write a series of python function to get the most recently created file. follow single respnsbility principle as much as possible, though its not a strict requirement. any s3 api operation must have a similar function signature like this function for s3 put operation (though its not a strict requirement):
+
+def s3_put_operation (S3Client, role_arn, data):
+    """Execute S3 Put operation on data; Returns (Success?True:False, Head_Object)"""
+    
+    try:
+        # assume_role (role_arn, "ClaudeS3Session")
+        # s3_client = boto3.client('s3')
+        s3_put_op = S3Client.put_object(
+            Bucket=S3_SRC,
+            Key=INPUT_JSONL_FILE_NAME,
+            Body=data
+        )
+        s3_head_op = S3Client.head_object(
+            Bucket=S3_SRC,
+            Key=INPUT_JSONL_FILE_NAME
+        )
+
+        
+        return (True, s3_head_op)
+
+    except Exception as e:
+        error_msg = f"PutObject verification failed: {e}"
+        print(error_msg)
+        return (False, error_msg)
+
+
+
+Names/identifiers must be like HelloWorld

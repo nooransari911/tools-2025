@@ -19,6 +19,7 @@ static-manifest*
 /projects/resume/spam.sh
 /projects/AWS/S3 Static Website/*.md
 **/automation
+/projects/Knowledge Base/files/
 /projects/Knowledge Base/*.md
 /projects/Knowledge Base/*.log
 /projects/Knowledge Base/README.md

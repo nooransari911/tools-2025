@@ -183,8 +183,8 @@ def main():
         video_ext = input_video_s3_uri.split(".")[-1]
         # prompt = "What is an API. Explain in detail."
         try:
-            prompt = input('Enter a prompt: ')
-            # prompt = "what is an API. Explain WHAT is an API"
+            # prompt = input('Enter a prompt: ')
+            prompt = "Explain why S3 is the best object storage in its class"
 
 
         except KeyboardInterrupt: #still can be raised
@@ -212,12 +212,15 @@ def main():
             # response_body = json.loads (response.get ('body').read())
             raw_body = response ['body'].read()
             response ['body'] = json.loads(raw_body.decode('utf-8'))  # Decode as UTF-8 and parse JSON
+            # print (json.dumps (response, indent=4))
 
 
-
-            # print (type (response))
+            print ("Output size: ", response ["ResponseMetadata"] ["HTTPHeaders"] ["x-amzn-bedrock-output-token-count"])
+            # print (type (response ["body"]))
+            # print (dir  (response ["body"]))
+            # print ((response ["body"]))
+            # print ((response ["body"].__dict__))
             # print (dir  (response))
-            print (json.dumps (response, indent=4))
             print (response ["body"] ["choices"] [0] ["text"])
             # print(raw_body)
 

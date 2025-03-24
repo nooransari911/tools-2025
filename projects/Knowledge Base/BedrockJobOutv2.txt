@@ -1,0 +1,41 @@
+RECORD-ID-f59f28d6d5e1ed3e80a6340e4ff5a5d0 :  This is a comprehensive set of lecture notes covering antenna theory and electromagnetics across several units. It covers:
+
+1. Half-Wave Dipole Antenna Design - Core principles and characteristics
+2. Common Antenna Types - Horn, Yagi, Slot, and Rectangular Patch antennas
+3. Two-Antenna Systems - Basics of wireless communication between antennas
+4. Antenna Figures of Merit - Performance metrics like efficiency and bandwidth 
+5. Theory of Radiation - Fundamental electromagnetic theory behind antenna operation
+
+The material appears to be from an advanced engineering/physics course, likely at undergraduate or graduate level, focused on antenna theory and electromagnetic radiation.
+
+
+
+RECORD-ID-281e55ad9d58d4b92b60c4c7813c47ee :  # Electromagnetic Wave Core Topics
+
+This content appears to be the detailed course material from an advanced electromagnetic waves course, covering 4 key areas:
+
+1. Maxwell's Equations and Wave Equations
+- Core electromagnetic theory equations
+- Constitutive relations
+- Wave equations derivation and solutions
+
+2. Wave Propagation & Properties
+- Phasor notation for analyzing waves
+- Wave solutions and behavior
+- Phase velocity, wavelength
+- Vector potentials
+
+3. EM Field Boundary Behaviors 
+- How fields behave at material boundaries
+- Boundary conditions between different materials
+- Reflection and transmission
+
+4. Mathematical Tools
+- Complex numbers and phasor notation
+- Vector calculus applications
+- Wave equation solutions methodology
+
+This forms core theoretical groundwork needed to understand electromagnetic wave behavior and interactions with materials.
+
+
+

@@ -1,0 +1,8 @@
+write a theory note. topics are explicitly identified. requirements:
+1. core focus should be core prinicples (what its based on), core of what it provides and their importance. Ex., cryptogrpahic digital signatures. focus on: its based (technically can be based) on asymm cryptography; entity signs (encrypts) with its private key, someone else can verify it by decrypting it with public key. it provides non-repudiation, integrity, authentication. its important because it provides proof of origin/authenticity, which is the foundation for all of cybersecurity. all access control, encryption, etc. fails without strong authentication
+2. use simple, natural, human-like language
+3. maintain proper straightforward flow. have good flow and clarity
+4. have balanced depth and length
+5. structure it in markdown properly. headings start from level h1. create sections and sub sections with headings with appropriate levels as needed
+
+topics: digital signature with asymm crypto. encryption (AES, DES)

@@ -11,7 +11,7 @@ import * as fs from 'fs';
         JwtModule.register({
             privateKey: fs.readFileSync('./private/private_key.pem'),  // Load private key
             publicKey: fs.readFileSync('./private/public_key.pem'),  // Load public key
-            signOptions: { algorithm: 'RS256', expiresIn: '20s' }, // Use RS256 for signing
+            signOptions: { algorithm: 'RS256', expiresIn: '20s' }, // Use RS256 (RSA+SHA) for signing; You can also use ES256 (ECC P-256 (eq to RSA3072)+SHA-256)
     }),
     ],
     controllers: [AuthController],
