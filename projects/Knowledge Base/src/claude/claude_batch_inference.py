@@ -2,17 +2,15 @@ from datetime import datetime
 import re
 
 from claude_chatbot import *
+import latest_job_file 
 import secrets
 import ast
 
 load_dotenv()  # Load environment variables first
 
 
-ROLE_ARN="arn:aws:iam::677276075874:role/AWSBedrockFullAccesstoLambdaRole"
-S3_SRC = os.getenv ("S3_SOURCE_BUCKET")
-INPUT_JSONL_FILE_NAME = os.getenv ("INPUT_JSONL_FILE_NAME")
-S3_DEST = os.getenv ("S3_DESTINATION_BUCKET")
-OUTPUT_JSONL_FILE_NAME = os.getenv ("OUTPUT_JSONL_FILE_NAME")
+
+
 
 """
 Get 100 dummy files:
@@ -185,7 +183,7 @@ def prepare_input_jsonl_file (prompt, dir, model_id, system_prompts, max_op_toke
 
 def create_jsonl_file(data_list):
     """
-    Takes a list and creates a JSONL file where each line is an element from the list.
+    (Deprecated) Takes a list and creates a JSONL file where each line is an element from the list.
     
     Args:
         data_list (list): List of objects that can be serialized to JSON
@@ -475,7 +473,7 @@ def load_mode ():
     )
 
 
-    create_jsonl_file (records)
+    # create_jsonl_file (records)
 
     # print ("\n\nLoaded JSONL File")
     sys.exit (0)
@@ -596,6 +594,8 @@ def print_help():
     print("        List jobs status\n")
     print("    python3 script.py load")
     print("        Load data from regular files (text) into batch inference job input file")
+    print("    python3 script.py fetch") 
+    print("        Fetch the latest job output file from S3")
     print("    python3 script.py clean <input_file> <output_file>")
     print("        Load data from batch inference job output file into human-readable text file\n")
     print("    python3 script.py dev")
@@ -614,6 +614,8 @@ if __name__ == "__main__":
         jobs_status()
     elif num_args == 2 and sys.argv[1] == "load":
         load_mode()
+    elif num_args == 2 and sys.argv[1] == "fetch":
+        latest_job_file.DownloadLatestS3FileMain ()
     elif num_args == 4 and sys.argv[1] == "clean":
         extract_text_from_jsonl(sys.argv[2], sys.argv[3])
     elif num_args == 2 and sys.argv[1] == "dev":

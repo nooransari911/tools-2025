@@ -7,12 +7,15 @@ import readline
 
 
 import claude_chatbot
-from claude_batch_inference import ROLE_ARN, S3_DEST, OUTPUT_JSONL_FILE_NAME
 import boto3
 from botocore.client import Config
 from botocore.exceptions import ClientError
 from dotenv import load_dotenv
 load_dotenv ()
+
+
+
+
 
 
 def ListBucketObjects(S3Client, bucket_name, prefix=""):
@@ -85,7 +88,7 @@ def FindLatestFolder(objects):
         key = obj['Key']
         parts = key.split('/')
         if len(parts) >= 2:
-            folder = parts[0] + '/' + parts[1] + '/'
+            folder = parts[0] + '/'
             if folder not in folders:
                 folders[folder] = []
             folders[folder].append(obj)
@@ -181,13 +184,21 @@ def DownloadLatestS3File(S3Client, bucket_name, local_path="./latest_file"):
         latest_file_key = result
         
         # Download the file
-        S3Client.download_file(
+        S3Client.download_file (
             Bucket=bucket_name,
             Key=latest_file_key,
             Filename=local_path
         )
-        print ("Success")        
-        return (True, local_path)
+
+        s3_head_op = S3Client.head_object(
+            Bucket=bucket_name,
+            Key=latest_file_key
+        )
+
+
+        s3_head_op ["Key"] = latest_file_key
+        # print ("Success")        
+        return (True, s3_head_op)
         
     except Exception as e:
         error_msg = f"DownloadLatestS3File failed: {e}"
@@ -196,8 +207,8 @@ def DownloadLatestS3File(S3Client, bucket_name, local_path="./latest_file"):
 
 
 
-def dev_main ():
-    claude_chatbot.assume_role (ROLE_ARN, "DownloadLatestJobFileSession")
+def DownloadLatestS3FileMain ():
+    claude_chatbot.assume_role (claude_chatbot.ROLE_ARN, "DownloadLatestJobFileSession")
     S3Client = boto3.client ("s3")
     
     # _, file_key = GetLatestS3File (
@@ -206,17 +217,39 @@ def dev_main ():
     # )
 
 
-    res = DownloadLatestS3File (
+    is_success, response = DownloadLatestS3File (
         S3Client,
-        S3_DEST
+        claude_chatbot.S3_DEST
     )
 
-    print (res)
+    if is_success:
+        # Extract key information from successful response
+        key                    =    response ["Key"]
+        accept_ranges          =    response ["AcceptRanges"]
+        last_modified          =    response ["LastModified"]
+        content_length         =    response ["ContentLength"]
+        etag                   =    response ["ETag"]
+        content_type           =    response ["ContentType"]
+        server_side_encryption =    response ["ServerSideEncryption"]
+        metadata               =    response ["Metadata"]
+
+        # Print the most important information
+        print(f"\n{'Key:':<15} {key}"
+              f"\n{'Size:':<15} {content_length} bytes"
+              f"\n{'Type:':<15} {content_type}"
+              f"\n{'Last Modified:':<15} {last_modified.isoformat()}"
+              f"\n{'ETag:':<15} {etag}")
+
+
+
+def dev_main ():
+    pass
+
 
 
 
 def main ():
-    pass
+    DownloadLatestS3FileMain ()
 
 
 

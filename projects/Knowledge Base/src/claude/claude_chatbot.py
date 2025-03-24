@@ -22,6 +22,17 @@ load_dotenv()  # Load environment variables first
 
 
 
+ROLE_ARN="arn:aws:iam::677276075874:role/AWSBedrockFullAccesstoLambdaRole"
+S3_SRC = os.getenv ("S3_SOURCE_BUCKET")
+INPUT_JSONL_FILE_NAME = os.getenv ("INPUT_JSONL_FILE_NAME")
+S3_DEST = os.getenv ("S3_DESTINATION_BUCKET")
+OUTPUT_JSONL_FILE_NAME = os.getenv ("OUTPUT_JSONL_FILE_NAME")
+
+
+
+
+
+
 
 def load_system_instructions():
     instructions_file_path = os.getenv('SYSTEM_INSTRUCTIONS_PATH')
@@ -513,7 +524,7 @@ def run_chatbot():
 
 
     num_args = len(sys.argv)
-    if num_args == 2 and sys.argv[1] == "im":
+    if num_args >= 2 and sys.argv[1] == "im":
         initial_prompt_string = "this is the first prompt. this is used to provide images to you. tell me how many images do you see. don't tell me anything else"
         initial_prompt = {
             "type": "text",
@@ -547,22 +558,31 @@ def run_chatbot():
 
 
 
-    if num_args == 2 and sys.argv[1] == "one":
+    if num_args >= 2 and sys.argv[1] == "one":
         print ("Prompt from file mode;\n")
-        prompt_file_path = "./claude_prompt.txt"
-        output_file_path = "./claude_output_file.md"
+        prompt_file_path = sys.argv [2]
+        text_file_path   = sys.argv [3]
+        output_file_path = sys.argv [4]
 
 
         
         if not os.path.isfile (prompt_file_path):
             print (f"No such file as {prompt_file_path}\n\n")
 
+        if not os.path.isfile (text_file_path):
+            print (f"No such file as {text_file_path}\n\n")
+
+        if output_file_path is None:
+            print (f"No output file path provided\n\n")
 
         else:
-            with open (prompt_file_path, "r") as prompt_file:
+            with open (prompt_file_path, "r") as prompt_file, open (text_file_path, "r") as text_file:
                 prompt_file_string = prompt_file.read ()
                 prompt_file_message = prepare_message (prompt_file_string, "user")
                 messages.append (prompt_file_message)
+                text_file_string = f"Text file:\n\n{text_file.read ()}"
+                text_file_message = prepare_message (text_file_string, "user")
+                messages.append (text_file_message)
 
                 prompt_file_response = generate_response (bedrock_runtime, model_id, system_prompts, messages)
                 # print ("\n\nResponse body dump: ")

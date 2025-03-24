@@ -1,0 +1,6 @@
+consider this article. rewrite it. requirements (important ones are explicitly identified as such):
+1. most importnat: its should not appear AI-generated. it should appear human-written. so use natural language, simple plain language.
+2. Improve flow and clarity if needed
+3. correct anything technically incorrect/inaccurate/misleading
+4. importnat: avoid confusion in reader
+5. important: in an previous attempt, you made it too shallow and removed almost all detail. i didn't tell you to make it shorter or remove details. don't do that. preserve as much as possible verbatim
