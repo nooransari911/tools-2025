@@ -1,0 +1,11 @@
+consider this code. this contains code from multiple files and applications. at the top of each file, i have included <note></note> tag that has brief description of the app. study and understand all these apps. This file is extremely long and i will hit rate limits if I give it to you as-is, so at certain places i have removed some lines of code. When i remove code, it is indicated by <trim></trim> tag. this tag provides a description for what has been removed. it may also refer to another similar code elsewhere here; do resolve that out.
+
+You have code, but still at a high-level, here is what I have done:
+- Developed AI chatbots using various AI models: Claude 3.7 Sonnet, Gemini 2.0 series, and DeepSeek-R1 models
+- Built parallel document processing system using Python multiprocessing with file-level/directory-level parallelism (gemini_generate.py and one_context.py apps)
+- Created modular components with strictly following single responsibility principle for processing inputs/outputs [loading/providing/preparing files in various ways (sometimes as a list of strings, sometimes as a list of custom classes, sometimes as a single string) to different models, handling the model responses in various ways (adding it to conversation history, printing it, writing it to files)], preparing model requests (particularly for the deepseek/claude models), configuring system (configuring the API key, model name, system instrcutions, etc. as relevant)
+- For the aws ones, worked with aws APis, services and inffrastructure; set up IAM roles and used S3 API; used batch processing service in aws (batch inference job): setting it up, starting it, processing its results
+
+
+
+produce four outputs: three for the actual resume, other a more verbose, detailed and functionally complete version for a reference resume (this reference resume will help me prepare for interview). for the three outputs for actual resumes: they have diff length, style, level of detail, suittable for these domains: software dev (broad, nothing specific), cloud, AI/ML. You should not produce entire resume, just the the part that I will add to resumes. Have clear and explicit separation with excess newlines between the outputs.

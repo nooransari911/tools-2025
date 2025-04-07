@@ -11,6 +11,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
+load_dotenv ("/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/.env")
 
 
 
@@ -92,51 +93,6 @@ def configure_bedrock_runtime():
         print(f"Error creating Bedrock runtime: {e}")
         print("Check your AWS credentials and region configuration.")
         sys.exit(1)  # Exit, as we can't proceed without a client
-
-
-def configure_bedrock():
-    """Configures and returns the Bedrock runtime."""
-
-    # Load .env, but don't require it (AWS credentials might be configured differently)
-    load_dotenv()
-
-    # Use environment variables if available, otherwise let boto3 use default credential chain
-    region_name = os.getenv("AWS_REGION_NAME")  # Or use a default region like "us-east-1"
-    # Access key and secret key are not needed if IAM roles or profiles are properly configured.
-
-    # Bedrock config.  Crucial for long generation tasks.
-    custom_config = Config(
-        connect_timeout=840,
-        read_timeout=840,
-        region_name=region_name,  # Always a good idea to specify the region
-        #  retries = {  # Optional: Configure retry behavior
-        #      'max_attempts': 5, # Example: Retry up to 5 times.
-        #      'mode': 'standard'
-        #  }
-    )
-    try:
-        role_arn = "arn:aws:iam::677276075874:role/AWSBedrockFullAccesstoLambdaRole"  # Replace with your role ARN
-        session_name = "DeepseekR1Session"
-        credentials = assume_role (role_arn, session_name)
-
-        # Create a Bedrock using the temporary credentials
-        bedrock = boto3.client (
-            service_name='bedrock',
-            aws_access_key_id=credentials['AccessKeyId'],
-            aws_secret_access_key=credentials['SecretAccessKey'],
-            aws_session_token=credentials['SessionToken']
-        )
-        return bedrock
-    except Exception as e:
-        print(f"Error creating Bedrock: {e}")
-        print("Check your AWS credentials and region configuration.")
-        sys.exit(1)  # Exit, as we can't proceed without a
-
-
-
-
-
-
 
 def load_directory_files(directory_path):
     """
@@ -278,22 +234,14 @@ def generate_response(bedrock_runtime, model_id, system_prompts, messages):
 
 def run_chatbot():
     """Main chatbot loop."""
-    load_dotenv()  # Load environment variables first
+    load_dotenv("/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/.env")  # Load environment variables first
 
     role_arn = "arn:aws:iam::677276075874:role/AWSBedrockFullAccesstoLambdaRole"  # Replace with your role ARN
     session_name = "DeepseekR1Session"
     credentials = assume_role (role_arn, session_name)
 
     bedrock_runtime = configure_bedrock_runtime ()
-    bedrock = configure_bedrock ()
-    files_string = load_directory_files ("./files/")
-
-    # print (bedrock.list_foundation_models ())
-    # print (bedrock.get_foundation_model (modelIdentifier="deepseek.r1-v1:0"))
-
-
-
-
+    # files_string = load_directory_files ("./files/")
 
     model_id = "us.deepseek.r1-v1:0"  # Or get from env, but a default is useful
     system_prompts = load_system_instructions()

@@ -11,7 +11,7 @@ import boto3
 from botocore.client import Config
 from botocore.exceptions import ClientError
 from dotenv import load_dotenv
-load_dotenv ()
+load_dotenv ("/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/.env")
 
 
 

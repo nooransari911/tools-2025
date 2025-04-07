@@ -1,652 +1,1528 @@
-2025-03-10 19:30:44 : DEBUG : Entering main
-2025-03-10 19:30:44 : DEBUG : Exiting main
-2025-03-10 19:30:44 : DEBUG : Using selector: EpollSelector
-2025-03-10 19:30:44 : CRITICAL : A new run;
-2025-03-10 19:30:44 : CRITICAL : <run>
-2025-03-10 19:30:47 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 19:31:17 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 19:31:17 : DEBUG : Entering parallelize_processing
-2025-03-10 19:31:18 : DEBUG : Entering process_record
-2025-03-10 19:31:18 : DEBUG : Entering gen_response
-2025-03-10 19:31:18 : DEBUG : Entering process_record
-2025-03-10 19:31:18 : DEBUG : Entering gen_response
-2025-03-10 19:31:18 : DEBUG : Entering process_record
-2025-03-10 19:31:18 : DEBUG : Entering process_record
-2025-03-10 19:31:18 : DEBUG : Entering gen_response
-2025-03-10 19:31:18 : DEBUG : Entering gen_response
-2025-03-10 19:31:22 : DEBUG : Exiting gen_response
-2025-03-10 19:31:22 : DEBUG : Exiting process_record
-2025-03-10 19:31:46 : DEBUG : Exiting gen_response
-2025-03-10 19:31:46 : DEBUG : Exiting process_record
-2025-03-10 19:31:46 : DEBUG : Exiting gen_response
-2025-03-10 19:31:46 : DEBUG : Exiting process_record
-2025-03-10 19:31:49 : DEBUG : Exiting gen_response
-2025-03-10 19:31:49 : DEBUG : Exiting process_record
-2025-03-10 19:31:49 : DEBUG : Entering collect_results_from_queue
-2025-03-10 19:31:49 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 19:31:49 : DEBUG : Exiting parallelize_processing
-2025-03-10 19:31:49 : CRITICAL : </run>
-2025-03-10 19:47:42 : DEBUG : Entering main
-2025-03-10 19:47:42 : DEBUG : Exiting main
-2025-03-10 19:47:42 : DEBUG : Using selector: EpollSelector
-2025-03-10 19:47:42 : CRITICAL : A new run;
-2025-03-10 19:47:42 : CRITICAL : <run>
-2025-03-10 19:47:45 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 19:47:53 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 19:47:53 : DEBUG : Entering parallelize_processing
-2025-03-10 19:47:53 : DEBUG : Entering process_record
-2025-03-10 19:47:53 : DEBUG : Entering gen_response
-2025-03-10 19:47:53 : DEBUG : Entering process_record
-2025-03-10 19:47:53 : DEBUG : Entering gen_response
-2025-03-10 19:47:53 : DEBUG : Entering process_record
-2025-03-10 19:47:53 : DEBUG : Entering process_record
-2025-03-10 19:47:53 : DEBUG : Entering gen_response
-2025-03-10 19:47:53 : DEBUG : Entering gen_response
-2025-03-10 19:47:57 : DEBUG : Exiting gen_response
-2025-03-10 19:47:57 : DEBUG : Exiting process_record
-2025-03-10 19:48:19 : DEBUG : Exiting gen_response
-2025-03-10 19:48:19 : DEBUG : Exiting process_record
-2025-03-10 19:48:26 : DEBUG : Exiting gen_response
-2025-03-10 19:48:26 : DEBUG : Exiting process_record
-2025-03-10 19:48:36 : DEBUG : Exiting gen_response
-2025-03-10 19:48:36 : DEBUG : Exiting process_record
-2025-03-10 19:48:36 : DEBUG : Entering collect_results_from_queue
-2025-03-10 19:48:36 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 19:48:36 : DEBUG : Exiting parallelize_processing
-2025-03-10 19:48:36 : CRITICAL : </run>
-2025-03-10 19:49:03 : DEBUG : Entering main
-2025-03-10 19:49:03 : DEBUG : Exiting main
-2025-03-10 19:49:03 : DEBUG : Using selector: EpollSelector
-2025-03-10 19:49:03 : CRITICAL : A new run;
-2025-03-10 19:49:03 : CRITICAL : <run>
-2025-03-10 19:49:04 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 19:49:09 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 19:49:09 : DEBUG : Entering parallelize_processing
-2025-03-10 19:49:09 : DEBUG : Entering process_record
-2025-03-10 19:49:09 : DEBUG : Entering gen_response
-2025-03-10 19:49:09 : DEBUG : Entering process_record
-2025-03-10 19:49:09 : DEBUG : Entering gen_response
-2025-03-10 19:49:09 : DEBUG : Entering process_record
-2025-03-10 19:49:09 : DEBUG : Entering gen_response
-2025-03-10 19:49:09 : DEBUG : Entering process_record
-2025-03-10 19:49:09 : DEBUG : Entering gen_response
-2025-03-10 19:49:13 : DEBUG : Exiting gen_response
-2025-03-10 19:49:13 : DEBUG : Exiting process_record
-2025-03-10 19:49:39 : DEBUG : Exiting gen_response
-2025-03-10 19:49:39 : DEBUG : Exiting process_record
-2025-03-10 19:49:41 : DEBUG : Exiting gen_response
-2025-03-10 19:49:41 : DEBUG : Exiting process_record
-2025-03-10 19:49:43 : DEBUG : Exiting gen_response
-2025-03-10 19:49:43 : DEBUG : Exiting process_record
-2025-03-10 19:49:43 : DEBUG : Entering collect_results_from_queue
-2025-03-10 19:49:43 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 19:49:43 : DEBUG : Exiting parallelize_processing
-2025-03-10 19:49:43 : CRITICAL : </run>
-2025-03-10 19:51:34 : DEBUG : Entering main
-2025-03-10 19:51:34 : DEBUG : Exiting main
-2025-03-10 19:51:34 : DEBUG : Using selector: EpollSelector
-2025-03-10 19:51:34 : CRITICAL : A new run;
-2025-03-10 19:51:34 : CRITICAL : <run>
-2025-03-10 19:51:37 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 19:51:44 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 19:51:44 : DEBUG : Entering parallelize_processing
-2025-03-10 19:51:44 : DEBUG : Entering process_record
-2025-03-10 19:51:44 : DEBUG : Entering gen_response
-2025-03-10 19:51:44 : DEBUG : Entering process_record
-2025-03-10 19:51:44 : DEBUG : Entering gen_response
-2025-03-10 19:51:44 : DEBUG : Entering process_record
-2025-03-10 19:51:44 : DEBUG : Entering gen_response
-2025-03-10 19:51:44 : DEBUG : Entering process_record
-2025-03-10 19:51:44 : DEBUG : Entering gen_response
-2025-03-10 19:51:48 : DEBUG : Exiting gen_response
-2025-03-10 19:51:48 : DEBUG : Exiting process_record
-2025-03-10 19:52:17 : DEBUG : Exiting gen_response
-2025-03-10 19:52:17 : DEBUG : Exiting process_record
-2025-03-10 19:52:18 : DEBUG : Exiting gen_response
-2025-03-10 19:52:18 : DEBUG : Exiting process_record
-2025-03-10 19:52:24 : DEBUG : Exiting gen_response
-2025-03-10 19:52:24 : DEBUG : Exiting process_record
-2025-03-10 19:52:24 : DEBUG : Entering collect_results_from_queue
-2025-03-10 19:52:24 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 19:52:25 : DEBUG : Exiting parallelize_processing
-2025-03-10 19:52:25 : CRITICAL : </run>
-2025-03-10 19:53:50 : DEBUG : Entering main
-2025-03-10 19:53:50 : DEBUG : Exiting main
-2025-03-10 19:53:50 : DEBUG : Using selector: EpollSelector
-2025-03-10 19:53:50 : CRITICAL : A new run;
-2025-03-10 19:53:50 : CRITICAL : <run>
-2025-03-10 19:53:52 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 19:53:57 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 19:53:57 : DEBUG : Entering parallelize_processing
-2025-03-10 19:53:57 : DEBUG : Entering process_record
-2025-03-10 19:53:57 : DEBUG : Entering gen_response
-2025-03-10 19:53:57 : DEBUG : Entering process_record
-2025-03-10 19:53:57 : DEBUG : Entering gen_response
-2025-03-10 19:53:57 : DEBUG : Entering process_record
-2025-03-10 19:53:57 : DEBUG : Entering gen_response
-2025-03-10 19:53:57 : DEBUG : Entering process_record
-2025-03-10 19:53:57 : DEBUG : Entering gen_response
-2025-03-10 19:54:00 : DEBUG : Exiting gen_response
-2025-03-10 19:54:00 : DEBUG : Exiting process_record
-2025-03-10 19:54:09 : DEBUG : Exiting gen_response
-2025-03-10 19:54:09 : DEBUG : Exiting process_record
-2025-03-10 19:54:10 : DEBUG : Exiting gen_response
-2025-03-10 19:54:10 : DEBUG : Exiting process_record
-2025-03-10 19:54:12 : DEBUG : Exiting gen_response
-2025-03-10 19:54:12 : DEBUG : Exiting process_record
-2025-03-10 19:54:12 : DEBUG : Entering collect_results_from_queue
-2025-03-10 19:54:12 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 19:54:12 : DEBUG : Exiting parallelize_processing
-2025-03-10 19:54:12 : CRITICAL : </run>
-2025-03-10 19:57:12 : DEBUG : Entering main
-2025-03-10 19:57:12 : DEBUG : Exiting main
-2025-03-10 19:57:12 : DEBUG : Using selector: EpollSelector
-2025-03-10 19:57:12 : CRITICAL : A new run;
-2025-03-10 19:57:12 : CRITICAL : <run>
-2025-03-10 19:57:14 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 19:57:18 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 19:57:18 : DEBUG : Entering parallelize_processing
-2025-03-10 19:57:18 : DEBUG : Entering process_record
-2025-03-10 19:57:18 : DEBUG : Entering gen_response
-2025-03-10 19:57:18 : DEBUG : Entering process_record
-2025-03-10 19:57:18 : DEBUG : Entering gen_response
-2025-03-10 19:57:18 : DEBUG : Entering process_record
-2025-03-10 19:57:18 : DEBUG : Entering process_record
-2025-03-10 19:57:18 : DEBUG : Entering gen_response
-2025-03-10 19:57:18 : DEBUG : Entering gen_response
-2025-03-10 19:57:20 : DEBUG : Exiting gen_response
-2025-03-10 19:57:20 : DEBUG : Exiting process_record
-2025-03-10 19:57:29 : DEBUG : Exiting gen_response
-2025-03-10 19:57:29 : DEBUG : Exiting process_record
-2025-03-10 19:57:33 : DEBUG : Exiting gen_response
-2025-03-10 19:57:33 : DEBUG : Exiting process_record
-2025-03-10 19:57:34 : DEBUG : Exiting gen_response
-2025-03-10 19:57:34 : DEBUG : Exiting process_record
-2025-03-10 19:57:34 : DEBUG : Entering collect_results_from_queue
-2025-03-10 19:57:34 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 19:57:34 : DEBUG : Exiting parallelize_processing
-2025-03-10 19:57:34 : CRITICAL : </run>
-2025-03-10 19:58:43 : DEBUG : Entering main
-2025-03-10 19:58:43 : DEBUG : Exiting main
-2025-03-10 19:58:43 : DEBUG : Using selector: EpollSelector
-2025-03-10 19:58:43 : CRITICAL : A new run;
-2025-03-10 19:58:43 : CRITICAL : <run>
-2025-03-10 19:58:44 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 19:58:49 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 19:58:49 : DEBUG : Entering parallelize_processing
-2025-03-10 19:58:49 : DEBUG : Entering process_record
-2025-03-10 19:58:49 : DEBUG : Entering gen_response
-2025-03-10 19:58:49 : DEBUG : Entering process_record
-2025-03-10 19:58:49 : DEBUG : Entering gen_response
-2025-03-10 19:58:49 : DEBUG : Entering process_record
-2025-03-10 19:58:49 : DEBUG : Entering gen_response
-2025-03-10 19:58:49 : DEBUG : Entering process_record
-2025-03-10 19:58:49 : DEBUG : Entering gen_response
-2025-03-10 19:59:03 : DEBUG : Exiting gen_response
-2025-03-10 19:59:03 : DEBUG : Exiting process_record
-2025-03-10 19:59:09 : DEBUG : Exiting gen_response
-2025-03-10 19:59:09 : DEBUG : Exiting process_record
-2025-03-10 19:59:10 : DEBUG : Exiting gen_response
-2025-03-10 19:59:10 : DEBUG : Exiting process_record
-2025-03-10 19:59:14 : DEBUG : Exiting gen_response
-2025-03-10 19:59:14 : DEBUG : Exiting process_record
-2025-03-10 19:59:14 : DEBUG : Entering collect_results_from_queue
-2025-03-10 19:59:14 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 19:59:14 : DEBUG : Exiting parallelize_processing
-2025-03-10 19:59:14 : CRITICAL : </run>
-2025-03-10 20:01:25 : DEBUG : Entering main
-2025-03-10 20:01:25 : DEBUG : Exiting main
-2025-03-10 20:01:25 : DEBUG : Using selector: EpollSelector
-2025-03-10 20:01:25 : CRITICAL : A new run;
-2025-03-10 20:01:25 : CRITICAL : <run>
-2025-03-10 20:01:25 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 20:01:31 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 20:01:31 : DEBUG : Entering parallelize_processing
-2025-03-10 20:01:31 : DEBUG : Entering process_record
-2025-03-10 20:01:31 : DEBUG : Entering gen_response
-2025-03-10 20:01:31 : DEBUG : Entering process_record
-2025-03-10 20:01:31 : DEBUG : Entering process_record
-2025-03-10 20:01:31 : DEBUG : Entering gen_response
-2025-03-10 20:01:31 : DEBUG : Entering process_record
-2025-03-10 20:01:31 : DEBUG : Entering gen_response
-2025-03-10 20:01:31 : DEBUG : Entering gen_response
-2025-03-10 20:01:34 : DEBUG : Exiting gen_response
-2025-03-10 20:01:34 : DEBUG : Exiting process_record
-2025-03-10 20:02:04 : DEBUG : Exiting gen_response
-2025-03-10 20:02:04 : DEBUG : Exiting process_record
-2025-03-10 20:02:04 : DEBUG : Exiting gen_response
-2025-03-10 20:02:04 : DEBUG : Exiting process_record
-2025-03-10 20:02:09 : DEBUG : Exiting gen_response
-2025-03-10 20:02:09 : DEBUG : Exiting process_record
-2025-03-10 20:02:09 : DEBUG : Entering collect_results_from_queue
-2025-03-10 20:02:09 : INFO : Number of responses processed: 4
-2025-03-10 20:02:09 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 20:02:09 : DEBUG : Exiting parallelize_processing
-2025-03-10 20:02:09 : CRITICAL : </run>
-2025-03-10 20:07:30 : DEBUG : Entering main
-2025-03-10 20:07:30 : DEBUG : Exiting main
-2025-03-10 20:07:30 : DEBUG : Using selector: EpollSelector
-2025-03-10 20:07:30 : CRITICAL : A new run;
-2025-03-10 20:07:30 : CRITICAL : <run>
-2025-03-10 20:07:32 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 20:07:35 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 20:07:35 : DEBUG : Entering parallelize_processing
-2025-03-10 20:07:35 : DEBUG : Entering process_record
-2025-03-10 20:07:35 : DEBUG : Entering gen_response
-2025-03-10 20:07:35 : DEBUG : Entering process_record
-2025-03-10 20:07:35 : DEBUG : Entering gen_response
-2025-03-10 20:07:35 : DEBUG : Entering process_record
-2025-03-10 20:07:35 : DEBUG : Entering gen_response
-2025-03-10 20:07:35 : DEBUG : Entering process_record
-2025-03-10 20:07:35 : DEBUG : Entering gen_response
-2025-03-10 20:07:40 : DEBUG : Exiting gen_response
-2025-03-10 20:07:40 : DEBUG : Exiting process_record
-2025-03-10 20:07:48 : DEBUG : Exiting gen_response
-2025-03-10 20:07:48 : DEBUG : Exiting process_record
-2025-03-10 20:07:48 : DEBUG : Exiting gen_response
-2025-03-10 20:07:48 : DEBUG : Exiting process_record
-2025-03-10 20:07:52 : DEBUG : Exiting gen_response
-2025-03-10 20:07:53 : DEBUG : Exiting process_record
-2025-03-10 20:07:53 : DEBUG : Entering collect_results_from_queue
-2025-03-10 20:07:53 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 20:07:53 : DEBUG : Exiting parallelize_processing
-2025-03-10 20:07:53 : CRITICAL : </run>
-2025-03-10 20:11:38 : DEBUG : Entering main
-2025-03-10 20:11:38 : DEBUG : Exiting main
-2025-03-10 20:11:38 : DEBUG : Using selector: EpollSelector
-2025-03-10 20:11:38 : CRITICAL : A new run;
-2025-03-10 20:11:38 : CRITICAL : <run>
-2025-03-10 20:11:42 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 20:11:45 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 20:11:45 : DEBUG : Entering parallelize_processing
-2025-03-10 20:11:45 : DEBUG : Entering process_record
-2025-03-10 20:11:45 : DEBUG : Entering gen_response
-2025-03-10 20:11:45 : DEBUG : Entering process_record
-2025-03-10 20:11:45 : DEBUG : Entering gen_response
-2025-03-10 20:11:45 : DEBUG : Entering process_record
-2025-03-10 20:11:45 : DEBUG : Entering gen_response
-2025-03-10 20:11:45 : DEBUG : Entering process_record
-2025-03-10 20:11:45 : DEBUG : Entering gen_response
-2025-03-10 20:11:47 : DEBUG : Exiting gen_response
-2025-03-10 20:11:47 : DEBUG : Exiting process_record
-2025-03-10 20:11:59 : DEBUG : Exiting gen_response
-2025-03-10 20:11:59 : DEBUG : Exiting process_record
-2025-03-10 20:12:01 : DEBUG : Exiting gen_response
-2025-03-10 20:12:01 : DEBUG : Exiting process_record
-2025-03-10 20:12:02 : DEBUG : Exiting gen_response
-2025-03-10 20:12:02 : DEBUG : Exiting process_record
-2025-03-10 20:12:02 : DEBUG : Entering collect_results_from_queue
-2025-03-10 20:12:02 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 20:12:02 : DEBUG : Exiting parallelize_processing
-2025-03-10 20:12:02 : CRITICAL : </run>
-2025-03-10 20:15:31 : DEBUG : Entering main
-2025-03-10 20:15:31 : DEBUG : Exiting main
-2025-03-10 20:15:31 : DEBUG : Using selector: EpollSelector
-2025-03-10 20:15:31 : CRITICAL : A new run;
-2025-03-10 20:15:31 : CRITICAL : <run>
-2025-03-10 20:15:32 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 20:15:35 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 20:15:35 : DEBUG : Entering parallelize_processing
-2025-03-10 20:15:35 : DEBUG : Entering process_record
-2025-03-10 20:15:35 : DEBUG : Entering gen_response
-2025-03-10 20:15:35 : DEBUG : Entering process_record
-2025-03-10 20:15:35 : DEBUG : Entering gen_response
-2025-03-10 20:15:35 : DEBUG : Entering process_record
-2025-03-10 20:15:35 : DEBUG : Entering process_record
-2025-03-10 20:15:35 : DEBUG : Entering gen_response
-2025-03-10 20:15:35 : DEBUG : Entering gen_response
-2025-03-10 20:15:39 : DEBUG : Exiting gen_response
-2025-03-10 20:15:39 : DEBUG : Exiting process_record
-2025-03-10 20:15:46 : DEBUG : Exiting gen_response
-2025-03-10 20:15:46 : DEBUG : Exiting process_record
-2025-03-10 20:15:49 : DEBUG : Exiting gen_response
-2025-03-10 20:15:49 : DEBUG : Exiting process_record
-2025-03-10 20:15:52 : DEBUG : Exiting gen_response
-2025-03-10 20:15:52 : DEBUG : Exiting process_record
-2025-03-10 20:15:52 : DEBUG : Entering collect_results_from_queue
-2025-03-10 20:15:52 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 20:15:52 : DEBUG : Exiting parallelize_processing
-2025-03-10 20:15:52 : CRITICAL : </run>
-2025-03-10 20:16:04 : DEBUG : Entering main
-2025-03-10 20:16:04 : DEBUG : Exiting main
-2025-03-10 20:16:04 : DEBUG : Using selector: EpollSelector
-2025-03-10 20:16:04 : CRITICAL : A new run;
-2025-03-10 20:16:04 : CRITICAL : <run>
-2025-03-10 20:16:05 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 20:16:07 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 20:16:07 : DEBUG : Entering parallelize_processing
-2025-03-10 20:16:07 : DEBUG : Entering process_record
-2025-03-10 20:16:07 : DEBUG : Entering gen_response
-2025-03-10 20:16:07 : DEBUG : Entering process_record
-2025-03-10 20:16:07 : DEBUG : Entering gen_response
-2025-03-10 20:16:07 : DEBUG : Entering process_record
-2025-03-10 20:16:07 : DEBUG : Entering gen_response
-2025-03-10 20:16:07 : DEBUG : Entering process_record
-2025-03-10 20:16:07 : DEBUG : Entering gen_response
-2025-03-10 20:16:10 : DEBUG : Exiting gen_response
-2025-03-10 20:16:10 : DEBUG : Exiting process_record
-2025-03-10 20:16:19 : DEBUG : Exiting gen_response
-2025-03-10 20:16:19 : DEBUG : Exiting process_record
-2025-03-10 20:16:19 : DEBUG : Exiting gen_response
-2025-03-10 20:16:19 : DEBUG : Exiting process_record
-2025-03-10 20:16:19 : DEBUG : Exiting parallelize_processing
-2025-03-10 20:16:22 : DEBUG : Entering main
-2025-03-10 20:16:22 : DEBUG : Exiting main
-2025-03-10 20:16:22 : DEBUG : Using selector: EpollSelector
-2025-03-10 20:16:22 : CRITICAL : A new run;
-2025-03-10 20:16:22 : CRITICAL : <run>
-2025-03-10 20:16:22 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 20:16:25 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 20:16:25 : DEBUG : Entering parallelize_processing
-2025-03-10 20:16:25 : DEBUG : Entering process_record
-2025-03-10 20:16:25 : DEBUG : Entering gen_response
-2025-03-10 20:16:25 : DEBUG : Entering process_record
-2025-03-10 20:16:25 : DEBUG : Entering gen_response
-2025-03-10 20:16:25 : DEBUG : Entering process_record
-2025-03-10 20:16:25 : DEBUG : Entering gen_response
-2025-03-10 20:16:25 : DEBUG : Entering process_record
-2025-03-10 20:16:25 : DEBUG : Entering gen_response
-2025-03-10 20:16:27 : DEBUG : Exiting gen_response
-2025-03-10 20:16:27 : DEBUG : Exiting process_record
-2025-03-10 20:16:29 : DEBUG : Exiting gen_response
-2025-03-10 20:16:29 : DEBUG : Exiting process_record
-2025-03-10 20:16:41 : DEBUG : Exiting gen_response
-2025-03-10 20:16:41 : DEBUG : Exiting process_record
-2025-03-10 20:16:41 : DEBUG : Exiting gen_response
-2025-03-10 20:16:41 : DEBUG : Exiting process_record
-2025-03-10 20:16:41 : DEBUG : Entering collect_results_from_queue
-2025-03-10 20:16:41 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 20:16:41 : DEBUG : Exiting parallelize_processing
-2025-03-10 20:16:41 : CRITICAL : </run>
-2025-03-10 20:16:59 : DEBUG : Entering main
-2025-03-10 20:16:59 : DEBUG : Exiting main
-2025-03-10 20:16:59 : DEBUG : Using selector: EpollSelector
-2025-03-10 20:16:59 : CRITICAL : A new run;
-2025-03-10 20:16:59 : CRITICAL : <run>
-2025-03-10 20:17:00 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 20:17:02 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 20:17:02 : DEBUG : Entering parallelize_processing
-2025-03-10 20:17:03 : DEBUG : Entering process_record
-2025-03-10 20:17:03 : DEBUG : Entering gen_response
-2025-03-10 20:17:03 : DEBUG : Entering process_record
-2025-03-10 20:17:03 : DEBUG : Entering gen_response
-2025-03-10 20:17:03 : DEBUG : Entering process_record
-2025-03-10 20:17:03 : DEBUG : Entering gen_response
-2025-03-10 20:17:03 : DEBUG : Entering process_record
-2025-03-10 20:17:03 : DEBUG : Entering gen_response
-2025-03-10 20:17:06 : DEBUG : Exiting gen_response
-2025-03-10 20:17:06 : DEBUG : Exiting process_record
-2025-03-10 20:17:16 : DEBUG : Exiting gen_response
-2025-03-10 20:17:16 : DEBUG : Exiting process_record
-2025-03-10 20:17:17 : DEBUG : Exiting gen_response
-2025-03-10 20:17:17 : DEBUG : Exiting process_record
-2025-03-10 20:17:27 : DEBUG : Exiting gen_response
-2025-03-10 20:17:27 : DEBUG : Exiting process_record
-2025-03-10 20:17:27 : DEBUG : Entering collect_results_from_queue
-2025-03-10 20:17:27 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 20:17:27 : DEBUG : Exiting parallelize_processing
-2025-03-10 20:17:27 : CRITICAL : </run>
-2025-03-10 20:21:42 : DEBUG : Entering main
-2025-03-10 20:21:42 : DEBUG : Exiting main
-2025-03-10 20:21:42 : DEBUG : Using selector: EpollSelector
-2025-03-10 20:21:42 : CRITICAL : A new run;
-2025-03-10 20:21:42 : CRITICAL : <run>
-2025-03-10 20:21:44 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-10 20:21:46 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-10 20:21:46 : DEBUG : Entering parallelize_processing
-2025-03-10 20:21:46 : DEBUG : Entering process_record
-2025-03-10 20:21:46 : DEBUG : Entering gen_response
-2025-03-10 20:21:46 : DEBUG : Entering process_record
-2025-03-10 20:21:46 : DEBUG : Entering gen_response
-2025-03-10 20:21:46 : DEBUG : Entering process_record
-2025-03-10 20:21:46 : DEBUG : Entering process_record
-2025-03-10 20:21:46 : DEBUG : Entering gen_response
-2025-03-10 20:21:46 : DEBUG : Entering gen_response
-2025-03-10 20:21:57 : DEBUG : Exiting gen_response
-2025-03-10 20:21:57 : DEBUG : Exiting process_record
-2025-03-10 20:21:59 : DEBUG : Exiting gen_response
-2025-03-10 20:21:59 : DEBUG : Exiting process_record
-2025-03-10 20:22:01 : DEBUG : Exiting gen_response
-2025-03-10 20:22:01 : DEBUG : Exiting process_record
-2025-03-10 20:22:26 : DEBUG : Exiting gen_response
-2025-03-10 20:22:26 : DEBUG : Exiting process_record
-2025-03-10 20:22:26 : DEBUG : Entering collect_results_from_queue
-2025-03-10 20:22:26 : DEBUG : Exiting collect_results_from_queue
-2025-03-10 20:22:26 : DEBUG : Exiting parallelize_processing
-2025-03-10 20:22:26 : CRITICAL : </run>
-2025-03-11 12:57:27 : DEBUG : Entering main
-2025-03-11 12:57:27 : DEBUG : Exiting main
-2025-03-11 12:57:27 : DEBUG : Using selector: EpollSelector
-2025-03-11 12:57:27 : CRITICAL : A new run;
-2025-03-11 12:57:27 : CRITICAL : <run>
-2025-03-11 12:57:42 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Be written in simple, clear language. Avoid jargon and technical terms whenever possible. If technical terms are necessary, define them clearly. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam.
-2025-03-11 12:57:44 : INFO : Starting parallel processing for 4 records with 1 prompts.
-2025-03-11 12:57:44 : DEBUG : Entering parallelize_processing
-2025-03-11 12:57:44 : DEBUG : Entering process_record
-2025-03-11 12:57:44 : DEBUG : Entering gen_response
-2025-03-11 12:57:44 : DEBUG : Entering process_record
-2025-03-11 12:57:44 : DEBUG : Entering gen_response
-2025-03-11 12:57:44 : DEBUG : Entering process_record
-2025-03-11 12:57:44 : DEBUG : Entering gen_response
-2025-03-11 12:57:44 : DEBUG : Entering process_record
-2025-03-11 12:57:44 : DEBUG : Entering gen_response
-2025-03-11 12:57:56 : DEBUG : Exiting gen_response
-2025-03-11 12:57:56 : DEBUG : Exiting process_record
-2025-03-11 12:57:57 : DEBUG : Exiting gen_response
-2025-03-11 12:57:57 : DEBUG : Exiting process_record
-2025-03-11 12:57:58 : DEBUG : Exiting gen_response
-2025-03-11 12:57:58 : DEBUG : Exiting process_record
-2025-03-11 12:58:22 : DEBUG : Exiting gen_response
-2025-03-11 12:58:22 : DEBUG : Exiting process_record
-2025-03-11 12:58:22 : DEBUG : Entering collect_results_from_queue
-2025-03-11 12:58:22 : DEBUG : Exiting collect_results_from_queue
-2025-03-11 12:58:22 : DEBUG : Exiting parallelize_processing
-2025-03-11 12:58:22 : CRITICAL : </run>
-2025-03-11 17:21:21 : DEBUG : Entering main
-2025-03-11 17:21:21 : DEBUG : Exiting main
-2025-03-11 17:21:21 : DEBUG : Using selector: EpollSelector
-2025-03-11 17:21:21 : CRITICAL : A new run;
-2025-03-11 17:21:21 : CRITICAL : <run>
-2025-03-11 17:21:25 : INFO : Prompt added <prompt>: say hi
-2025-03-11 17:21:37 : DEBUG : Entering main
-2025-03-11 17:21:37 : DEBUG : Exiting main
-2025-03-11 17:21:37 : DEBUG : Using selector: EpollSelector
-2025-03-11 17:21:37 : CRITICAL : A new run;
-2025-03-11 17:21:37 : CRITICAL : <run>
-2025-03-11 17:22:44 : DEBUG : Entering main
-2025-03-11 17:22:44 : DEBUG : Exiting main
-2025-03-11 17:22:44 : DEBUG : Using selector: EpollSelector
-2025-03-11 17:22:44 : CRITICAL : A new run;
-2025-03-11 17:22:44 : CRITICAL : <run>
-2025-03-12 21:29:07 : DEBUG : Entering main
-2025-03-12 21:29:07 : DEBUG : Exiting main
-2025-03-12 21:29:07 : DEBUG : Using selector: EpollSelector
-2025-03-12 21:29:07 : CRITICAL : A new run;
-2025-03-12 21:29:07 : CRITICAL : <run>
-2025-03-12 21:29:08 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit I Attacks on Computers and Computer Security: Introduction, The need for security, Security approaches, Principles of security, Types of Security attacks, Security services, Security Mechanisms, A model for Network Security
-2025-03-12 21:29:16 : INFO : Starting parallel processing for 1 records with 1 prompts.
-2025-03-12 21:29:16 : DEBUG : Entering parallelize_processing
-2025-03-12 21:29:16 : DEBUG : Entering process_record
-2025-03-12 21:29:16 : DEBUG : Entering gen_response
-2025-03-12 21:29:40 : DEBUG : Exiting gen_response
-2025-03-12 21:29:40 : DEBUG : Exiting process_record
-2025-03-12 21:29:40 : DEBUG : Entering collect_results_from_queue
-2025-03-12 21:29:40 : INFO : Number of responses processed: 1
-2025-03-12 21:29:40 : DEBUG : Exiting collect_results_from_queue
-2025-03-12 21:29:40 : DEBUG : Exiting parallelize_processing
-2025-03-12 21:29:40 : CRITICAL : </run>
-2025-03-12 21:30:25 : DEBUG : Entering main
-2025-03-12 21:30:25 : DEBUG : Exiting main
-2025-03-12 21:30:25 : DEBUG : Using selector: EpollSelector
-2025-03-12 21:30:25 : CRITICAL : A new run;
-2025-03-12 21:30:25 : CRITICAL : <run>
-2025-03-12 21:30:25 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit I Attacks on Computers and Computer Security: Introduction, The need for security, Security approaches, Principles of security, Types of Security attacks, Security services, Security Mechanisms, A model for Network Security
-2025-03-12 21:30:25 : INFO : Prompt added <prompt>: 
-2025-03-12 21:30:25 : INFO : Prompt added <prompt>: 
-2025-03-12 21:30:33 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit II Cryptography-Concepts and Techniques: Introduction, plain text and cipher text, substitution techniques, transposition techniques, encryption and decryption, symmetric and asymmetric key cryptography, stenography, key range and key size, possible types of attacks.done
-2025-03-12 21:30:38 : DEBUG : Entering main
-2025-03-12 21:30:38 : DEBUG : Exiting main
-2025-03-12 21:30:38 : DEBUG : Using selector: EpollSelector
-2025-03-12 21:30:38 : CRITICAL : A new run;
-2025-03-12 21:30:38 : CRITICAL : <run>
-2025-03-12 21:30:39 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit I Attacks on Computers and Computer Security: Introduction, The need for security, Security approaches, Principles of security, Types of Security attacks, Security services, Security Mechanisms, A model for Network Security
-2025-03-12 21:30:39 : INFO : Prompt added <prompt>: 
-2025-03-12 21:30:39 : INFO : Prompt added <prompt>: 
-2025-03-12 21:31:09 : DEBUG : Entering main
-2025-03-12 21:31:09 : DEBUG : Exiting main
-2025-03-12 21:31:09 : DEBUG : Using selector: EpollSelector
-2025-03-12 21:31:09 : CRITICAL : A new run;
-2025-03-12 21:31:09 : CRITICAL : <run>
-2025-03-12 21:31:13 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit II Cryptography-Concepts and Techniques: Introduction, plain text and cipher text, substitution techniques, transposition techniques, encryption and decryption, symmetric and asymmetric key cryptography, stenography, key range and key size, possible types of attacks.
-2025-03-12 21:31:19 : INFO : Starting parallel processing for 1 records with 1 prompts.
-2025-03-12 21:31:19 : DEBUG : Entering parallelize_processing
-2025-03-12 21:31:19 : DEBUG : Entering process_record
-2025-03-12 21:31:19 : DEBUG : Entering gen_response
-2025-03-12 21:32:03 : DEBUG : Exiting gen_response
-2025-03-12 21:32:03 : DEBUG : Exiting process_record
-2025-03-12 21:32:03 : DEBUG : Entering collect_results_from_queue
-2025-03-12 21:32:03 : INFO : Number of responses processed: 1
-2025-03-12 21:32:03 : DEBUG : Exiting collect_results_from_queue
-2025-03-12 21:32:04 : DEBUG : Exiting parallelize_processing
-2025-03-12 21:32:04 : CRITICAL : </run>
-2025-03-12 21:37:11 : DEBUG : Entering main
-2025-03-12 21:37:11 : DEBUG : Exiting main
-2025-03-12 21:37:11 : DEBUG : Using selector: EpollSelector
-2025-03-12 21:37:11 : CRITICAL : A new run;
-2025-03-12 21:37:11 : CRITICAL : <run>
-2025-03-12 21:37:12 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # Q.1 A: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit I Attacks on Computers and Computer Security: Introduction, The need for security, Security approaches, Principles of security, Types of Security attacks, Security services, Security Mechanisms, A model for Network Security
-2025-03-12 21:37:20 : INFO : Starting parallel processing for 1 records with 1 prompts.
-2025-03-12 21:37:20 : DEBUG : Entering parallelize_processing
-2025-03-12 21:37:20 : DEBUG : Entering process_record
-2025-03-12 21:37:20 : DEBUG : Entering gen_response
-2025-03-12 21:38:12 : DEBUG : Exiting gen_response
-2025-03-12 21:38:12 : DEBUG : Exiting process_record
-2025-03-12 21:38:12 : DEBUG : Entering collect_results_from_queue
-2025-03-12 21:38:12 : INFO : Number of responses processed: 1
-2025-03-12 21:38:12 : DEBUG : Exiting collect_results_from_queue
-2025-03-12 21:38:12 : DEBUG : Exiting parallelize_processing
-2025-03-12 21:38:12 : CRITICAL : </run>
-2025-03-12 21:43:47 : DEBUG : Entering main
-2025-03-12 21:43:47 : DEBUG : Exiting main
-2025-03-12 21:43:47 : DEBUG : Using selector: EpollSelector
-2025-03-12 21:43:47 : CRITICAL : A new run;
-2025-03-12 21:43:47 : CRITICAL : <run>
-2025-03-12 21:43:47 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # <exact question number, say Q.4 A>: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit II Cryptography-Concepts and Techniques: Introduction, plain text and cipher text, substitution techniques, transposition techniques, encryption and decryption, symmetric and asymmetric key cryptography, stenography, key range and key size, possible types of attacks.
-2025-03-12 21:43:52 : DEBUG : Entering main
-2025-03-12 21:43:52 : DEBUG : Exiting main
-2025-03-12 21:43:52 : DEBUG : Using selector: EpollSelector
-2025-03-12 21:43:52 : CRITICAL : A new run;
-2025-03-12 21:43:52 : CRITICAL : <run>
-2025-03-12 21:43:53 : INFO : Prompt added <prompt>: You are an AI expert in the subject matter of a theory exam. You are provided with a question and a corresponding answer that you previously generated. The answer has the following potential problems: Irrelevant or off-topic content, Incorrect information, Misunderstanding of the question, Inaccurate explanations, Lack of depth or quality, Anything else that could make the answer unsatisfactory. Your task is to rewrite the answer to address all of these issues and create a high-quality response. The rewritten answer must be in the following format: # <exact question number, say Q.4 A>: <question> <rewritten answer>. The rewritten answer must: 1. Directly and completely answer the question. Ensure that the answer addresses all aspects of the question and leaves no room for ambiguity. 2. Be factually accurate. Verify all information and correct any errors. Use reliable sources if necessary. 3. Demonstrate a thorough understanding of the topic. Provide in-depth explanations and relevant details. 4. Write in clear, simple language. Use technical terms only when they are directly relevant to the question and used correctly within the context of the answer. 5. Have a logical flow and high clarity. Organize the answer in a way that is easy to follow and understand. Use headings, bullet points, or other formatting elements to improve readability. Focus on providing the best possible answer for a student preparing for a theory exam. Here is the relevant unit syllabus for reference: Unit II Cryptography-Concepts and Techniques: Introduction, plain text and cipher text, substitution techniques, transposition techniques, encryption and decryption, symmetric and asymmetric key cryptography, stenography, key range and key size, possible types of attacks.
-2025-03-12 21:44:05 : INFO : Starting parallel processing for 1 records with 1 prompts.
-2025-03-12 21:44:05 : DEBUG : Entering parallelize_processing
-2025-03-12 21:44:05 : DEBUG : Entering process_record
-2025-03-12 21:44:05 : DEBUG : Entering gen_response
-2025-03-12 21:45:01 : DEBUG : Exiting gen_response
-2025-03-12 21:45:01 : DEBUG : Exiting process_record
-2025-03-12 21:45:01 : DEBUG : Entering collect_results_from_queue
-2025-03-12 21:45:01 : INFO : Number of responses processed: 1
-2025-03-12 21:45:01 : DEBUG : Exiting collect_results_from_queue
-2025-03-12 21:45:01 : DEBUG : Exiting parallelize_processing
-2025-03-12 21:45:01 : CRITICAL : </run>
-2025-03-13 10:16:20 : DEBUG : Entering main
-2025-03-13 10:16:20 : DEBUG : Exiting main
-2025-03-13 10:16:20 : DEBUG : Using selector: EpollSelector
-2025-03-13 10:16:20 : CRITICAL : A new run;
-2025-03-13 10:16:20 : CRITICAL : <run>
-2025-03-13 10:17:17 : INFO : Prompt added <prompt>: solve these questions. syllabus: file:///home/ansarimn/Downloads/UII.jpeg
-2025-03-13 10:17:17 : INFO : Prompt added <prompt>: file:///home/ansarimn/Downloads/UI.jpeg
-2025-03-13 10:17:26 : DEBUG : Entering main
-2025-03-13 10:17:26 : DEBUG : Exiting main
-2025-03-13 10:17:26 : DEBUG : Using selector: EpollSelector
-2025-03-13 10:17:26 : CRITICAL : A new run;
-2025-03-13 10:17:26 : CRITICAL : <run>
-2025-03-13 10:17:40 : INFO : Prompt added <prompt>: solve these questions. syllabus: Unit I Attacks on Computers and Computer Security: Introduction, The need for security, Security approaches, Principles of security, Types of Security attacks, Security services, Security Mechanisms, A model for Network Security; Unit II Cryptography-Concepts and Techniques: Introduction, plain text and cipher text, substitution techniques, transposition techniques, encryption and decryption, symmetric and asymmetric key cryptography, stenography, key range and key size, possible types of attacks.
-2025-03-13 10:17:43 : WARNING : Skipping unsupported file type: UI.jpeg
-2025-03-13 10:17:43 : WARNING : Skipping unsupported file type: UII.jpeg
-2025-03-13 10:17:43 : INFO : Starting parallel processing for 0 records with 1 prompts.
-2025-03-13 10:17:43 : DEBUG : Entering parallelize_processing
-2025-03-13 10:17:43 : DEBUG : Entering collect_results_from_queue
-2025-03-13 10:17:43 : INFO : Number of responses processed: 0
-2025-03-13 10:17:43 : DEBUG : Exiting collect_results_from_queue
-2025-03-13 10:17:43 : DEBUG : Exiting parallelize_processing
-2025-03-13 10:17:43 : CRITICAL : </run>
-2025-03-13 12:49:05 : DEBUG : Entering main
-2025-03-13 12:49:05 : DEBUG : Exiting main
-2025-03-13 12:49:05 : DEBUG : Using selector: EpollSelector
-2025-03-13 12:49:05 : CRITICAL : A new run;
-2025-03-13 12:49:05 : CRITICAL : <run>
-2025-03-13 12:49:08 : INFO : Prompt added <prompt>: summarize this
-2025-03-13 12:49:10 : INFO : Starting parallel processing for 2 records with 1 prompts.
-2025-03-13 12:49:10 : DEBUG : Entering parallelize_processing
-2025-03-13 12:49:10 : DEBUG : Entering process_record
-2025-03-13 12:49:10 : DEBUG : Entering process_record
-2025-03-13 12:49:10 : DEBUG : Entering gen_response
-2025-03-13 12:49:10 : DEBUG : Entering gen_response
-2025-03-13 12:49:10 : DEBUG : Exiting gen_response
-2025-03-13 12:49:10 : DEBUG : Exiting gen_response
-2025-03-13 12:49:10 : ERROR : Error processing record: 'Blob' object is not subscriptable
-2025-03-13 12:49:10 : ERROR : Error processing record: 'Blob' object is not subscriptable
-2025-03-13 12:49:10 : DEBUG : Exiting process_record
-2025-03-13 12:49:10 : DEBUG : Exiting process_record
-2025-03-13 12:49:10 : DEBUG : Entering collect_results_from_queue
-2025-03-13 12:49:10 : DEBUG : Exiting collect_results_from_queue
-2025-03-13 12:49:10 : DEBUG : Exiting parallelize_processing
-2025-03-13 12:49:10 : CRITICAL : </run>
-2025-03-13 12:49:42 : DEBUG : Entering main
-2025-03-13 12:49:42 : DEBUG : Exiting main
-2025-03-13 12:49:42 : DEBUG : Using selector: EpollSelector
-2025-03-13 12:49:42 : CRITICAL : A new run;
-2025-03-13 12:49:42 : CRITICAL : <run>
-2025-03-13 12:49:45 : INFO : Prompt added <prompt>: summarize this
-2025-03-13 12:49:47 : WARNING : Skipping unsupported file type: UI.jpeg
-2025-03-13 12:49:47 : WARNING : Skipping unsupported file type: UII.jpeg
-2025-03-13 12:49:47 : INFO : Starting parallel processing for 0 records with 1 prompts.
-2025-03-13 12:49:47 : DEBUG : Entering parallelize_processing
-2025-03-13 12:49:48 : DEBUG : Entering collect_results_from_queue
-2025-03-13 12:49:48 : DEBUG : Exiting collect_results_from_queue
-2025-03-13 12:49:48 : DEBUG : Exiting parallelize_processing
-2025-03-13 12:49:48 : CRITICAL : </run>
-2025-03-13 12:51:28 : DEBUG : Entering main
-2025-03-13 12:51:28 : DEBUG : Exiting main
-2025-03-13 12:51:28 : DEBUG : Using selector: EpollSelector
-2025-03-13 12:51:28 : CRITICAL : A new run;
-2025-03-13 12:51:28 : CRITICAL : <run>
-2025-03-13 12:51:30 : INFO : Prompt added <prompt>: summ
-2025-03-13 12:51:32 : INFO : Starting parallel processing for 2 records with 1 prompts.
-2025-03-13 12:51:32 : DEBUG : Entering parallelize_processing
-2025-03-13 12:51:33 : DEBUG : Entering process_record
-2025-03-13 12:51:33 : DEBUG : Entering gen_response
-2025-03-13 12:51:33 : DEBUG : Entering process_record
-2025-03-13 12:51:33 : DEBUG : Entering gen_response
-2025-03-13 12:51:33 : DEBUG : Exiting gen_response
-2025-03-13 12:51:33 : DEBUG : Exiting gen_response
-2025-03-13 12:51:33 : ERROR : Error processing record: 'Blob' object is not subscriptable
-2025-03-13 12:51:33 : ERROR : Error processing record: 'Blob' object is not subscriptable
-2025-03-13 12:51:33 : DEBUG : Exiting process_record
-2025-03-13 12:51:33 : DEBUG : Exiting process_record
-2025-03-13 12:51:33 : DEBUG : Entering collect_results_from_queue
-2025-03-13 12:51:33 : DEBUG : Exiting collect_results_from_queue
-2025-03-13 12:51:33 : DEBUG : Exiting parallelize_processing
-2025-03-13 12:51:33 : CRITICAL : </run>
-2025-03-13 12:53:24 : DEBUG : Entering main
-2025-03-13 12:53:24 : DEBUG : Exiting main
-2025-03-13 12:53:24 : DEBUG : Using selector: EpollSelector
-2025-03-13 12:53:24 : CRITICAL : A new run;
-2025-03-13 12:53:24 : CRITICAL : <run>
-2025-03-13 12:53:27 : INFO : Prompt added <prompt>: summarize this
-2025-03-13 12:53:32 : INFO : Starting parallel processing for 2 records with 1 prompts.
-2025-03-13 12:53:32 : DEBUG : Entering parallelize_processing
-2025-03-13 12:53:32 : DEBUG : Entering process_record
-2025-03-13 12:53:32 : DEBUG : Entering process_record
-2025-03-13 12:53:32 : DEBUG : Entering gen_response
-2025-03-13 12:53:32 : DEBUG : Entering gen_response
-2025-03-13 12:53:32 : DEBUG : Exiting gen_response
-2025-03-13 12:53:32 : DEBUG : Exiting gen_response
-2025-03-13 12:53:32 : ERROR : Error processing record: 'Blob' object is not subscriptable
-2025-03-13 12:53:32 : ERROR : Error processing record: 'Blob' object is not subscriptable
-2025-03-13 12:53:32 : DEBUG : Exiting process_record
-2025-03-13 12:53:32 : DEBUG : Exiting process_record
-2025-03-13 12:53:32 : DEBUG : Entering collect_results_from_queue
-2025-03-13 12:53:32 : DEBUG : Exiting collect_results_from_queue
-2025-03-13 12:53:32 : DEBUG : Exiting parallelize_processing
+2025-03-13 12:53:32 : CRITICAL : </run>
+2025-03-13 19:36:35 : DEBUG : Entering main
+2025-03-13 19:36:35 : DEBUG : Exiting main
+2025-03-13 19:36:35 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:36:35 : CRITICAL : A new run;
+2025-03-13 19:36:35 : CRITICAL : <run>
+2025-03-13 19:36:53 : DEBUG : Entering main
+2025-03-13 19:36:53 : DEBUG : Exiting main
+2025-03-13 19:36:53 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:36:53 : CRITICAL : A new run;
+2025-03-13 19:36:53 : CRITICAL : <run>
+2025-03-13 19:36:53 : INFO : Prompt added <prompt>: file:///home/ansarimn/Downloads/Ansys/track%201:%20electromagnetics/Vectors_Rebranded.pdf
+2025-03-13 19:36:53 : INFO : Prompt added <prompt>: file:///home/ansarimn/Downloads/Ansys/track%201:%20electromagnetics/Magnetostatics_Rebranded.pdf
+2025-03-13 19:36:53 : INFO : Prompt added <prompt>: file:///home/ansarimn/Downloads/Ansys/track%201:%20electromagnetics/MagnetostaticMaterialInteraction.pdf
+2025-03-13 19:36:53 : INFO : Prompt added <prompt>: file:///home/ansarimn/Downloads/Ansys/track%201:%20electromagnetics/Electrostatics_Rebranded.pdf
+2025-03-13 19:36:53 : INFO : Prompt added <prompt>: file:///home/ansarimn/Downloads/Ansys/track%201:%20electromagnetics/ElectrostaticMaterialInteraction_kls-2.pdf
+2025-03-13 19:36:59 : DEBUG : Entering main
+2025-03-13 19:36:59 : DEBUG : Exiting main
+2025-03-13 19:36:59 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:36:59 : CRITICAL : A new run;
+2025-03-13 19:36:59 : CRITICAL : <run>
+2025-03-13 19:37:01 : INFO : Prompt added <prompt>: Generate comprehensive, detailed, and well-structured notes from the provided Ansys electromagnetics course PPT content. The notes should have a lot of depth and detail, covering all key concepts, principles, equations, and examples presented in the PPT. Ensure the notes are accurate, clear, and organized logically. The notes should primarily use Markdown formatting, but feel free to embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 19:37:52 : DEBUG : Entering main
+2025-03-13 19:37:52 : DEBUG : Exiting main
+2025-03-13 19:37:52 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:37:52 : CRITICAL : A new run;
+2025-03-13 19:37:52 : CRITICAL : <run>
+2025-03-13 19:37:54 : INFO : Prompt added <prompt>: Generate comprehensive, detailed, and well-structured notes from the provided Ansys electromagnetics course PPT content. The notes should have a lot of depth and detail, covering all key concepts, principles, equations, and examples presented in the PPT. Ensure the notes are accurate, clear, and organized logically. The notes should primarily use Markdown formatting, but feel free to embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 19:38:07 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-13 19:38:07 : DEBUG : Entering parallelize_processing
+2025-03-13 19:38:08 : DEBUG : Entering process_record
+2025-03-13 19:38:08 : DEBUG : Entering gen_response
+2025-03-13 19:38:08 : DEBUG : Entering process_record
+2025-03-13 19:38:08 : DEBUG : Entering gen_response
+2025-03-13 19:38:08 : DEBUG : Entering process_record
+2025-03-13 19:38:08 : DEBUG : Entering gen_response
+2025-03-13 19:38:08 : DEBUG : Entering process_record
+2025-03-13 19:38:08 : DEBUG : Entering gen_response
+2025-03-13 19:38:08 : DEBUG : Entering process_record
+2025-03-13 19:38:08 : DEBUG : Entering gen_response
+2025-03-13 19:38:31 : DEBUG : Exiting gen_response
+2025-03-13 19:38:31 : DEBUG : Exiting process_record
+2025-03-13 19:38:50 : DEBUG : Exiting gen_response
+2025-03-13 19:38:50 : DEBUG : Exiting process_record
+2025-03-13 19:38:55 : DEBUG : Exiting gen_response
+2025-03-13 19:38:55 : DEBUG : Exiting process_record
+2025-03-13 19:39:22 : DEBUG : Exiting gen_response
+2025-03-13 19:39:22 : DEBUG : Exiting process_record
+2025-03-13 19:39:50 : DEBUG : Exiting gen_response
+2025-03-13 19:39:50 : DEBUG : Exiting process_record
+2025-03-13 19:39:50 : DEBUG : Entering collect_results_from_queue
+2025-03-13 19:39:50 : INFO : Number of responses processed: 5
+2025-03-13 19:39:50 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 19:39:50 : DEBUG : Exiting parallelize_processing
+2025-03-13 19:39:50 : CRITICAL : </run>
+2025-03-13 19:43:08 : DEBUG : Entering main
+2025-03-13 19:43:08 : DEBUG : Exiting main
+2025-03-13 19:43:08 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:43:08 : CRITICAL : A new run;
+2025-03-13 19:43:08 : CRITICAL : <run>
+2025-03-13 19:43:14 : DEBUG : Entering main
+2025-03-13 19:43:14 : DEBUG : Exiting main
+2025-03-13 19:43:14 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:43:14 : CRITICAL : A new run;
+2025-03-13 19:43:14 : CRITICAL : <run>
+2025-03-13 19:43:15 : INFO : Prompt added <prompt>: Generate comprehensive, detailed, and well-structured notes from the provided Ansys electromagnetics course PPT content. The notes should have a lot of depth and detail, covering all key concepts, principles, equations, and examples presented in the PPT. Ensure the notes are accurate, clear, and organized logically. Begin with a top-level H1 heading. The notes should primarily use Markdown formatting, but feel free to embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 19:43:19 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-13 19:43:19 : DEBUG : Entering parallelize_processing
+2025-03-13 19:43:20 : DEBUG : Entering process_record
+2025-03-13 19:43:20 : DEBUG : Entering gen_response
+2025-03-13 19:43:20 : DEBUG : Entering process_record
+2025-03-13 19:43:20 : DEBUG : Entering gen_response
+2025-03-13 19:43:20 : DEBUG : Entering process_record
+2025-03-13 19:43:20 : DEBUG : Entering gen_response
+2025-03-13 19:43:20 : DEBUG : Entering process_record
+2025-03-13 19:43:20 : DEBUG : Entering gen_response
+2025-03-13 19:43:20 : DEBUG : Entering process_record
+2025-03-13 19:43:20 : DEBUG : Entering gen_response
+2025-03-13 19:43:46 : DEBUG : Exiting gen_response
+2025-03-13 19:43:46 : DEBUG : Exiting process_record
+2025-03-13 19:43:58 : DEBUG : Exiting gen_response
+2025-03-13 19:43:58 : DEBUG : Exiting process_record
+2025-03-13 19:44:23 : DEBUG : Exiting gen_response
+2025-03-13 19:44:23 : DEBUG : Exiting process_record
+2025-03-13 19:45:07 : DEBUG : Exiting gen_response
+2025-03-13 19:45:07 : DEBUG : Exiting process_record
+2025-03-13 19:45:28 : DEBUG : Exiting gen_response
+2025-03-13 19:45:28 : DEBUG : Exiting process_record
+2025-03-13 19:45:28 : DEBUG : Entering collect_results_from_queue
+2025-03-13 19:45:28 : INFO : Number of responses processed: 5
+2025-03-13 19:45:28 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 19:45:28 : DEBUG : Exiting parallelize_processing
+2025-03-13 19:45:28 : CRITICAL : </run>
+2025-03-13 19:49:21 : DEBUG : Entering main
+2025-03-13 19:49:21 : DEBUG : Exiting main
+2025-03-13 19:49:21 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:49:21 : CRITICAL : A new run;
+2025-03-13 19:49:21 : CRITICAL : <run>
+2025-03-13 19:49:27 : INFO : Prompt added <prompt>: Generate comprehensive, detailed, and well-structured notes from the provided Ansys electromagnetics course PPT content. The notes should have a lot of depth and detail, covering all key concepts, principles, equations, and examples presented in the PPT. Ensure the notes are accurate, clear, and organized logically. Begin with a top-level H1 heading. The notes should primarily use Markdown formatting, but feel free to embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 19:49:30 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-13 19:49:30 : DEBUG : Entering parallelize_processing
+2025-03-13 19:49:30 : DEBUG : Entering process_record
+2025-03-13 19:49:30 : DEBUG : Entering gen_response
+2025-03-13 19:49:30 : DEBUG : Entering process_record
+2025-03-13 19:49:30 : DEBUG : Entering gen_response
+2025-03-13 19:49:30 : DEBUG : Entering process_record
+2025-03-13 19:49:30 : DEBUG : Entering gen_response
+2025-03-13 19:49:30 : DEBUG : Entering process_record
+2025-03-13 19:49:30 : DEBUG : Entering gen_response
+2025-03-13 19:49:30 : DEBUG : Entering process_record
+2025-03-13 19:49:30 : DEBUG : Entering gen_response
+2025-03-13 19:49:53 : DEBUG : Exiting gen_response
+2025-03-13 19:49:53 : DEBUG : Exiting process_record
+2025-03-13 19:50:08 : DEBUG : Exiting gen_response
+2025-03-13 19:50:08 : DEBUG : Exiting process_record
+2025-03-13 19:50:21 : DEBUG : Exiting gen_response
+2025-03-13 19:50:21 : DEBUG : Exiting process_record
+2025-03-13 19:51:26 : DEBUG : Exiting gen_response
+2025-03-13 19:51:26 : DEBUG : Exiting process_record
+2025-03-13 19:51:44 : DEBUG : Exiting gen_response
+2025-03-13 19:51:44 : DEBUG : Exiting process_record
+2025-03-13 19:51:44 : DEBUG : Entering collect_results_from_queue
+2025-03-13 19:51:44 : INFO : Number of responses processed: 5
+2025-03-13 19:51:44 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 19:51:44 : DEBUG : Exiting parallelize_processing
+2025-03-13 19:51:44 : CRITICAL : </run>
+2025-03-13 19:52:11 : DEBUG : Entering main
+2025-03-13 19:52:11 : DEBUG : Exiting main
+2025-03-13 19:52:11 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:52:11 : CRITICAL : A new run;
+2025-03-13 19:52:11 : CRITICAL : <run>
+2025-03-13 19:52:12 : INFO : Prompt added <prompt>: Generate comprehensive, detailed, and well-structured notes from the provided Ansys electromagnetics course PPT content. The notes should have a lot of depth and detail, covering all key concepts, principles, equations, and examples presented in the PPT. Ensure the notes are accurate, clear, and organized logically. Begin with a top-level H1 heading. The notes should primarily use Markdown formatting, but feel free to embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 19:52:16 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-13 19:52:16 : DEBUG : Entering parallelize_processing
+2025-03-13 19:52:16 : DEBUG : Entering process_record
+2025-03-13 19:52:16 : DEBUG : Entering gen_response
+2025-03-13 19:52:16 : DEBUG : Entering process_record
+2025-03-13 19:52:16 : DEBUG : Entering gen_response
+2025-03-13 19:52:16 : DEBUG : Entering process_record
+2025-03-13 19:52:16 : DEBUG : Entering gen_response
+2025-03-13 19:52:16 : DEBUG : Entering process_record
+2025-03-13 19:52:16 : DEBUG : Entering gen_response
+2025-03-13 19:52:16 : DEBUG : Entering process_record
+2025-03-13 19:52:16 : DEBUG : Entering gen_response
+2025-03-13 19:52:40 : DEBUG : Exiting gen_response
+2025-03-13 19:52:40 : DEBUG : Exiting process_record
+2025-03-13 19:53:02 : DEBUG : Exiting gen_response
+2025-03-13 19:53:02 : DEBUG : Exiting process_record
+2025-03-13 19:53:02 : DEBUG : Exiting gen_response
+2025-03-13 19:53:02 : DEBUG : Exiting process_record
+2025-03-13 19:53:17 : DEBUG : Exiting gen_response
+2025-03-13 19:53:17 : DEBUG : Exiting process_record
+2025-03-13 19:53:18 : DEBUG : Exiting gen_response
+2025-03-13 19:53:18 : DEBUG : Exiting process_record
+2025-03-13 19:53:18 : DEBUG : Entering collect_results_from_queue
+2025-03-13 19:53:18 : INFO : Number of responses processed: 5
+2025-03-13 19:53:18 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 19:53:18 : DEBUG : Exiting parallelize_processing
+2025-03-13 19:53:18 : CRITICAL : </run>
+2025-03-13 19:53:41 : DEBUG : Entering main
+2025-03-13 19:53:41 : DEBUG : Exiting main
+2025-03-13 19:53:41 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:53:41 : CRITICAL : A new run;
+2025-03-13 19:53:41 : CRITICAL : <run>
+2025-03-13 19:53:43 : INFO : Prompt added <prompt>: Generate comprehensive, detailed, and well-structured notes from the provided Ansys electromagnetics course PPT content. The notes should have a lot of depth and detail, covering all key concepts, principles, equations, and examples presented in the PPT. Ensure the notes are accurate, clear, and organized logically. Begin with a top-level H1 heading. The notes should primarily use Markdown formatting, but feel free to embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 19:53:46 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-13 19:53:46 : DEBUG : Entering parallelize_processing
+2025-03-13 19:53:46 : DEBUG : Entering process_record
+2025-03-13 19:53:46 : DEBUG : Entering gen_response
+2025-03-13 19:53:46 : DEBUG : Entering process_record
+2025-03-13 19:53:46 : DEBUG : Entering gen_response
+2025-03-13 19:53:46 : DEBUG : Entering process_record
+2025-03-13 19:53:46 : DEBUG : Entering gen_response
+2025-03-13 19:53:46 : DEBUG : Entering process_record
+2025-03-13 19:53:46 : DEBUG : Entering gen_response
+2025-03-13 19:53:46 : DEBUG : Entering process_record
+2025-03-13 19:53:46 : DEBUG : Entering gen_response
+2025-03-13 19:54:07 : DEBUG : Exiting gen_response
+2025-03-13 19:54:07 : DEBUG : Exiting process_record
+2025-03-13 19:54:26 : DEBUG : Exiting gen_response
+2025-03-13 19:54:26 : DEBUG : Exiting process_record
+2025-03-13 19:55:02 : DEBUG : Exiting gen_response
+2025-03-13 19:55:02 : DEBUG : Exiting process_record
+2025-03-13 19:55:14 : DEBUG : Exiting gen_response
+2025-03-13 19:55:14 : DEBUG : Exiting process_record
+2025-03-13 19:55:16 : DEBUG : Exiting gen_response
+2025-03-13 19:55:17 : DEBUG : Exiting process_record
+2025-03-13 19:55:17 : DEBUG : Entering collect_results_from_queue
+2025-03-13 19:55:17 : INFO : Number of responses processed: 5
+2025-03-13 19:55:17 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 19:55:17 : DEBUG : Exiting parallelize_processing
+2025-03-13 19:55:17 : CRITICAL : </run>
+2025-03-13 19:55:45 : DEBUG : Entering main
+2025-03-13 19:55:45 : DEBUG : Exiting main
+2025-03-13 19:55:45 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:55:45 : CRITICAL : A new run;
+2025-03-13 19:55:45 : CRITICAL : <run>
+2025-03-13 19:55:45 : INFO : Prompt added <prompt>: file:///home/ansarimn/Downloads/Ansys/Track%201%20v3.md
+2025-03-13 19:55:45 : INFO : Prompt added <prompt>: 
+2025-03-13 19:55:54 : DEBUG : Entering main
+2025-03-13 19:55:54 : DEBUG : Exiting main
+2025-03-13 19:55:54 : DEBUG : Using selector: EpollSelector
+2025-03-13 19:55:54 : CRITICAL : A new run;
+2025-03-13 19:55:54 : CRITICAL : <run>
+2025-03-13 19:55:55 : INFO : Prompt added <prompt>: Generate comprehensive, detailed, and well-structured notes from the provided Ansys electromagnetics course PPT content. The notes should have a lot of depth and detail, covering all key concepts, principles, equations, and examples presented in the PPT. Ensure the notes are accurate, clear, and organized logically. Begin with a top-level H1 heading. The notes should primarily use Markdown formatting, but feel free to embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 19:55:57 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-13 19:55:57 : DEBUG : Entering parallelize_processing
+2025-03-13 19:55:58 : DEBUG : Entering process_record
+2025-03-13 19:55:58 : DEBUG : Entering gen_response
+2025-03-13 19:55:58 : DEBUG : Entering process_record
+2025-03-13 19:55:58 : DEBUG : Entering gen_response
+2025-03-13 19:55:58 : DEBUG : Entering process_record
+2025-03-13 19:55:58 : DEBUG : Entering gen_response
+2025-03-13 19:55:58 : DEBUG : Entering process_record
+2025-03-13 19:55:58 : DEBUG : Entering gen_response
+2025-03-13 19:55:58 : DEBUG : Entering process_record
+2025-03-13 19:55:58 : DEBUG : Entering gen_response
+2025-03-13 19:56:37 : DEBUG : Exiting gen_response
+2025-03-13 19:56:37 : DEBUG : Exiting process_record
+2025-03-13 19:56:40 : DEBUG : Exiting gen_response
+2025-03-13 19:56:40 : DEBUG : Exiting process_record
+2025-03-13 19:56:41 : DEBUG : Exiting gen_response
+2025-03-13 19:56:41 : DEBUG : Exiting process_record
+2025-03-13 19:57:05 : DEBUG : Exiting gen_response
+2025-03-13 19:57:05 : DEBUG : Exiting process_record
+2025-03-13 19:57:16 : DEBUG : Exiting gen_response
+2025-03-13 19:57:16 : DEBUG : Exiting process_record
+2025-03-13 19:57:16 : DEBUG : Entering collect_results_from_queue
+2025-03-13 19:57:16 : INFO : Number of responses processed: 5
+2025-03-13 19:57:16 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 19:57:16 : DEBUG : Exiting parallelize_processing
+2025-03-13 19:57:16 : CRITICAL : </run>
+2025-03-13 20:36:46 : DEBUG : Entering main
+2025-03-13 20:36:46 : DEBUG : Exiting main
+2025-03-13 20:36:46 : DEBUG : Using selector: EpollSelector
+2025-03-13 20:36:46 : CRITICAL : A new run;
+2025-03-13 20:36:46 : CRITICAL : <run>
+2025-03-13 20:36:51 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading. Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 20:36:53 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-13 20:36:53 : DEBUG : Entering parallelize_processing
+2025-03-13 20:36:53 : DEBUG : Entering process_record
+2025-03-13 20:36:53 : DEBUG : Entering gen_response
+2025-03-13 20:36:53 : DEBUG : Entering process_record
+2025-03-13 20:36:53 : DEBUG : Entering gen_response
+2025-03-13 20:36:53 : DEBUG : Entering process_record
+2025-03-13 20:36:53 : DEBUG : Entering gen_response
+2025-03-13 20:36:53 : DEBUG : Entering process_record
+2025-03-13 20:36:53 : DEBUG : Entering gen_response
+2025-03-13 20:36:53 : DEBUG : Entering process_record
+2025-03-13 20:36:53 : DEBUG : Entering gen_response
+2025-03-13 20:37:27 : DEBUG : Exiting gen_response
+2025-03-13 20:37:27 : DEBUG : Exiting process_record
+2025-03-13 20:37:40 : DEBUG : Exiting gen_response
+2025-03-13 20:37:40 : DEBUG : Exiting process_record
+2025-03-13 20:38:02 : DEBUG : Exiting gen_response
+2025-03-13 20:38:03 : DEBUG : Exiting process_record
+2025-03-13 20:38:12 : DEBUG : Exiting gen_response
+2025-03-13 20:38:12 : DEBUG : Exiting process_record
+2025-03-13 20:38:37 : DEBUG : Exiting gen_response
+2025-03-13 20:38:37 : DEBUG : Exiting process_record
+2025-03-13 20:38:37 : DEBUG : Entering collect_results_from_queue
+2025-03-13 20:38:37 : INFO : Number of responses processed: 5
+2025-03-13 20:38:37 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 20:38:37 : DEBUG : Exiting parallelize_processing
+2025-03-13 20:38:37 : CRITICAL : </run>
+2025-03-13 20:39:41 : DEBUG : Entering main
+2025-03-13 20:39:41 : DEBUG : Exiting main
+2025-03-13 20:39:41 : DEBUG : Using selector: EpollSelector
+2025-03-13 20:39:41 : CRITICAL : A new run;
+2025-03-13 20:39:41 : CRITICAL : <run>
+2025-03-13 20:39:42 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading. Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 20:39:44 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-13 20:39:44 : DEBUG : Entering parallelize_processing
+2025-03-13 20:39:44 : DEBUG : Entering process_record
+2025-03-13 20:39:44 : DEBUG : Entering gen_response
+2025-03-13 20:39:44 : DEBUG : Entering process_record
+2025-03-13 20:39:44 : DEBUG : Entering gen_response
+2025-03-13 20:39:44 : DEBUG : Entering process_record
+2025-03-13 20:39:44 : DEBUG : Entering gen_response
+2025-03-13 20:39:44 : DEBUG : Entering process_record
+2025-03-13 20:39:44 : DEBUG : Entering gen_response
+2025-03-13 20:39:44 : DEBUG : Entering process_record
+2025-03-13 20:39:44 : DEBUG : Entering gen_response
+2025-03-13 20:40:13 : DEBUG : Exiting gen_response
+2025-03-13 20:40:13 : DEBUG : Exiting process_record
+2025-03-13 20:40:43 : DEBUG : Exiting gen_response
+2025-03-13 20:40:43 : DEBUG : Exiting process_record
+2025-03-13 20:41:01 : DEBUG : Exiting gen_response
+2025-03-13 20:41:01 : DEBUG : Exiting process_record
+2025-03-13 20:41:31 : DEBUG : Exiting gen_response
+2025-03-13 20:41:31 : DEBUG : Exiting process_record
+2025-03-13 20:41:58 : DEBUG : Exiting gen_response
+2025-03-13 20:41:58 : DEBUG : Exiting process_record
+2025-03-13 20:41:58 : DEBUG : Entering collect_results_from_queue
+2025-03-13 20:41:58 : INFO : Number of responses processed: 5
+2025-03-13 20:41:58 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 20:41:58 : DEBUG : Exiting parallelize_processing
+2025-03-13 20:41:58 : CRITICAL : </run>
+2025-03-13 20:42:43 : DEBUG : Entering main
+2025-03-13 20:42:43 : DEBUG : Exiting main
+2025-03-13 20:42:43 : DEBUG : Using selector: EpollSelector
+2025-03-13 20:42:43 : CRITICAL : A new run;
+2025-03-13 20:42:43 : CRITICAL : <run>
+2025-03-13 20:42:50 : DEBUG : Entering main
+2025-03-13 20:42:50 : DEBUG : Exiting main
+2025-03-13 20:42:50 : DEBUG : Using selector: EpollSelector
+2025-03-13 20:42:50 : CRITICAL : A new run;
+2025-03-13 20:42:50 : CRITICAL : <run>
+2025-03-13 20:42:57 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading. Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 20:42:59 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-13 20:42:59 : DEBUG : Entering parallelize_processing
+2025-03-13 20:42:59 : DEBUG : Entering process_record
+2025-03-13 20:42:59 : DEBUG : Entering gen_response
+2025-03-13 20:42:59 : DEBUG : Entering process_record
+2025-03-13 20:42:59 : DEBUG : Entering gen_response
+2025-03-13 20:42:59 : DEBUG : Entering process_record
+2025-03-13 20:42:59 : DEBUG : Entering gen_response
+2025-03-13 20:42:59 : DEBUG : Entering process_record
+2025-03-13 20:42:59 : DEBUG : Entering gen_response
+2025-03-13 20:42:59 : DEBUG : Entering process_record
+2025-03-13 20:42:59 : DEBUG : Entering gen_response
+2025-03-13 20:43:30 : DEBUG : Exiting gen_response
+2025-03-13 20:43:30 : DEBUG : Exiting process_record
+2025-03-13 20:43:53 : DEBUG : Exiting gen_response
+2025-03-13 20:43:53 : DEBUG : Exiting process_record
+2025-03-13 20:43:59 : DEBUG : Exiting gen_response
+2025-03-13 20:43:59 : DEBUG : Exiting process_record
+2025-03-13 20:44:14 : DEBUG : Exiting gen_response
+2025-03-13 20:44:14 : DEBUG : Exiting process_record
+2025-03-13 20:44:48 : DEBUG : Exiting gen_response
+2025-03-13 20:44:48 : DEBUG : Exiting process_record
+2025-03-13 20:44:48 : DEBUG : Entering collect_results_from_queue
+2025-03-13 20:44:48 : INFO : Number of responses processed: 5
+2025-03-13 20:44:48 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 20:44:48 : DEBUG : Exiting parallelize_processing
+2025-03-13 20:44:48 : CRITICAL : </run>
+2025-03-13 20:46:56 : DEBUG : Entering main
+2025-03-13 20:46:56 : DEBUG : Exiting main
+2025-03-13 20:46:56 : DEBUG : Using selector: EpollSelector
+2025-03-13 20:46:56 : CRITICAL : A new run;
+2025-03-13 20:46:56 : CRITICAL : <run>
+2025-03-13 20:47:07 : DEBUG : Entering main
+2025-03-13 20:47:07 : DEBUG : Exiting main
+2025-03-13 20:47:07 : DEBUG : Using selector: EpollSelector
+2025-03-13 20:47:07 : CRITICAL : A new run;
+2025-03-13 20:47:07 : CRITICAL : <run>
+2025-03-13 20:47:09 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading. Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 20:47:21 : INFO : Starting parallel processing for 30 records with 1 prompts.
+2025-03-13 20:47:21 : DEBUG : Entering parallelize_processing
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:21 : DEBUG : Entering process_record
+2025-03-13 20:47:21 : DEBUG : Entering gen_response
+2025-03-13 20:47:25 : DEBUG : Exiting gen_response
+2025-03-13 20:47:25 : DEBUG : Exiting process_record
+2025-03-13 20:47:25 : DEBUG : Entering process_record
+2025-03-13 20:47:25 : DEBUG : Entering gen_response
+2025-03-13 20:47:25 : DEBUG : Exiting gen_response
+2025-03-13 20:47:25 : DEBUG : Exiting process_record
+2025-03-13 20:47:25 : DEBUG : Entering process_record
+2025-03-13 20:47:25 : DEBUG : Entering gen_response
+2025-03-13 20:47:25 : DEBUG : Exiting gen_response
+2025-03-13 20:47:25 : DEBUG : Exiting process_record
+2025-03-13 20:47:25 : DEBUG : Entering process_record
+2025-03-13 20:47:25 : DEBUG : Entering gen_response
+2025-03-13 20:47:25 : DEBUG : Exiting gen_response
+2025-03-13 20:47:25 : DEBUG : Exiting process_record
+2025-03-13 20:47:25 : DEBUG : Entering process_record
+2025-03-13 20:47:25 : DEBUG : Entering gen_response
+2025-03-13 20:47:26 : DEBUG : Exiting gen_response
+2025-03-13 20:47:26 : DEBUG : Exiting process_record
+2025-03-13 20:47:26 : DEBUG : Entering process_record
+2025-03-13 20:47:26 : DEBUG : Entering gen_response
+2025-03-13 20:47:26 : DEBUG : Exiting gen_response
+2025-03-13 20:47:26 : DEBUG : Exiting process_record
+2025-03-13 20:47:26 : DEBUG : Entering process_record
+2025-03-13 20:47:26 : DEBUG : Entering gen_response
+2025-03-13 20:47:27 : DEBUG : Exiting gen_response
+2025-03-13 20:47:27 : DEBUG : Exiting process_record
+2025-03-13 20:47:27 : DEBUG : Entering process_record
+2025-03-13 20:47:27 : DEBUG : Entering gen_response
+2025-03-13 20:47:27 : DEBUG : Exiting gen_response
+2025-03-13 20:47:27 : DEBUG : Exiting process_record
+2025-03-13 20:47:27 : DEBUG : Entering process_record
+2025-03-13 20:47:27 : DEBUG : Entering gen_response
+2025-03-13 20:47:27 : DEBUG : Exiting gen_response
+2025-03-13 20:47:27 : DEBUG : Exiting process_record
+2025-03-13 20:47:27 : DEBUG : Entering process_record
+2025-03-13 20:47:27 : DEBUG : Entering gen_response
+2025-03-13 20:47:28 : DEBUG : Exiting gen_response
+2025-03-13 20:47:28 : DEBUG : Exiting process_record
+2025-03-13 20:47:28 : DEBUG : Entering process_record
+2025-03-13 20:47:28 : DEBUG : Entering gen_response
+2025-03-13 20:47:28 : DEBUG : Exiting gen_response
+2025-03-13 20:47:28 : DEBUG : Exiting process_record
+2025-03-13 20:47:28 : DEBUG : Entering process_record
+2025-03-13 20:47:28 : DEBUG : Entering gen_response
+2025-03-13 20:47:28 : DEBUG : Exiting gen_response
+2025-03-13 20:47:28 : DEBUG : Exiting process_record
+2025-03-13 20:47:28 : DEBUG : Entering process_record
+2025-03-13 20:47:28 : DEBUG : Entering gen_response
+2025-03-13 20:47:29 : DEBUG : Exiting gen_response
+2025-03-13 20:47:29 : DEBUG : Exiting process_record
+2025-03-13 20:47:29 : DEBUG : Entering process_record
+2025-03-13 20:47:29 : DEBUG : Entering gen_response
+2025-03-13 20:47:29 : DEBUG : Exiting gen_response
+2025-03-13 20:47:29 : DEBUG : Exiting process_record
+2025-03-13 20:47:29 : DEBUG : Entering process_record
+2025-03-13 20:47:29 : DEBUG : Entering gen_response
+2025-03-13 20:47:29 : DEBUG : Exiting gen_response
+2025-03-13 20:47:29 : DEBUG : Exiting process_record
+2025-03-13 20:47:32 : DEBUG : Exiting gen_response
+2025-03-13 20:47:32 : DEBUG : Exiting process_record
+2025-03-13 20:47:32 : DEBUG : Exiting gen_response
+2025-03-13 20:47:32 : DEBUG : Exiting process_record
+2025-03-13 20:47:33 : DEBUG : Exiting gen_response
+2025-03-13 20:47:33 : DEBUG : Exiting process_record
+2025-03-13 20:47:33 : DEBUG : Exiting gen_response
+2025-03-13 20:47:33 : DEBUG : Exiting process_record
+2025-03-13 20:47:33 : DEBUG : Exiting gen_response
+2025-03-13 20:47:33 : DEBUG : Exiting process_record
+2025-03-13 20:47:34 : DEBUG : Exiting gen_response
+2025-03-13 20:47:34 : DEBUG : Exiting process_record
+2025-03-13 20:47:34 : DEBUG : Exiting gen_response
+2025-03-13 20:47:34 : DEBUG : Exiting process_record
+2025-03-13 20:47:34 : DEBUG : Exiting gen_response
+2025-03-13 20:47:34 : DEBUG : Exiting process_record
+2025-03-13 20:47:34 : DEBUG : Exiting gen_response
+2025-03-13 20:47:34 : DEBUG : Exiting process_record
+2025-03-13 20:47:40 : DEBUG : Exiting gen_response
+2025-03-13 20:47:40 : DEBUG : Exiting process_record
+2025-03-13 20:47:45 : DEBUG : Exiting gen_response
+2025-03-13 20:47:45 : DEBUG : Exiting process_record
+2025-03-13 20:47:47 : DEBUG : Exiting gen_response
+2025-03-13 20:47:47 : DEBUG : Exiting process_record
+2025-03-13 20:47:53 : DEBUG : Exiting gen_response
+2025-03-13 20:47:53 : DEBUG : Exiting process_record
+2025-03-13 20:47:57 : DEBUG : Exiting gen_response
+2025-03-13 20:47:57 : DEBUG : Exiting process_record
+2025-03-13 20:48:25 : DEBUG : Exiting gen_response
+2025-03-13 20:48:25 : DEBUG : Exiting process_record
+2025-03-13 20:48:25 : DEBUG : Entering collect_results_from_queue
+2025-03-13 20:48:25 : INFO : Number of responses processed: 30
+2025-03-13 20:48:25 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 20:48:25 : DEBUG : Exiting parallelize_processing
+2025-03-13 20:48:25 : CRITICAL : </run>
+2025-03-13 21:12:39 : DEBUG : Entering main
+2025-03-13 21:12:39 : DEBUG : Exiting main
+2025-03-13 21:12:39 : DEBUG : Using selector: EpollSelector
+2025-03-13 21:12:39 : CRITICAL : A new run;
+2025-03-13 21:12:39 : CRITICAL : <run>
+2025-03-13 21:12:41 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading. Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 21:12:46 : DEBUG : Entering main
+2025-03-13 21:12:46 : DEBUG : Exiting main
+2025-03-13 21:12:46 : DEBUG : Using selector: EpollSelector
+2025-03-13 21:12:46 : CRITICAL : A new run;
+2025-03-13 21:12:46 : CRITICAL : <run>
+2025-03-13 21:12:47 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading. Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 21:12:49 : INFO : Starting parallel processing for 0 records with 1 prompts.
+2025-03-13 21:12:49 : DEBUG : Entering parallelize_processing
+2025-03-13 21:12:49 : DEBUG : Entering collect_results_from_queue
+2025-03-13 21:12:49 : INFO : Number of responses processed: 0
+2025-03-13 21:12:49 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 21:12:49 : DEBUG : Exiting parallelize_processing
+2025-03-13 21:12:49 : CRITICAL : </run>
+2025-03-13 21:13:15 : DEBUG : Entering main
+2025-03-13 21:13:15 : DEBUG : Exiting main
+2025-03-13 21:13:15 : DEBUG : Using selector: EpollSelector
+2025-03-13 21:13:15 : CRITICAL : A new run;
+2025-03-13 21:13:15 : CRITICAL : <run>
+2025-03-13 21:13:16 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading. Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-13 21:13:28 : INFO : Starting parallel processing for 30 records with 1 prompts.
+2025-03-13 21:13:28 : DEBUG : Entering parallelize_processing
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:28 : DEBUG : Entering process_record
+2025-03-13 21:13:28 : DEBUG : Entering gen_response
+2025-03-13 21:13:31 : DEBUG : Exiting gen_response
+2025-03-13 21:13:31 : DEBUG : Exiting process_record
+2025-03-13 21:13:31 : DEBUG : Entering process_record
+2025-03-13 21:13:31 : DEBUG : Entering gen_response
+2025-03-13 21:13:32 : DEBUG : Exiting gen_response
+2025-03-13 21:13:32 : DEBUG : Exiting process_record
+2025-03-13 21:13:32 : DEBUG : Entering process_record
+2025-03-13 21:13:32 : DEBUG : Entering gen_response
+2025-03-13 21:13:32 : DEBUG : Exiting gen_response
+2025-03-13 21:13:32 : DEBUG : Exiting process_record
+2025-03-13 21:13:32 : DEBUG : Entering process_record
+2025-03-13 21:13:32 : DEBUG : Entering gen_response
+2025-03-13 21:13:32 : DEBUG : Exiting gen_response
+2025-03-13 21:13:32 : DEBUG : Exiting process_record
+2025-03-13 21:13:32 : DEBUG : Entering process_record
+2025-03-13 21:13:32 : DEBUG : Entering gen_response
+2025-03-13 21:13:33 : DEBUG : Exiting gen_response
+2025-03-13 21:13:33 : DEBUG : Exiting process_record
+2025-03-13 21:13:33 : DEBUG : Entering process_record
+2025-03-13 21:13:33 : DEBUG : Entering gen_response
+2025-03-13 21:13:33 : DEBUG : Exiting gen_response
+2025-03-13 21:13:33 : DEBUG : Exiting process_record
+2025-03-13 21:13:33 : DEBUG : Entering process_record
+2025-03-13 21:13:33 : DEBUG : Entering gen_response
+2025-03-13 21:13:33 : DEBUG : Exiting gen_response
+2025-03-13 21:13:33 : DEBUG : Exiting process_record
+2025-03-13 21:13:33 : DEBUG : Entering process_record
+2025-03-13 21:13:33 : DEBUG : Entering gen_response
+2025-03-13 21:13:34 : DEBUG : Exiting gen_response
+2025-03-13 21:13:34 : DEBUG : Exiting process_record
+2025-03-13 21:13:34 : DEBUG : Entering process_record
+2025-03-13 21:13:34 : DEBUG : Entering gen_response
+2025-03-13 21:13:34 : DEBUG : Exiting gen_response
+2025-03-13 21:13:34 : DEBUG : Exiting process_record
+2025-03-13 21:13:34 : DEBUG : Entering process_record
+2025-03-13 21:13:34 : DEBUG : Entering gen_response
+2025-03-13 21:13:35 : DEBUG : Exiting gen_response
+2025-03-13 21:13:35 : DEBUG : Exiting process_record
+2025-03-13 21:13:35 : DEBUG : Entering process_record
+2025-03-13 21:13:35 : DEBUG : Entering gen_response
+2025-03-13 21:13:35 : DEBUG : Exiting gen_response
+2025-03-13 21:13:35 : DEBUG : Exiting process_record
+2025-03-13 21:13:35 : DEBUG : Entering process_record
+2025-03-13 21:13:35 : DEBUG : Entering gen_response
+2025-03-13 21:13:35 : DEBUG : Exiting gen_response
+2025-03-13 21:13:35 : DEBUG : Exiting process_record
+2025-03-13 21:13:35 : DEBUG : Entering process_record
+2025-03-13 21:13:35 : DEBUG : Entering gen_response
+2025-03-13 21:13:36 : DEBUG : Exiting gen_response
+2025-03-13 21:13:36 : DEBUG : Exiting process_record
+2025-03-13 21:13:36 : DEBUG : Entering process_record
+2025-03-13 21:13:36 : DEBUG : Entering gen_response
+2025-03-13 21:13:36 : DEBUG : Exiting gen_response
+2025-03-13 21:13:36 : DEBUG : Exiting process_record
+2025-03-13 21:13:36 : DEBUG : Entering process_record
+2025-03-13 21:13:36 : DEBUG : Entering gen_response
+2025-03-13 21:13:36 : DEBUG : Exiting gen_response
+2025-03-13 21:13:36 : DEBUG : Exiting process_record
+2025-03-13 21:13:37 : DEBUG : Exiting gen_response
+2025-03-13 21:13:37 : DEBUG : Exiting process_record
+2025-03-13 21:13:37 : DEBUG : Exiting gen_response
+2025-03-13 21:13:37 : DEBUG : Exiting process_record
+2025-03-13 21:13:38 : DEBUG : Exiting gen_response
+2025-03-13 21:13:38 : DEBUG : Exiting process_record
+2025-03-13 21:13:38 : DEBUG : Exiting gen_response
+2025-03-13 21:13:38 : DEBUG : Exiting process_record
+2025-03-13 21:13:38 : DEBUG : Exiting gen_response
+2025-03-13 21:13:38 : DEBUG : Exiting process_record
+2025-03-13 21:13:38 : DEBUG : Exiting gen_response
+2025-03-13 21:13:38 : DEBUG : Exiting process_record
+2025-03-13 21:13:39 : DEBUG : Exiting gen_response
+2025-03-13 21:13:39 : DEBUG : Exiting process_record
+2025-03-13 21:13:40 : DEBUG : Exiting gen_response
+2025-03-13 21:13:40 : DEBUG : Exiting process_record
+2025-03-13 21:13:49 : DEBUG : Exiting gen_response
+2025-03-13 21:13:49 : DEBUG : Exiting process_record
+2025-03-13 21:13:53 : DEBUG : Exiting gen_response
+2025-03-13 21:13:53 : DEBUG : Exiting process_record
+2025-03-13 21:13:57 : DEBUG : Exiting gen_response
+2025-03-13 21:13:57 : DEBUG : Exiting process_record
+2025-03-13 21:14:00 : DEBUG : Exiting gen_response
+2025-03-13 21:14:00 : DEBUG : Exiting process_record
+2025-03-13 21:14:02 : DEBUG : Exiting gen_response
+2025-03-13 21:14:02 : DEBUG : Exiting process_record
+2025-03-13 21:14:09 : DEBUG : Exiting gen_response
+2025-03-13 21:14:09 : DEBUG : Exiting process_record
+2025-03-13 21:14:12 : DEBUG : Exiting gen_response
+2025-03-13 21:14:12 : DEBUG : Exiting process_record
+2025-03-13 21:14:12 : DEBUG : Entering collect_results_from_queue
+2025-03-13 21:14:12 : INFO : Number of responses processed: 30
+2025-03-13 21:14:12 : DEBUG : Exiting collect_results_from_queue
+2025-03-13 21:14:12 : DEBUG : Exiting parallelize_processing
+2025-03-13 21:14:12 : CRITICAL : </run>
+2025-03-14 00:48:54 : DEBUG : Entering main
+2025-03-14 00:48:54 : DEBUG : Exiting main
+2025-03-14 00:48:54 : DEBUG : Using selector: EpollSelector
+2025-03-14 00:48:54 : CRITICAL : A new run;
+2025-03-14 00:48:54 : CRITICAL : <run>
+2025-03-14 00:48:55 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading. Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements.
+2025-03-14 00:49:01 : INFO : Starting parallel processing for 8 records with 1 prompts.
+2025-03-14 00:49:01 : DEBUG : Entering parallelize_processing
+2025-03-14 00:49:01 : DEBUG : Entering process_record
+2025-03-14 00:49:01 : DEBUG : Entering gen_response
+2025-03-14 00:49:01 : DEBUG : Entering process_record
+2025-03-14 00:49:01 : DEBUG : Entering gen_response
+2025-03-14 00:49:01 : DEBUG : Entering process_record
+2025-03-14 00:49:01 : DEBUG : Entering gen_response
+2025-03-14 00:49:01 : DEBUG : Entering process_record
+2025-03-14 00:49:01 : DEBUG : Entering gen_response
+2025-03-14 00:49:01 : DEBUG : Entering process_record
+2025-03-14 00:49:01 : DEBUG : Entering gen_response
+2025-03-14 00:49:01 : DEBUG : Entering process_record
+2025-03-14 00:49:01 : DEBUG : Entering gen_response
+2025-03-14 00:49:01 : DEBUG : Entering process_record
+2025-03-14 00:49:01 : DEBUG : Entering gen_response
+2025-03-14 00:49:01 : DEBUG : Entering process_record
+2025-03-14 00:49:01 : DEBUG : Entering gen_response
+2025-03-14 00:49:11 : DEBUG : Exiting gen_response
+2025-03-14 00:49:11 : DEBUG : Exiting process_record
+2025-03-14 00:49:11 : DEBUG : Exiting gen_response
+2025-03-14 00:49:11 : DEBUG : Exiting process_record
+2025-03-14 00:49:40 : DEBUG : Exiting gen_response
+2025-03-14 00:49:40 : DEBUG : Exiting process_record
+2025-03-14 00:49:45 : DEBUG : Exiting gen_response
+2025-03-14 00:49:45 : DEBUG : Exiting process_record
+2025-03-14 00:49:48 : DEBUG : Exiting gen_response
+2025-03-14 00:49:48 : DEBUG : Exiting process_record
+2025-03-14 00:49:59 : DEBUG : Exiting gen_response
+2025-03-14 00:49:59 : DEBUG : Exiting process_record
+2025-03-14 00:50:18 : DEBUG : Exiting gen_response
+2025-03-14 00:50:18 : DEBUG : Exiting process_record
+2025-03-14 00:51:45 : DEBUG : Exiting gen_response
+2025-03-14 00:51:45 : DEBUG : Exiting process_record
+2025-03-14 00:51:45 : DEBUG : Entering collect_results_from_queue
+2025-03-14 00:51:45 : INFO : Number of responses processed: 8
+2025-03-14 00:51:45 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 00:51:46 : DEBUG : Exiting parallelize_processing
+2025-03-14 00:51:46 : CRITICAL : </run>
+2025-03-14 01:05:40 : DEBUG : Entering main
+2025-03-14 01:05:40 : DEBUG : Exiting main
+2025-03-14 01:05:40 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:05:40 : CRITICAL : A new run;
+2025-03-14 01:05:40 : CRITICAL : <run>
+2025-03-14 01:05:42 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:05:48 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-14 01:05:48 : DEBUG : Entering parallelize_processing
+2025-03-14 01:05:48 : DEBUG : Entering process_record
+2025-03-14 01:05:48 : DEBUG : Entering gen_response
+2025-03-14 01:05:48 : DEBUG : Entering process_record
+2025-03-14 01:05:48 : DEBUG : Entering gen_response
+2025-03-14 01:05:48 : DEBUG : Entering process_record
+2025-03-14 01:05:48 : DEBUG : Entering gen_response
+2025-03-14 01:05:48 : DEBUG : Entering process_record
+2025-03-14 01:05:48 : DEBUG : Entering process_record
+2025-03-14 01:05:48 : DEBUG : Entering gen_response
+2025-03-14 01:05:48 : DEBUG : Entering gen_response
+2025-03-14 01:06:22 : DEBUG : Exiting gen_response
+2025-03-14 01:06:22 : DEBUG : Exiting process_record
+2025-03-14 01:06:34 : DEBUG : Exiting gen_response
+2025-03-14 01:06:34 : DEBUG : Exiting process_record
+2025-03-14 01:06:35 : DEBUG : Exiting gen_response
+2025-03-14 01:06:35 : DEBUG : Exiting process_record
+2025-03-14 01:06:45 : DEBUG : Exiting gen_response
+2025-03-14 01:06:45 : DEBUG : Exiting process_record
+2025-03-14 01:07:51 : DEBUG : Exiting gen_response
+2025-03-14 01:07:51 : DEBUG : Exiting process_record
+2025-03-14 01:07:51 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:07:51 : INFO : Number of responses processed: 5
+2025-03-14 01:07:51 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:07:51 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:07:51 : CRITICAL : </run>
+2025-03-14 01:08:12 : DEBUG : Entering main
+2025-03-14 01:08:12 : DEBUG : Exiting main
+2025-03-14 01:08:12 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:08:12 : CRITICAL : A new run;
+2025-03-14 01:08:12 : CRITICAL : <run>
+2025-03-14 01:08:15 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:08:18 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-14 01:08:18 : DEBUG : Entering parallelize_processing
+2025-03-14 01:08:18 : DEBUG : Entering process_record
+2025-03-14 01:08:18 : DEBUG : Entering gen_response
+2025-03-14 01:08:18 : DEBUG : Entering process_record
+2025-03-14 01:08:18 : DEBUG : Entering gen_response
+2025-03-14 01:08:18 : DEBUG : Entering process_record
+2025-03-14 01:08:18 : DEBUG : Entering gen_response
+2025-03-14 01:08:18 : DEBUG : Entering process_record
+2025-03-14 01:08:18 : DEBUG : Entering gen_response
+2025-03-14 01:08:18 : DEBUG : Entering process_record
+2025-03-14 01:08:18 : DEBUG : Entering gen_response
+2025-03-14 01:08:52 : DEBUG : Exiting gen_response
+2025-03-14 01:08:52 : DEBUG : Exiting process_record
+2025-03-14 01:08:52 : DEBUG : Exiting gen_response
+2025-03-14 01:08:52 : DEBUG : Exiting process_record
+2025-03-14 01:11:08 : DEBUG : Exiting gen_response
+2025-03-14 01:11:08 : DEBUG : Exiting process_record
+2025-03-14 01:11:29 : DEBUG : Exiting gen_response
+2025-03-14 01:11:29 : DEBUG : Exiting process_record
+2025-03-14 01:11:56 : DEBUG : Exiting gen_response
+2025-03-14 01:11:56 : DEBUG : Exiting process_record
+2025-03-14 01:11:56 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:11:56 : INFO : Number of responses processed: 5
+2025-03-14 01:11:56 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:11:56 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:11:56 : CRITICAL : </run>
+2025-03-14 01:12:28 : DEBUG : Entering main
+2025-03-14 01:12:28 : DEBUG : Exiting main
+2025-03-14 01:12:28 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:12:28 : CRITICAL : A new run;
+2025-03-14 01:12:28 : CRITICAL : <run>
+2025-03-14 01:12:30 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:12:34 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-14 01:12:34 : DEBUG : Entering parallelize_processing
+2025-03-14 01:12:34 : DEBUG : Entering process_record
+2025-03-14 01:12:34 : DEBUG : Entering gen_response
+2025-03-14 01:12:34 : DEBUG : Entering process_record
+2025-03-14 01:12:34 : DEBUG : Entering gen_response
+2025-03-14 01:12:34 : DEBUG : Entering process_record
+2025-03-14 01:12:34 : DEBUG : Entering gen_response
+2025-03-14 01:12:34 : DEBUG : Entering process_record
+2025-03-14 01:12:34 : DEBUG : Entering gen_response
+2025-03-14 01:12:34 : DEBUG : Entering process_record
+2025-03-14 01:12:34 : DEBUG : Entering gen_response
+2025-03-14 01:13:05 : DEBUG : Exiting gen_response
+2025-03-14 01:13:05 : DEBUG : Exiting process_record
+2025-03-14 01:13:10 : DEBUG : Exiting gen_response
+2025-03-14 01:13:10 : DEBUG : Exiting process_record
+2025-03-14 01:13:15 : DEBUG : Exiting gen_response
+2025-03-14 01:13:15 : DEBUG : Exiting process_record
+2025-03-14 01:13:25 : DEBUG : Exiting gen_response
+2025-03-14 01:13:25 : DEBUG : Exiting process_record
+2025-03-14 01:14:01 : DEBUG : Exiting gen_response
+2025-03-14 01:14:01 : DEBUG : Exiting process_record
+2025-03-14 01:14:01 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:14:01 : INFO : Number of responses processed: 5
+2025-03-14 01:14:01 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:14:01 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:14:01 : CRITICAL : </run>
+2025-03-14 01:14:20 : DEBUG : Entering main
+2025-03-14 01:14:20 : DEBUG : Exiting main
+2025-03-14 01:14:20 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:14:20 : CRITICAL : A new run;
+2025-03-14 01:14:20 : CRITICAL : <run>
+2025-03-14 01:14:21 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:14:24 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-14 01:14:24 : DEBUG : Entering parallelize_processing
+2025-03-14 01:14:24 : DEBUG : Entering process_record
+2025-03-14 01:14:24 : DEBUG : Entering gen_response
+2025-03-14 01:14:24 : DEBUG : Entering process_record
+2025-03-14 01:14:24 : DEBUG : Entering gen_response
+2025-03-14 01:14:24 : DEBUG : Entering process_record
+2025-03-14 01:14:24 : DEBUG : Entering gen_response
+2025-03-14 01:14:24 : DEBUG : Entering process_record
+2025-03-14 01:14:24 : DEBUG : Entering gen_response
+2025-03-14 01:14:24 : DEBUG : Entering process_record
+2025-03-14 01:14:24 : DEBUG : Entering gen_response
+2025-03-14 01:15:01 : DEBUG : Exiting gen_response
+2025-03-14 01:15:01 : DEBUG : Exiting process_record
+2025-03-14 01:15:04 : DEBUG : Exiting gen_response
+2025-03-14 01:15:04 : DEBUG : Exiting process_record
+2025-03-14 01:15:04 : DEBUG : Exiting gen_response
+2025-03-14 01:15:04 : DEBUG : Exiting process_record
+2025-03-14 01:15:31 : DEBUG : Exiting gen_response
+2025-03-14 01:15:31 : DEBUG : Exiting process_record
+2025-03-14 01:17:11 : DEBUG : Exiting gen_response
+2025-03-14 01:17:11 : DEBUG : Exiting process_record
+2025-03-14 01:17:11 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:17:11 : INFO : Number of responses processed: 5
+2025-03-14 01:17:11 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:17:11 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:17:11 : CRITICAL : </run>
+2025-03-14 01:17:26 : DEBUG : Entering main
+2025-03-14 01:17:26 : DEBUG : Exiting main
+2025-03-14 01:17:26 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:17:26 : CRITICAL : A new run;
+2025-03-14 01:17:26 : CRITICAL : <run>
+2025-03-14 01:17:27 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:17:28 : INFO : Prompt added <prompt>: doe
+2025-03-14 01:17:32 : DEBUG : Entering main
+2025-03-14 01:17:32 : DEBUG : Exiting main
+2025-03-14 01:17:32 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:17:32 : CRITICAL : A new run;
+2025-03-14 01:17:32 : CRITICAL : <run>
+2025-03-14 01:17:33 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:17:35 : INFO : Starting parallel processing for 5 records with 1 prompts.
+2025-03-14 01:17:35 : DEBUG : Entering parallelize_processing
+2025-03-14 01:17:35 : DEBUG : Entering process_record
+2025-03-14 01:17:35 : DEBUG : Entering gen_response
+2025-03-14 01:17:35 : DEBUG : Entering process_record
+2025-03-14 01:17:35 : DEBUG : Entering gen_response
+2025-03-14 01:17:35 : DEBUG : Entering process_record
+2025-03-14 01:17:35 : DEBUG : Entering gen_response
+2025-03-14 01:17:35 : DEBUG : Entering process_record
+2025-03-14 01:17:35 : DEBUG : Entering gen_response
+2025-03-14 01:17:35 : DEBUG : Entering process_record
+2025-03-14 01:17:35 : DEBUG : Entering gen_response
+2025-03-14 01:18:08 : DEBUG : Exiting gen_response
+2025-03-14 01:18:08 : DEBUG : Exiting process_record
+2025-03-14 01:18:11 : DEBUG : Exiting gen_response
+2025-03-14 01:18:11 : DEBUG : Exiting process_record
+2025-03-14 01:18:21 : DEBUG : Exiting gen_response
+2025-03-14 01:18:21 : DEBUG : Exiting process_record
+2025-03-14 01:18:30 : DEBUG : Exiting gen_response
+2025-03-14 01:18:30 : DEBUG : Exiting process_record
+2025-03-14 01:18:34 : DEBUG : Exiting gen_response
+2025-03-14 01:18:34 : DEBUG : Exiting process_record
+2025-03-14 01:18:34 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:18:34 : INFO : Number of responses processed: 5
+2025-03-14 01:18:34 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:18:34 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:18:34 : CRITICAL : </run>
+2025-03-14 01:19:21 : DEBUG : Entering main
+2025-03-14 01:19:21 : DEBUG : Exiting main
+2025-03-14 01:19:21 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:19:21 : CRITICAL : A new run;
+2025-03-14 01:19:21 : CRITICAL : <run>
+2025-03-14 01:19:22 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:19:25 : INFO : Starting parallel processing for 3 records with 1 prompts.
+2025-03-14 01:19:25 : DEBUG : Entering parallelize_processing
+2025-03-14 01:19:25 : DEBUG : Entering process_record
+2025-03-14 01:19:25 : DEBUG : Entering gen_response
+2025-03-14 01:19:25 : DEBUG : Entering process_record
+2025-03-14 01:19:25 : DEBUG : Entering gen_response
+2025-03-14 01:19:25 : DEBUG : Entering process_record
+2025-03-14 01:19:25 : DEBUG : Entering gen_response
+2025-03-14 01:20:06 : DEBUG : Exiting gen_response
+2025-03-14 01:20:06 : DEBUG : Exiting process_record
+2025-03-14 01:20:20 : DEBUG : Exiting gen_response
+2025-03-14 01:20:20 : DEBUG : Exiting process_record
+2025-03-14 01:21:40 : DEBUG : Exiting gen_response
+2025-03-14 01:21:40 : DEBUG : Exiting process_record
+2025-03-14 01:21:40 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:21:40 : INFO : Number of responses processed: 3
+2025-03-14 01:21:40 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:21:40 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:21:40 : CRITICAL : </run>
+2025-03-14 01:23:08 : DEBUG : Entering main
+2025-03-14 01:23:08 : DEBUG : Exiting main
+2025-03-14 01:23:08 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:23:08 : CRITICAL : A new run;
+2025-03-14 01:23:08 : CRITICAL : <run>
+2025-03-14 01:23:09 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:23:11 : INFO : Starting parallel processing for 3 records with 1 prompts.
+2025-03-14 01:23:11 : DEBUG : Entering parallelize_processing
+2025-03-14 01:23:11 : DEBUG : Entering process_record
+2025-03-14 01:23:11 : DEBUG : Entering gen_response
+2025-03-14 01:23:11 : DEBUG : Entering process_record
+2025-03-14 01:23:11 : DEBUG : Entering gen_response
+2025-03-14 01:23:12 : DEBUG : Entering process_record
+2025-03-14 01:23:12 : DEBUG : Entering gen_response
+2025-03-14 01:23:59 : DEBUG : Exiting gen_response
+2025-03-14 01:23:59 : DEBUG : Exiting process_record
+2025-03-14 01:24:09 : DEBUG : Exiting gen_response
+2025-03-14 01:24:09 : DEBUG : Exiting process_record
+2025-03-14 01:25:36 : DEBUG : Exiting gen_response
+2025-03-14 01:25:36 : DEBUG : Exiting process_record
+2025-03-14 01:25:36 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:25:36 : INFO : Number of responses processed: 3
+2025-03-14 01:25:36 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:25:36 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:25:36 : CRITICAL : </run>
+2025-03-14 01:29:41 : DEBUG : Entering main
+2025-03-14 01:29:41 : DEBUG : Exiting main
+2025-03-14 01:29:41 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:29:41 : CRITICAL : A new run;
+2025-03-14 01:29:41 : CRITICAL : <run>
+2025-03-14 01:29:42 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:29:45 : INFO : Starting parallel processing for 3 records with 1 prompts.
+2025-03-14 01:29:45 : DEBUG : Entering parallelize_processing
+2025-03-14 01:29:45 : DEBUG : Entering process_record
+2025-03-14 01:29:45 : DEBUG : Entering gen_response
+2025-03-14 01:29:45 : DEBUG : Entering process_record
+2025-03-14 01:29:45 : DEBUG : Entering gen_response
+2025-03-14 01:29:45 : DEBUG : Entering process_record
+2025-03-14 01:29:45 : DEBUG : Entering gen_response
+2025-03-14 01:30:22 : DEBUG : Exiting gen_response
+2025-03-14 01:30:22 : DEBUG : Exiting process_record
+2025-03-14 01:30:34 : DEBUG : Exiting gen_response
+2025-03-14 01:30:34 : DEBUG : Exiting process_record
+2025-03-14 01:32:27 : DEBUG : Exiting gen_response
+2025-03-14 01:32:27 : DEBUG : Exiting process_record
+2025-03-14 01:32:27 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:32:27 : INFO : Number of responses processed: 3
+2025-03-14 01:32:27 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:32:27 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:32:27 : CRITICAL : </run>
+2025-03-14 01:32:40 : DEBUG : Entering main
+2025-03-14 01:32:40 : DEBUG : Exiting main
+2025-03-14 01:32:40 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:32:40 : CRITICAL : A new run;
+2025-03-14 01:32:40 : CRITICAL : <run>
+2025-03-14 01:32:42 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:32:44 : INFO : Starting parallel processing for 3 records with 1 prompts.
+2025-03-14 01:32:44 : DEBUG : Entering parallelize_processing
+2025-03-14 01:32:44 : DEBUG : Entering process_record
+2025-03-14 01:32:44 : DEBUG : Entering gen_response
+2025-03-14 01:32:44 : DEBUG : Entering process_record
+2025-03-14 01:32:44 : DEBUG : Entering gen_response
+2025-03-14 01:32:44 : DEBUG : Entering process_record
+2025-03-14 01:32:44 : DEBUG : Entering gen_response
+2025-03-14 01:33:25 : DEBUG : Exiting gen_response
+2025-03-14 01:33:25 : DEBUG : Exiting process_record
+2025-03-14 01:33:33 : DEBUG : Exiting gen_response
+2025-03-14 01:33:33 : DEBUG : Exiting process_record
+2025-03-14 01:35:08 : DEBUG : Exiting gen_response
+2025-03-14 01:35:08 : DEBUG : Exiting process_record
+2025-03-14 01:35:08 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:35:08 : INFO : Number of responses processed: 3
+2025-03-14 01:35:08 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:35:08 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:35:08 : CRITICAL : </run>
+2025-03-14 01:54:30 : DEBUG : Entering main
+2025-03-14 01:54:30 : DEBUG : Exiting main
+2025-03-14 01:54:30 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:54:30 : CRITICAL : A new run;
+2025-03-14 01:54:30 : CRITICAL : <run>
+2025-03-14 01:54:31 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:54:33 : INFO : Starting parallel processing for 4 records with 1 prompts.
+2025-03-14 01:54:33 : DEBUG : Entering parallelize_processing
+2025-03-14 01:54:33 : DEBUG : Entering process_record
+2025-03-14 01:54:33 : DEBUG : Entering gen_response
+2025-03-14 01:54:33 : DEBUG : Entering process_record
+2025-03-14 01:54:33 : DEBUG : Entering gen_response
+2025-03-14 01:54:33 : DEBUG : Entering process_record
+2025-03-14 01:54:33 : DEBUG : Entering gen_response
+2025-03-14 01:54:33 : DEBUG : Entering process_record
+2025-03-14 01:54:33 : DEBUG : Entering gen_response
+2025-03-14 01:55:46 : DEBUG : Exiting gen_response
+2025-03-14 01:55:46 : DEBUG : Exiting process_record
+2025-03-14 01:55:53 : DEBUG : Exiting gen_response
+2025-03-14 01:55:53 : DEBUG : Exiting process_record
+2025-03-14 01:55:55 : DEBUG : Exiting gen_response
+2025-03-14 01:55:55 : DEBUG : Exiting process_record
+2025-03-14 01:55:58 : DEBUG : Exiting gen_response
+2025-03-14 01:55:58 : DEBUG : Exiting process_record
+2025-03-14 01:55:58 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:55:58 : INFO : Number of responses processed: 4
+2025-03-14 01:55:58 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:55:58 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:55:58 : CRITICAL : </run>
+2025-03-14 01:56:29 : DEBUG : Entering main
+2025-03-14 01:56:29 : DEBUG : Exiting main
+2025-03-14 01:56:29 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:56:29 : CRITICAL : A new run;
+2025-03-14 01:56:29 : CRITICAL : <run>
+2025-03-14 01:56:30 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:56:32 : INFO : Starting parallel processing for 4 records with 1 prompts.
+2025-03-14 01:56:32 : DEBUG : Entering parallelize_processing
+2025-03-14 01:56:33 : DEBUG : Entering process_record
+2025-03-14 01:56:33 : DEBUG : Entering gen_response
+2025-03-14 01:56:33 : DEBUG : Entering process_record
+2025-03-14 01:56:33 : DEBUG : Entering gen_response
+2025-03-14 01:56:33 : DEBUG : Entering process_record
+2025-03-14 01:56:33 : DEBUG : Entering gen_response
+2025-03-14 01:56:33 : DEBUG : Entering process_record
+2025-03-14 01:56:33 : DEBUG : Entering gen_response
+2025-03-14 01:57:30 : DEBUG : Exiting gen_response
+2025-03-14 01:57:30 : DEBUG : Exiting process_record
+2025-03-14 01:57:44 : DEBUG : Exiting gen_response
+2025-03-14 01:57:44 : DEBUG : Exiting process_record
+2025-03-14 01:57:50 : DEBUG : Exiting gen_response
+2025-03-14 01:57:50 : DEBUG : Exiting process_record
+2025-03-14 01:58:02 : DEBUG : Exiting gen_response
+2025-03-14 01:58:02 : DEBUG : Exiting process_record
+2025-03-14 01:58:02 : DEBUG : Entering collect_results_from_queue
+2025-03-14 01:58:02 : INFO : Number of responses processed: 4
+2025-03-14 01:58:02 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 01:58:03 : DEBUG : Exiting parallelize_processing
+2025-03-14 01:58:03 : CRITICAL : </run>
+2025-03-14 01:59:15 : DEBUG : Entering main
+2025-03-14 01:59:15 : DEBUG : Exiting main
+2025-03-14 01:59:15 : DEBUG : Using selector: EpollSelector
+2025-03-14 01:59:15 : CRITICAL : A new run;
+2025-03-14 01:59:15 : CRITICAL : <run>
+2025-03-14 01:59:16 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 01:59:19 : INFO : Starting parallel processing for 4 records with 1 prompts.
+2025-03-14 01:59:19 : DEBUG : Entering parallelize_processing
+2025-03-14 01:59:19 : DEBUG : Entering process_record
+2025-03-14 01:59:19 : DEBUG : Entering gen_response
+2025-03-14 01:59:19 : DEBUG : Entering process_record
+2025-03-14 01:59:19 : DEBUG : Entering gen_response
+2025-03-14 01:59:19 : DEBUG : Entering process_record
+2025-03-14 01:59:19 : DEBUG : Entering gen_response
+2025-03-14 01:59:19 : DEBUG : Entering process_record
+2025-03-14 01:59:19 : DEBUG : Entering gen_response
+2025-03-14 02:00:21 : DEBUG : Exiting gen_response
+2025-03-14 02:00:21 : DEBUG : Exiting process_record
+2025-03-14 02:00:44 : DEBUG : Exiting gen_response
+2025-03-14 02:00:44 : DEBUG : Exiting process_record
+2025-03-14 02:02:10 : DEBUG : Exiting gen_response
+2025-03-14 02:02:10 : DEBUG : Exiting process_record
+2025-03-14 02:02:32 : DEBUG : Exiting gen_response
+2025-03-14 02:02:32 : DEBUG : Exiting process_record
+2025-03-14 02:02:32 : DEBUG : Entering collect_results_from_queue
+2025-03-14 02:02:32 : INFO : Number of responses processed: 4
+2025-03-14 02:02:32 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 02:02:32 : DEBUG : Exiting parallelize_processing
+2025-03-14 02:02:32 : CRITICAL : </run>
+2025-03-14 02:02:48 : DEBUG : Entering main
+2025-03-14 02:02:48 : DEBUG : Exiting main
+2025-03-14 02:02:48 : DEBUG : Using selector: EpollSelector
+2025-03-14 02:02:48 : CRITICAL : A new run;
+2025-03-14 02:02:48 : CRITICAL : <run>
+2025-03-14 02:02:49 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 02:02:54 : INFO : Starting parallel processing for 4 records with 1 prompts.
+2025-03-14 02:02:54 : DEBUG : Entering parallelize_processing
+2025-03-14 02:02:54 : DEBUG : Entering process_record
+2025-03-14 02:02:54 : DEBUG : Entering gen_response
+2025-03-14 02:02:54 : DEBUG : Entering process_record
+2025-03-14 02:02:54 : DEBUG : Entering gen_response
+2025-03-14 02:02:54 : DEBUG : Entering process_record
+2025-03-14 02:02:54 : DEBUG : Entering gen_response
+2025-03-14 02:02:54 : DEBUG : Entering process_record
+2025-03-14 02:02:54 : DEBUG : Entering gen_response
+2025-03-14 02:03:59 : DEBUG : Exiting gen_response
+2025-03-14 02:03:59 : DEBUG : Exiting process_record
+2025-03-14 02:04:06 : DEBUG : Exiting gen_response
+2025-03-14 02:04:06 : DEBUG : Exiting process_record
+2025-03-14 02:04:23 : DEBUG : Exiting gen_response
+2025-03-14 02:04:23 : DEBUG : Exiting process_record
+2025-03-14 02:05:45 : DEBUG : Exiting gen_response
+2025-03-14 02:05:45 : DEBUG : Exiting process_record
+2025-03-14 02:05:45 : DEBUG : Entering collect_results_from_queue
+2025-03-14 02:05:45 : INFO : Number of responses processed: 4
+2025-03-14 02:05:45 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 02:05:45 : DEBUG : Exiting parallelize_processing
+2025-03-14 02:05:45 : CRITICAL : </run>
+2025-03-14 02:10:49 : DEBUG : Entering main
+2025-03-14 02:10:49 : DEBUG : Exiting main
+2025-03-14 02:10:49 : DEBUG : Using selector: EpollSelector
+2025-03-14 02:10:49 : CRITICAL : A new run;
+2025-03-14 02:10:49 : CRITICAL : <run>
+2025-03-14 02:10:50 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 02:10:52 : INFO : Starting parallel processing for 3 records with 1 prompts.
+2025-03-14 02:10:52 : DEBUG : Entering parallelize_processing
+2025-03-14 02:10:52 : DEBUG : Entering process_record
+2025-03-14 02:10:52 : DEBUG : Entering gen_response
+2025-03-14 02:10:52 : DEBUG : Entering process_record
+2025-03-14 02:10:52 : DEBUG : Entering gen_response
+2025-03-14 02:10:52 : DEBUG : Entering process_record
+2025-03-14 02:10:52 : DEBUG : Entering gen_response
+2025-03-14 02:12:05 : DEBUG : Exiting gen_response
+2025-03-14 02:12:05 : DEBUG : Exiting process_record
+2025-03-14 02:14:01 : DEBUG : Exiting gen_response
+2025-03-14 02:14:01 : DEBUG : Exiting process_record
+2025-03-14 02:18:00 : DEBUG : Exiting gen_response
+2025-03-14 02:18:00 : DEBUG : Exiting process_record
+2025-03-14 02:18:00 : DEBUG : Entering collect_results_from_queue
+2025-03-14 02:18:00 : INFO : Number of responses processed: 3
+2025-03-14 02:18:00 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 02:18:00 : DEBUG : Exiting parallelize_processing
+2025-03-14 02:18:00 : CRITICAL : </run>
+2025-03-14 02:18:39 : DEBUG : Entering main
+2025-03-14 02:18:39 : DEBUG : Exiting main
+2025-03-14 02:18:39 : DEBUG : Using selector: EpollSelector
+2025-03-14 02:18:39 : CRITICAL : A new run;
+2025-03-14 02:18:39 : CRITICAL : <run>
+2025-03-14 02:18:39 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 02:18:42 : INFO : Starting parallel processing for 3 records with 1 prompts.
+2025-03-14 02:18:42 : DEBUG : Entering parallelize_processing
+2025-03-14 02:18:42 : DEBUG : Entering process_record
+2025-03-14 02:18:42 : DEBUG : Entering gen_response
+2025-03-14 02:18:42 : DEBUG : Entering process_record
+2025-03-14 02:18:42 : DEBUG : Entering gen_response
+2025-03-14 02:18:42 : DEBUG : Entering process_record
+2025-03-14 02:18:42 : DEBUG : Entering gen_response
+2025-03-14 02:19:27 : DEBUG : Exiting gen_response
+2025-03-14 02:19:27 : DEBUG : Exiting process_record
+2025-03-14 02:20:06 : DEBUG : Exiting gen_response
+2025-03-14 02:20:06 : DEBUG : Exiting process_record
+2025-03-14 02:20:27 : DEBUG : Exiting gen_response
+2025-03-14 02:20:27 : DEBUG : Exiting process_record
+2025-03-14 02:20:27 : DEBUG : Entering collect_results_from_queue
+2025-03-14 02:20:27 : INFO : Number of responses processed: 3
+2025-03-14 02:20:27 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 02:20:27 : DEBUG : Exiting parallelize_processing
+2025-03-14 02:20:27 : CRITICAL : </run>
+2025-03-14 02:20:35 : DEBUG : Entering main
+2025-03-14 02:20:35 : DEBUG : Exiting main
+2025-03-14 02:20:35 : DEBUG : Using selector: EpollSelector
+2025-03-14 02:20:35 : CRITICAL : A new run;
+2025-03-14 02:20:35 : CRITICAL : <run>
+2025-03-14 02:20:36 : INFO : Prompt added <prompt>: nonzenzegirl@gmail.com
+2025-03-14 02:20:42 : DEBUG : Entering main
+2025-03-14 02:20:42 : DEBUG : Exiting main
+2025-03-14 02:20:42 : DEBUG : Using selector: EpollSelector
+2025-03-14 02:20:42 : CRITICAL : A new run;
+2025-03-14 02:20:42 : CRITICAL : <run>
+2025-03-14 02:20:43 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 02:20:46 : INFO : Starting parallel processing for 3 records with 1 prompts.
+2025-03-14 02:20:46 : DEBUG : Entering parallelize_processing
+2025-03-14 02:20:46 : DEBUG : Entering process_record
+2025-03-14 02:20:46 : DEBUG : Entering gen_response
+2025-03-14 02:20:46 : DEBUG : Entering process_record
+2025-03-14 02:20:46 : DEBUG : Entering gen_response
+2025-03-14 02:20:46 : DEBUG : Entering process_record
+2025-03-14 02:20:46 : DEBUG : Entering gen_response
+2025-03-14 02:21:31 : DEBUG : Exiting gen_response
+2025-03-14 02:21:31 : DEBUG : Exiting process_record
+2025-03-14 02:21:34 : DEBUG : Exiting gen_response
+2025-03-14 02:21:34 : DEBUG : Exiting process_record
+2025-03-14 02:22:39 : DEBUG : Exiting gen_response
+2025-03-14 02:22:39 : DEBUG : Exiting process_record
+2025-03-14 02:22:39 : DEBUG : Entering collect_results_from_queue
+2025-03-14 02:22:39 : INFO : Number of responses processed: 3
+2025-03-14 02:22:39 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 02:22:39 : DEBUG : Exiting parallelize_processing
+2025-03-14 02:22:39 : CRITICAL : </run>
+2025-03-14 02:22:48 : DEBUG : Entering main
+2025-03-14 02:22:48 : DEBUG : Exiting main
+2025-03-14 02:22:48 : DEBUG : Using selector: EpollSelector
+2025-03-14 02:22:48 : CRITICAL : A new run;
+2025-03-14 02:22:48 : CRITICAL : <run>
+2025-03-14 02:22:48 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 02:22:51 : INFO : Starting parallel processing for 3 records with 1 prompts.
+2025-03-14 02:22:51 : DEBUG : Entering parallelize_processing
+2025-03-14 02:22:51 : DEBUG : Entering process_record
+2025-03-14 02:22:51 : DEBUG : Entering gen_response
+2025-03-14 02:22:51 : DEBUG : Entering process_record
+2025-03-14 02:22:51 : DEBUG : Entering gen_response
+2025-03-14 02:22:51 : DEBUG : Entering process_record
+2025-03-14 02:22:51 : DEBUG : Entering gen_response
+2025-03-14 02:23:34 : DEBUG : Exiting gen_response
+2025-03-14 02:23:34 : DEBUG : Exiting process_record
+2025-03-14 02:23:45 : DEBUG : Exiting gen_response
+2025-03-14 02:23:45 : DEBUG : Exiting process_record
+2025-03-14 02:26:22 : DEBUG : Exiting gen_response
+2025-03-14 02:26:22 : DEBUG : Exiting process_record
+2025-03-14 02:26:22 : DEBUG : Entering collect_results_from_queue
+2025-03-14 02:26:22 : INFO : Number of responses processed: 3
+2025-03-14 02:26:22 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 02:26:22 : DEBUG : Exiting parallelize_processing
+2025-03-14 02:26:22 : CRITICAL : </run>
+2025-03-14 02:26:26 : DEBUG : Entering main
+2025-03-14 02:26:26 : DEBUG : Exiting main
+2025-03-14 02:26:26 : DEBUG : Using selector: EpollSelector
+2025-03-14 02:26:26 : CRITICAL : A new run;
+2025-03-14 02:26:26 : CRITICAL : <run>
+2025-03-14 02:26:27 : INFO : Prompt added <prompt>: Generate exhaustive and meticulously detailed notes from the provided Ansys electromagnetics course PPT content. The notes must be extraordinarily thorough, providing in-depth coverage of all key concepts, principles, equations, and examples presented in the PPT, with comprehensive elaborations and detailed explanations. Ensure absolute accuracy, clarity, and logical organization. Begin with a top-level H1 heading in the format: # U<unit number>: <Unit Name>. Extract the <unit number> from the filename (which is always of the form 'Track <track no.> U<unit no.>'). The unit number in the filename, and in the H1 heading, should be represented using Roman numerals (I, II, III, IV, etc.). Replace <Unit Name> with a descriptive name for the unit (you may need to infer this from the content). Primarily use Markdown formatting, but embed/use HTML if needed for better presentation of equations or other elements. Be aware that some input files may contain duplicated content due to being merged from multiple lecture files. Identify and remove duplicated information, focusing on creating a cohesive and non-repetitive set of notes.
+2025-03-14 02:26:30 : INFO : Starting parallel processing for 3 records with 1 prompts.
+2025-03-14 02:26:30 : DEBUG : Entering parallelize_processing
+2025-03-14 02:26:30 : DEBUG : Entering process_record
+2025-03-14 02:26:30 : DEBUG : Entering gen_response
+2025-03-14 02:26:30 : DEBUG : Entering process_record
+2025-03-14 02:26:30 : DEBUG : Entering gen_response
+2025-03-14 02:26:30 : DEBUG : Entering process_record
+2025-03-14 02:26:30 : DEBUG : Entering gen_response
+2025-03-14 02:27:17 : DEBUG : Exiting gen_response
+2025-03-14 02:27:17 : DEBUG : Exiting process_record
+2025-03-14 02:28:38 : DEBUG : Exiting gen_response
+2025-03-14 02:28:38 : DEBUG : Exiting process_record
+2025-03-14 02:28:55 : DEBUG : Exiting gen_response
+2025-03-14 02:28:55 : DEBUG : Exiting process_record
+2025-03-14 02:28:55 : DEBUG : Entering collect_results_from_queue
+2025-03-14 02:28:55 : INFO : Number of responses processed: 3
+2025-03-14 02:28:55 : DEBUG : Exiting collect_results_from_queue
+2025-03-14 02:28:55 : DEBUG : Exiting parallelize_processing
+2025-03-14 02:28:55 : CRITICAL : </run>
+2025-03-26 19:30:08 : DEBUG : Entering main
+2025-03-26 19:30:08 : DEBUG : Exiting main
+2025-03-26 19:30:08 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:30:08 : CRITICAL : A new run;
+2025-03-26 19:30:08 : CRITICAL : <run>
+2025-03-26 19:30:19 : DEBUG : Entering main
+2025-03-26 19:30:19 : DEBUG : Exiting main
+2025-03-26 19:30:19 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:30:19 : CRITICAL : A new run;
+2025-03-26 19:30:19 : CRITICAL : <run>
+2025-03-26 19:30:34 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:30:38 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 19:30:38 : DEBUG : Entering parallelize_processing
+2025-03-26 19:30:38 : DEBUG : Entering process_record
+2025-03-26 19:30:38 : DEBUG : Entering gen_response
+2025-03-26 19:30:38 : DEBUG : Exiting gen_response
+2025-03-26 19:30:38 : ERROR : Error processing record: Model type (pro/flash) and API key type (free/paid) must be provided.
+2025-03-26 19:30:38 : DEBUG : Exiting process_record
+2025-03-26 19:30:38 : DEBUG : Entering collect_results_from_queue
+2025-03-26 19:30:38 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 19:30:38 : DEBUG : Exiting parallelize_processing
+2025-03-26 19:30:38 : CRITICAL : </run>
+2025-03-26 19:31:02 : DEBUG : Entering main
+2025-03-26 19:31:02 : DEBUG : Exiting main
+2025-03-26 19:31:02 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:31:02 : CRITICAL : A new run;
+2025-03-26 19:31:02 : CRITICAL : <run>
+2025-03-26 19:31:07 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:31:11 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 19:31:11 : DEBUG : Entering parallelize_processing
+2025-03-26 19:31:11 : DEBUG : Entering process_record
+2025-03-26 19:31:11 : DEBUG : Entering gen_response
+2025-03-26 19:31:11 : DEBUG : Exiting gen_response
+2025-03-26 19:31:11 : ERROR : Error processing record: 'Part' object is not subscriptable
+2025-03-26 19:31:11 : DEBUG : Exiting process_record
+2025-03-26 19:31:11 : DEBUG : Entering collect_results_from_queue
+2025-03-26 19:31:11 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 19:31:11 : DEBUG : Exiting parallelize_processing
+2025-03-26 19:31:11 : CRITICAL : </run>
+2025-03-26 19:35:59 : DEBUG : Entering main
+2025-03-26 19:35:59 : DEBUG : Exiting main
+2025-03-26 19:35:59 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:35:59 : CRITICAL : A new run;
+2025-03-26 19:35:59 : CRITICAL : <run>
+2025-03-26 19:36:03 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:36:06 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 19:36:06 : DEBUG : Entering parallelize_processing
+2025-03-26 19:36:07 : DEBUG : Entering process_record
+2025-03-26 19:36:07 : DEBUG : Entering gen_response
+2025-03-26 19:36:07 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 19:36:07 : DEBUG : Exiting gen_response
+2025-03-26 19:36:07 : ERROR : Error processing record: module 'google.api_core' has no attribute 'exceptions'
+2025-03-26 19:36:07 : DEBUG : Exiting process_record
+2025-03-26 19:36:07 : DEBUG : Entering collect_results_from_queue
+2025-03-26 19:36:07 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 19:36:07 : DEBUG : Exiting parallelize_processing
+2025-03-26 19:36:07 : CRITICAL : </run>
+2025-03-26 19:37:27 : DEBUG : Entering main
+2025-03-26 19:37:27 : DEBUG : Exiting main
+2025-03-26 19:37:27 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:37:27 : CRITICAL : A new run;
+2025-03-26 19:37:27 : CRITICAL : <run>
+2025-03-26 19:37:28 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:37:29 : INFO : Prompt added <prompt>: don
+2025-03-26 19:37:42 : DEBUG : Entering main
+2025-03-26 19:37:42 : DEBUG : Exiting main
+2025-03-26 19:37:42 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:37:42 : CRITICAL : A new run;
+2025-03-26 19:37:42 : CRITICAL : <run>
+2025-03-26 19:37:43 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:37:47 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 19:37:47 : DEBUG : Entering parallelize_processing
+2025-03-26 19:37:47 : DEBUG : Entering process_record
+2025-03-26 19:37:47 : DEBUG : Entering gen_response
+2025-03-26 19:37:47 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 19:37:47 : ERROR : Error generating response for prompt 'Transform this file into a list of provided JSON schema': Default value is not supported in the response schema for the Gemini API.
+2025-03-26 19:37:47 : DEBUG : Exiting gen_response
+2025-03-26 19:37:47 : DEBUG : Exiting process_record
+2025-03-26 19:37:47 : DEBUG : Entering collect_results_from_queue
+2025-03-26 19:37:47 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 19:37:47 : DEBUG : Exiting parallelize_processing
+2025-03-26 19:37:47 : CRITICAL : </run>
+2025-03-26 19:38:32 : DEBUG : Entering main
+2025-03-26 19:38:32 : DEBUG : Exiting main
+2025-03-26 19:38:32 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:38:32 : CRITICAL : A new run;
+2025-03-26 19:38:32 : CRITICAL : <run>
+2025-03-26 19:38:34 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:38:36 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 19:38:36 : DEBUG : Entering parallelize_processing
+2025-03-26 19:38:36 : DEBUG : Entering process_record
+2025-03-26 19:38:36 : DEBUG : Entering gen_response
+2025-03-26 19:38:36 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 19:38:36 : ERROR : Error generating response for prompt 'Transform this file into a list of provided JSON schema': Default value is not supported in the response schema for the Gemini API.
+2025-03-26 19:38:36 : DEBUG : Exiting gen_response
+2025-03-26 19:38:36 : DEBUG : Exiting process_record
+2025-03-26 19:38:36 : DEBUG : Entering collect_results_from_queue
+2025-03-26 19:38:36 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 19:38:36 : DEBUG : Exiting parallelize_processing
+2025-03-26 19:38:36 : CRITICAL : </run>
+2025-03-26 19:39:08 : DEBUG : Entering main
+2025-03-26 19:39:08 : DEBUG : Exiting main
+2025-03-26 19:39:08 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:39:08 : CRITICAL : A new run;
+2025-03-26 19:39:08 : CRITICAL : <run>
+2025-03-26 19:39:09 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:39:12 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 19:39:12 : DEBUG : Entering parallelize_processing
+2025-03-26 19:39:12 : DEBUG : Entering process_record
+2025-03-26 19:39:12 : DEBUG : Entering gen_response
+2025-03-26 19:39:12 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 19:39:12 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 19:39:34 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 19:39:34 : INFO : AFC remote call 1 is done.
+2025-03-26 19:39:34 : DEBUG : Exiting gen_response
+2025-03-26 19:39:34 : DEBUG : Exiting process_record
+2025-03-26 19:39:34 : DEBUG : Entering collect_results_from_queue
+2025-03-26 19:39:34 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 19:39:34 : DEBUG : Exiting parallelize_processing
+2025-03-26 19:39:34 : CRITICAL : </run>
+2025-03-26 19:41:05 : DEBUG : Entering main
+2025-03-26 19:41:05 : DEBUG : Exiting main
+2025-03-26 19:41:05 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:41:05 : CRITICAL : A new run;
+2025-03-26 19:41:05 : CRITICAL : <run>
+2025-03-26 19:41:07 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:41:11 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 19:41:11 : DEBUG : Entering parallelize_processing
+2025-03-26 19:41:11 : DEBUG : Entering process_record
+2025-03-26 19:41:11 : DEBUG : Entering gen_response
+2025-03-26 19:41:11 : ERROR : Error generating response for prompt 'Transform this file into a list of provided JSON schema': 6 validation errors for GenerateContentConfig
+response_schema.dict[any,any]
+  Input should be a valid dictionary [type=dict_type, input_value=[<class 'data.PDF_page_JS...schema.PdfPageContent'>], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.10/v/dict_type
+response_schema.custom-error[is-instance[type]]
+  Input should be a type [type=is_type, input_value=[<class 'data.PDF_page_JS...schema.PdfPageContent'>], input_type=list]
+response_schema.Schema
+  Input should be a valid dictionary or object to extract fields from [type=model_attributes_type, input_value=[<class 'data.PDF_page_JS...schema.PdfPageContent'>], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.10/v/model_attributes_type
+response_schema.is-instance[GenericAlias]
+  Input should be an instance of GenericAlias [type=is_instance_of, input_value=[<class 'data.PDF_page_JS...schema.PdfPageContent'>], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.10/v/is_instance_of
+response_schema.is-instance[UnionType]
+  Input should be an instance of UnionType [type=is_instance_of, input_value=[<class 'data.PDF_page_JS...schema.PdfPageContent'>], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.10/v/is_instance_of
+response_schema.is-instance[_UnionGenericAlias]
+  Input should be an instance of _UnionGenericAlias [type=is_instance_of, input_value=[<class 'data.PDF_page_JS...schema.PdfPageContent'>], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.10/v/is_instance_of
+2025-03-26 19:41:11 : DEBUG : Exiting gen_response
+2025-03-26 19:41:11 : DEBUG : Exiting process_record
+2025-03-26 19:41:11 : DEBUG : Entering collect_results_from_queue
+2025-03-26 19:41:11 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 19:41:11 : DEBUG : Exiting parallelize_processing
+2025-03-26 19:41:11 : CRITICAL : </run>
+2025-03-26 19:45:00 : DEBUG : Entering main
+2025-03-26 19:45:00 : DEBUG : Exiting main
+2025-03-26 19:45:00 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:45:00 : CRITICAL : A new run;
+2025-03-26 19:45:00 : CRITICAL : <run>
+2025-03-26 19:45:01 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:45:04 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 19:45:04 : DEBUG : Entering parallelize_processing
+2025-03-26 19:45:04 : DEBUG : Entering process_record
+2025-03-26 19:45:04 : DEBUG : Entering gen_response
+2025-03-26 19:45:04 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 19:45:04 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 19:47:50 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 19:47:51 : INFO : AFC remote call 1 is done.
+2025-03-26 19:47:51 : DEBUG : Exiting gen_response
+2025-03-26 19:47:51 : DEBUG : Exiting process_record
+2025-03-26 19:47:51 : DEBUG : Entering collect_results_from_queue
+2025-03-26 19:47:51 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 19:47:51 : DEBUG : Exiting parallelize_processing
+2025-03-26 19:47:51 : CRITICAL : </run>
+2025-03-26 19:51:45 : DEBUG : Entering main
+2025-03-26 19:51:45 : DEBUG : Exiting main
+2025-03-26 19:51:45 : DEBUG : Using selector: EpollSelector
+2025-03-26 19:51:45 : CRITICAL : A new run;
+2025-03-26 19:51:45 : CRITICAL : <run>
+2025-03-26 19:51:46 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 19:51:50 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 19:51:50 : DEBUG : Entering parallelize_processing
+2025-03-26 19:51:50 : DEBUG : Entering process_record
+2025-03-26 19:51:50 : DEBUG : Entering gen_response
+2025-03-26 19:51:50 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 19:51:50 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 19:54:28 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 19:54:28 : INFO : AFC remote call 1 is done.
+2025-03-26 19:54:28 : DEBUG : Exiting gen_response
+2025-03-26 19:54:28 : DEBUG : Exiting process_record
+2025-03-26 19:54:28 : DEBUG : Entering collect_results_from_queue
+2025-03-26 19:54:28 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 19:54:28 : DEBUG : Exiting parallelize_processing
+2025-03-26 20:07:06 : DEBUG : Entering main
+2025-03-26 20:07:06 : DEBUG : Exiting main
+2025-03-26 20:07:06 : DEBUG : Using selector: EpollSelector
+2025-03-26 20:07:06 : CRITICAL : A new run;
+2025-03-26 20:07:06 : CRITICAL : <run>
+2025-03-26 20:07:06 : INFO : Prompt added <prompt>: file:///home/ansarimn/Downloads/tools-2025/projects/Knowledge%20Base/output_response%20v0.md
+2025-03-26 20:08:26 : DEBUG : Entering main
+2025-03-26 20:08:26 : DEBUG : Exiting main
+2025-03-26 20:08:26 : DEBUG : Using selector: EpollSelector
+2025-03-26 20:08:26 : CRITICAL : A new run;
+2025-03-26 20:08:26 : CRITICAL : <run>
+2025-03-26 20:08:35 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 20:08:41 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 20:08:41 : DEBUG : Entering parallelize_processing
+2025-03-26 20:08:41 : DEBUG : Entering process_record
+2025-03-26 20:08:41 : DEBUG : Entering gen_response
+2025-03-26 20:08:41 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 20:08:41 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 20:12:14 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 20:12:14 : INFO : AFC remote call 1 is done.
+2025-03-26 20:12:14 : DEBUG : Exiting gen_response
+2025-03-26 20:12:14 : DEBUG : Exiting process_record
+2025-03-26 20:12:14 : DEBUG : Entering collect_results_from_queue
+2025-03-26 20:12:14 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 20:12:14 : DEBUG : Exiting parallelize_processing
+2025-03-26 20:12:14 : CRITICAL : </run>
+2025-03-26 20:41:01 : DEBUG : Entering main
+2025-03-26 20:41:01 : DEBUG : Exiting main
+2025-03-26 20:41:01 : DEBUG : Using selector: EpollSelector
+2025-03-26 20:41:01 : CRITICAL : A new run;
+2025-03-26 20:41:01 : CRITICAL : <run>
+2025-03-26 20:41:14 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 20:41:15 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 20:41:15 : DEBUG : Entering parallelize_processing
+2025-03-26 20:41:15 : DEBUG : Entering process_record
+2025-03-26 20:41:15 : DEBUG : Entering gen_response
+2025-03-26 20:41:15 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 20:41:15 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 20:41:57 : DEBUG : Exiting gen_response
+2025-03-26 20:41:57 : DEBUG : Exiting process_record
+2025-03-26 20:41:57 : DEBUG : Exiting parallelize_processing
+2025-03-26 20:42:48 : DEBUG : Entering main
+2025-03-26 20:42:48 : DEBUG : Exiting main
+2025-03-26 20:42:48 : DEBUG : Using selector: EpollSelector
+2025-03-26 20:42:48 : CRITICAL : A new run;
+2025-03-26 20:42:48 : CRITICAL : <run>
+2025-03-26 20:42:52 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 20:42:55 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 20:42:55 : DEBUG : Entering parallelize_processing
+2025-03-26 20:42:55 : DEBUG : Entering process_record
+2025-03-26 20:42:55 : DEBUG : Entering gen_response
+2025-03-26 20:42:55 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 20:42:55 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 20:45:37 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 20:45:37 : INFO : AFC remote call 1 is done.
+2025-03-26 20:45:37 : DEBUG : Exiting gen_response
+2025-03-26 20:45:37 : DEBUG : Exiting process_record
+2025-03-26 20:45:37 : DEBUG : Entering collect_results_from_queue
+2025-03-26 20:45:37 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 20:45:37 : DEBUG : Exiting parallelize_processing
+2025-03-26 20:45:37 : CRITICAL : </run>
+2025-03-26 20:48:36 : DEBUG : Entering main
+2025-03-26 20:48:36 : DEBUG : Exiting main
+2025-03-26 20:48:36 : DEBUG : Using selector: EpollSelector
+2025-03-26 20:48:36 : CRITICAL : A new run;
+2025-03-26 20:48:36 : CRITICAL : <run>
+2025-03-26 20:48:45 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 20:48:47 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 20:48:47 : DEBUG : Entering parallelize_processing
+2025-03-26 20:48:47 : DEBUG : Entering process_record
+2025-03-26 20:48:47 : DEBUG : Entering gen_response
+2025-03-26 20:48:47 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 20:48:47 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 20:51:35 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 20:51:35 : INFO : AFC remote call 1 is done.
+2025-03-26 20:51:35 : DEBUG : Exiting gen_response
+2025-03-26 20:51:35 : DEBUG : Exiting process_record
+2025-03-26 20:51:35 : DEBUG : Entering collect_results_from_queue
+2025-03-26 20:51:35 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 20:51:35 : DEBUG : Exiting parallelize_processing
+2025-03-26 20:51:35 : CRITICAL : </run>
+2025-03-26 20:55:40 : DEBUG : Entering main
+2025-03-26 20:55:40 : DEBUG : Exiting main
+2025-03-26 20:55:40 : DEBUG : Using selector: EpollSelector
+2025-03-26 20:55:40 : CRITICAL : A new run;
+2025-03-26 20:55:40 : CRITICAL : <run>
+2025-03-26 20:55:50 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 20:55:57 : INFO : Starting parallel processing for 1 records with 1 prompts.
+2025-03-26 20:55:57 : DEBUG : Entering parallelize_processing
+2025-03-26 20:55:57 : DEBUG : Entering process_record
+2025-03-26 20:55:57 : DEBUG : Entering gen_response
+2025-03-26 20:55:57 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 20:55:57 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 20:58:44 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 20:58:44 : INFO : AFC remote call 1 is done.
+2025-03-26 20:58:44 : DEBUG : Exiting gen_response
+2025-03-26 20:58:44 : DEBUG : Exiting process_record
+2025-03-26 20:58:44 : DEBUG : Entering collect_results_from_queue
+2025-03-26 20:58:44 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 20:58:44 : DEBUG : Exiting parallelize_processing
+2025-03-26 20:58:44 : CRITICAL : </run>
+2025-03-26 21:02:37 : DEBUG : Entering main
+2025-03-26 21:02:37 : DEBUG : Exiting main
+2025-03-26 21:02:37 : DEBUG : Using selector: EpollSelector
+2025-03-26 21:02:37 : CRITICAL : A new run;
+2025-03-26 21:02:37 : CRITICAL : <run>
+2025-03-26 21:03:11 : INFO : Prompt added <prompt>: Transform this file into a list of provided JSON schema
+2025-03-26 21:03:14 : INFO : Starting parallel processing for 4 records with 1 prompts.
+2025-03-26 21:03:14 : DEBUG : Entering parallelize_processing
+2025-03-26 21:03:14 : DEBUG : Entering process_record
+2025-03-26 21:03:14 : DEBUG : Entering gen_response
+2025-03-26 21:03:14 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 21:03:14 : DEBUG : Entering process_record
+2025-03-26 21:03:14 : DEBUG : Entering gen_response
+2025-03-26 21:03:14 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 21:03:14 : DEBUG : Entering process_record
+2025-03-26 21:03:14 : DEBUG : Entering gen_response
+2025-03-26 21:03:14 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 21:03:14 : DEBUG : Entering process_record
+2025-03-26 21:03:14 : DEBUG : Entering gen_response
+2025-03-26 21:03:14 : INFO : AFC is enabled with max remote calls: 10.
+2025-03-26 21:03:14 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 21:03:14 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 21:03:14 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 21:03:14 : DEBUG : Starting new HTTPS connection (1): generativelanguage.googleapis.com:443
+2025-03-26 21:04:18 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 21:04:18 : INFO : AFC remote call 1 is done.
+2025-03-26 21:04:18 : DEBUG : Exiting gen_response
+2025-03-26 21:04:18 : DEBUG : Exiting process_record
+2025-03-26 21:04:43 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 21:04:43 : INFO : AFC remote call 1 is done.
+2025-03-26 21:04:43 : DEBUG : Exiting gen_response
+2025-03-26 21:04:43 : DEBUG : Exiting process_record
+2025-03-26 21:05:47 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 21:05:48 : INFO : AFC remote call 1 is done.
+2025-03-26 21:05:48 : DEBUG : Exiting gen_response
+2025-03-26 21:05:48 : DEBUG : Exiting process_record
+2025-03-26 21:06:02 : DEBUG : https://generativelanguage.googleapis.com:443 "POST /v1beta/models/gemini-2.5-pro-exp-03-25:generateContent HTTP/1.1" 200 None
+2025-03-26 21:06:02 : INFO : AFC remote call 1 is done.
+2025-03-26 21:06:02 : DEBUG : Exiting gen_response
+2025-03-26 21:06:02 : DEBUG : Exiting process_record
+2025-03-26 21:06:02 : DEBUG : Entering collect_results_from_queue
+2025-03-26 21:06:02 : DEBUG : Exiting collect_results_from_queue
+2025-03-26 21:06:02 : DEBUG : Exiting parallelize_processing
+2025-03-26 21:06:02 : CRITICAL : </run>

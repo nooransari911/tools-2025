@@ -1,0 +1,449 @@
+[
+    {
+        "pages": [
+            {
+                "page_number": 1,
+                "section": null,
+                "title": "Project Risk & Financial Management",
+                "text_content": [
+                    "PROJECT",
+                    "MANAGEGEMENT",
+                    "Project Risk & Financial",
+                    "Management"
+                ],
+                "image_descriptions": [
+                    "A stylized graphic with hexagonal icons representing project management concepts like handshakes, targets, Gantt charts, money, checklists, and checkmarks. A hand points to the 'PROJECT MANAGEMENT' hexagon."
+                ]
+            },
+            {
+                "page_number": 2,
+                "section": "Unit V- Project Risk and Finance Management",
+                "title": "Unit V- Project Risk and Finance Management",
+                "text_content": [
+                    "Unit V- Project Risk and Finance Management",
+                    "\tProject Risk Management: Introduction, Risk, Risk Management, Role of Risk",
+                    "Management in Overall",
+                    "\tProject Management, Steps in Risk Management, Risk Identification, Risk Analysis,",
+                    "Reducing Risks",
+                    "\tIntroduction to Project Management Tools such as: Trello, JIRA and Asana.",
+                    "\tFinancial Management in Projects: Project Finance structure, Process of Project",
+                    "Financial Management:",
+                    "\tConducting Feasibility Studies, Planning the Project Finance, Arranging the Financial",
+                    "Package, Controlling the",
+                    "\tFinancial Package, Controlling Financial Risk, Options Models.",
+                    "CO5: Identify and assess the project risks and manage finances in line with",
+                    "Project Financial Management",
+                    "Process."
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 3,
+                "section": "Project Risk Management",
+                "title": "Project Risk Management",
+                "text_content": [
+                    "Project Risk Management",
+                    "When developing a competitive product or",
+                    "system, risks can arise from the inability to",
+                    "meet functional requirements and business",
+                    "expectations throughout the life cycle, from",
+                    "first inception to final disposal. The risks can",
+                    "be broadly grouped into four primary",
+                    "categories i.e.",
+                    "\tOperational,",
+                    "\tFinancial,",
+                    "\tPeople (HR),",
+                    "\tStrategic",
+                    "Environment",
+                    "& Physical",
+                    "Govt.",
+                    "Regulatory",
+                    "& Legal",
+                    "Reputation",
+                    "Technology",
+                    "Operational",
+                    "People",
+                    "(HR)",
+                    "Financial",
+                    "Crime",
+                    "Strategic",
+                    "Socio",
+                    "Economic"
+                ],
+                "image_descriptions": [
+                    "A diagram showing interconnected hexagons representing different categories of risk. The central blue hexagons are 'People (HR)', 'Operational', 'Financial', and 'Strategic'. Surrounding yellow hexagons include 'Environment & Physical', 'Reputation', 'Technology', 'Socio Economic', 'Crime', and 'Govt. Regulatory & Legal'."
+                ]
+            },
+            {
+                "page_number": 4,
+                "section": "Project Risk Management",
+                "title": "Risk?",
+                "text_content": [
+                    "Risk?",
+                    "\tRisk -It is a potential problem, it might happen and it might not or measure",
+                    "of the probability and consequence of not achieving a defined project goal.",
+                    "\tConceptual definition of Risk",
+                    "\tRisk concerns future happenings",
+                    "\tRisk involves change in mind, opinions, action, places etc.",
+                    "\tRisk involves choice and uncertainty that choice involves",
+                    "\tUncertainty -The risk may or may not happen, that is, there are no 100%",
+                    "risk (those, instead, are called constraints) most people agree that risk",
+                    "involves the notion of uncertainty",
+                    "\tLoss -the risk becomes a reality and unwanted consequences or losses occur"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 5,
+                "section": "Project Risk Management",
+                "title": "Risk Categorization",
+                "text_content": [
+                    "Risk Categorization",
+                    "Technological risks Business risks",
+                    "\tDesign Risk",
+                    "\tManufacturing",
+                    "Risk",
+                    "\tQuality Risk",
+                    "\tMarket Risk",
+                    "\tStrategic Risk",
+                    "\tSales Risk",
+                    "\tManagement Risk",
+                    "\tReliability Risk \tBudget Risk",
+                    "\tSafety Risk",
+                    "Societal risks",
+                    "\tEnvironmental",
+                    "hazards",
+                    "\tEconomic",
+                    "National risks",
+                    "\t national economic",
+                    "\t military",
+                    "well-being."
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 6,
+                "section": "Project Risk Management",
+                "title": "Risk also categorise into",
+                "text_content": [
+                    "Risk also categorise into",
+                    "Known Risk",
+                    "\tThose risk that can be",
+                    "uncovered after careful",
+                    "evaluation of the project",
+                    "plan, the business and",
+                    "technical in which the",
+                    "project is being developed,",
+                    "and other reliable",
+                    "information sources",
+                    "(e.g.Unrealistic delivery date)",
+                    "Predictable Risk Unpredictable Risk",
+                    "\tThose risks that are",
+                    "Extrapolated from the past",
+                    "project experiances",
+                    "(e.g. past turnover)",
+                    "\tThose risk that can and do",
+                    "occur, but are extremely",
+                    "difficult to identify in",
+                    "advance"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 7,
+                "section": "Project Risk Management",
+                "title": "Risk?",
+                "text_content": [
+                    "Risk?",
+                    "Risk has two primary components for a given event:",
+                    "\tA probability (likelihood) of occurrence of that event",
+                    "\tImpact of the event occurring (amount at stake)",
+                    "Risk = f(likelihood, impact)",
+                    "\tLack of knowledge of future events-favourable are called opportunities and",
+                    "unfavourable events are called risks",
+                    "\tIts cause- hazards (to overcome by knowing them and taking the action)",
+                    "Risk = f(Hazards, Safeguard)"
+                ],
+                "image_descriptions": []
+            }
+        ]
+    },
+    {
+        "pages": [
+            {
+                "page_number": 1,
+                "section": null,
+                "title": "Project Management Tools",
+                "text_content": [
+                    "Project Management Tools",
+                    "\u2022 Asana, Jira,",
+                    "Trello"
+                ],
+                "image_descriptions": [
+                    "A lit lightbulb centered vertically on a bright yellow background, which occupies the right half of the slide. Black lines drawn around the bulb represent rays of light. The left half of the slide is white."
+                ]
+            },
+            {
+                "page_number": 2,
+                "section": "Introduction",
+                "title": "Introduction to Project Management Tools",
+                "text_content": [
+                    "Introduction to",
+                    "Project Management",
+                    "Tools",
+                    "\u2022 Efficiency and Productivity:",
+                    "\u2022 Collaboration and",
+                    "Communication:",
+                    "\u2022 Task and Project Tracking:",
+                    "\u2022 Resource Management:",
+                    "\u2022 Adaptability and Scalability:"
+                ],
+                "image_descriptions": [
+                    "A close-up view of white, three-dimensional jigsaw puzzle pieces covering the left half of the slide. One red puzzle piece is positioned to fit into a gap among the white pieces."
+                ]
+            },
+            {
+                "page_number": 3,
+                "section": "Asana",
+                "title": "Asana",
+                "text_content": [
+                    "Asana",
+                    "\u2022 Key features:",
+                    "\u2022 task management,",
+                    "\u2022 project tracking,",
+                    "\u2022 collaboration tools",
+                    "\u2022 Benefits:",
+                    "- improved productivity,",
+                    "- enhanced team communication"
+                ],
+                "image_descriptions": [
+                    "A screenshot of the Asana user interface is shown on the right side, framed with a turquoise border. It displays a project board titled 'Website launch' with columns and tasks."
+                ]
+            },
+            {
+                "page_number": 4,
+                "section": "Asana",
+                "title": "Asana",
+                "text_content": [
+                    "Asana",
+                    "\u2022 Task creation and",
+                    "assignment",
+                    "\u2022 Timeline view",
+                    "\u2022 Calendar",
+                    "integration",
+                    "\u2022 Team collaboration",
+                    "\u2022 File attachments",
+                    "\u2022 Progress tracking"
+                ],
+                "image_descriptions": [
+                    "A screenshot detailing the Asana board view for a 'Software & System Deployment' project. It shows columns labeled 'Planning', 'Design', 'Development and Testing', and 'Deployment and Close Out', each containing task cards with details like assignee, due date, and status (e.g., 'Done', 'In Progress', 'Waiting', 'Not Started'). Various project views like Overview, List, Board, Timeline, Calendar, etc., are visible as tabs at the top."
+                ]
+            },
+            {
+                "page_number": 5,
+                "section": "Jira",
+                "title": "Jira Overview",
+                "text_content": [
+                    "Jira Overview",
+                    "\u2022 Key features:",
+                    "\u2022 issue tracking,",
+                    "agile project",
+                    "management,",
+                    "\u2022 customizable",
+                    "workflows",
+                    "\u2022 Benefits:",
+                    "- efficient bug tracking,",
+                    "- agile methodology",
+                    "support"
+                ],
+                "image_descriptions": [
+                    "A blurred screenshot depicting a Jira board interface on the right side of the slide. Columns and cards, typical of Kanban or Scrum boards used in agile project management, are faintly visible."
+                ]
+            },
+            {
+                "page_number": 6,
+                "section": "Jira",
+                "title": "Jira",
+                "text_content": [
+                    "Jira",
+                    "\u2022 Issue creation and management",
+                    "\u2022 Agile boards (Scrum, Kanban)",
+                    "\u2022 Customizable workflows",
+                    "\u2022 Reporting and analytics",
+                    "\u2022 Integration with development tools (e.g.,",
+                    "GitHub)"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 7,
+                "section": "Trello",
+                "title": "Trello",
+                "text_content": [
+                    "Trello",
+                    "\u2022 Key features: visual boards, card-based task",
+                    "management, collaboration",
+                    "\u2022 Benefits: simplicity, flexibility, visual project",
+                    "tracking"
+                ],
+                "image_descriptions": [
+                    "A screenshot of the Trello interface is displayed at the bottom of the slide. It shows a board titled 'Project Management' with lists (columns) labeled 'To do', 'Doing', and 'Done'. Each list contains several cards representing tasks, some with assigned user icons."
+                ]
+            },
+            {
+                "page_number": 8,
+                "section": "Trello",
+                "title": "Trello",
+                "text_content": [
+                    "Trello",
+                    "\u2022 Board creation and customization",
+                    "\u2022 Card-based task management",
+                    "\u2022 Collaboration through comments and",
+                    "attachments",
+                    "\u2022 Checklist and due dates",
+                    "\u2022 Power-Ups for additional functionality"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 9,
+                "section": "Comparison",
+                "title": "Home work : Comparison",
+                "text_content": [
+                    "Home work : Comparison",
+                    "\u2022 task management,",
+                    "\u2022 collaboration,",
+                    "\u2022 reporting,",
+                    "\u2022 customization,",
+                    "\u2022 integration,",
+                    "\u2022 pricing"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 10,
+                "section": "Comparison",
+                "title": "Comparison - Use Cases",
+                "text_content": [
+                    "Comparison - Use Cases",
+                    "\u2022 Examples of use cases for each tool",
+                    "\u2022 Asana: Marketing campaign management",
+                    "\u2022 Jira: Software development and bug tracking",
+                    "\u2022 Trello: Personal task management, project",
+                    "planning"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 11,
+                "section": "Comparison",
+                "title": "Comparison - Pros and Cons",
+                "text_content": [
+                    "Comparison - Pros and Cons",
+                    "\u2022 Pros and cons of using Asana",
+                    "\u2022 Pros and cons of using Jira",
+                    "\u2022 Pros and cons of using Trello"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 12,
+                "section": "Integration",
+                "title": "Integration Capabilities",
+                "text_content": [
+                    "Integration Capabilities",
+                    "\u2022 Overview of integration capabilities for each tool",
+                    "\u2022 Asana integrations: Google Drive, Slack, Microsoft",
+                    "Teams",
+                    "\u2022 Jira integrations: GitHub, Bitbucket, Confluence",
+                    "\u2022 Trello integrations: Evernote, Dropbox, Zapier"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 13,
+                "section": "Collaboration",
+                "title": "Collaboration and Communication",
+                "text_content": [
+                    "Collaboration and Communication",
+                    "\u2022 Highlighting collaboration and communication",
+                    "features of each tool",
+                    "\u2022 Asana: Team conversations, @mentions, task",
+                    "comments",
+                    "Jira: Agile boards for team collaboration, issue",
+                    "comments",
+                    "Trello: Card comments, team discussions,",
+                    "notifications"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 14,
+                "section": "Customization",
+                "title": "Customization Options",
+                "text_content": [
+                    "Customization Options",
+                    "\u2022 Discussing customization options for",
+                    "workflows and project structures",
+                    "\u2022 Asana: Custom fields, project templates",
+                    "\u2022 Jira: Customizable workflows, issue types",
+                    "\u2022 Trello: Custom boards, card labels, power-ups"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 15,
+                "section": "Reporting",
+                "title": "Reporting and Analytics",
+                "text_content": [
+                    "Reporting and Analytics",
+                    "\u2022 Overview of reporting and analytics features",
+                    "\u2022 Asana: Progress tracking, workload",
+                    "management",
+                    "\u2022 Jira: Agile reporting, sprint burndown charts",
+                    "\u2022 Trello: Card aging, activity logs"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 16,
+                "section": "Pricing",
+                "title": "Pricing Plans",
+                "text_content": [
+                    "Pricing Plans",
+                    "\u2022 Comparison of pricing plans for Asana, Jira,",
+                    "and Trello",
+                    "\u2022 Highlighting free and premium tiers, pricing",
+                    "per user/month"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 17,
+                "section": "Reviews",
+                "title": "Customer Reviews and Testimonials",
+                "text_content": [
+                    "Customer Reviews and Testimonials",
+                    "\u2022 Including customer reviews or testimonials for",
+                    "each tool",
+                    "\u2022 Quotes highlighting user experiences and",
+                    "satisfaction"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 18,
+                "section": "Tips",
+                "title": "Tips for Choosing the Right Tool",
+                "text_content": [
+                    "Tips for Choosing the Right Tool",
+                    "\u2022 Factors to consider when choosing between",
+                    "Asana, Jira, and Trello",
+                    "\u2022 Team size, project complexity, budget,",
+                    "integration needs"
+                ],
+                "image_descriptions": []
+            }
+        ]
+    }
+]

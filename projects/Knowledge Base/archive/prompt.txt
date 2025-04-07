@@ -1,0 +1,8 @@
+Defense-in-depth and RBAC are overhyped and provide false sense of security RBAC: A comprimised role can do as much as a comprimised traditional user can. Difference between role and user strictly technically is superficial. Defense-in-depth: "Layering" systems does not increase security. System is only as secure as the weakest link.
+
+
+RBAC inherently does not enforce principle of least privileges. This principle is not exclusive to roles and can very much be used with user auths. There can very much be multiple users each with very limited permissions. You understanding of "user" as strictly "full complete administrative privileges" is flawed and wrong. Users can very much disabled/permssions can be revoked. For defense part, again its only as secure as weakest link. thinking that "it increases effort required to hack" is precisely false sense of security. Damage control of breach is not at all reliable or reliable enoguh to be considered the foundation of defnse-in...'s supposed security
+
+You have very narrow understanding. Each user does not need unique policies. JUst form IAM user groups and attach policies to the user groups; add/remove users as needed. For defense, compromising any layer is sufficient to compromise entire system.
+
+

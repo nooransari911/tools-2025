@@ -17,7 +17,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
-load_dotenv()  # Load environment variables first
+load_dotenv("/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/.env")  # Load environment variables first
 
 
 
@@ -27,6 +27,7 @@ S3_SRC = os.getenv ("S3_SOURCE_BUCKET")
 INPUT_JSONL_FILE_NAME = os.getenv ("INPUT_JSONL_FILE_NAME")
 S3_DEST = os.getenv ("S3_DESTINATION_BUCKET")
 OUTPUT_JSONL_FILE_NAME = os.getenv ("OUTPUT_JSONL_FILE_NAME")
+TOKENS_STORE_JSON_FILE_NAME = os.getenv ("CLAUDE_TOKENS_STORE_JSON_FILE_NAME")
 
 
 
@@ -159,13 +160,47 @@ def configure_bedrock(session_name="DeepseekR1Session"):
 
 
 
+def load_usage_json ():
+    try:
+        with open(TOKENS_STORE_JSON_FILE_NAME, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return None
+
+
+def save_usage_json (data: list):
+    old_data = load_usage_json ()
+    new_data = {}
+
+    if not old_data:
+        old_data = {
+            "input_tokens": 0,
+            "output_tokens": 0
+        }
+    
+    new_data ["input_tokens"]  = old_data ["input_tokens"]   +  data [0]
+    new_data ["output_tokens"] = old_data ["output_tokens"]  +  data [1]
+    
+    with open(TOKENS_STORE_JSON_FILE_NAME, 'w') as f:
+        json.dump(new_data, f, indent=4)
+
+def reset_usage ():
+    
+    new_data = {
+        "input_tokens": 0,
+        "output_tokens": 0
+    }
+
+
+    with open(TOKENS_STORE_JSON_FILE_NAME, 'w') as f:
+        json.dump(new_data, f, indent=4)
 
 
 
 
 def load_directory_files(directory_path):
     """
-    Load all text files (.txt, .md) from a directory and combine them into a single string.
+    Load all text files from a directory and combine them into a single string.
     Each file is separated by a clear delimiter.
     
     Args:
@@ -178,44 +213,71 @@ def load_directory_files(directory_path):
         print(f"Error: {directory_path} is not a valid directory")
         return None
         
-    file_content_list = []
+    combined_content = ""
+    file_count = 0
     
-    # Define text file extensions to process
-    text_extensions = ['.txt', '.md']
+    # Define common text file extensions to prioritize
+    text_extensions = ['.txt', '.md', '.html', '.xml', '.json', '.csv', 
+                       '.log', '.py', '.js', '.css', '.yaml', '.yml', 
+                       '.cfg', '.ini', '.sh', '.bat', '.tex']
     
     try:
-        for filename in os.listdir(directory_path):
+        for filename in sorted(os.listdir(directory_path)):
             file_path = os.path.join(directory_path, filename)
             
-            # Skip directories and non-text files
+            # Skip directories
             if os.path.isdir(file_path):
                 continue
-                
-            # Check if file has a text extension
-            _, file_extension = os.path.splitext(filename)
-            if file_extension.lower() not in text_extensions:
-                continue
-                
-            # Try to read the file as text
+            
+            # Try to determine if it's a text file
             try:
-                with open(file_path, 'r', encoding='utf-8') as file:
-                    file_content = file.read()
+                # Check extension first
+                _, file_extension = os.path.splitext(filename)
+                is_likely_text = file_extension.lower() in text_extensions
+                
+                # If not a known extension, check content
+                if not is_likely_text:
+                    try:
+                        with open(file_path, 'rb') as test_file:
+                            # Read first KB to detect if it's binary
+                            chunk = test_file.read(1024)
+                            # If NUL char is present, likely binary
+                            if b'\x00' in chunk:
+                                continue
+                            # Try decoding - if it works, probably text
+                            chunk.decode('utf-8')
+                            is_likely_text = True
+                    except UnicodeDecodeError:
+                        # Not valid UTF-8 text
+                        continue
+                
+                # If it passed our checks, try to read it
+                if is_likely_text:
+                    with open(file_path, 'r', encoding='utf-8') as file:
+                        file_content = file.read()
+                        
+                    # Add file delimiter with name and separator
+                    file_delimiter = f"\n\n{'='*50}\n"
+                    file_delimiter += f"FILE: {filename}\n"
+                    file_delimiter += f"{'='*50}\n\n"
                     
-                file_content_list.append (file_content)
+                    combined_content += file_delimiter + file_content
+                    file_count += 1
                     
             except Exception as e:
                 print(f"Skipping {filename}: {e}")
                 continue
                 
-        print(f"Successfully loaded {len (file_content_list)} files from {directory_path}")
-        return file_content_list
-
-        
+        if file_count > 0:
+            print(f"Successfully loaded {file_count} text files from {directory_path}")
+            return combined_content
+        else:
+            print(f"No readable text files found in {directory_path}")
+            return None
             
     except Exception as e:
         print(f"Error reading directory {directory_path}: {e}")
         return None
-
 
 
 
@@ -422,22 +484,30 @@ def generate_response(bedrock_runtime, model_id, system_prompts, messages, max_o
     Sends messages to Claude and handles the response.
     """
 
-    body = json.dumps(
-        {
-            "anthropic_version": "bedrock-2023-05-31",
-            "max_tokens": max_op_tokens,
-            "system": system_prompts,
-            "messages": messages
-        }
+
+    should_deep_think = os.getenv ("SHOULD_CLAUDE_37_DEEP_THINK")
+    deep_think_budget = os.getenv ("CLAUDE_37_DEEP_THINK_BUDGET")
+
+    body = {
+        "anthropic_version": "bedrock-2023-05-31",
+        "max_tokens": max_op_tokens,
+        "system": system_prompts,
+        "messages": messages
+    }
+    # if should_deep_think.lower () == "true":
+    #     body ["thinking"] = {
+    #         "type": "enabled",
+    #         "budget_tokens": int (deep_think_budget)
+    #     }
+
+    body_string = json.dumps (
+        body
     )
-
-
-
 
     try:
         response = bedrock_runtime.invoke_model(
             modelId=model_id,
-            body=body
+            body=body_string
         )
         # print ((response.items ()))
         response ["body"] = json.loads (
@@ -458,6 +528,12 @@ def generate_response(bedrock_runtime, model_id, system_prompts, messages, max_o
         print(f"\nInput tokens: {token_usage     ['input_tokens']:<15}")
         print(f"Output tokens:  {token_usage     ['output_tokens']}")
         print(f"Stop reason:    {response_body   ['stop_reason']}")
+
+        save_usage_json ([
+                             int (token_usage ['input_tokens']),
+                             int (token_usage ['output_tokens'])
+                         ])
+
 
         raw_content = response_body ['content']
         output_message = []
@@ -493,15 +569,15 @@ def generate_response(bedrock_runtime, model_id, system_prompts, messages, max_o
         return None  # Or raise, depending on your needs
 
     except Exception as e:  # Catch *any* other exception
-        print(f"An unexpected error occurred: {e}")
+        print(f"An unexpected error occurred in generate_response: {e}")
         return None  # Or raise, if you want to stop the program on unhandled errors
 
 
 def run_chatbot():
     """Main chatbot loop."""
     load_dotenv()  # Load environment variables first
-    images_dir = "./img"
-    files_dir = "./files"
+    images_dir = "../../img"
+    files_dir  = "../../files"
     role_arn = "arn:aws:iam::677276075874:role/AWSBedrockFullAccesstoLambdaRole"  # Replace with your role ARN
     session_name = "Claude37SonnetSession"
     credentials = assume_role (role_arn, session_name)
@@ -517,7 +593,8 @@ def run_chatbot():
 
 
 
-    model_id = "us.anthropic.claude-3-7-sonnet-20250219-v1:0" 
+    # model_id = "us.anthropic.claude-3-7-sonnet-20250219-v1:0" 
+    model_id = "us.anthropic.claude-3-5-sonnet-20241022-v2:0" 
     system_prompts = load_system_instructions()
     messages = []  # Initialize conversation history
     content = []
@@ -558,49 +635,66 @@ def run_chatbot():
 
 
 
-    if num_args >= 2 and sys.argv[1] == "one":
-        print ("Prompt from file mode;\n")
-        prompt_file_path = sys.argv [2]
-        text_file_path   = sys.argv [3]
-        output_file_path = sys.argv [4]
+    if num_args >= 2 and sys.argv[1] == "file":
+        print("Prompt from file mode;\n")
+        prompt_file_path = sys.argv[2]
+        text_path = sys.argv[3]  # Can be file or directory
+        output_file_path = sys.argv[4]
+        should_print = sys.argv[5] if len(sys.argv) > 5 else "no print"  # Default to False if not provided
 
 
-        
-        if not os.path.isfile (prompt_file_path):
-            print (f"No such file as {prompt_file_path}\n\n")
 
-        if not os.path.isfile (text_file_path):
-            print (f"No such file as {text_file_path}\n\n")
-
+        # Validate prompt file
+        if not os.path.isfile(prompt_file_path):
+            print(f"No such file as {prompt_file_path}\n\n")
+            sys.exit(1)
+    
+        # Validate text path exists
+        if not os.path.exists(text_path):
+            print(f"No such file or directory as {text_path}\n\n")
+            sys.exit(1)
+    
         if output_file_path is None:
-            print (f"No output file path provided\n\n")
+            print(f"No output file path provided\n\n")
+            sys.exit(1)
 
-        else:
-            with open (prompt_file_path, "r") as prompt_file, open (text_file_path, "r") as text_file:
-                prompt_file_string = prompt_file.read ()
-                prompt_file_message = prepare_message (prompt_file_string, "user")
-                messages.append (prompt_file_message)
-                text_file_string = f"Text file:\n\n{text_file.read ()}"
-                text_file_message = prepare_message (text_file_string, "user")
-                messages.append (text_file_message)
-
-                prompt_file_response = generate_response (bedrock_runtime, model_id, system_prompts, messages)
-                # print ("\n\nResponse body dump: ")
-                # print (json.dumps (initial_response, indent = 4))
-
-                print (f"Size of response: {sys.getsizeof (prompt_file_response)}B")
-                print ("\n\n")
-
-
-            messages.append (prepare_message (prompt_file_response, "assistant")) #add ai response to history
-
-
-
-
-            with open (output_file_path, "w") as output_file:
-                output_file.write (prompt_file_response)
-
-
+        # Load prompt file
+        with open(prompt_file_path, "r") as prompt_file:
+            prompt_file_string = prompt_file.read()
+            prompt_file_message = prepare_message(prompt_file_string, "user")
+            messages.append(prompt_file_message)
+    
+        # Process text path - check if it's a file or directory
+        if os.path.isfile(text_path):
+            # Process as a single file
+            with open(text_path, "r") as text_file:
+                text_content = text_file.read()
+            text_file_string = f"Text file: {os.path.basename(text_path)}\n\n{text_content}"
+    
+        elif os.path.isdir(text_path):
+            # Process as a directory
+            text_content = load_directory_files(text_path)
+            if text_content is None:
+                print(f"Failed to load content from directory {text_path}")
+                sys.exit(1)
+            text_file_string = f"Directory content from: {text_path}\n\n{text_content}"
+    
+        text_file_message = prepare_message(text_file_string, "user")
+        messages.append(text_file_message)
+    
+        # Generate and process response
+        prompt_file_response = generate_response(bedrock_runtime, model_id, system_prompts, messages)
+        print(f"Size of response: {sys.getsizeof(prompt_file_response)}B")
+        print("\n\n")
+    
+        messages.append(prepare_message(prompt_file_response, "assistant"))  # Add AI response to history
+    
+        # Output response
+        if should_print.lower() == "print":
+            print("\n\n", prompt_file_response, "\n\n")
+    
+        with open(output_file_path, "w") as output_file:
+            output_file.write(prompt_file_response)
 
 
 

@@ -6,7 +6,7 @@ import latest_job_file
 import secrets
 import ast
 
-load_dotenv()  # Load environment variables first
+load_dotenv("/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/.env")  # Load environment variables first
 
 
 
@@ -463,17 +463,30 @@ def load_mode ():
     load_dotenv()  # Load environment variables first
     system_prompts = load_system_instructions()
 
+    prompt_file_path = sys.argv [2]
+    source_files     = sys.argv [3]
+    if not os.path.isfile(prompt_file_path):
+        print(f"No such file as {prompt_file_path}\n\n")
+        sys.exit(1)
+
+    if not os.path.isdir (source_files):
+        print(f"No such dir as {source_files}\n\n")
+        sys.exit(1)
+
+    with open(prompt_file_path, "r") as prompt_file:
+        prompt_file_string = prompt_file.read()
+
 
     num_args = len(sys.argv)
     records = prepare_input_jsonl_file (
-        prompt="what is this about. i don't want summary, just broadly what it covers. Ignore if it identifies itself as dummy file.",
-        dir="./files",
+        prompt=prompt_file_string,
+        dir=source_files,
         system_prompts=system_prompts,
         model_id="us.anthropic.claude-3-7-sonnet-20250219-v1:0"
     )
 
 
-    # create_jsonl_file (records)
+    create_jsonl_file (records)
 
     # print ("\n\nLoaded JSONL File")
     sys.exit (0)
@@ -592,8 +605,8 @@ def print_help():
     print("Usage:")
     print("    python3 script.py list")
     print("        List jobs status\n")
-    print("    python3 script.py load")
-    print("        Load data from regular files (text) into batch inference job input file")
+    print("    python3 script.py load ./prompt file")
+    print("        Load data from regular files (text) into batch inference job input file with prompt from prompt file")
     print("    python3 script.py fetch") 
     print("        Fetch the latest job output file from S3")
     print("    python3 script.py clean <input_file> <output_file>")
@@ -610,17 +623,17 @@ def print_help():
 
 if __name__ == "__main__":
     num_args = len(sys.argv)
-    if num_args == 2 and sys.argv[1] == "list":
+    if num_args >= 2 and sys.argv[1] == "list":
         jobs_status()
-    elif num_args == 2 and sys.argv[1] == "load":
+    elif num_args >= 2 and sys.argv[1] == "load":
         load_mode()
-    elif num_args == 2 and sys.argv[1] == "fetch":
+    elif num_args >= 2 and sys.argv[1] == "fetch":
         latest_job_file.DownloadLatestS3FileMain ()
-    elif num_args == 4 and sys.argv[1] == "clean":
+    elif num_args >= 4 and sys.argv[1] == "clean":
         extract_text_from_jsonl(sys.argv[2], sys.argv[3])
-    elif num_args == 2 and sys.argv[1] == "dev":
+    elif num_args >= 2 and sys.argv[1] == "dev":
         dev_main()
-    elif num_args == 2 and (sys.argv[1] == "help" or sys.argv[1] == "-h" or sys.argv[1] == "--help"): #added this
+    elif num_args >= 2 and (sys.argv[1] == "help" or sys.argv[1] == "-h" or sys.argv[1] == "--help"): #added this
         print_help()
     else:
         main() #changed this to call main by default
