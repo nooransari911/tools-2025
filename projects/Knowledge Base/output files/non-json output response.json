@@ -1,0 +1,1780 @@
+{
+  "pages": [
+    {
+      "page_number": 1,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "PROJECT",
+        "MANAGEGEMENT",
+        "Project Organizational structure",
+        "& Issues"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 2,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Unit II- Project Identification,",
+        "Selection & Planning",
+        "•",
+        "•",
+        "Organizational Structure and Organizational Issues:",
+        "Introduction, Concept of Organizational Structure",
+        "Roles and Responsibilities of Project Leader",
+        "• Relationship between Project Manager and Line Manager",
+        "• Leadership Styles for Project Managers, Conflict Resolution",
+        "•",
+        "Team Management and Diversity Management, Change management",
+        "CO3: Assimilate effectively within the organizational structure of",
+        "project and handle project management related issues in an",
+        "efficient manner."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 3,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Text Books/References",
+        "1.\tProject Management A systems approach to planning ,scheduling and",
+        "\t controlling by Harold Kerzner(Wiley).",
+        "2.\tChandra, P., \"Projects\", Tata McGraw-Hill Education, 8th Edition, 2009.",
+        "3.\tProject Management the managerial process by Clifford F.Gray, Erik w.",
+        "\t Larson, Gautam V Desai(McGrawHill Education)"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 4,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "ISD Organizational chart",
+        "SUP, TECH.",
+        "WRITING",
+        "2",
+        "SUPERVISOR",
+        "PROCEDURES",
+        "2",
+        "PROJECT",
+        "PROJECT",
+        "Y",
+        "SUP, INTERNAL",
+        "AUDIT",
+        "DIRECTOR,",
+        "ISD",
+        "ASSOCIATE",
+        "DIRECTOR",
+        "MANAGER,",
+        "OPERATIONS",
+        "SECRETARY",
+        "SECRETARY",
+        "SECRETARY",
+        "POOL",
+        "4",
+        "MGR, ADMIN.",
+        "SERVICES",
+        "3",
+        "MGR, COMP.",
+        "SYSTEMS",
+        "10",
+        "SUP., ACCT.",
+        "SERVICES",
+        "SUP., GEN",
+        "LEDGER",
+        "3",
+        "SUP., COST",
+        "ACCOUNTING",
+        "\"DENOTES THE NUMBER OF ADDITIONAL FUNCTIONAL EMPLOYEES",
+        "7"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 5,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Problems identified by the consultant",
+        "1.\tThe operations manager controls more than 50 percent of the people resources.",
+        "\tYou might want to break up his empire. This will have to be done very carefully.",
+        "2.\tThe secretary pool is placed too high in the organization.",
+        "3.\tThe supervisors who now report to the associate director will have to be",
+        "\t reassigned lower in the organization if the associate director's position is",
+        "\t abolished.",
+        "4.\tOne of the major problem areas will be trying to convince corporate management",
+        "\t that their change will be beneficial. You'll have to convince them that this change",
+        "\t can be accomplished without having to increase division manpower.",
+        "5.\tYou might wish to set up a separate department or a separate project for customer",
+        "\t relations.",
+        "6.\tIntroducing your employees to the matrix will be a problem. Each employee will",
+        "\t look at the change differently. Most people have the tendency of looking first at"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 6,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "The issues faced by the system manager",
+        "1.\tWhat should the new organizational structure look like? Where should I put",
+        "\t each person, specifically the managers?",
+        "2.\tWhen should I announce the new organizational change? Should it be at the",
+        "\t same time as my appointment or at a later date?",
+        "3.\tShould I invite any of my people to provide input to the organizational",
+        "\t restructuring? Can this be used as a technique to ease power plays?",
+        "4.\tShould I provide inside or outside seminars to train my people for the new",
+        "\t organizational structure? How soon should they be held?",
+        "\t The case study gives the importance of organization structure and the",
+        "\t complexities involved"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 7,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Introduction: Organizational structure and organizational issues",
+        "•\tDuring the past thirty years there has been a so-called hidden revolution in",
+        "\t the introduction and development of new organizational structures.",
+        "•\tManagement has come to realize that organizations must be dynamic in",
+        "\t nature; that is, they must be capable of rapid restructuring should",
+        "\t environmental conditions so dictate.",
+        "•\tThese environmental factors evolved from the increasing competitiveness of",
+        "\t the market, changes in technology, and a requirement for better control of",
+        "\t resources for multiproduct firms."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 8,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Introduction: Organizational structure and organizational issues",
+        "•\tMore than thirty years ago, Wallace identified four major factors that caused",
+        "\t the onset of the organizational revolution.",
+        "•\tThe technology revolution (complexity and variety of products, new",
+        "\t materials and processes, and the effects of massive research)",
+        "•\tCompetition and the profit squeeze (saturated markets, inflation of wage and",
+        "\t material costs, and production efficiency)",
+        "•\tThe high cost of marketing",
+        "•\tThe unpredictability of consumer demands (due to high income, wide range",
+        "\t of choices available, and shifting tastes)"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 9,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Organization",
+        "•\tOrganizations can be defined as groups of people who must coordinate their",
+        "\t activities in order to meet organizational objectives.",
+        "•\tIt is the function of putting together the different parts of an enterprise into",
+        "\t working order.",
+        "•\tThe coordination function requires strong communications and a clear",
+        "\t understanding of the relationships and interdependencies among people.",
+        "•\tOrganizational structures are dictated by such factors as technology and its",
+        "\t rate of change, complexity, resource availability, products and/or services,",
+        "\t competition, and decision-making requirements."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 10,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Organizational workflow",
+        "•\tOrganizations are continually restructured to meet the demands imposed by",
+        "\t the environment.",
+        "•\tRestructuring can change the role of individuals in the formal and the",
+        "\t informal organization."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 11,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Organizational change requirements",
+        "•\tEven the simplest type of organizational change can induce major conflicts.",
+        "•\tThe creation of a new position, the need for better planning, the lengthening",
+        "\t or shortening of the span of control, the need for additional technology",
+        "\t (knowledge), and centralization or decentralization can result in major",
+        "\t changes in the sociotechnical subsystem."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 12,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Organization Forms",
+        "•\tThere is a wide variety of organizational forms for restructuring",
+        "\t management. The exact method depends on the people in the organization,",
+        "\t the company's product lines, and management's philosophy.",
+        "•\tA poorly restructured organization can sever communication channels that",
+        "\t may have taken months or years to cultivate; cause a restructuring of the",
+        "\t informal organization, thus creating new power, status, and political",
+        "\t positions; and eliminate job satisfaction and motivational factors to such a",
+        "\t degree that complete discontent results"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 13,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Task Consideration",
+        "Three tasks to be considered for the varied nature of organization:",
+        "1.\tControl",
+        "2.\tIntegration",
+        "3.\tExternal relationships"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 14,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Organization workflow",
+        "In the discussion of organizational structures, the following definitions will be",
+        "used:",
+        "•\tAuthority is the power granted to individuals (possibly by their position) so",
+        "\t that they can make final decisions.",
+        "•\tResponsibility is the obligation incurred by individuals in their roles in the",
+        "\t formal organization to effectively perform assignments.",
+        "•\tAccountability is being answerable for the satisfactory completion of a",
+        "\t specific assignment. (Accountability authority responsibility.)",
+        "•\tEven with these clearly definable divisions of authority, responsibility, and",
+        "\t accountability, establishing good relationships between project and",
+        "\t functional managers can take a great deal of time, especially during the",
+        "\t conversion from a traditional to a project organizational form"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 15,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Project Management structures",
+        "• Challenges to Organizing Projects",
+        "Ο\tThe uniqueness and short duration of projects relative to ongoing longer-term",
+        "\t organizational activities",
+        "Ο\tThe multidisciplinary and cross-functional nature of projects creates authority and",
+        "\t responsibility dilemmas.",
+        "• Choosing an Appropriate Project Management Structure",
+        "Ο\tThe best system balances the needs of the project with the needs of the organization."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 16,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Project Management structures",
+        "•\tOrganizing Projects: Functional organization",
+        "Ο\tDifferent segments of the project are delegated to respective functional units.",
+        "Ο\tCoordination is maintained through normal management channels.",
+        "Ο\tUsed when the interest of one functional area dominates the project or one",
+        "\t functional area has a dominant interest in the project's success."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 17,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Traditional or classical organization",
+        "•\tThe traditional management structure has survived for more than two",
+        "\t centuries.",
+        "•\tHowever, recent business developments, such as the rapid rate of change in",
+        "\t technology and increased stockholder demands, have created strains on",
+        "\t existing organizational forms.",
+        "•\tThe classical organization is also referred to as functional organization"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 18,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Traditional management structure",
+        "EXECUTIVE",
+        "OFFICE",
+        "DIVISION\tENGINEERING\tOPERATIONS\tFINANCIAL\tADMIN-\nISTRATION\tMARKETING",
+        "DEPARTMENT",
+        "SECTION",
+        "FUNCTIONAL RESPONSIBILITY",
+        "ㅁㅁㅁ"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 19,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Advantages of traditional organization",
+        "•\tEasier budgeting and cost control are possible.",
+        "•\tBetter technical control is possible.",
+        "•\tSpecialists can be grouped to share knowledge and responsibility.",
+        "Ο\tPersonnel can be used on many different projects.",
+        "•\tAll projects will benefit from the most advanced technology (better",
+        "\t utilization of scarce personnel).",
+        "•\tFlexibility in the use of manpower.",
+        "•\tA broad manpower base to work with.",
+        "•\tContinuity in the functional disciplines; policies, procedures, and lines of",
+        "\t responsibility are easily defined and understandable."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 20,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Advantages of traditional organization",
+        "•\tAdmits mass production activities within established specifications.",
+        "•\tGood control over personnel, since each employee has one and only one",
+        "\t person to report to.",
+        "•\tCommunication channels are vertical and well established.",
+        "•\tQuick reaction capability exists, but may be dependent upon the priorities of",
+        "\t the functional managers"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 21,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Disadvantages of traditional organization",
+        "•\tNo one individual is directly responsible for the total project (i.e., no formal",
+        "\t authority; committee",
+        "•\tsolutions).",
+        "•\tDoes not provide the project-oriented emphasis necessary to accomplish the",
+        "\t project tasks.",
+        "•\tCoordination becomes complex, and additional lead time is required for approval",
+        "\t of decisions.",
+        "•\tDecisions normally favor the strongest functional groups.",
+        "•\tNo customer focal point.",
+        "•\tResponse to customer needs is slow.",
+        "•\tDifficulty in pinpointing responsibility; this is the result of little or no direct",
+        "\t project reporting, very little project-oriented planning, and no project authority.",
+        "•\tMotivation and innovation are decreased.",
+        "•\tIdeas tend to be functionally oriented with little regard for ongoing projects."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 22,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Departmental Organization Structure",
+        "DIVISION MANAGER",
+        "DEPARTMENT X",
+        "DEPARTMENT Y",
+        "DEPARTMENT Z",
+        "PROJECT LEADERS",
+        "PROJECT LEADERS",
+        "PROJECT LEADERS",
+        "SECTION LEVEL",
+        "SECTION LEVEL",
+        "SECTION LEVEL"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 23,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Line Staff Organization: Project Coordinator",
+        "LEGEND",
+        "FORMAL AUTHORITY",
+        "FORMAL OR INFORMAL\nAUTHORITY OR\nINFORMATION FLOW",
+        "DIVISION MANAGER",
+        "DEPARTMENT",
+        "MANAGER",
+        "DEPARTMENT",
+        "MANAGER",
+        "PROJECT",
+        "MANAGER"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 24,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Projectized team",
+        "•\tOrganizing Projects: Dedicated Teams",
+        "Ο\tTeams operate as separate units under the leadership of a full-time project manager.",
+        "Ο\tIn a projectized organization where projects are the dominant form of business,",
+        "\t functional departments are responsible for providing support for its teams."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 25,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Pure Product(Projectized)Organization : Structure",
+        "GENERAL MANAGER",
+        "PRODUCT A",
+        "MANAGER",
+        "PRODUCT B",
+        "MANAGER",
+        "PRODUCT C",
+        "MANAGER",
+        "------",
+        "ENG.",
+        "MANU.",
+        "ENG.",
+        "MANU.",
+        "ENG.",
+        "MANU."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 26,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Pure Product(Projectized)Organization Structure: Advantages",
+        "1.\tProvides complete line authority over the project (i.e., strong control through a",
+        "\t single project authority).",
+        "2.\tParticipants work directly for the project manager. Unprofitable product lines are",
+        "\t easily identified and can be eliminated.",
+        "3.\tStrong communications channels.",
+        "4.\tStaffs can maintain expertise on a given project without sharing key personnel.",
+        "5.\tVery rapid reaction time is provided.",
+        "6.\tPersonnel demonstrate loyalty to the project; better morale with product",
+        "\t identification.",
+        "7.\tA focal point develops for out-of-company customer relations.",
+        "8.\tFlexibility in determining time (schedule), cost, and performance trade- offs.",
+        "9.\tInterface management becomes easier as unit size is decreased.",
+        "10.\tUpper-level management maintains more free time for executive"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 27,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Pure Product(Projectized)Organization Structure: Disadvantages",
+        "•\tCost of maintaining this form in a multiproduct company would be",
+        "\t prohibitive due to duplication of effort, facilities, and personnel; inefficient",
+        "\t usage.",
+        "•\tA tendency to retain personnel on a project long after they are needed.",
+        "\t Upper-level management must balance workloads as projects start up and",
+        "\t are phased out.",
+        "•\tTechnology suffers because, without strong functional groups, outlook of",
+        "\t the future to improve company's capabilities for new programs would be",
+        "\t hampered (i.e., no perpetuation of technology).",
+        "•\tControl of functional (i.e., organizational) specialists requires top-level",
+        "\t coordination.",
+        "•\tLack of opportunities for technical interchange between projects.",
+        "•\tLack of career continuity and opportunities for project personnel."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 28,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Organizing Projects: Matrix Structure",
+        "•\tHybrid organizational structure (matrix) is overlaid on the normal functional",
+        "\t structure.",
+        "\tTwo chains of command (functional and project)",
+        "\tProject participants report simultaneously to both functional and project",
+        "\t managers.",
+        "•\tMatrix structure optimizes the use of resources.",
+        "\tAllows for participation on multiple projects while performing normal",
+        "\t functional duties.",
+        "\tAchieves a greater integration of expertise and project requirements."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 29,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Matrix Organizational Structure",
+        "PROJECT MGR.",
+        "X",
+        "PROJECT MGR.",
+        "Y",
+        "PROJECT MGR.",
+        "Z",
+        "GENERAL MANAGER",
+        "ENGINEERING\tOPERATIONS\tFINANCIAL\tOTHERS",
+        "FUNCTIONAL RESPONSIBILITY",
+        "PROJECT RESPONSIBILITY"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 30,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Matrix Organization :Advantages",
+        "1.\tThe project manager maintains maximum project control (through the line",
+        "\t managers) over all resources, including cost and personnel.",
+        "2.\tPolicies and procedures can be set up independently for each project,",
+        "\t provided that they do not contradict company policies and procedures.",
+        "3.\tThe project manager has the authority to commit company resources,",
+        "\t provided that scheduling does not cause conflicts with other projects.",
+        "4.\tRapid responses are possible to changes, conflict resolution, and project",
+        "\t needs (as technology or schedule).",
+        "5.\tThe functional organizations exist primarily as support for the project.",
+        "6.\tEach person has a \"home\" after project completion. People are susceptible",
+        "\t to motivation and end-item identification. Each person can be shown a",
+        "\t career path."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 31,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Matrix Organization :Advantages",
+        "1.\tBecause key people can be shared, the program cost is minimized. People",
+        "\t can work on a variety of problems; that is, better people control is possible.",
+        "2.\tA strong technical base can be developed, and much more time can be",
+        "\t devoted to complex problem solving. Knowledge is available for all",
+        "\t projects on an equal basis.",
+        "3.\tConflicts are minimal, and those requiring hierarchical referrals are more",
+        "\t easily resolved.",
+        "4.\tThere is a better balance among time, cost, and performance.",
+        "5.\tRapid development of specialists and generalists occurs.",
+        "6.\tAuthority and responsibility are shared.",
+        "7.\tStress is distributed among the team (and the functional managers)."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 32,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "1.\tMultidimensional information flow.",
+        "2.\tMultidimensional work flow.",
+        "3.\tDual reporting.",
+        "4.\tContinuously changing priorities.",
+        "5.\tManagement goals different from project goals.",
+        "6.\tPotential for continuous conflict and conflict resolution.",
+        "7.\tDifficulty in monitoring and control.",
+        "8.\tCompany-wide, the organizational structure is not cost-effective because",
+        "\t more people than necessary are required, primarily administrative.",
+        "9.\tEach project organization operates independently. Care must be taken that",
+        "\t duplication of efforts does not occur.",
+        "10.\tMore effort and time are needed initially to define policies and procedures,",
+        "\t compared to traditional form."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 33,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "11.\tFunctional managers may be biased according to their own set of priorities.",
+        "12.\tBalance of power between functional and project organizations must be",
+        "\t watched.",
+        "13.\tBalance of time, cost, and performance must be monitored.",
+        "14.\tAlthough rapid response time is possible for individual problem resolution,",
+        "\t the reaction time can become quite slow.",
+        "15.\tEmployees and managers are more susceptible to role ambiguity than in",
+        "\t traditional form.",
+        "16.\tConflicts and their resolution may be a continuous process (possibly",
+        "\t requiring support of an organizational development specialist).",
+        "17.\tPeople do not feel that they have any control over their own destiny when",
+        "\t continuously reporting to multiple managers."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 34,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Different Matrix Forms",
+        "•\tWeak Matrix: If the line manager has more influence than the project",
+        "\t manager then the organization functions as a weak matrix as seen by the",
+        "\t project manager.",
+        "•\tStrong Matrix: If the project manager has more influence than the line",
+        "\t manager then the organization functions as a strong matrix as seen by the",
+        "\t project manager.",
+        "•\tBalance Matrix: Here the project manager sets the overall plan and the line",
+        "\t manager determines how it is to be done."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 35,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Selecting an organizational form",
+        "•\tProject management has matured as an outgrowth of the need to develop",
+        "\t and produce complex and/or large projects in the shortest possible time,",
+        "\t within anticipated cost, with required reliability and performance, and",
+        "\t (when applicable) to realize a profit.",
+        "•\tGranted that organizations have become so complex that traditional",
+        "\t organizational structures and relationships no longer allow for effective",
+        "\t management, how can executives determine which organizational form is",
+        "\t best, especially since some projects last for only a few weeks or months",
+        "\t while others may take years?"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 36,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Selecting an Organizational Form",
+        "The project management approach can be effectively applied to a onetime",
+        "undertaking that is",
+        "•\tDefinable in terms of a specific goal",
+        "•\tInfrequent, unique, or unfamiliar to the present organization",
+        "•\tComplex with respect to interdependence of detailed tasks",
+        "•\tCritical to the company"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 37,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Selecting an Organizational Form",
+        "The basic factors that influence the selection of a project organizational form",
+        "are:",
+        "1.\tProject size",
+        "2.\tProject length",
+        "3.\tExperience with project management organization",
+        "4.\tPhilosophy and visibility of upper-level management",
+        "5.\tProject location",
+        "6.\tAvailable resources",
+        "7.\tUnique aspects of the project"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 38,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Roles and Responsibilities of Project Leader",
+        "Effective project management relies on a healthy foundation of leadership.",
+        "With so many moving parts and often large numbers of team members with",
+        "diverse professional backgrounds, strong leadership plays an essential role",
+        "in moving the workflow in the right direction.",
+        "Adding project leaders to your project management team can be the",
+        "difference-maker in achieving a highly productive and happy work",
+        "environment.",
+        "Though often mistaken for project managers, project leaders hold an",
+        "essential role within an organization. Much like project management",
+        "officers and project coordinators' roles, project leaders work in conjunction",
+        "with project managers to ensure goals are met."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 39,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Project Leader x Project Manager",
+        "•\tAn expert within their field, a project leader can effectively make plans that",
+        "\t support project goals and lead their team to perform efficiently. An",
+        "\t exceptional project leader is receptive to the feelings of their team members.",
+        "\t They work diligently to keep their team engaged, motivated, and focused on",
+        "\t the task at hand.",
+        "•\tA successful project manager will inspire their team, encourage creativity,",
+        "\t and foster a collaborative work environment to exceed project goals."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 40,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Project Leader: Roles & Responsibilities",
+        "A project leader's responsibilities will vary based on the company, industry, and",
+        "even project management role structure. Some common responsibilities",
+        "includes:",
+        "1.\tWork with departmental heads, managers, and other stakeholders to",
+        "\t develop team goals and delegate tasks to the appropriate team member",
+        "2.\tDevelop team schedules and assist in the successful onboarding and",
+        "\t training of team members",
+        "3.\tCreate and communicate a clear list of expectations and goals for team",
+        "\t members to follow",
+        "4.\tOffer emotional support to project team members and make people feel",
+        "\t valued",
+        "5.\tMaintain frequent communication to offer encouragement, amend tasks,",
+        "\t and provide updates on goal progress"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 41,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Project Leader: Roles & Responsibilities",
+        "6.\tImplement incentives to keep the team motivated and focused on their",
+        "\t daily tasks project goals",
+        "7.\tProvide frequent feedback on employee performance, address weaknesses",
+        "\t or inefficiencies, and offer support to improve skill gaps",
+        "8.\tNurture collaboration amongst team members",
+        "9.\tCreate a workspace that encourages creativity and innovation to get the",
+        "\t most out of the team",
+        "10.\tQuickly and effectively resolve team conflicts",
+        "11.\tWrite project reports as necessary",
+        "12.\tReward team members for their continued efforts and celebrate",
+        "\t accomplishments"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 42,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Project Leader :Skills",
+        "1.\tTeam Management",
+        "Ο\tThe bulk of a project leader's responsibilities rely on effectively managing their team.",
+        "Ο\tTo achieve project goals, leaders must establish a team of individuals with the right skill",
+        "\t sets and encourage collaboration.",
+        "Ο\tSuccessful team management involves teamwork, goal setting, and regular performance",
+        "\t reviews.",
+        "2.\tCommunication",
+        "Ο\tStrong communication is an essential project leader skill.",
+        "Ο\tTo effectively convey ideas, or direct a team of employees, leaders should promote and",
+        "\t facilitate communication.",
+        "3.\tListening",
+        "Ο\tProject leaders should be focused on actively listening to their team. Understand team",
+        "\t members' concerns and feedback and work to rectify any issues to avoid disruptions to",
+        "\t productivity."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 43,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Project Leader :Skills",
+        "4.\tConflict Resolution",
+        "Ο\tWhen a diverse group of individuals work within close proximity, conflict is often",
+        "\t inevitable.",
+        "Ο\tHowever, nothing quite hinders productivity than team friction. Project leaders must",
+        "\t swiftly recognize emerging conflicts and work to de-escalate any tension or disputes",
+        "\t among team members.",
+        "Ο\tA work environment should be harmonious for all team members to thrive.",
+        "5.\tTeam Leadership",
+        "Ο\tThe position title of project leader is one major indicator that leadership is the most critical",
+        "\t skill required for success in the role.",
+        "Ο\tProject leaders must work without biases to ensure all team members are treated equally.",
+        "Ο\tLeadership requires a combination of conflict resolution, team management, and",
+        "\t communication.",
+        "Ο\tSet goals that are in line with project requirements and provide the team with the necessary",
+        "\t tools to achieve them"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 44,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Project Leader :Skills",
+        "6.\tOrganization",
+        "Ο\tStrong organizational skills are crucial to creating and keeping",
+        "Ο\tdeadlines, delegating tasks, and making effective schedules for",
+        "Ο\t their team.",
+        "7.\tCritical Thinking",
+        "Ο\t
+{
+  "pages": [
+    {
+      "page_number": 1,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "$",
+        "$",
+        "Leadership Styles for",
+        "Project Managers,",
+        "Conflict Resolution,",
+        "Team Management",
+        "Diversity Management,",
+        "Change management\""
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 2,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Agenda",
+        "01",
+        "Style",
+        "02",
+        "Leadership Styles for Project Managers.",
+        "Recognised the different traits of Leadership Styles.",
+        "Conflict Resolution.",
+        "Aware about the issues pertaining of Conflicts.",
+        "03",
+        "Team Management",
+        "Able to analyze the importance of Team management.",
+        "$$",
+        "Diversity Management.",
+        "04",
+        "05",
+        "Change Management.",
+        "Get acquainted about the need of Change Management."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 3,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "$",
+        "$",
+        "Leadership &",
+        "Management"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 4,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "$$",
+        "Managers are characterized as:",
+        "\"Those in executive status systems who are authorized",
+        "to get others to get work done, and for whose work, as",
+        "well as their own, they are held accountable.\"",
+        "\"After all, it is obvious that a person can be a leader",
+        "without being a manager, a person can be a manager",
+        "without leading.\"",
+        "\"Leadership certainly seems to be part of",
+        "management: a sub-set of specific skills, qualities,",
+        "attitudes, flair and action. There is an expectation in",
+        "those being managed that somewhere, effective",
+        "leadership should be exercised and visible. Without it",
+        "management seems sterile.\""
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 5,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Types of Leaderships",
+        "Situational Leadership",
+        "What happens when we consider situations",
+        "Visionary Leadership",
+        "\"Come With me\"",
+        "Coaching Leadership",
+        "\"Try this\"",
+        "Leaderships",
+        "Democratic Leadership",
+        "\"What do you think\"",
+        "欢",
+        "Pacesetting Leadership",
+        "\"Run Fast: Keep Up\"",
+        "Commanding Leadership",
+        "Do What I tell You",
+        "Transformational Leadership",
+        "encourage, inspire and motivate",
+        "employees to innovate and create",
+        "change",
+        "Affiliative Leadership",
+        "\"People Come first\"",
+        "Ethical Leadership",
+        "normatively appropriate conduct through",
+        "personal actions and interpersonal relations",
+        "$",
+        "$"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 6,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Situational leadership",
+        "• The ability to recognize the need to use differing leadership approaches in",
+        "different situations.",
+        "• The ability of the leader personally to adapt and use different leadership styles",
+        "as required.",
+        "....... Paul Hersey: The Situational Leader 1985."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 7,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Four ways of leading (leadership approach)",
+        "S1 Telling - Leaders tell their people exactly what to do, and how to do it.",
+        "S2 Selling – Leaders still provide information and direction, but there's more",
+        "communication with followers. Leaders \"sell\" their message to get the team on",
+        "board.",
+        "S3 Participating - Leaders focus more on the relationship and less on direction.",
+        "The leader works with the team and shares decision-making responsibilities.",
+        "S4 Delegating - Leaders pass most of the responsibility on to the follower or",
+        "group. The leaders still monitor progress, but they're less involved in decisions."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 8,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Four ways of assessing Maturity",
+        "• M1 - People at this level of maturity are at the bottom level of the scale. They",
+        "lack the knowledge, skills, or confidence to work on their own, and they often",
+        "need to be pushed to take the task on.",
+        "• M2 - At this level, followers might be willing to work on the task, but they",
+        "still don't have the skills to do it successfully.",
+        "• M3 - Here, followers are ready and willing to help with the task. They have",
+        "more skills than the M2 group, but they're still not confident in their abilities.",
+        "• M4 - These followers are able to work on their own. They have high",
+        "confidence and strong skills, and they're committed to the task."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 9,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Maturity Level",
+        "• M1: Low maturity",
+        "• M2: Medium maturity, limited skills",
+        "• M3: Medium maturity, higher skills",
+        "but lacking confidence",
+        "• M4: High maturity",
+        "Leadership Approach",
+        "• S1: Telling/directing",
+        "• S2: Selling/coaching",
+        "• S3: Participating/supporting",
+        "• S4: Delegating"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 10,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "•",
+        "Case study- Example",
+        "• You will be away from work for a number of days and your tasks will be",
+        "handled by an experienced colleague. She's very familiar with your",
+        "responsibilities and she's excited to do the job.",
+        "• Instead of trusting her knowledge and skills to do the work, you spend hours",
+        "creating a detailed list of tasks for which she'll be responsible, and instructions",
+        "on how to do them.",
+        "• What might the result be?",
+        "• Your work gets done, but you've damaged the relationship with your",
+        "colleague by your lack of trust.",
+        "• She was an M4 in maturity and yet you used an S1 leadership style instead of",
+        "an S4, which would have been more appropriate"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 11,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "• Features",
+        "The Visionary Leadership",
+        "• Articulates where a group is going but not how it will get there.",
+        "• Helps people see how their work fits into the big picture.",
+        "• Inspires people.",
+        "• Underpinning message :\"Come with me\".",
+        "• Creates resonance (connects with people)",
+        "• By moving them towards shared dreams.",
+        "• Followers",
+        "• Are free to innovate, experiment, and take calculated risks.",
+        "• Have clarity - know the big picture, how their jobs fit in and what's expected of them."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 12,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "When it works",
+        "When changes require a new vision,",
+        "or",
+        "when a clear direction is needed.",
+        "When it doesn't work",
+        "•",
+        "When a leader is working with a team of",
+        "experts who are more experienced, and",
+        "who might see a leader expounding a",
+        "vision as 'pompous' or out of step with the",
+        "agenda. This can lead to cynicism."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 13,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Features",
+        "The Coaching Leadership",
+        "• Helps people identify their unique strengths and weaknesses, tying those to their",
+        "personal and career aspirations.",
+        "• Good at delegating - giving people challenging assignments that stretch them.",
+        "• Tolerates short-term failures.",
+        "• Underpinning message",
+        "\"Try this\" or “I believe in you, I'm investing in you, and I expect your best",
+        "efforts\"",
+        "• Creates resonance (connects with people)",
+        "• By connecting what a person wants with the organisation's goals.",
+        "• Followers",
+        "• Sense that their leader cares, so feel motivated to uphold standards of performance.",
+        "• Their capabilities and self-confidence are boosted."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 14,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "When it works",
+        "• To help a person improve performance",
+        "by building long-term capabilities.",
+        "• Works best with people who show",
+        "initiative and want more development",
+        "When it doesn't work",
+        "•",
+        "•",
+        "When the follower lacks motivation or",
+        "requires strong personal direction.",
+        "When the leader lacks the expertise or",
+        "sensitivity to help the follower."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 15,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "• Features",
+        "The Affiliative Leadership",
+        "• Shares emotions.",
+        "• Values people and their feelings – putting less emphasis on accomplishing tasks and",
+        "goals and more on people's emotional needs – cares for the whole person.",
+        "• Strives to keep people happy, to create harmony and to build a strong ethos.",
+        "• Underpinning message",
+        "\"People come first\" or \"We are family\"",
+        "• Creates resonance (connects with people)",
+        "• By valuing people, creating loyalty and heightening team harmony.",
+        "• Followers",
+        "• Feel strong loyalty and connectedness to the leader and the team/organisation."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 16,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "When it works",
+        "•",
+        "•",
+        "When trying to heighten team harmony, increase",
+        "morale, improve communication or repair broken",
+        "trust in an organization.",
+        "When working in cultures where strong personal ties",
+        "are important to business.",
+        "• Use in conjunction with the 'visionary' approach for a",
+        "potent combination.",
+        "When it doesn't works",
+        "•",
+        "•",
+        "In crises or when people need clear directives",
+        "to steer them through complex challenges.",
+        "This style should not be used alone. When",
+        "used alone – the exclusive focus on praise",
+        "can allow poor performance to go",
+        "uncorrected and mediocrity may be tolerated."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 17,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "• Features",
+        "The Democratic Leadership",
+        "• Listening is the key strength - these leaders create a sense that they truly",
+        "want to hear employees' thoughts and concerns and are available to listen.",
+        "• True collaborators – work as team members rather than top-down leaders.",
+        "• Underpinning message: \"What do you think?\"",
+        "• Creates resonance (connects with people)",
+        "• By valuing people's inputs and getting commitment through participation.",
+        "•Followers",
+        "• Feel trusted and respected.",
+        "• Values people and their feelings – putting less emphasis on accomplishing",
+        "tasks and goals and more on people's emotional needs - cares for the",
+        "whole person."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 18,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "When it works",
+        "•",
+        "•",
+        "To build buy-in or consensus.",
+        "When the leader is uncertain about what direction to",
+        "take and needs ideas from followers.",
+        "• To use in conjunction with the Visionary Style to",
+        "surface ideas about how to implement a vision or to",
+        "generate fresh ideas for executing it.",
+        "When it doesn't works",
+        "•",
+        "•",
+        "When employees are uninformed or",
+        "incompetent.",
+        "In times of crisis, when urgent events demand",
+        "quick decisions."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 19,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "• Features",
+        "The Pacesetting Leadership",
+        "• Leader expects excellence and exemplifies it – obsessive about doing things better and",
+        "faster and asks the same of everyone..",
+        "• Quickly pinpoints poor performers, demands more from them and if they don't rise to",
+        "the occasion, rescues the situation personally.",
+        "• Can be so focussed on their own goals that they appear not to care about the people",
+        "they rely on to achieve those goals.",
+        "• Underpinning message: \"Do as I do, now\"",
+        "• Creates resonance (connects with people)",
+        "• By meeting challenging and exciting goals.",
+        "• Followers",
+        "• Can feel pushed too hard by the leader's relentless demands.",
+        "• May allow leader to take over and so become disempowered."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 20,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "When it works",
+        "•",
+        "•",
+        "To get high-quality results from",
+        "a motivated and competent",
+        "team who need little direction.",
+        "During the entrepreneurial",
+        "phase of a company's life cycle,",
+        "when growth is all important.",
+        "• In tandem with other styles",
+        "such as the Visionary (passion)",
+        "and the Affiliative",
+        "(teambuilding).",
+        "When it doesn't works",
+        "•",
+        "•",
+        "•",
+        "•",
+        "Not effective when used alone.",
+        "When individuals and the team need a",
+        "great deal of support.",
+        "When executed poorly or overplayed.",
+        "Continued high pressure on people can",
+        "be debilitating and restricts their talent",
+        "for innovative thinking.",
+        "Pacesetters may get compliance and",
+        "short-term improvements but will not",
+        "create sustainable, high-performing",
+        "teams."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 21,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "The Commanding Leadership",
+        "• Features",
+        "• Leader demands immediate compliance with orders.",
+        "• Rather than delegate, they seek tight control of any situation and monitor it studiously.",
+        "• Performance feedback focuses on what people did wrong rather than what they did",
+        "well.",
+        "• Underpinning message: \"Do what I tell you\"",
+        "• Creates resonance (connects with people)",
+        "• By soothing fear through giving clear direction in an emergency.",
+        "• Followers",
+        "• Spirits, pride and job satisfaction may be eroded in staff who do not respond to this",
+        "style."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 22,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "When it works",
+        "•",
+        "•",
+        "In a business crisis e.g. to kick start a turnaround.",
+        "With problem employees.",
+        "•",
+        "To unfreeze useless business habits and shock people",
+        "into new ways of doing things.",
+        "When it doesn't works",
+        "•",
+        "•",
+        "When you want people to sense that their job",
+        "fits into a grand, shared mission.",
+        "As a sustainable dominant style."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 23,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Transformational leadership",
+        "• A leadership style which leads to positive change in those who follow.",
+        "• A style which is energetic, enthusiastic and passionate.",
+        "• Transformational leaders involve their followers in making changes."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 24,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Shows",
+        "Justice",
+        "Builds",
+        "Community",
+        "Ethical",
+        "Leadership",
+        "Respect",
+        "Others",
+        "Ethical Leadership",
+        "Serves",
+        "Others",
+        "Manifests",
+        "Honesty",
+        "Corporate and Social",
+        "Responsibility",
+        "The self-regulation of an",
+        "organisation to monitor and",
+        "comply with ethical standards,",
+        "international norms and the",
+        "spirit of law.",
+        "Work life balance &",
+        "Psychological contract",
+        "Work life balance implies 'I live",
+        "to work not work to live'",
+        "The psychological contract",
+        "covers the belief, perceptions,",
+        "and informal element of the in",
+        "the organization. Leaders and",
+        "organization should ensure",
+        "those written and unwritten",
+        "elements of the contract are",
+        "clarified to dispel",
+        "misconceptions and",
+        "misinterpretation.",
+        "Ethical",
+        "Leadership",
+        "Fair Trade'",
+        "A strategy for sustainable",
+        "development and poverty",
+        "alleviation\" (fairtrade.org.uk)",
+        "4 P approach:",
+        "Purpose - Planet -",
+        "People - Principles",
+        "The aim is to balance the",
+        "organizational purpose with",
+        "the personal needs of people",
+        "whilst given due consideration",
+        "to the world we live in.",
+        "Organisations that face",
+        "inwards can no longer",
+        "maintain success and growth",
+        "and leaders nowadays must",
+        "act with global accountability."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 25,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "$",
+        "$",
+        "Conflict Resolution"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 26,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Conflict Resolution",
+        "1. To come into collision or disagreement; be contradictory, at variance, or in",
+        "opposition;",
+        "2. Clash: to fight or contend; do battle.",
+        "3. A fight, battle, or struggle, esp. a prolonged struggle; strife.",
+        "4. Controversy; quarrel: conflicts between parties.",
+        "5. Discord of action, feeling, or effect; antagonism or opposition, as of",
+        "interests or principles: a conflict of ideas.",
+        "6. A striking together; collision."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 27,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "What Doesn't Work?",
+        "Yelling, refusing to change or compromise, refusing to work out the conflict,",
+        "name calling, hitting, walking out, belittling, etc.",
+        "What Does Work?",
+        "Negotiation, Mediation, Looking at both sides, A Win-Win attitude.",
+        "When is Conflict Positive?",
+        "When we are able to resolve internal and interpersonal conflicts, using",
+        "win-win problem solving.",
+        "\"Every relationship will have some conflicts at some time or other.\"",
+        "when we use win-win problem solving, it strengthens the relationship. when",
+        "we don't, it destroys it."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 28,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Who Owns the Problem?",
+        "The person who is negatively affected by the Problem.",
+        "What is the Owner's responsibility?",
+        "To find a way to resolve the problem, even if he is not the cause of it.",
+        "Search for Win-Win solution",
+        "The Use of Power",
+        "Three Responses",
+        "•",
+        "Fight",
+        "•",
+        "•",
+        "Flight / Avoidance",
+        "Obedience/ Shutting Down",
+        "Identify Each Others Needs and Goals"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 29,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Preparation for Resolving",
+        "• Include only those concerned.",
+        "• Give a description of the problem that respects all involved.",
+        "• Explain how conflict resolution can enable all to win, and explain the steps.",
+        "• Agree not to slip back to the win / lose methods",
+        "• Find a good time and place with no distractions.",
+        "• Get something to write down ideas."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 30,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Identify the problem or issues",
+        "• Use \"I\" Messages to explain your own concerns, needs and basic goals.",
+        "• Use reflective listening to hear and acknowledge the other's needs and basic",
+        "goals.",
+        "• Evaluate exactly what each of your actual needs are with the problem. List",
+        "needs.",
+        "• Don't accept sudden promises not to cause the problem."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 31,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Brainstorm All Possible Solutions",
+        "Cake Cutting Exercise",
+        "You are in charge of a Birthday party for four Children. You have one Cake",
+        "and need to cut it in 4 equal parts. Brainstorm with your partner.",
+        "How many different ways you could cut it.",
+        "Car Sharing Solution",
+        "• You and your spouse have one car. You need to go to a meeting tonight,",
+        "and your spouse wants to visit a good friend.",
+        "How many solutions can you come up with?",
+        "\"Look at things from another's perspective and try to see their point of view",
+        "and look for a solution that meets both underlying needs\"."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 33,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Brainstorm to Generate all possible solutions.",
+        "• Think of any and all possible ways to solve the problem so that everyone will",
+        "have needs met.",
+        "• Evaluate later NOT NOW.",
+        "• Do not criticize any suggestion. Feed back with reflective listening",
+        "• Write down all ideas suggested.",
+        "Evaluate the alternative solutions",
+        "• Ask \"Will it work? Does it meet all the needs of both people? Are there any",
+        "problems likely?\"",
+        "• Don't accept solutions for the sake of speed.",
+        "• Use reflective listening and I Messages."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 34,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Decide on the best solution",
+        "• Find a solutions that is mutually acceptable to both of you.",
+        "• If agreement seems difficult, Summarize areas of agreement. Restate needs,",
+        "and look for new solutions.",
+        "• Make certain that both of you are committed to the solution,",
+        "Implementing the Solutions",
+        "• Get Agreement on who does, what, by, when.",
+        "• Write this down and check all agree to it,",
+        "• Refuse to remind or police the solutions,",
+        "• If you want to set criteria for success, work out these now,"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 35,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "$",
+        "$",
+        "Team Management and",
+        "Diversity Management"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 36,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Team Management and Diversity Management",
+        "• Do you have one team member who doesn't seem concerned about the",
+        "team's mission. Are they affecting others' attitudes.",
+        "• How do you confront them, what questions do you ask.",
+        "• What are some of the things that you think contribute to a productive",
+        "work atmosphere.",
+        "• To me, you seem to lack commitment and energy lately.",
+        "• Is that impression accurate.",
+        "• How do think your behavior affects productivity."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 37,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Good Leader",
+        "Be a person who will take risks",
+        "• We have to push ourselves to get better",
+        "Show concern",
+        "• Let people know when they have done a good job",
+        "• Your job should be fun.",
+        "Don't make Excuses",
+        "• You are the leaders of the plant.",
+        "Teamwork",
+        "• Support decisions, help others understand.",
+        "Continued Development",
+        "• Ask questions, training sessions, seminars, workshops."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 38,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Essential Elements of a Team",
+        "• Small size.",
+        "• Complementary skills.",
+        "• Common purpose and performance.",
+        "• A common approach.",
+        "• Mutual accountability.",
+        "Do You Sabotage Teamwork",
+        "• Saving the day: If you find yourself",
+        "rescuing your team again and again,",
+        "find out why?.",
+        "• Are you withholding information.",
+        "• Do people need training.",
+        "• Are you only one who can do it."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 39,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Delegation",
+        "• Strong leaders recognize that delegation achieves two important goals at the",
+        "same time",
+        "1. It frees them to focus on the significant parts of their jobs.",
+        "2. It enables their subordinates to develop their own skills and competencies.",
+        "Ω"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 40,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "What Employees Want",
+        "• Pat on the back.",
+        "• Listen to me more often.",
+        "• Stop hounding me.",
+        "• Let me make suggestions.",
+        "• Smile once in a while.",
+        "• Ask me how I feel.",
+        "• Stop trying to prove to me how smart you are.",
+        "• Stop yelling.",
+        "• Stop talking down to me.",
+        "• Train me.",
+        "• Give me a challenge."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 41,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Diversity Management",
+        "• To provide a clear understanding of what diversity, inclusion, and culture.",
+        "• To raise a greater awareness and sensitivity to diversity issues that go well",
+        "beyond the assumed categories.",
+        "• To recommend behavioral tools for fostering a more cohesive workplace"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 42,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Diversity redefined........",
+        "Diversity is the mosaic of people who",
+        "bring a variety of backgrounds,",
+        "styles, perspectives, values and",
+        "beliefs as assets to the groups and",
+        "organizations with which they",
+        "interact."
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 43,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Distinction Between EEO, Affirmative Action and Diversity & Inclusion",
+        "Equal Employment",
+        "Opportunity",
+        "The enforcement of",
+        "statutes to prevent",
+        "employment",
+        "discrimination",
+        "Affirmative Action",
+        "The effort to achieve",
+        "parity in the workforce",
+        "through outreach and",
+        "eliminating barriers in",
+        "Hiring",
+        "Diversity & Inclusion",
+        "Leveraging differences",
+        "in the workforce to",
+        "achieve better results",
+        "$",
+        "$"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 44,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Primary and Secondary Dimensions of Diversity",
+        "Geographic",
+        "Location",
+        "Military",
+        "Experience",
+        "Education",
+        "Gender",
+        "Work",
+        "Experience",
+        "Age",
+        "Sexual",
+        "Orientation",
+        "Work/thinking",
+        "Style",
+        "Family",
+        "Socioeconomic",
+        "status",
+        "Ethnic",
+        "Heritage",
+        "Disability",
+        "Religion",
+        "Status",
+        "Race",
+        "Communication",
+        "First",
+        "Style",
+        "Language",
+        "Organizational",
+        "Role and Level"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 45,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "• Age",
+        "• National origin",
+        "• Race",
+        "All Communication is Filtered",
+        "Through Your Cultural Perspective",
+        "• Sexual orientation",
+        "• Religion",
+        "• Disability",
+        "• Gender",
+        "• Education",
+        "• Work role/experience",
+        "• Personality",
+        "• Customs",
+        "• Geographic location",
+        "• Functional discipline",
+        "• Languages used",
+        "• Values",
+        "• Communication style",
+        "• Work Style",
+        "• Learning style",
+        "• Economic status",
+        "• Family situation",
+        "• Military experience",
+        "• Philosophical",
+        "• perspective"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 46,
+      "section": null,
+      "title": null,
+      "text_content": [
+        "Benefits of Workforce Diversity & Inclusion",
+        "• Improved understanding of those you work for, with, and around.",
+        "• Creates a work environment that allows everyone to reach their full potential.",
+        "• Provides multiple perspectives on problem solving.",
+        "• Better performance outcomes.",
+        "• Increases employee productivity.",
+        "• Increased retention rates.",
+        "• Boosts employee morale.",
+        "• Improved customer relations.",
+        "• Reduces complaints and grievances.",
+        "• It's the right thing to do!"
+      ],
+      "image_descriptions": []
+    },
+    {
+      "page_number": 47,
+      "section": null

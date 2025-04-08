@@ -1,0 +1,1875 @@
+[
+    {
+        "pages": [
+            {
+                "page_number": 1,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "PROJECT",
+                    "MANAGEGEMENT",
+                    "Project Risk & Financial",
+                    "Management"
+                ],
+                "image_descriptions": [
+                    "a collage of images related to project management with icons for handshake, target, dollar sign, chart, and a hand pointing to a checklist"
+                ]
+            },
+            {
+                "page_number": 2,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit V- Project Risk and Finance Management",
+                    "\u2022 Project Risk Management: Introduction, Risk, Risk Management, Role of Risk",
+                    "Management in Overall",
+                    "\u2022 Project Management, Steps in Risk Management, Risk Identification, Risk Analysis,",
+                    "Reducing Risks",
+                    "\u2022",
+                    "Introduction to Project Management Tools such as: Trello, JIRA and Asana.",
+                    "Financial Management in Projects: Project Finance structure, Process of Project",
+                    "Financial Management:",
+                    "\u2022 Conducting Feasibility Studies, Planning the Project Finance, Arranging the Financial",
+                    "Package, Controlling the",
+                    "\u2022",
+                    "Financial Package, Controlling Financial Risk, Options Models.",
+                    "CO5: Identify and assess the project risks and manage finances in line with",
+                    "Project Financial Management",
+                    "Process."
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 3,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Project Risk Management",
+                    "When developing a competitive product or",
+                    "system, risks can arise from the inability to",
+                    "meet functional requirements and business",
+                    "expectations throughout the life cycle, from",
+                    "first inception to final disposal. The risks can",
+                    "be broadly grouped into four primary",
+                    "categories i.e.",
+                    "\u2022 Operational,",
+                    "\u2022 Financial,",
+                    "\u2022 People (HR),",
+                    "\u2022 Strategic"
+                ],
+                "image_descriptions": [
+                    "a diagram showing different types of risks in a hexagon shape, including environment & physical, reputation, govt regulatory & legal, technology, operational, financial, people (HR), strategic, crime, and socio economic"
+                ]
+            },
+            {
+                "page_number": 4,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Risk?",
+                    "\u2022",
+                    "Risk -It is a potential problem, it might happen and it might not or measure",
+                    "of the probability and consequence of not achieving a defined project goal.",
+                    "\u2022",
+                    "Conceptual definition of Risk",
+                    "\u2022",
+                    "\u039f Risk concerns future happenings",
+                    "\u039f Risk involves change in mind, opinions, action, places etc.",
+                    "\u039f Risk involves choice and uncertainty that choice involves",
+                    "Uncertainty -The risk may or may not happen, that is, there are no 100%",
+                    "risk (those, instead, are called constraints) most people agree that risk",
+                    "involves the notion of uncertainty",
+                    "Loss -the risk becomes a reality and unwanted consequences or losses occur",
+                    "\u2022"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 5,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Risk Categorization",
+                    "Technological risks Business risks",
+                    "\u2022 Design Risk",
+                    "\u2022 Manufacturing",
+                    "Risk",
+                    "\u2022 Market Risk",
+                    "Strategic Risk",
+                    "\u2022 Sales Risk",
+                    "\u2022 Management Risk",
+                    "\u2022 Reliability Risk \u2022 Budget Risk",
+                    "\u2022 Safety Risk",
+                    "Societal risks",
+                    "\u2022 Environmental",
+                    "hazards",
+                    "\u2022 Economic",
+                    "National risks",
+                    "\u2022 national economic",
+                    "\u2022 military",
+                    "well-being.",
+                    "\u2022 Quality Risk"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 6,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Risk also categorise into",
+                    "Known Risk",
+                    "\u2022 Those risk that can be",
+                    "uncovered after careful",
+                    "evaluation of the project",
+                    "plan, the business and",
+                    "technical in which the",
+                    "project is being developed,",
+                    "and other reliable",
+                    "information sources",
+                    "(e.g.Unrealistic delivery date)",
+                    "Predictable Risk Unpredictable Risk",
+                    "\u2022 Those risks that are",
+                    "Extrapolated from the past",
+                    "project experiances",
+                    "(e.g. past turnover)",
+                    "\u2022 Those risk that can and do",
+                    "occur, but are extremely",
+                    "difficult to identify in",
+                    "advance"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 7,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Risk?",
+                    "Risk has two primary components for a given event:",
+                    "\u2022",
+                    "A probability (likelihood) of occurrence of that event",
+                    "\u2022",
+                    "Impact of the event occurring (amount at stake)",
+                    "Risk = f(likelihood, impact)",
+                    "\u2022",
+                    "Lack of knowledge of future events-favourable are called opportunities and",
+                    "unfavourable events are called risks",
+                    "\u2022 Its cause- hazards (to overcome by knowing them and taking the action)",
+                    "Risk = f(Hazards, Safeguard)"
+                ],
+                "image_descriptions": []
+            }
+        ]
+    },
+    {
+        "pages": [
+            {
+                "page_number": 1,
+                "section": null,
+                "title": "Project Management Tools",
+                "text_content": [
+                    "Project Management Tools",
+                    "\u2022 Asana, Jira,",
+                    "Trello"
+                ],
+                "image_descriptions": [
+                    "light bulb"
+                ]
+            },
+            {
+                "page_number": 2,
+                "section": null,
+                "title": "Introduction to\nProject Management\nTools",
+                "text_content": [
+                    "\u2022 Efficiency and Productivity:",
+                    "\u2022 Collaboration and\nCommunication:",
+                    "\u2022 Task and Project Tracking:",
+                    "\u2022 Resource Management:",
+                    "\u2022 Adaptability and Scalability:",
+                    "Introduction to\nProject Management\nTools"
+                ],
+                "image_descriptions": [
+                    "puzzle pieces"
+                ]
+            },
+            {
+                "page_number": 3,
+                "section": null,
+                "title": "Asana",
+                "text_content": [
+                    "\u2022 Key features:",
+                    "\u2022 task management,",
+                    "\u2022 project tracking,",
+                    "\u2022 collaboration tools",
+                    "\u2022 Benefits:",
+                    "Asana",
+                    "- improved productivity,",
+                    "-",
+                    "enhanced team communication"
+                ],
+                "image_descriptions": [
+                    "Asana screenshot"
+                ]
+            },
+            {
+                "page_number": 4,
+                "section": null,
+                "title": "Asana",
+                "text_content": [
+                    "\u2022 Task creation and\nassignment",
+                    "\u2022 Timeline view",
+                    "\u2022 Calendar\nintegration",
+                    "\u2022 Team collaboration",
+                    "\u2022 File attachments",
+                    "\u2022 Progress tracking",
+                    "Asana"
+                ],
+                "image_descriptions": [
+                    "Asana software screenshot"
+                ]
+            },
+            {
+                "page_number": 5,
+                "section": null,
+                "title": "Jira Overview",
+                "text_content": [
+                    "\u2022 Key features:",
+                    "\u2022 issue tracking,",
+                    "agile project\nmanagement,",
+                    "\u2022 customizable\nworkflows",
+                    "\u2022 Benefits:",
+                    "-",
+                    "Jira Overview",
+                    "efficient bug tracking,",
+                    "- agile methodology\nsupport"
+                ],
+                "image_descriptions": [
+                    "Jira Board screenshot"
+                ]
+            },
+            {
+                "page_number": 6,
+                "section": null,
+                "title": "Jira",
+                "text_content": [
+                    "Jira",
+                    "\u2022 Issue creation and management",
+                    "\u2022 Agile boards (Scrum, Kanban)",
+                    "\u2022 Customizable workflows",
+                    "\u2022 Reporting and analytics",
+                    "\u2022 Integration with development tools (e.g.,\nGitHub)"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 7,
+                "section": null,
+                "title": "Trello",
+                "text_content": [
+                    "Trello",
+                    "\u2022 Key features: visual boards, card-based task\nmanagement, collaboration",
+                    "\u2022 Benefits: simplicity, flexibility, visual project\ntracking"
+                ],
+                "image_descriptions": [
+                    "Trello project management boards"
+                ]
+            },
+            {
+                "page_number": 8,
+                "section": null,
+                "title": "Trello",
+                "text_content": [
+                    "Trello",
+                    "\u2022 Board creation and customization",
+                    "\u2022 Card-based task management",
+                    "\u2022 Collaboration through comments and\nattachments",
+                    "\u2022 Checklist and due dates",
+                    "\u2022 Power-Ups for additional functionality"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 9,
+                "section": null,
+                "title": "Home work : Comparison",
+                "text_content": [
+                    "\u2022 task management,",
+                    "\u2022 collaboration,",
+                    "\u2022 reporting,",
+                    "\u2022 customization,",
+                    "\u2022 integration,",
+                    "\u2022 pricing",
+                    "Home work : Comparison"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 10,
+                "section": null,
+                "title": "Comparison - Use Cases",
+                "text_content": [
+                    "\u2022 Examples of use cases for each tool",
+                    "\u2022 Asana: Marketing campaign management",
+                    "\u2022 Jira: Software development and bug tracking",
+                    "\u2022 Trello: Personal task management, project\nplanning",
+                    "Comparison - Use Cases"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 11,
+                "section": null,
+                "title": "Comparison - Pros and Cons",
+                "text_content": [
+                    "\u2022 Pros and cons of using Asana",
+                    "\u2022 Pros and cons of using Jira",
+                    "\u2022 Pros and cons of using Trello",
+                    "Comparison - Pros and Cons"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 12,
+                "section": null,
+                "title": "Integration Capabilities",
+                "text_content": [
+                    "Integration Capabilities",
+                    "\u2022 Overview of integration capabilities for each tool",
+                    "\u2022 Asana integrations: Google Drive, Slack, Microsoft\nTeams",
+                    "\u2022 Jira integrations: GitHub, Bitbucket, Confluence",
+                    "\u2022 Trello integrations: Evernote, Dropbox, Zapier"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 13,
+                "section": null,
+                "title": "Collaboration and Communication",
+                "text_content": [
+                    "Collaboration and Communication",
+                    "\u2022",
+                    "Highlighting collaboration and communication\nfeatures of each tool",
+                    "\u2022 Asana: Team conversations, @mentions, task\ncomments",
+                    "Jira: Agile boards for team collaboration, issue\ncomments",
+                    "Trello: Card comments, team discussions,\nnotifications"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 14,
+                "section": null,
+                "title": "Customization Options",
+                "text_content": [
+                    "Customization Options",
+                    "\u2022 Discussing customization options for\nworkflows and project structures",
+                    "\u2022 Asana: Custom fields, project templates",
+                    "\u2022 Jira: Customizable workflows, issue types",
+                    "\u2022 Trello: Custom boards, card labels, power-ups"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 15,
+                "section": null,
+                "title": "Reporting and Analytics",
+                "text_content": [
+                    "Reporting and Analytics",
+                    "\u2022 Overview of reporting and analytics features",
+                    "\u2022 Asana: Progress tracking, workload\nmanagement",
+                    "\u2022 Jira: Agile reporting, sprint burndown charts",
+                    "\u2022 Trello: Card aging, activity logs"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 16,
+                "section": null,
+                "title": "Pricing Plans",
+                "text_content": [
+                    "Pricing Plans",
+                    "\u2022 Comparison of pricing plans for Asana, Jira,\nand Trello",
+                    "\u2022 Highlighting free and premium tiers, pricing\nper user/month"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 17,
+                "section": null,
+                "title": "Customer Reviews and Testimonials",
+                "text_content": [
+                    "Customer Reviews and Testimonials",
+                    "\u2022 Including customer reviews or testimonials for\neach tool",
+                    "\u2022 Quotes highlighting user experiences and\nsatisfaction"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 18,
+                "section": null,
+                "title": "Tips for Choosing the Right Tool",
+                "text_content": [
+                    "Tips for Choosing the Right Tool",
+                    "\u2022 Factors to consider when choosing between\nAsana, Jira, and Trello",
+                    "\u2022 Team size, project complexity, budget,\nintegration needs"
+                ],
+                "image_descriptions": []
+            }
+        ]
+    },
+    {
+        "pages": [
+            {
+                "page_number": 1,
+                "section": null,
+                "title": "Project Finance Management",
+                "text_content": [
+                    "Project Finance structure,",
+                    "Process of Project Financial Management:",
+                    "Conducting Feasibility Studies,",
+                    "Planning the Project Finance,",
+                    "Arranging the Financial Package,",
+                    "Controlling the Financial Package,",
+                    "Controlling Financial Risk,",
+                    "Options Models"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 2,
+                "section": null,
+                "title": "Structure of Project Finance\nManagement",
+                "text_content": [
+                    "Overview of project finance management\nstructure",
+                    "Key stakeholders (investors, project sponsors,\nlenders, etc.)",
+                    "Project finance team roles and responsibilities"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 3,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Project Sponsor(s): The project sponsor is typically a key stakeholder who initiates\nand champions the project. They are responsible for securing funding, providing\noverall project oversight, and ensuring alignment with organizational goals.",
+                    "Project Finance Team: This team consists of professionals with expertise in financial\nanalysis, risk assessment, legal compliance, and project management. Roles within\nthe team may include financial analysts, legal advisors, project managers, and other\nspecialists as needed.",
+                    "Financial Institutions and Investors: These entities provide funding for the project\nin the form of debt or equity financing. They play a crucial role in assessing project\nfeasibility, conducting due diligence, and determining the financial terms and\nconditions.",
+                    "Legal Advisors and Consultants: Legal advisors ensure compliance with regulatory\nrequirements, negotiate contracts and agreements, and help mitigate legal risks\nassociated with the project. Consultants may also be involved to provide specialized\nexpertise in areas such as financial modeling, risk management, or industry-specific\nknowledge.",
+                    "Project Development and Execution Teams: These teams are responsible for\nexecuting the project activities according to the project plan. They may include\nengineers, contractors, suppliers, and other stakeholders involved in the physical\nimplementation of the project."
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 4,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Financial Institutions and Advisors: Apart from providing funding, financial\ninstitutions and advisors offer expertise in financial structuring, risk management,\nand investment strategies. They help optimize the project's financial structure,\nassess financial risks, and provide guidance on financial decision-making.",
+                    "Risk Management Framework: Project finance management includes a robust risk\nmanagement framework to identify, assess, and mitigate potential risks that could\nimpact the project's financial viability. This may involve risk assessments,\ncontingency planning, insurance coverage, and risk mitigation strategies.",
+                    "Financial Reporting and Compliance: Adequate financial reporting and compliance\nmechanisms are essential components of project finance management. This\nincludes preparing financial statements, conducting audits, ensuring regulatory\ncompliance, and providing transparent and accurate financial information to\nstakeholders.",
+                    "Monitoring and Control Systems: Project finance management involves\nestablishing monitoring and control systems to track project progress, financial\nperformance, and adherence to budgetary and financial targets. This may include\nregular reporting, performance metrics, and variance analysis to identify and\naddress issues promptly.",
+                    "Exit Strategies: Project finance management also includes planning for exit\nstrategies, which outline how investors and stakeholders can exit the project once it\nreaches certain milestones or upon project completion. This may involve"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 5,
+                "section": null,
+                "title": "Process of Project Finance\nManagement",
+                "text_content": [
+                    "Financial management means a way by which\nappropriate expenses are been budgeted,\nplanned, reported, tracked, controlled, evaluated\nand approved.",
+                    "Steps involved in project finance management",
+                    "Project identification and evaluation",
+                    "Financial modeling and forecasting",
+                    "Funding acquisition",
+                    "Risk assessment and mitigation"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 6,
+                "section": null,
+                "title": null,
+                "text_content": [],
+                "image_descriptions": [
+                    "Project Manager/Project Administrator",
+                    "Project Manager/\nSponsor",
+                    "Financial Management Process",
+                    "Budget\nPlannning",
+                    "The project\nbudget has been\napproved by the\nProject Sponsor",
+                    "The Financial\nExpense form is\ncreated",
+                    "Document\nExpenses",
+                    "Incoming\nexpenses are\ndocumented",
+                    "Planned or\nunplanned\nexpense?",
+                    "If the expense was\nnot planned,\napproval is\nneeded from the\nProject Sponsor\nfor payment",
+                    "Track\nExpenses",
+                    "If planned,\nprocess for\npayment and\ntrack expenses on\nthe Financial\nExpense Form",
+                    "Update the\nProject Plan"
+                ]
+            },
+            {
+                "page_number": 7,
+                "section": null,
+                "title": null,
+                "text_content": [],
+                "image_descriptions": [
+                    "Project Manager/ Sponsor",
+                    "Finalize and\nClose Budget",
+                    "Project completed\non budget?",
+                    "Yes",
+                    "No",
+                    "Finalize all\nexpenses and\nclose budget.\nSubmit final\nexpense report to\nProject Sponsor\nfor signoff",
+                    "Notify the\nProject Sponsor\nof any exceptions"
+                ]
+            },
+            {
+                "page_number": 8,
+                "section": null,
+                "title": "Key Features of Project Finance\nManagement",
+                "text_content": [
+                    "Capital Intensive Financing Scheme",
+                    "Risk management strategies",
+                    "Cash flow analysis",
+                    "Capital structuring",
+                    "Financial reporting and compliance",
+                    "Multiple Participants Applicable",
+                    "Asset Ownership is Decided at the Completion of Project",
+                    "Zero or Limited Recourse Financing Solution",
+                    "Loan Repayment With Project Cash Flow",
+                    "Better Tax Treatment",
+                    "Sponsor Credit Has No Impact on Project"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 9,
+                "section": null,
+                "title": "Benefits and Advantages",
+                "text_content": [
+                    "Improved project feasibility assessment",
+                    "Enhanced financial control and transparency",
+                    "Mitigation of financial risks",
+                    "Access to diverse funding sources"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 10,
+                "section": null,
+                "title": "Financial Planning in Project Finance",
+                "text_content": [
+                    "Importance of financial planning",
+                    "Objectives and goals setting",
+                    "Budgeting and cost estimation"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 11,
+                "section": null,
+                "title": "Control and Financial Decision Making",
+                "text_content": [
+                    "Financial control mechanisms",
+                    "Decision-making frameworks",
+                    "Cost-benefit analysis"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 12,
+                "section": null,
+                "title": "Key Elements of Good Project Finance\nManagement",
+                "text_content": [
+                    "Robust financial modeling",
+                    "Risk assessment and mitigation strategies",
+                    "Effective communication and reporting",
+                    "Compliance with regulations"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 13,
+                "section": null,
+                "title": "Components of a Good Financial Plan",
+                "text_content": [
+                    "Income statement",
+                    "Balance sheet",
+                    "Cash flow statement",
+                    "Financial ratios analysis"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 14,
+                "section": null,
+                "title": "Sources of Funding",
+                "text_content": [
+                    "Equity financing",
+                    "Debt financing",
+                    "Public-private partnerships",
+                    "Grants and subsidies"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 15,
+                "section": null,
+                "title": "Equity Financing",
+                "text_content": [
+                    "Explanation of equity financing",
+                    "Types of equity investors (venture capitalists,\nangel investors, etc.)",
+                    "Pros and cons"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 16,
+                "section": null,
+                "title": "Debt Financing",
+                "text_content": [
+                    "Explanation of debt financing",
+                    "Types of debt instruments (loans, bonds, etc.)",
+                    "Pros and cons"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 17,
+                "section": null,
+                "title": "Public-Private Partnerships (PPPs)",
+                "text_content": [
+                    "Overview of PPPs",
+                    "Collaboration between public and private\nsectors",
+                    "Benefits and challenges"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 18,
+                "section": null,
+                "title": "Grants and Subsidies",
+                "text_content": [
+                    "Explanation of grants and subsidies",
+                    "Government and non-government sources",
+                    "Purpose and eligibility criteria"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 19,
+                "section": null,
+                "title": "Financial Modeling and Forecasting",
+                "text_content": [
+                    "Importance of financial modeling",
+                    "Assumptions and variables",
+                    "Scenario analysis"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 20,
+                "section": null,
+                "title": "Risk Assessment and Mitigation",
+                "text_content": [
+                    "Types of financial risks (market risk, credit risk,\noperational risk, etc.)",
+                    "Risk assessment methodologies",
+                    "Risk mitigation strategies"
+                ],
+                "image_descriptions": [
+                    "Financial\nRisk",
+                    "Market Risk",
+                    "Equity Risk",
+                    "Interest Rate",
+                    "Exchange Rates",
+                    "Commodity prices",
+                    "Credit Risk",
+                    "Customer Risk",
+                    "Supplier Risk",
+                    "Partner risk",
+                    "Financing/Liquidity",
+                    "Financing",
+                    "Market Liquidity",
+                    "Cash flow",
+                    "Operational Risk",
+                    "Fraud Risk",
+                    "People Risk",
+                    "Model Risk",
+                    "Legal Risk"
+                ]
+            },
+            {
+                "page_number": 21,
+                "section": null,
+                "title": "Capital Structuring",
+                "text_content": [
+                    "Importance of capital structure",
+                    "Debt-to-equity ratio",
+                    "Optimal capital structure considerations"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 22,
+                "section": null,
+                "title": "Financial Reporting and Compliance",
+                "text_content": [
+                    "Importance of financial reporting",
+                    "Compliance with accounting standards and\nregulations",
+                    "Transparency and accountability"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 23,
+                "section": null,
+                "title": "Conducting Feasibility Studies",
+                "text_content": [
+                    "What Is a Feasibility Study?",
+                    "A feasibility study is simply an assessment of\nthe practicality of a proposed project plan or\nmethod. This is done by analyzing technical,\neconomic, legal, operational and time\nfeasibility factors"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 24,
+                "section": null,
+                "title": "Project Feasibility Study",
+                "text_content": [
+                    "Key elements",
+                    "1. Technical Capability",
+                    "2. Budget",
+                    "3. Legality",
+                    "4. Risk",
+                    "5. Operational feasibility",
+                    "6. Time",
+                    "Types of Project Feasibility Study",
+                    "1. Technical Feasibility",
+                    "2. Economic Feasibility",
+                    "3. Legal feasibility",
+                    "4. Operational Feasibility",
+                    "5. Scheduling Feasibility"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 25,
+                "section": null,
+                "title": "Financial Planning in Project\nManagement",
+                "text_content": [
+                    "Preparing to create your financial plan :",
+                    "a. Understand the top-down approach to project\nbudgeting.",
+                    "b. Understand the bottom-up approach to project\nbudgeting.",
+                    "c. Choose the approach for you.",
+                    "d. Discuss the needs of the project with key\nstakeholders"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 26,
+                "section": null,
+                "title": "Financial Planning in Project\nManagement",
+                "text_content": [
+                    "Creating your Project Financial Plan",
+                    "a. Determine your core costs",
+                    "b. Consider non-core expenses",
+                    "c. Add a reserve to help reduce your risk.",
+                    "d. Create a table to record your costs."
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 27,
+                "section": null,
+                "title": "Options Models.",
+                "text_content": [
+                    "10 most common types of financial models:",
+                    "1.Three Statement Model",
+                    "2.Discounted Cash Flow (DCF) Model",
+                    "3.Merger Model (M&A)",
+                    "4.Initial Public Offering (IPO) Model",
+                    "5.Leveraged Buyout (LBO) Model",
+                    "6.Sum of the Parts Model",
+                    "7.Consolidation Model",
+                    "8.Budget Model",
+                    "9.Forecasting Model",
+                    "10.Option Pricing Model"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 28,
+                "section": null,
+                "title": "Options Models.",
+                "text_content": [
+                    "Three Statement Model: Projects income statement,\nbalance sheet, and cash flow statement to analyze a\ncompany's financial health.",
+                    "Discounted Cash Flow (DCF) Model: Estimates the value of\nan investment by discounting future cash flows back to\npresent value.",
+                    "Merger Model (M&A): Evaluates the financial impact of\nmergers and acquisitions on companies involved.",
+                    "Initial Public Offering (IPO) Model: Assesses the financial\nimplications of taking a company public through an IPO.",
+                    "Leveraged Buyout (LBO) Model: Analyzes the financial\nfeasibility of acquiring a company using significant debt."
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 29,
+                "section": null,
+                "title": "Options Models.",
+                "text_content": [
+                    "Sum of the Parts Model: Valuation technique that calculates the\ntotal value of a company by summing the individual parts or\ndivisions.",
+                    "Consolidation Model: Combines financial statements of subsidiary\ncompanies into a single set of financial statements for the parent\ncompany.",
+                    "Budget Model: Helps in planning and allocating financial resources\nbased on projected income and expenses.",
+                    "Forecasting Model: Predicts future financial performance based on\nhistorical data and assumptions about market trends.",
+                    "Option Pricing Model: Calculates the theoretical value of options\ncontracts based on variables such as underlying asset price,\nvolatility, and time to expiration."
+                ],
+                "image_descriptions": []
+            }
+        ]
+    },
+    {
+        "pages": [
+            {
+                "page_number": 1,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "PCCOE",
+                    "FACULTY ORIENTATION WORKSHOP ON TE (E&TC)",
+                    "REVISED SYLLABUS 2019C",
+                    "UNDER THE AEGIS OF BOARD OF STUDIES",
+                    "ELECTRONICS &",
+                    "TELECOMMUNICATIONS, SPPU PUNE",
+                    "SUBJECT: PROJECT MANAGEMENT [304193]",
+                    "ORGANIZED BY",
+                    "DEPARTMENT OF E&TC, PCCOE",
+                    "JANUARY 27-29, 2022",
+                    "UNIT 4: PROJECT SCHEDULING",
+                    "Prof. Ashwini S. Shinde",
+                    "Asst.Prof, E&Tc Dept, PCCOE"
+                ],
+                "image_descriptions": [
+                    "logo",
+                    "building"
+                ]
+            },
+            {
+                "page_number": 2,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "PIMPRI CHINCHWAD EDUCATION TRUST's",
+                    "PIMPRI CHINCHWAD COLLEGE OF ENGINEERING",
+                    "An Autonomous Institute Permanently Affiliated to SPPU, Pune",
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "PERT and CPM: Introduction. Development of",
+                    "Project Network.",
+                    "1Hr",
+                    "T2",
+                    "812",
+                    "R7",
+                    "1-25",
+                    "Time Estimation, Determination of the Critical Path,",
+                    "1Hr",
+                    "T2",
+                    "813-817",
+                    "R7",
+                    "26-40",
+                    "PERT Model, Measures of variability, CPM Model,",
+                    "1Hr",
+                    "T2",
+                    "818-819",
+                    "R7",
+                    "41-61,62-83",
+                    "Reference with one case",
+                    "Study",
+                    "Network Cost System",
+                    "1Hr",
+                    "T2",
+                    "820-826",
+                    "R7",
+                    "86-102",
+                    "Resources Considerations in Projects: Introduction,",
+                    "Resource Allocation,",
+                    "1Hr",
+                    "T2",
+                    "835-839",
+                    "6. Scheduling,",
+                    "1Hr",
+                    "T2",
+                    "839-846",
+                    "7. Project Cost Estimate and Budgets, Cost Forecasts.",
+                    "1Hr",
+                    "T2",
+                    "846-848"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 3,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "1. PERT and CPM: Introduction. Development of Project Network",
+                    "2. Time Estimation, Determination of the Critical Path,,",
+                    "3. PERT Model, Measures of variability, CPM Model",
+                    "4. Network Cost System",
+                    "5. Resources Considerations in Projects:",
+                    "Introduction, Resource Allocation, Scheduling,",
+                    "Project Cost Estimate and Budgets, Cost Forecasts."
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 4,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Resources Considerations in Projects",
+                    "Resources",
+                    "People",
+                    "Time",
+                    "Tools",
+                    "Capital",
+                    "Resource Allocation",
+                    "Process of assigning and managing assets in support of",
+                    "organization's strategic goal"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 5,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Resource Availability and/or Limits",
+                    "-",
+                    "-",
+                    "Due date, late penalties, early completion incentives",
+                    "Budget",
+                    "Activity Information",
+                    "- Identify all required activities",
+                    "-",
+                    "-",
+                    "Estimate the resources required (time) to complete each activity",
+                    "Immediate predecessor(s) to each activity needed to create",
+                    "interrelationships"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 6,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Project Cost Estimate and Budgets, Cost Forecasts.",
+                    "Project cost estimation and budget management are two of the most difficult",
+                    "challenges for project managers.",
+                    "Goal of estimation is to identify all the costs associated with the project in order",
+                    "to create an accurate budget and timeline.",
+                    "Project budget is built from the cost estimate and the schedule.",
+                    "Types of cost to be considered are as:",
+                    "Direct Cost",
+                    "Costs that are clearly chargeable to a specific work package.",
+                    "Labor, materials, equipment, and other",
+                    "Indirect Cost",
+                    "Overhead :Rent",
+                    "General /Administrative Cost: Employee benefits, salaries"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 7,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Project cost estimation methods",
+                    "Top-Down",
+                    "Organization repeats similar projects (such as specific equipment",
+                    "repairs or other regular initiatives), by comparing past projects and their",
+                    "associated costs to current project specs.",
+                    "Bottom-Up",
+                    "More Accurate",
+                    "In this method, project is broken down into smaller parts and according",
+                    "to activities cost estimates is calculated.",
+                    "Based on cost elements in the WBS (Work Breakdown Structure)"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 8,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Project cost estimation tools",
+                    "Earned Value Management (EVM)",
+                    "Cumulative Values",
+                    "Actual",
+                    "Costs",
+                    "(AC)",
+                    "Planned",
+                    "Value",
+                    "(PV)",
+                    "Earned",
+                    "Value",
+                    "(EV)",
+                    "Data Date",
+                    "Time",
+                    "Budget",
+                    "at",
+                    "Completion",
+                    "(BAC)",
+                    "To Complete Performance Index (TCPI)",
+                    "Status Date",
+                    "TCPI",
+                    "(BAC)",
+                    "Baseline Plan",
+                    "TCPI",
+                    "(EAC)",
+                    "Cumulative",
+                    "CPI",
+                    "Formula:",
+                    "Work Remaining (BAC-EV)",
+                    "Funds Remaining (BAC-AC) or (EAC-AC)",
+                    "= TCPI"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 9,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Project cost estimation tools",
+                    "Terminologies Used:",
+                    "Budget at Completion",
+                    "(BAC)",
+                    "BAC = Sum of all planned",
+                    "budgets",
+                    "Earned Value (EV)",
+                    "EV = % work complete \u00d7",
+                    "budget",
+                    "Actual Cost (AC)",
+                    "AC = Amount spent on",
+                    "budget",
+                    "Estimate at Completion",
+                    "EAC = AC + BAC \u2013 EV",
+                    "(EAC)",
+                    "Cost planned and approved for the project to",
+                    "complete its work",
+                    "Amount of work performed by the time of calculating",
+                    "the TCPI",
+                    "The cost incurred by the time of the TCPI",
+                    "computation",
+                    "The expected total cost of completing all work",
+                    "Source: https://project-management.info/what-is-the-to-complete-performance-index-tcpi-definition-formula-calculator/"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 10,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Project cost estimation tools",
+                    "Example of TCPI",
+                    "You are working on a project to be completed in 24 months. The BAC of the project is 200,000 USD.",
+                    "12 months have passed, you have spent 110,000 USD, and 60% of the work has been completed.",
+                    "Find the To Complete Performance Index (TCPI) for this project.",
+                    "Budget at Completion (BAC) = 200,000 USD",
+                    "Actual Cost (AC) =110,000 USD",
+                    "Planned Value (PV) = 50% of 200,000",
+                    "= 100,000 USD",
+                    "Earned Value (EV) = 60% of 200,000",
+                    "= 120,000 USD",
+                    "Cost Performance Index (CPI) = EV / AC",
+                    "= 120,000 / 110,000",
+                    "= 1.1",
+                    "Since the Cost Performance Index is 1.1, which is greater than one, you are under budget. Therefore, you will use the TCPI formula based on the BAC in this",
+                    "case.",
+                    "TCPI = (BAC \u2013 EV) / (BAC \u2013 AC)",
+                    "= (200,000 \u2013 120,000) / (200,000 \u2013 110,000)",
+                    "= 80,000 / 90,000",
+                    "= 0.89",
+                    "This means that you can continue with a Cost Performance Index of 0.89 to complete the project."
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 11,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Case Study 1",
+                    "Project Cost Estimation",
+                    "Demolition: $2000- Week 1",
+                    "Installing sheet rocks: $2000- Week 2",
+                    "Tiling:\t$3000- Week 3",
+                    "Installing fixtures(lighting): $2000- Week 4",
+                    "Painting : $500- Week 5",
+                    "Contingency fund: $2000",
+                    "Total estimate: $11,500",
+                    "Budget",
+                    "Week 1- $2000",
+                    "Week 2- $2000",
+                    "Week 3- $3000",
+                    "Week 4- $2000",
+                    "Week 5-$500",
+                    "Total budget amount- $12500"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 12,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Case Study 2: A Case Study Of Indira Gandhi International Delhi Airport",
+                    "Exhibit 21A\tProject Cost Break-up and Sources of Finance:",
+                    "Basis of Financial Closure",
+                    "Cost Break-up",
+                    "Sources of Finance",
+                    "Description",
+                    "Amount",
+                    "(* crore)",
+                    "Sources",
+                    "Amount",
+                    "(* crore)",
+                    "T1, T2 and Initial CWIP",
+                    "762",
+                    "Equity",
+                    "1,250",
+                    "Runway / Taxiway / Apron / Lighting",
+                    "1,765",
+                    "Debt Domestic",
+                    "3,650",
+                    "Terminal 3 and Associated Building",
+                    "4,669",
+                    "ECB*",
+                    "1,336",
+                    "Preliminary, Preoperative and IDC",
+                    "1,279",
+                    "Lease Deposits / Trade Deposits",
+                    "912",
+                    "Delhi Metro",
+                    "350",
+                    "Development Fee (DF) - Funding",
+                    "1,827",
+                    "Gap",
+                    "Upfront Payment to AAl",
+                    "150",
+                    "TOTAL",
+                    "8,975",
+                    "TOTAL",
+                    "8,975",
+                    "*External Commercial Borrowing"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 13,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Case Study 2: A Case Study Of Indira Gandhi International Delhi Airport",
+                    "Exhibit 21B\tIncrease in Project Cost Estimate and its",
+                    "Financing",
+                    "Particulars",
+                    "(Figure in\tcrores)",
+                    "Amount",
+                    "Project Cost Revised",
+                    "12718",
+                    "Initial",
+                    "8975",
+                    "Increase in Project Cost",
+                    "3743",
+                    "Sources to Finance Increase",
+                    "Additional Development Fee (DF)",
+                    "1654",
+                    "Other Sources:",
+                    "Additional Equity Contribution",
+                    "1250",
+                    "Lease Deposit",
+                    "559",
+                    "ECB",
+                    "280",
+                    "2089",
+                    "Total Additional Means of Finance",
+                    "3743"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 14,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "Case Study 2: A Case Study Of Indira Gandhi International Delhi Airport",
+                    "KPMG Comments",
+                    "In May 2010, the Government appointed Engineers India Limited (EIL) and KPMG",
+                    "as auditors to audit the project cost.",
+                    "The important observations of KPMG are described below.",
+                    "\u25a0 The key reason behind the increase in the project cost estimate was the",
+                    "design-build approach adopted by DIAL, and also due to unforeseen scope",
+                    "additions (Delhi Metro, ATC tower etc).",
+                    "On the issue of risk mitigation, steps undertaken by DIAL to prevent cost",
+                    "escalation were not entirely compliant with international best practices",
+                    "and at no stage was the project cost capped and the risk of escalation",
+                    "shared with the Engineering Procurement and Commissioning (EPC)",
+                    "contractor.",
+                    "The contract terms with the EPC contractor did not have any incentives",
+                    "and penalties to enable better control on cost and the PMC did not look at",
+                    "the cost escalation aspect with reference to initial estimate of project",
+                    "costs.",
+                    "The Gross Floor Area (GFA) exceeded the mandated one and no prior",
+                    "approval was taken from the DIAL Board for the same. Further, the GFA",
+                    "per Peak Hour Passenger (PHP) of T3 was higher than most leading",
+                    "airports in the Asia Pacific region.",
+                    "Source: T2:Chandra, P., \u201cProjects\u201d, Tata McGraw-Hill Education, 8 th Edition, 2009 Page No.779",
+                    "4"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            },
+            {
+                "page_number": 15,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Thank You !!!"
+                ],
+                "image_descriptions": [
+                    "logo"
+                ]
+            }
+        ]
+    },
+    {
+        "pages": [
+            {
+                "page_number": 1,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "PROJECT",
+                    "MANAGEGEMENT",
+                    "Project Scheduling"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 2,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV- Project Scheduling",
+                    "\u2022\tPERT and CPM: Introduction. Development of Project Network",
+                    "\u2022\tTime Estimation, Determination of the Critical Path,,",
+                    "PERT Model, Measures of variability, CPM Model",
+                    "\u2022\tNetwork Cost System",
+                    "\u2022\tResources Considerations in Projects: Introduction, Resource Allocation",
+                    "\u2022\tScheduling,",
+                    "\u2022\tProject Cost Estimate and Budgets, Cost Forecasts.",
+                    "CO4: Apply the project scheduling techniques to create a Project",
+                    "Schedule Plan and accordingly utilize the",
+                    "resources to meet the project deadline."
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 3,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Learning Objectives",
+                    "\u2022\tDiagram networks of project activities",
+                    "\u2022\tEstimate the completion time of a project",
+                    "\u2022\tCompute the probability of completing a project by a specific time",
+                    "\u2022\tDetermine how to reduce the length of a project effectively",
+                    "\u2022\tDescribe the critical chain approach to project management"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 4,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Unit IV: Project Scheduling (07 Hrs.)",
+                    "T2\t812",
+                    "1. PERT and CPM: Introduction. Development of\t1Hr",
+                    "Project Network.\tR7\t1-25",
+                    "T2\t813-817",
+                    "2.\tTime Estimation, Determination of the Critical Path,\t1Hr",
+                    "R7\t26-40",
+                    "T2\t818-819",
+                    "3.\tPERT Model, Measures of variability, CPM Model,\t1Hr\tR7\t41-61,62-83 Reference with one case",
+                    "Study",
+                    "T2\t820-826",
+                    "4.\tNetwork Cost System\t1Hr",
+                    "R7\t86-102",
+                    "5. Resources Considerations in Projects: Introduction,\t1Hr\tT2\t835-839",
+                    "Resource Allocation,",
+                    "6. Scheduling,\t1Hr\tT2\t839-846",
+                    "7. Project Cost Estimate and Budgets, Cost Forecasts.\t1Hr\tT2\t846-848"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 5,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Program Evaluation Review Technique: PERT",
+                    "Critical Path Method : CPM",
+                    "\u2022\tProgram Evaluation & Review Technique (PERT):",
+                    "\u039f\tDeveloped to manage the Polaris missile project",
+                    "\u039f\tMany tasks pushed the boundaries of science & engineering",
+                    "(tasks' duration = probabilistic)",
+                    "\u2022\tCritical Path Method (CPM):",
+                    "\u039f\tDeveloped to coordinate maintenance projects in the chemical",
+                    "industry",
+                    "\u039f\tA complex undertaking, but individual tasks are routine (tasks'",
+                    "duration = deterministic)"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 6,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Both PERT and CPM",
+                    "\u2022\tGraphically display the precedence relationships & sequence of",
+                    "activities",
+                    "\u2022\tEstimate the project's duration",
+                    "\u2022\tIdentify critical activities that cannot be delayed without delaying",
+                    "the project",
+                    "Estimate the amount of slack associated with non-critical activities"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 7,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Network Diagrams",
+                    "\u2022\tActivity-on-Node (AON):",
+                    "\u039f\tUses nodes to represent the activity",
+                    "\u039f\tUses arrows to represent precedence relationships",
+                    "A\tB\tC",
+                    "B",
+                    "A\tC",
+                    "a. Activity A precedes activity B,\tb. Activity A must be completed",
+                    "which precedes activity C\tbefore activities B and C can",
+                    "begin.",
+                    "A\tC",
+                    "B\tD",
+                    "B\tA\tD",
+                    "C",
+                    "c. Activities A and B must both be\td. Activities B and C can begin once",
+                    "completed before activity C or D\tactivity A has been completed; activity",
+                    "can begin.\tD cannot begin until both B and C are",
+                    "completed."
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 8,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Step 1-Define the Project: Finolex Cables is bringing a new product",
+                    "on line to be manufactured in their current facility in existing space.",
+                    "The owners have identified 11 activities and their precedence",
+                    "relationships. Develop an Activity On Node for the project.",
+                    "Activity\tDescription\tImmediate\tDuration",
+                    "Predecessor\t(weeks)",
+                    "A\tDevelop product specifications\tNone\t4",
+                    "B\tDesign manufacturing process\tA\t6",
+                    "C\tSource & purchase materials\tA\t3",
+                    "D\tSource & purchase tooling & equipment\tB\t6",
+                    "E\tReceive & install tooling & equipment\tD\t14",
+                    "F\tReceive materials\tC\t5",
+                    "G\tPilot production run\tE & F\t2",
+                    "H\tEvaluate product design\tG\t2",
+                    "Evaluate process performance\tG\t3",
+                    "J\tWrite documentation report\tH & I\t4",
+                    "K\tTransition to manufacturing\tJ\t2"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 9,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Step 2- Diagram the Network for Cables By Us",
+                    "A\tB\tD\tE\tH",
+                    "C\tF\tG\tJ\tK"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 10,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Step 3 (a)- Add Deterministic Time Estimates and Connected Paths",
+                    "Connected paths",
+                    "1. A, B, D, E, G, H, J, K",
+                    "2. A, B, D, E, G, I, J, K",
+                    "3. A, C, F, G, H, J, K",
+                    "4. A, C, F, G, I, J, K",
+                    "A(4)",
+                    "B(6) D(6) E(14)",
+                    "H(2)",
+                    "G(2)",
+                    "J(4)\tK(2)",
+                    "C(3) F(5)",
+                    "1(3)"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 11,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "\u2022\t",
+                    "Step 3 (a) (Con't): Calculate the Project Completion Times",
+                    "Paths\tPath duration",
+                    "ABDEGHJK\t40",
+                    "ABDEGIJK\t41",
+                    "ACFGHJK\t22",
+                    "ACFGIJK\t23",
+                    "The longest path (ABDEGIJK) limits the project's duration",
+                    "(project cannot finish in less time than its longest path)",
+                    "ABDEGIJK is the project's critical path"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 12,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Some Network Definitions",
+                    "\u2022\tAll activities on the critical path have zero slack",
+                    "\u2022\tSlack defines how long non-critical activities can be delayed",
+                    "without delaying the project",
+                    "\u2022\tSlack = the activity's late finish minus its early finish (or its late",
+                    "start minus its early start)",
+                    "\u2022\tEarliest Start (ES) = the earliest finish of the immediately",
+                    "preceding activity",
+                    "\u2022\tEarliest Finish (EF) = is the ES plus the activity time",
+                    "\u2022\tLatest Start (LS) and Latest Finish (LF) = the latest an activity can",
+                    "start (LS) or finish (LF) without delaying the project completion"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 13,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "ES, EF Network",
+                    "ES = 4\tES = 10\tES = 16\tES = 32",
+                    "EF = 10\tEF = 16\tEF = 30\tEF = 34",
+                    "B(6)\tD(6) \u2192 E(14)\tH(2)",
+                    "A(4)",
+                    "G(2)",
+                    "J(4)\tK(2)",
+                    "ES = 0\tES = 30\tES = 35\tES = 39",
+                    "EF = 4\tEF = 32\tEF = 39\tEF = 41",
+                    "C(3)\tF(5)",
+                    "1(3)",
+                    "ES = 4\tES = 7\tES = 32",
+                    "EF = 7\tEF = 12\tEF = 35"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 14,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "LS, LF Network",
+                    "ES = 4\tES = 10\tES = 16\tES = 32",
+                    "EF = 10\tEF = 16\tEF = 30\tEF = 34",
+                    "LS = 4\tLS = 10\tLS = 16\tLS = 33",
+                    "LF = 10\tLF = 16\tLF = 30\tLF = 35",
+                    "B(6)\tD(6)\tE(14)\tH(2)",
+                    "ES = 0",
+                    "EF = 4\tA(4)",
+                    "LS = 0",
+                    "LF = 4",
+                    "G(2)",
+                    "J(4)\tK(2)",
+                    "ES = 35\tES = 39",
+                    "ES = 30\tEF = 39\tEF = 41",
+                    "C(3)\tF(5)\tEF = 32\t1(3)\tLS = 35\tLS = 39",
+                    "LS = 30\tLF = 39\tLF = 41",
+                    "LF = 32 ES = 32",
+                    "ES = 4\tES = 7\tEF = 35",
+                    "EF = 7\tEF = 12\tLS = 32",
+                    "LS = 22\tLS = 25\tLF = 35",
+                    "LF\t= 25\tLF = 30",
+                    "Critical path is",
+                    "A-B-D-E-G-I-J-K"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 15,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Calculating Slack",
+                    "Late\tEarly\tSlack",
+                    "Activity",
+                    "Finish\tFinish\t(weeks)",
+                    "A\t4\t4\t0",
+                    "B\t10\t10\t0",
+                    "C\t25\t7\t18",
+                    "D\t16\t16\t0",
+                    "E\t30\t30\t0",
+                    "F\t30\t12\t18",
+                    "G\t32\t32\t0",
+                    "H\t35\t34\t1",
+                    "I\t35\t35\t0",
+                    "J\t39\t39\t0",
+                    "K\t41\t41\t0"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 16,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Revisiting Using Probabilistic Time Estimates",
+                    "Optimistic\tMost likely\tPessimistic",
+                    "Activity\tDescription",
+                    "time\ttime\ttime",
+                    "A\tDevelop product specifications\t2\t4\t6",
+                    "B\tDesign manufacturing process\t3\t7\t10",
+                    "C\tSource & purchase materials\t2\t3\t5",
+                    "D\tSource & purchase tooling & equipment\t4\t7\t9",
+                    "E\tReceive & install tooling & equipment\t12\t16\t20",
+                    "F\tReceive materials\t2\t5\t8",
+                    "G\tPilot production run\t2\t2\t2",
+                    "H\tEvaluate product design\t2\t3\t4",
+                    "|\tEvaluate process performance\t2\t3\t5",
+                    "J\tWrite documentation report\t2\t4\t6",
+                    "K\tTransition to manufacturing\t2\t2\t2"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 17,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Using Beta Probability Distribution to Calculate",
+                    "Expected Time Durations",
+                    "\u2022\tA typical beta distribution is shown below, note that it has definite end points",
+                    "\u2022\tThe expected time for finishing each activity is a weighted average",
+                    "ET",
+                    "Activity Optimistic\tMost likely\tPessimistic",
+                    "start completion\tcompletion\tcompletion",
+                    "time\ttime\ttime",
+                    "Exp. time =\toptimistic + 4(most likely) + pessimistic",
+                    "6"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 18,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Project Cost Estimate and Budgets, Cost Forecasts",
+                    "Case study :-SEAGATE TECHNOLOGY",
+                    "Seagate Technology is a multibillion-dollar manufacturer of storage devices for PCs,",
+                    "networks, and other media requiring permanent, safe, accessible information.",
+                    "the company's manufacturing and design facilities exist across the United States and",
+                    "around the world. The company began operations in 1979, primarily making disc",
+                    "drives. While the revenues today are still primarily from disc storage devices, the",
+                    "storage hosts have expanded from PCs to other devices such as video recorders,",
+                    "televisions, and games. Seagate was one of",
+                    "the pioneers in implementing the Critical Chain methodology. Speed to market, with",
+                    "new technology, is very important in Seagate's strategy. Generally, the first supplier",
+                    "to deliver an innovative new product to a market enjoys the combination of high",
+                    "margins and high volume, until the competitors catch up. To meet the competitive",
+                    "challenges to Seagate's market leadership position, Brent King, executive director,",
+                    "1000"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 19,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Resources Considerations in Projects",
+                    "Resources",
+                    "\u039f\tPeople",
+                    "\u039f\tTime",
+                    "\u039f\tTools",
+                    "\u039f\tCapital",
+                    "Resource Allocation",
+                    "\u039f\tProcess of assigning and managing assets in support of organization's strategic goal",
+                    "Resource Availability and/or Limits",
+                    "\u039f\tDue date, late penalties, early completion incentives",
+                    "\u039f\tBudget"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 20,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Project Cost Estimate and Budgets, Cost Forecasts.",
+                    "\u2022\tProject cost estimation and budget management are two of the most difficult",
+                    "challenges for project managers.",
+                    "\u2022\tGoal of estimation is to identify all the costs associated with the project in",
+                    "order to create an accurate budget and timeline.",
+                    "\u2022\tProject budget is built from the cost estimate and the schedule.",
+                    "\u2022\tTypes of cost to be considered are as:",
+                    "\u039f\tDirect Cost",
+                    "\u2610 Costs that are clearly chargeable to a specific work package.",
+                    "Labor, materials, equipment, and other",
+                    "Indirect Cost",
+                    "Overhead :Rent",
+                    "General /Administrative Cost : Employee benefits, salaries"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 21,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Project cost estimation methods",
+                    "Top-Down",
+                    "\u2022\tOrganization repeats similar projects (such as specific equipment repairs or",
+                    "other regular initiatives), by comparing past projects and their associated",
+                    "costs to current project specs.",
+                    "Bottom-Up",
+                    "\u2022\tMore Accurate",
+                    "\u2022\tIn this method, project is broken down into smaller parts and according to",
+                    "activities cost estimates is calculated.",
+                    "Based on cost elements in the WBS (Work Breakdown Structure)"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 22,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Project cost Estimation Tools: Earned Value Management (EVM)",
+                    "Cumulative Values",
+                    "Actual\tPlanned\tBudget",
+                    "Costs\tValue\tat",
+                    "(AC)\t(PV)\tCompletion",
+                    "(BAC)",
+                    "Earned",
+                    "Value",
+                    "(EV)",
+                    "Data Date",
+                    "Time"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 23,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Project cost estimation Tools: To Complete Performance Index (TCPI)",
+                    "+\tStatus Date",
+                    "TCPI",
+                    "(BAC)",
+                    "1.00\tBaseline Plan",
+                    "TCPI",
+                    "(EAC)",
+                    "Cumulative",
+                    "CPI",
+                    "Formula:",
+                    "Work Remaining (BAC-EV)\t\t= TCPI",
+                    "Funds Remaining (BAC-AC) or (EAC-AC)"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 24,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Project cost Estimation Tools",
+                    "Terminologies Used:",
+                    "Budget at Completion\tBAC = Sum of all planned\tCost planned and approved for the project to",
+                    "(BAC)\tbudgets\tcomplete its work",
+                    "Earned Value (EV)\tEV = % work complete \u00d7\tAmount of work performed by the time of calculating",
+                    "budget\tthe TCPI",
+                    "Actual Cost (AC)\tAC = Amount spent on\tThe cost incurred by the time of the TCPI",
+                    "budget\tcomputation",
+                    "Estimate at Completion\tEAC = AC + BAC \u2013 EV\tThe expected total cost of completing all work",
+                    "(EAC)",
+                    "Source: https://project-management.info/what-is-the-to-complete-performance-index-tcpi-definition-formula-calculator/"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 25,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "Case Study",
+                    "Pune Metro DPR:",
+                    "\u039f\tPage 325",
+                    "\u039f\tPage 326",
+                    "Table 0.10 - Capital Cost Estimate of PCMC - Swargate (Corridor I)",
+                    "(November 2015 Price Level)",
+                    "Corridor I (PCMC-SEWARGATE SECTION)\tNov 2015 Prices",
+                    "Total length = 16.589 km, UG= 5.019 km (TBM = 4.114 km, C&C = 0.905 km), Elv = 11.570 km",
+                    "Total Station = 15 nos, UG = 6, Elv =9",
+                    "S. No.\tItem\tUnit Rate\tQty.\tAmount",
+                    "(Rs. in Cr.)",
+                    "Without taxes",
+                    "1.0\tLand\t\t\t503.94",
+                    "1.1\tR & R incl. Hutments etc.\tR Km\t3.55\t17.589\t62.40",
+                    "Sub Total (1)\t\t\t\t566.34",
+                    "2.0\tAlignment and Formation",
+                    "Underground section by T.B.M",
+                    "2.1\texcluding station length (260m\tR. Km.\t150.00\t3.074\t461.10",
+                    "each)",
+                    "2.2\tUnderground section by Cut &\t\t",
+                    "Cover excluding Station length\tR. Km.\t100.00\t0.385\t38.50",
+                    "(260m each)",
+                    "2.3\tElevated section including\t\t",
+                    "station length\tR. Km.\t33.00\t11.570\t381.81",
+                    "2.4\tEntry to depot at grade\tR. Km.\t19.80\t1.000\t19.80",
+                    "Sub Total (2)\t\t\t\t901.21",
+                    "3.0\tStation Buildings",
+                    "3.1\tUnderground Station(260 m\t",
+                    "length) incl. EM works, lifts,\tEach",
+                    "escalators, VAC etc.",
+                    "a\tUnderground Station- Civil\tEach\t150.00\t6.000\t900.00",
+                    "works",
+                    "b\tUnderground Station- EM works\tEach\t60.00\t6.000\t360.00",
+                    "etc.",
+                    "3.2\tElevated stations\tEach",
+                    "a\tType (A) way side- civil works\tEach\t26.00\t5.000\t130.00",
+                    "b\tType (A) way side- EM works\tEach\t11.81\t5.000\t59.05",
+                    "etc"
+                ],
+                "image_descriptions": []
+            },
+            {
+                "page_number": 26,
+                "section": null,
+                "title": null,
+                "text_content": [
+                    "c\tType (B) Way side with\tEach\t25.89\t2.000\t51.78",
+                    "signalling-civil works",
+                    "d\tType (B) Way side with\tEach\t11.81\t2.000\t23.62",
+                    "signalling-EM works etc",
+                    "e\tType (C), Terminal station-civil\tEach\t29.01\t2.000\t58.02",
+                    "works",
+                    "f\tType (c), Terminal station -EM\tEach\t11.81\t2.000\t23.62",
+                    "works",
+                    "3.3\tMetro Bhawan& OCC bldg.",
+                    "a\tMetro Bhawan& OCC bldg.-civil\tLS\t\t\t56.25",
+                    "works",
+                    "b\tMetro Bhawan& OCC bldg.-EM\tLS\t\t\t18.75",
+                    "works etc",
+                    "Sub Total (3)\t\t\t\t1681.09",
+                    "4.0\tDepot",
+                    "a\tCivil works\tLS\t\t\t100.00",
+                    "b\tEM works etc\tLS\t\t\t50.00",
+                    "Sub total (4)\t\t\t\t150.00",
+                    "5.0\tP-Way",
+                    "5.1\tBallastless track for elevated &\tR. Km.\t7.85\t16.589\t130.22",
+                    "underground Section",
+                    "5.2\tBallasted track for at grade\tR. Km.\t3.93\t5.000\t19.63",
+                    "alignment in depots",
+                    "Sub total (5)\t\t\t\t149.85",
+                    "6.0\tTraction & power supply incl.",
+                    "OHE, ASS etc. Excl. lifts &",
+                    "Escalators",
+                    "6.1\tUG Section\tR.Km.\t15.39\t5.019\t77.25",
+                    "6.1\tElevated & at grade section\tR.Km.\t10.34\t12.570\t129.98",
+                    "Sub total (6)\t\t\t\t207.23",
+                    "7.0\tSignalling and Telecom.",
+                    "7.1\tSig. & Telecom.\tR. Km.\t15.73\t17.589\t276.63",
+                    "7.2\tAutomatic fare collection\tStn.",
+                    "a)\tUnderground section\tEach\t5.41\t6.000\t32.45",
+                    "b)\tElevated stations\tEach\t5.41\t9.000\t48.67",
+                    "Sub Total (7)\t\t\t\t357.75",
+                    "8.0\tMisc. Utilities, roadworks,",
+                    "other civil works such as",
+                    "median stn.signages",
+                    "Environmental protection\tR. Km.",
+                    "a\tCivil works+EM works\tR. Km.\t7.18\t16.589\t119.15",
+                    "Sub Total (9)\t\t\t\t119.15",
+                    "9.0\tRolling Stock\tEach\t10.60\t76.000\t805.62",
+                    "Sub Total (10)\t\t\t\t805.62",
+                    "10.0\tCapital expenditure on\tLS",
+                    "security",
+                    "a\tCivil works\tLS\t\t\t12.00",
+                    "b\tEM works etc\tLS\t\t\t8.00",
+                    "Sub Tatal (44)\t\t\t\t",
+                    "11.0\tTotal of all items except Land\t\t\t\t4391.90",
+                    "12.0\tGeneral Charges incl. Design\t\t\t\t",
+                    "charges @ 5% on all items\t\t\t\t",
+                    "except land\t\t\t\t219.60",
+                    "13.0\tTotal of all items including G.\t\t\t\t",
+                    "Charges except land\t\t\t\t4611.50",
+                    "14.0\tContingencies @ 3%\t\t\t\t138.34",
+                    "15.0\tGross Total\t\t\t\t4749.84",
+                    "Cost without land\t=\t4750",
+                    "Cost with land\t=\t5333"
+                ],
+                "image_descriptions": []
+            }
+        ]
+    }
+]

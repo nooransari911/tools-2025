@@ -2,15 +2,18 @@ import sys
 import os, json
 import asyncio
 import typing_extensions as typing
-from pydantic import BaseModel # Added for schema definition
-from typing import Optional, List # Added for strong typing in schema
-from data.PDF_page_JSON_schema import PdfDocument
-
+from pydantic import BaseModel, Field
+from typing import Optional, List, Dict, Any, Union, Type # Ensure Type is imported
+import data.generic_JSON_response_schema
+import data.PDF_page_JSON_schema
+import src.utils.gemini_utils as gem_utils
 
 
 import logging
 import concurrent.futures
 from multiprocessing import cpu_count, Manager
+import argparse
+
 # import google.generativeai as genai
 from google.genai import types
 from google import genai
@@ -27,16 +30,6 @@ import pathlib
 
 
 load_dotenv()
-SYS_INS = ""
-MODEL_NAME = "GEMINI_20_FL"
-PRO_MODEL_NAME = "GEMINI_20_PRO"
-FLASH_MODEL_NAME = "GEMINI_20_FL"
-API_KEY_PAID_STR = "API_KEY_PAID"
-API_KEY_FREE_STR = "API_KEY_FREE"
-OUTPUT_JSON_PATH = "OUTPUT_JSON_PATH"
-
-
-
 # Set up logging with timestamp in the desired format (yyyy-mm-dd 24 hr)
 logging.basicConfig(
     level=logging.DEBUG,
@@ -55,128 +48,15 @@ def log_entry_exit(func):
     """Decorator to log function entry and exit with function name."""
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        # Get the logger for the module where the function is defined
         func_logger = logging.getLogger(func.__module__)
-
-        # Log function entry with function name
         func_logger.debug(f"Entering {func.__name__}")
-
         try:
             result = func(*args, **kwargs)
             return result
         finally:
             # Log function exit with function name
             func_logger.debug(f"Exiting {func.__name__}")
-
     return wrapper
-
-
-
-def load_system_instructions():
-    global SYS_INS
-    # Retrieve the file path from the environment variable
-    instructions_file_path = os.getenv('SYSTEM_INSTRUCTIONS_PATH')
-
-    if instructions_file_path:
-        try:
-            # Open and read the system instructions file
-            with open(instructions_file_path, 'r') as file:
-                SYS_INS = file.read()
-
-            # print ("sys_ins L70: ", sys_ins, "\n")
-        except Exception as e:
-            print(f"Error reading system instructions file: {e}")
-    else:
-        print("Environment variable 'SYSTEM_INSTRUCTIONS_PATH' not set.")
-
-
-
-def load_output_file_version_json ():
-    global OUTPUT_JSON_PATH
-    output_json_path = os.environ.get (OUTPUT_JSON_PATH)
-    try:
-        with open(output_json_path, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return None
-
-
-
-def save_output_file_version_json ():
-    global OUTPUT_JSON_PATH
-    output_json_path = os.environ.get (OUTPUT_JSON_PATH)
-    old_data = load_output_file_version_json ()
-    new_data = {}
-    
-
-    if not old_data:
-        old_data = {
-            "version": 0,
-            "filename": "./output files/output response v0.json"
-        }
-    
-    new_data ["version"]   = old_data ["version"]   +  1
-    new_data ["filepath"]  = f"./output files/output response v{new_data ["version"]}.json"
-    
-    with open(output_json_path, 'w') as f:
-        json.dump(
-            obj=new_data, 
-            fp=f, 
-            indent=4
-        )
-
-    return new_data ["filepath"]
-
-
-
-
-def reset_output_file_version ():
-    global OUTPUT_JSON_PATH
-    output_json_path = os.environ.get (OUTPUT_JSON_PATH)
-    old_data = {
-        "version": 0,
-        "filename": "./output files/output response v0.json"
-    }
-
-
-    with open(output_json_path, 'w') as f:
-        json.dump(old_data, f, indent=4)
-
-
-
-
-def configure_genai():
-    global SYS_INS, PRO_MODEL_NAME, FLASH_MODEL_NAME, API_KEY_PAID_STR, API_KEY_FREE_STR
-
-    if len(sys.argv) < 3:
-        raise ValueError("Model type (pro/flash) and API key type (free/paid) must be provided.")
-
-    SYS_INS = load_system_instructions ()
-
-    model_type = sys.argv[1].lower()
-    api_key_type = sys.argv[2].lower()
-
-    if model_type == "pro":
-        model_name = os.environ.get(PRO_MODEL_NAME)
-    elif model_type == "flash":
-        model_name = os.environ.get(FLASH_MODEL_NAME)
-    else:
-        raise ValueError("Invalid model_type. Must be 'pro' or 'flash'.")
-
-    if api_key_type == "free":
-        api_key = os.environ.get(API_KEY_FREE_STR)
-        if not api_key:
-             raise ValueError(f"The {API_KEY_FREE_STR} environment variable is not set.")
-
-    elif api_key_type == "paid":
-        api_key = os.environ.get(API_KEY_PAID_STR)
-        if not api_key:
-            raise ValueError(f"The {API_KEY_PAID_STR} environment variable is not set.")
-    else:
-        raise ValueError("Invalid api_key_type. Must be 'free' or 'paid'.")
-
-    client = genai.Client(api_key=api_key)
-    return client, model_name
 
 
 
@@ -184,11 +64,10 @@ def configure_genai():
 @log_entry_exit
 def gen_response(prompts, record):
     """Generate a response from the Gemini API using multiple prompts."""
-    # logger.debug("Entering gen_response")
-    global SYS_INS
+    # print (f"{gem_utils.SYS_INS [:40]}")
     gemini_response = None
     RESPONSES = []
-    client, model_name = configure_genai()  # Initialize the model once
+    client, model_name = gem_utils.configure_genai ()
     
     if not prompts:
         logger.error("No prompts provided.")
@@ -207,11 +86,12 @@ def gen_response(prompts, record):
                     model=model_name,
                     contents=record,
                     config=types.GenerateContentConfig(
-                        system_instruction=SYS_INS,
+                        system_instruction=gem_utils.SYS_INS,
                         response_mime_type="application/json",
-                        response_schema = PdfDocument
+                        response_schema = gem_utils.SELECTED_SCHEMA_CLASS
                     ) # Pass system instruction via config
                 )
+                logger.info (gemini_response.usage_metadata)
             else:
                 print ("empty record!!")
 
@@ -252,10 +132,6 @@ def collect_results_from_queue(results_queue):
     while not results_queue.empty():
         response = results_queue.get()
         all_responses.append(response)
-
-    # print (len (all_responses))
-    # for res in all_responses:
-    #     print (res [:2000], "\n\n\n\n")
     return all_responses
 
 
@@ -277,15 +153,8 @@ def parallelize_processing(records, prompts):
             for record in records:
                 futures.append(executor.submit(process_record, record, prompts, results_queue))
 
-
             # Wait for all futures to complete
             concurrent.futures.wait(futures)
-
-
-
-        
-
-
             # Collecting results from the queue as the workers complete
             all_responses = []
             for future in concurrent.futures.as_completed(futures):
@@ -317,7 +186,7 @@ def files_content() -> list:
             file_path = os.path.join(md_directory, f)
 
             try:  # Inner try-except for individual file processing
-                if f.endswith((".txt", ".md")):
+                if f.endswith((".txt", ".md", ".json")):
                     with open(file_path, 'r', encoding="utf-8") as file:
                         records.append(file.read())
                 elif f.endswith(".pdf"):
@@ -363,12 +232,9 @@ def files_content() -> list:
         sys.exit(1)  # Exit for unexpected errors at the directory level
 
 
-
-
 def lines_content ():
     # First argument is the file containing records (e.g., links)
     input_file = sys.argv[1]
-
 
     try:
         with open(input_file, 'r') as f:
@@ -389,7 +255,7 @@ async def files_count_tokens_async () -> dict:
     
     md_directory = './files/'
     files_tokens = {}
-    client, model_name = configure_genai() # Get client and model_name
+    client, model_name = gem_utils.configure_genai() # Get client and model_name
 
 
     async def process_file(file_path):
@@ -457,7 +323,6 @@ async def files_count_tokens_async () -> dict:
 @log_entry_exit
 def res_agg (base_responses):
     # perform aggregate on base_responses
-
     try:
         with open("base_prompts.md", "r") as file:
             base_prompt = file.readline().strip()  # Read the first line and remove any trailing whitespace
@@ -470,7 +335,6 @@ def res_agg (base_responses):
 
     except Exception as e:
         print(f"An error occurred: {e}")
-
     
     prompts = ""
     custom_agg = input("Enter your custom aggregation prompt if any: ").strip()  # Take user input and strip any extra spaces
@@ -481,31 +345,21 @@ def res_agg (base_responses):
         prompts = f"{agg_prompt} {custom_agg}"
     else:
         prompts = f"{agg_prompt}"
-
     # Log the created prompt
     logger.info(f"Aggregate prompt <agg prompt>: {prompts}")
     base_responses.append (prompts)
-    
-    # global model
-    client, model_name = configure_genai() # Get client and model_name
-    # Ensure SYS_INS is loaded (configure_genai loads it globally)
 
-
-
+    client, model_name = gem_utils.configure_genai() # Get client and model_name
     gemini_response = client.models.generate_content(
         model=model_name,
         contents=base_responses,
-        config=types.GenerateContentConfig(system_instruction=SYS_INS) # Pass system instruction via config
+        config=types.GenerateContentConfig(
+            system_instruction=gem_utils.SYS_INS
+        ) # Pass system instruction via config
     )
 
     aggregate_responses = [gemini_response.text]
-    
     return aggregate_responses
-
-
-
-
-
 
 
 @log_entry_exit
@@ -513,32 +367,33 @@ async def main():
     """Main function to read input, parallelize the work, and print the results."""
     logger.critical ("A new run;")
     logger.critical ("<run>")
+    gem_utils.resolve_and_set_schema_class ()
+    gem_utils.load_system_instructions ()
+    print (f"Resolved JSON Schema: {gem_utils.SELECTED_SCHEMA_CLASS}")
+    # serializable_registry = {k: v.__name__ for k, v in gem_utils.SCHEMA_REGISTRY.items()}
+    # print (f"Registry JSON Schema: {json.dumps (serializable_registry, indent=4)}")
 
     prompts = []
-    # Interactive loop with break condition
-    # while True:
-    #     user_input = input('Enter a prompt (or "done" to finish): ')
-    #     if user_input.lower() == 'done':
-    #         break
-    #     # Now prepend_string is redundant
-    #     prompt = f"{user_input}"
-    #     prompts.append(prompt)
-    #     logger.info(f"Prompt added <prompt>: {prompt}")
+    prompt_file_path = sys.argv[3]
 
+    # Validate prompt file
+    if not os.path.isfile(prompt_file_path):
+        print(f"No such file as {prompt_file_path}\n\n")
+        sys.exit(1)
 
-    user_input = input('Enter a prompt (or "done" to finish): ')
-    # Now prepend_string is redundant
-    prompt = f"{user_input}"
+    # Load prompt file
+    with open(prompt_file_path, "r") as prompt_file:
+        prompt_file_string = prompt_file.read()
+        prompt = prompt_file_string
+    
+
+    # prompt = f"{user_input}"
     prompts.append(prompt)
-    logger.info(f"Prompt added <prompt>: {prompt}")
-
-    # print("Modified prompts:", prompts)
-
-    # Prompt user for input
-    user_input = input("Choose the content source (1 for files, 2 for lines): ")
+    
+    user_input = 1
     agg_opt = input ("Do you want to perform aggregate operation? 1 for agg, 2 for no agg; ")
     # Assign records based on the input
-    if user_input == '1':
+    if user_input == 1:
         records = files_content()
         try:
             if sys.argv[3].lower() == "count":
@@ -563,51 +418,26 @@ async def main():
     else:
         pass
 
+    gem_utils.JSON_responses_parse_write (all_responses)
 
-    print (len (all_responses))
-    
-    # --- Step 1 & 2: Parse each JSON string and collect the objects ---
-    parsed_objects_list = []
-    for i, json_string in enumerate(all_responses):
-        try:
-            # Clean potential whitespace just in case
-            cleaned_string = json_string.strip()
-            if cleaned_string: # Check if string is not empty after stripping
-                # Parse the JSON string into a Python object
-                python_obj = json.loads(cleaned_string)
-                parsed_objects_list.append(python_obj)
-            else:
-                 print(f"Warning: Skipping empty string at index {i}")
-                 # logging.warning(f"Skipping empty string at index {i}")
-        except json.JSONDecodeError as e:
-            # Handle cases where a string in the list is not valid JSON
-            print(f"Error parsing string at index {i}: {e}")
-            print(f"Problematic string content (first 100 chars): {json_string[:100]}...")
-            # logging.error(f"Error parsing string at index {i}: {e}")
-            # logging.error(f"Problematic string content: {json_string[:200]}...")
-            # Decide how to handle errors: skip, add placeholder, raise exception?
-            # Option: Append an error object
-            # parsed_objects_list.append({"error": f"Invalid JSON at index {i}", "details": str(e)})
-            continue # Skip this invalid string
-
-
-    # --- Step 3: Dump the list of Python objects with indentation ---
-    output_file_path = save_output_file_version_json ()
-
-
-    with open(file=output_file_path, mode="w", encoding='utf-8') as f:
-        json.dump(
-            obj=parsed_objects_list, # Pass the list of PARSED Python objects
-            fp=f,
-            indent=4                 # Indent will format the list and the objects within it
-        )
-
-    print(f"Successfully wrote parsed and indented JSON to {output_file_path}")
-    
     logger.critical ("</run>")
+
+
+
+
+
+
+
     
 if __name__ == "__main__":
     # trace_span = client.start_span(name="application_start")
-    asyncio.run (main())
+
+    try:
+        asyncio.run (main())
+
+    except EOFError as eof:
+        print ("^D: EOF event")
+    except KeyboardInterrupt as kb_itr:
+        print ("^C: Keyboard interrupt event")
     # trace_span.end ()
 

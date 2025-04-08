@@ -1,0 +1,1 @@
+Transform all this content into structured JSON schema provided.

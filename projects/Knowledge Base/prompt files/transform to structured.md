@@ -1,0 +1,1 @@
+Transform all this content into structured JSON schema provided. It is critical that you faithfully convert into structured form, without losing or modifying any information. Be extremely comprehensive.
