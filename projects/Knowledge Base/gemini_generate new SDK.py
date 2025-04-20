@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any, Union, Type # Ensure Type is imported
 import data.generic_JSON_response_schema
 import data.PDF_page_JSON_schema
-import src.utils.gemini_utils as gem_utils
+import src.utils.gemini_utils_handwritten as gem_utils
 
 
 import logging
@@ -38,9 +38,6 @@ logging.basicConfig(
     handlers=[logging.FileHandler("gemini.log")]  # Output logs to console
 )
 logger = logging.getLogger(__name__)
-
-
-# trace_client = trace.Client()
 
 
 
@@ -78,22 +75,35 @@ def gen_response(prompts, record):
         record.append(prompt)
         if gemini_response:
             record.append(gemini_response.text)
+        # logger.info (record)
 
         try:
-            # Call the Gemini API using the client
-            if record:
+            if gem_utils.IS_STRUCTURED_OP_MODE:
                 gemini_response = client.models.generate_content(
                     model=model_name,
                     contents=record,
                     config=types.GenerateContentConfig(
                         system_instruction=gem_utils.SYS_INS,
+                        max_output_tokens=65536,
                         response_mime_type="application/json",
                         response_schema = gem_utils.SELECTED_SCHEMA_CLASS
-                    ) # Pass system instruction via config
+                    )
                 )
                 logger.info (gemini_response.usage_metadata)
+                gem_utils.USAGE_METADATA.append (gemini_response.usage_metadata)
             else:
-                print ("empty record!!")
+                gemini_response = client.models.generate_content(
+                    model=model_name,
+                    contents=record,
+                    config=types.GenerateContentConfig(
+                        system_instruction=gem_utils.SYS_INS,
+                        max_output_tokens=65536
+                    )
+                )
+
+                logger.info (gemini_response.usage_metadata)
+                gem_utils.USAGE_METADATA.append (gemini_response.usage_metadata)
+
 
             # logger.info(f"Successfully generated response for prompt: {prompt}".rstrip())
 
@@ -153,6 +163,11 @@ def parallelize_processing(records, prompts):
             for record in records:
                 futures.append(executor.submit(process_record, record, prompts, results_queue))
 
+            if not records:
+                futures.append (executor.submit (process_record, "dummy text", prompts, results_queue))
+
+
+
             # Wait for all futures to complete
             concurrent.futures.wait(futures)
             # Collecting results from the queue as the workers complete
@@ -172,7 +187,7 @@ def parallelize_processing(records, prompts):
 
 
 
-
+@log_entry_exit
 def files_content() -> list:
     """
     Reads files from a directory, handling text, markdown, and PDF files.
@@ -373,26 +388,21 @@ async def main():
     # serializable_registry = {k: v.__name__ for k, v in gem_utils.SCHEMA_REGISTRY.items()}
     # print (f"Registry JSON Schema: {json.dumps (serializable_registry, indent=4)}")
 
+    if (len (sys.argv) >= 5) and (sys.argv [4] == "struct"):
+        gem_utils.IS_STRUCTURED_OP_MODE = True
+    else:
+        gem_utils.IS_STRUCTURED_OP_MODE = False
+
+
+    records = []
     prompts = []
-    prompt_file_path = sys.argv[3]
 
-    # Validate prompt file
-    if not os.path.isfile(prompt_file_path):
-        print(f"No such file as {prompt_file_path}\n\n")
-        sys.exit(1)
-
-    # Load prompt file
-    with open(prompt_file_path, "r") as prompt_file:
-        prompt_file_string = prompt_file.read()
-        prompt = prompt_file_string
-    
-
-    # prompt = f"{user_input}"
+    prompt = gem_utils.load_prompt_string ()
     prompts.append(prompt)
     
-    user_input = 1
+    user_input = int (input ("Mode (1: Normal, 2: w/o files): "))
     agg_opt = input ("Do you want to perform aggregate operation? 1 for agg, 2 for no agg; ")
-    # Assign records based on the input
+
     if user_input == 1:
         records = files_content()
         try:
@@ -401,25 +411,26 @@ async def main():
                 pprint.pprint(token_count, indent=4)
         except IndexError:
             pass
-        
-    elif user_input == '2':
-        records = lines_content()
+
+    # elif user_input == 3:
+    #     records = lines_content()
+
+    elif user_input == 2:
+        pass
+
     else:
-        # Log error and exit program if the input is invalid
         logger.error(f"Invalid option chosen: {user_input}")
         sys.exit(1)    
 
     logger.info(f"Starting parallel processing for {len(records)} records with {len(prompts)} prompts.")
 
-    # Parallelize processing
     all_responses = parallelize_processing(records, prompts)
     if (agg_opt == '1'):
         all_responses = res_agg (all_responses)
     else:
         pass
-
-    gem_utils.JSON_responses_parse_write (all_responses)
-
+    gem_utils.write_response_to_file (all_responses)
+    gem_utils.update_gemini_token_usage (gem_utils.USAGE_METADATA)
     logger.critical ("</run>")
 
 
@@ -437,7 +448,9 @@ if __name__ == "__main__":
 
     except EOFError as eof:
         print ("^D: EOF event")
+        sys.exit (0)
     except KeyboardInterrupt as kb_itr:
         print ("^C: Keyboard interrupt event")
+        sys.exit (0)
     # trace_span.end ()
 

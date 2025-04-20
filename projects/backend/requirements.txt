@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+python-multipart
+google-generativeai
+pydantic
+# Add the path to your original project's requirements if they are not covered above
+# Example: numpy, pandas (if used indirectly by your scripts)

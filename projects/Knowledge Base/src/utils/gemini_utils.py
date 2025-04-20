@@ -1,309 +1,301 @@
-import os, sys, json
-from pydantic import BaseModel, Field
-from typing import Optional, List, Dict, Any, Union, Type # Ensure Type is imported
+# your_original_project/src/utils/gemini_utils.py
 
+import os
+import sys
+import json
+import logging
+import pathlib
+from multiprocessing import Manager
+from typing import Optional, List, Dict, Any, Union, Type, Tuple
+
+# Third-party imports
+from pydantic import BaseModel, Field
 from google.genai import types
 from google import genai
+import google.api_core.exceptions
+from dotenv import load_dotenv
 
-
-
-SCHEMA_REGISTRY: Dict [str, Type[BaseModel]] = {}
+# --- Configuration Constants ---
 SCHEMA_ENV_VAR = "STRUCTURED_OUTPUT_JSON_SCHEMA"
-# DEFAULT_SCHEMA_NAME = "LabelledDataMapValidated"
 DEFAULT_SCHEMA_NAME = "StructuredListOutput"
-SELECTED_SCHEMA_CLASS: Optional [Type[BaseModel]] = None
-SYS_INS = ""
-OUTPUT_JSON_PATH = "OUTPUT_JSON_PATH"
-MODEL_NAME = "GEMINI_20_FL"
-PRO_MODEL_NAME = "GEMINI_20_PRO"
-FLASH_MODEL_NAME = "GEMINI_20_FL"
-API_KEY_PAID_STR = "API_KEY_PAID"
-API_KEY_FREE_STR = "API_KEY_FREE"
+OUTPUT_JSON_PATH_ENV_VAR = "OUTPUT_JSON_PATH"
+MODEL_NAME_PRO_ENV_VAR = "GEMINI_20_PRO"
+MODEL_NAME_PRO_EXP_ENV_VAR = "GEMINI_20_PRO_EXP" # ** ADDED for free pro model **
+MODEL_NAME_FLASH_ENV_VAR = "GEMINI_20_FL"
+API_KEY_PAID_ENV_VAR = "API_KEY_PAID"
+API_KEY_FREE_ENV_VAR = "API_KEY_FREE"
+SYS_INS_PATH_ENV_VAR = "SYSTEM_INSTRUCTIONS_PATH"
+SYS_INS_STRUCT_PATH_ENV_VAR = "SYSTEM_INSTRUCTIONS_STRUCTURED_PATH"
 
-def resolve_and_set_schema_class():
-    """
-    Reads the schema name from the environment variable, looks it up in the
-    registry, and sets the global SELECTED_SCHEMA_CLASS. Falls back to default.
-    """
-    global SELECTED_SCHEMA_CLASS # To modify the global variable
+# --- Global State ---
+SCHEMA_REGISTRY: Dict[str, Type[BaseModel]] = {}
+try:
+    _manager = Manager()
+    CLI_USAGE_METADATA_PROXY = _manager.list()
+except Exception as e:
+    print(f"Warning: Could not init Manager: {e}. CLI parallel usage broken.", file=sys.stderr)
+    CLI_USAGE_METADATA_PROXY = None # type: ignore
 
-    # Ensure registry and default name are available
-    if not SCHEMA_REGISTRY or DEFAULT_SCHEMA_NAME not in SCHEMA_REGISTRY:
-         log_msg = f"Error: Schema registry empty or default schema '{DEFAULT_SCHEMA_NAME}' not found."
-         # Use logger if available, otherwise print and exit
-         try:
-             logger.error(log_msg)
-         except NameError:
-             print(log_msg, file=sys.stderr)
-         sys.exit(1) # Cannot proceed without a default
+# --- Logging Setup ---
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+logger = logging.getLogger(__name__)
 
-    default_class = SCHEMA_REGISTRY[DEFAULT_SCHEMA_NAME]
-    chosen_class = default_class # Start with default
-    schema_source = f"default ('{DEFAULT_SCHEMA_NAME}')" # For logging
+# --- Helper Function ---
+def format_number(num: Optional[int]) -> str:
+    """Formats an integer with commas, handles None."""
+    # (Implementation same as before)
+    if num is None: return "N/A"
+    try: return f"{int(num):,}"
+    except (ValueError, TypeError): return str(num)
 
-    # Get schema name from environment variable
-    env_schema_name = os.getenv(SCHEMA_ENV_VAR)
-
-    if env_schema_name and env_schema_name.strip():
-        env_schema_name = env_schema_name.strip()
-
-        # Look up the class in the registry
-        found_class = SCHEMA_REGISTRY.get(env_schema_name)
-        if found_class:
-            chosen_class = found_class
-            schema_source = f"environment variable ('{env_schema_name}')"
-        else:
-            pass
-    else:
-        pass
-        # chosen_class remains default_class
-
-    SELECTED_SCHEMA_CLASS = chosen_class
-    return SELECTED_SCHEMA_CLASS.__name__
-
-    # Optional: Check if the selected class is actually a BaseModel
-    if not issubclass(SELECTED_SCHEMA_CLASS, BaseModel):
-        log_msg = f"Error: Resolved schema '{SELECTED_SCHEMA_CLASS.__name__}' is not a Pydantic BaseModel."
-        try: logger.error(log_msg)
-        except NameError: print(log_msg, file=sys.stderr)
-        sys.exit(1)
-
-
+# --- Schema Registration ---
 def register_schema(cls: Type[BaseModel]):
-    """Decorator to automatically register a schema class using its own name as the key."""
-    # Ensure the input is actually a class derived from BaseModel
-    if not isinstance(cls, type) or not issubclass(cls, BaseModel):
-        raise TypeError(f"Object passed to register_schema must be a Pydantic BaseModel subclass, not {type(cls)}")
-
+    """Decorator to register a Pydantic BaseModel schema."""
+    # (Implementation same as before)
+    if not isinstance(cls, type) or not issubclass(cls, BaseModel): raise TypeError("Must be BaseModel subclass")
     schema_name = cls.__name__
-    # print (f"Registering {cls.__name__}")
-    if schema_name in SCHEMA_REGISTRY:
-        # Use logger if available, otherwise print warning
-        log_msg = f"Warning: Schema name '{schema_name}' already registered. Overwriting."
-        try:
-            # Check if logger is defined and configured
-            if 'logger' in globals() and isinstance(logger, logging.Logger):
-                logger.warning(log_msg)
-            else:
-                print(log_msg)
-        except NameError: # logger might not be defined globally yet
-            print(log_msg)
-
+    if schema_name in SCHEMA_REGISTRY: logger.warning(f"Schema '{schema_name}' overwritten.")
     SCHEMA_REGISTRY[schema_name] = cls
-    # Optional print for debugging registration:
-    # print(f"DEBUG: Registered schema '{schema_name}' -> {cls}")
+    logger.debug(f"Registered schema '{schema_name}'")
     return cls
 
+def resolve_schema_class(schema_name_override: Optional[str] = None) -> Optional[Type[BaseModel]]:
+    """Resolves schema class via param, env var, or default."""
+    # (Implementation same as before)
+    if not SCHEMA_REGISTRY or DEFAULT_SCHEMA_NAME not in SCHEMA_REGISTRY:
+         logger.critical(f"Default schema '{DEFAULT_SCHEMA_NAME}' not in registry."); sys.exit(1)
+    default_class = SCHEMA_REGISTRY[DEFAULT_SCHEMA_NAME]
+    target_name = schema_name_override or os.getenv(SCHEMA_ENV_VAR) or DEFAULT_SCHEMA_NAME
+    source = "param" if schema_name_override else "env" if os.getenv(SCHEMA_ENV_VAR) else "default"
+    chosen_class = SCHEMA_REGISTRY.get(target_name.strip())
+    if chosen_class:
+        logger.info(f"Resolved schema '{target_name}' using {source}.")
+        if not issubclass(chosen_class, BaseModel):
+             logger.error(f"Resolved '{target_name}' not a BaseModel. Using default.")
+             return default_class
+        return chosen_class
+    else:
+        logger.warning(f"Schema '{target_name}' ({source}) not found. Using default '{DEFAULT_SCHEMA_NAME}'.")
+        return default_class
 
-# --- File I/O operations ---
-def load_output_file_version_json ():
-    global OUTPUT_JSON_PATH
-    output_json_path = os.environ.get (OUTPUT_JSON_PATH)
+
+# --- System Instructions ---
+def load_system_instructions(is_structured_mode: bool) -> str:
+    """Loads system instructions from file path in env vars."""
+    # (Implementation same as before)
+    env_var = SYS_INS_STRUCT_PATH_ENV_VAR if is_structured_mode else SYS_INS_PATH_ENV_VAR
+    path_str = os.getenv(env_var)
+    sys_ins = ""
+    if path_str:
+        try:
+            path = pathlib.Path(path_str).resolve()
+            if path.is_file():
+                with open(path, 'r', encoding='utf-8') as f: sys_ins = f.read()
+                logger.info(f"Loaded sys instructions: {path} (Structured: {is_structured_mode})")
+            else: logger.warning(f"Sys instructions file not found: {path} (from {env_var})")
+        except Exception as e: logger.error(f"Err reading sys ins file '{path_str}': {e}", exc_info=True)
+    else: logger.warning(f"Env var '{env_var}' not set for sys instructions.")
+    return sys_ins
+
+# --- Gemini Client Configuration ---
+def configure_gemini(
+    model_type: str,
+    api_key_type: str
+) -> Tuple[genai.client.Client, str]:
+    """Configures Gemini client and model name based on params and env vars. **Handles free/pro model name.**"""
+    model_type_lc = model_type.lower()
+    api_key_type_lc = api_key_type.lower()
+    model_name = ""
+    api_key = ""
+
+    # Determine Model Name
+    if model_type_lc == "pro":
+        # ** CORRECTED LOGIC for free/pro model **
+        if api_key_type_lc == "free":
+            model_name = os.getenv(MODEL_NAME_PRO_EXP_ENV_VAR) # Use EXP model for free pro
+            if not model_name: raise ValueError(f"Env var '{MODEL_NAME_PRO_EXP_ENV_VAR}' for free Pro model not set.")
+            logger.info(f"Using Pro model (Free Tier Experimental): {model_name}")
+        else: # Paid tier pro
+            model_name = os.getenv(MODEL_NAME_PRO_ENV_VAR)
+            if not model_name: raise ValueError(f"Env var '{MODEL_NAME_PRO_ENV_VAR}' for paid Pro model not set.")
+            logger.info(f"Using Pro model (Paid Tier): {model_name}")
+    elif model_type_lc == "flash":
+        model_name = os.getenv(MODEL_NAME_FLASH_ENV_VAR)
+        if not model_name: raise ValueError(f"Env var '{MODEL_NAME_FLASH_ENV_VAR}' for Flash model not set.")
+        logger.info(f"Using Flash model: {model_name}")
+    else:
+        raise ValueError(f"Invalid model_type '{model_type}'. Must be 'pro' or 'flash'.")
+
+    # Determine API Key
+    if api_key_type_lc == "free":
+        api_key = os.getenv(API_KEY_FREE_ENV_VAR)
+        if not api_key: raise ValueError(f"Env var '{API_KEY_FREE_ENV_VAR}' not set.")
+        logger.info("Using FREE tier API key.")
+    elif api_key_type_lc == "paid":
+        api_key = os.getenv(API_KEY_PAID_ENV_VAR)
+        if not api_key: raise ValueError(f"Env var '{API_KEY_PAID_ENV_VAR}' not set.")
+        logger.info("Using PAID tier API key.")
+    else:
+        raise ValueError(f"Invalid api_key_type '{api_key_type}'. Must be 'free' or 'paid'.")
+
+    # Configure Client
     try:
-        with open(output_json_path, 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return None
+        client = genai.Client(api_key=api_key)
+        logger.info(f"Gemini client configured successfully.")
+        return client, model_name
+    except Exception as e:
+        logger.critical(f"Failed to initialize Gemini client: {e}", exc_info=True)
+        raise ValueError(f"Failed to initialize Gemini client: {e}")
 
 
-def save_output_file_version_json ():
-    global OUTPUT_JSON_PATH
-    output_json_path = os.environ.get (OUTPUT_JSON_PATH)
-    old_data = load_output_file_version_json ()
-    new_data = {}
-
-    if not old_data:
-        old_data = {
-            "version": 0,
-            "filename": "./output files/output response v0.json"
-        }
-    new_data ["version"]   = old_data ["version"]   +  1
-    new_data ["filepath"]  = f"./output files/output response v{new_data ["version"]}.json"
-    with open(output_json_path, 'w') as f:
-        json.dump(
-            obj=new_data, 
-            fp=f, 
-            indent=4
+# --- Core Gemini Content Generation ---
+def generate_gemini_content(
+    genai_client: genai.client.Client,
+    model_name: str,
+    contents: List[Union[str, types.Part]],
+    generation_config: types.GenerateContentConfig,
+    is_structured_mode: bool
+) -> types.GenerateContentResponse:
+    """Generates content using the Gemini API asynchronously."""
+    # (Implementation same as before)
+    logger.info(f"Sending request to Gemini model '{model_name}' (Structured: {is_structured_mode})...")
+    try:
+        response = genai_client.models.generate_content (
+            model=model_name, contents=contents, config=generation_config,
         )
-    return new_data ["filepath"]
+        logger.info("Received response from Gemini.")
+        if response.usage_metadata:
+             logger.info(f"Tokens - Prompt: {format_number(response.usage_metadata.prompt_token_count)}, "
+                         f"Candidates: {format_number(response.usage_metadata.candidates_token_count)}, "
+                         f"Total: {format_number(response.usage_metadata.total_token_count)}")
+        return response
+    except google.api_core.exceptions.GoogleAPIError as e:
+        logger.error(f"Gemini API Error: {e}", exc_info=False); raise # Re-raise specific error
+    except Exception as e:
+        logger.error(f"Unexpected Gemini generation error: {e}", exc_info=True); raise
 
-def reset_output_file_version ():
-    global OUTPUT_JSON_PATH
-    output_json_path = os.environ.get (OUTPUT_JSON_PATH)
-    old_data = {
-        "version": 0,
-        "filename": "./output files/output response v0.json"
-    }
-    with open(output_json_path, 'w') as f:
-        json.dump(old_data, f, indent=4)
+# --- Output File Handling (for CLI) ---
+def load_json_file(file_path: Union[str, pathlib.Path]) -> Optional[Dict]:
+    """Loads JSON data from a file."""
+    # (Implementation same as before)
+    path = pathlib.Path(file_path)
+    if not path.is_file(): return None
+    try:
+        with open(path, 'r', encoding='utf-8') as f: return json.load(f)
+    except Exception: return None
 
+def save_json_file(data: Any, file_path: Union[str, pathlib.Path], indent: int = 4) -> bool:
+    """Saves data as JSON to a file, creating directories."""
+    # (Implementation same as before)
+    path = pathlib.Path(file_path)
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=indent)
+        logger.info(f"Saved JSON data to {path}")
+        return True
+    except Exception as e: logger.error(f"Write JSON failed {path}: {e}", exc_info=True); return False
 
+def get_next_output_version(output_config_path: Union[str, pathlib.Path]) -> Tuple[int, pathlib.Path]:
+    """Reads/updates version config file and returns new version/path."""
+    # (Implementation same as before)
+    config_path = pathlib.Path(output_config_path)
+    default_pattern = "./output files/output_v{version}" # Relative to CWD
+    data = load_json_file(config_path)
+    current_version = data.get("version", -1) if isinstance(data, dict) else -1
+    pattern = data.get("base_filepath_pattern", default_pattern) if isinstance(data, dict) else default_pattern
+    if current_version == -1: logger.warning(f"Output config invalid/missing: {config_path}. Using defaults.")
+    new_version = current_version + 1
+    new_base_filepath = pathlib.Path(pattern.format(version=new_version))
+    if not save_json_file({"version": new_version, "base_filepath_pattern": pattern}, config_path):
+         logger.error("Failed to save updated output version config!")
+    return new_version, new_base_filepath
 
-def JSON_responses_parse_write (all_responses: List [str]):
-    # --- Initialization ---
-    parsed_objects_list = [] # To store successfully parsed Python objects
-    other_items_list = []    # To store ALL other original items
-    start_marker = "```json\n"
-    end_marker = "\n```"
+# --- Response Parsing and Writing (Refactored for single or multiple responses) ---
+def parse_json_from_response_text(response_text: str) -> Optional[Any]:
+    """Attempts to parse JSON from a string, handling markdown code blocks."""
+    # (Implementation same as before)
+    if not isinstance(response_text, str): return None
+    stripped = response_text.strip()
+    if not stripped: return None
+    start, end = "```json\n", "\n```"
+    if stripped.startswith(start) and stripped.endswith(end):
+        json_str = stripped[len(start):-len(end)].strip()
+        if not json_str: return None
+        try: return json.loads(json_str)
+        except json.JSONDecodeError: return None # Fall through to parse whole string
+    try: return json.loads(stripped)
+    except json.JSONDecodeError: return None
 
-    print(f"Processing {len(all_responses)} input items...")
+def write_output_files(
+    responses: List[str],
+    output_config_path: str,
+    is_structured_mode: bool
+) -> None:
+    """Parses responses and writes them to versioned output files (.json, .md)."""
+    # (Implementation same as before)
+    try:
+        _ver, base_path = get_next_output_version(output_config_path)
+        json_path, other_path = base_path.with_suffix(".json"), base_path.with_suffix(".md")
+        json_objs, others = [], []
+        for resp in responses:
+            parsed = parse_json_from_response_text(resp) if is_structured_mode else None
+            if parsed is not None: json_objs.append(parsed)
+            else: others.append(resp)
+        if json_objs:
+            if not save_json_file(json_objs, json_path):
+                 logger.error(f"JSON write failed: {json_path}")
+                 others.extend([f"--- FAILED JSON OBJ ---\n{str(o)[:1000]}\n--- END ---" for o in json_objs])
+        elif is_structured_mode: logger.warning("Structured mode, but no JSON parsed.")
+        if others:
+            try:
+                other_path.parent.mkdir(parents=True, exist_ok=True)
+                with open(other_path, 'w', encoding='utf-8') as f:
+                    for i, item in enumerate(others):
+                        f.write(str(item))
+                        if len(others) > 1 and i < len(others) - 1: f.write(f"\n\n{'='*20} Response Separator {'='*20}\n\n")
+                        elif not str(item).endswith('\n'): f.write('\n')
+                logger.info(f"Wrote {len(others)} non-JSON/raw items to {other_path}")
+            except Exception as e: logger.error(f"Write TXT failed {other_path}: {e}", exc_info=True)
+    except Exception as e: logger.error(f"Output file writing error: {e}", exc_info=True)
 
-    # --- Main Processing Loop ---
-    for i, original_item in enumerate(all_responses):
-        was_parsed_successfully = False
-        parsed_object = None
-        processed_via_markers = False # Flag to indicate if marker logic was attempted
-
-        try:
-            # --- Check 1: Is it a usable string? ---
-            if isinstance(original_item, str):
-                stripped_item = original_item.strip()
-                if stripped_item: # Proceed only if string is not empty after stripping
-
-                    # --- Check 2: Attempt Marker-Based Parsing ---
-                    start_index = original_item.find(start_marker)
-                    if start_index != -1:
-                        processed_via_markers = True # Marker logic path taken
-                        json_start_pos = start_index + len(start_marker)
-                        end_index = original_item.find(end_marker, json_start_pos)
-
-                        if end_index != -1:
-                            content_between_markers = original_item[json_start_pos:end_index].strip()
-                            if content_between_markers:
-                                try:
-                                    parsed_object = json.loads(content_between_markers)
-                                    was_parsed_successfully = True # SUCCESS via markers
-                                    # print(f"Debug: Index {i}: Parsed successfully via markers.")
-                                except json.JSONDecodeError as e:
-                                    print(f"Info: Index {i}: Content between markers is invalid JSON ({e}).")
-                                    # Keep was_parsed_successfully = False
-                            else:
-                                print(f"Info: Index {i}: Markers found, but content between them is empty.")
-                                # Keep was_parsed_successfully = False
-                        else:
-                            print(f"Info: Index {i}: Start marker found, but no subsequent end marker.")
-                            # Keep was_parsed_successfully = False
-
-                    # --- Check 3: Attempt Raw Parsing (if not processed via markers) ---
-                    # Only attempt raw parse if marker logic was NOT attempted (no start marker found)
-                    if not processed_via_markers:
-                        try:
-                            parsed_object = json.loads(stripped_item)
-                            was_parsed_successfully = True # SUCCESS via raw parse
-                            # print(f"Debug: Index {i}: Parsed successfully via raw string.")
-                        except json.JSONDecodeError:
-                            # Failed raw parse, it's likely just text
-                            # Optional: print(f"Info: Index {i}: Not raw JSON.")
-                            pass # Keep was_parsed_successfully = False
-
-            # --- If not a string or empty after strip, was_parsed_successfully remains False ---
-
-        except Exception as e:
-            # Catch any unexpected errors during the processing of THIS specific item
-            print(f"Error: Index {i}: Unexpected error processing item: {e}")
-            was_parsed_successfully = False # Ensure it goes to the 'other' list
-
-        # --- Final Assignment: Preserve Everything ---
-        if was_parsed_successfully:
-            parsed_objects_list.append(parsed_object)
-        else:
-            # Add the ORIGINAL item to the 'other' list if it wasn't parsed
-            # This includes non-strings, empty strings, parse failures, and errors
-            other_items_list.append(original_item)
-
-
-    print(f"\nProcessing complete.")
-    print(f"- Parsed {len(parsed_objects_list)} items as JSON.")
-    print(f"- Collected {len(other_items_list)} other items.")
-    # Verification: The counts should sum to the original number of items
-    total_processed = len(parsed_objects_list) + len(other_items_list)
-    print(f"- Total items accounted for: {total_processed} (Original: {len(all_responses)})")
-    if total_processed != len(all_responses):
-        print("!!! WARNING: Item count mismatch. Not all items were preserved.")
-
-
-    # --- Write Parsed JSON Output File ---
-    if parsed_objects_list:
-        json_output_file_path = save_output_file_version_json ()
-        print(f"\nWriting {len(parsed_objects_list)} parsed JSON objects to: {json_output_file_path}")
-        try:
-            with open(file=json_output_file_path, mode="w", encoding='utf-8') as f:
-                json.dump(obj=parsed_objects_list, fp=f, indent=4)
-            print(f"Successfully wrote JSON data to {json_output_file_path}.")
-        except IOError as e:
-            print(f"Error: Could not write JSON file '{json_output_file_path}'. Error: {e}")
-        except Exception as e:
-            print(f"Error: An unexpected error occurred during JSON file writing: {e}")
-    else:
-        print("\nNo valid JSON objects were parsed. JSON output file will not be created.")
-
-    # --- Write Other Items Output File ---
-    if other_items_list:
-        other_output_file_path = "./output files/non-json output response.json"
-        print(f"\nWriting {len(other_items_list)} other items to: {other_output_file_path}")
-        try:
-            with open(file=other_output_file_path, mode="w", encoding='utf-8') as f:
-                for item in other_items_list:
-                    # Write the string representation of the item + newline
-                    f.write(str(item) + '\n')
-            print(f"Successfully wrote other items to {other_output_file_path}.")
-        except IOError as e:
-            print(f"Error: Could not write other items file '{other_output_file_path}'. Error: {e}")
-        except Exception as e:
-            print(f"Error: An unexpected error occurred during other items file writing: {e}")
-    else:
-        print("\nNo 'other' items were collected. Other items output file will not be created.")
+# --- Token Usage Update (for CLI) ---
+def update_gemini_token_usage(
+    usage_metadata_list: List[types.GenerateContentResponseUsageMetadata],
+    usage_file_path: Union[str, pathlib.Path]
+) -> None:
+    """Updates the total API token usage stored in a JSON file."""
+    # (Implementation same as before)
+    if not usage_metadata_list: return
+    path = pathlib.Path(usage_file_path)
+    logger.info(f"Updating token usage: {path}")
+    current = load_json_file(path) or {"input_tokens": 0, "output_tokens": 0}
+    if not isinstance(current.get("input_tokens"), int): current["input_tokens"] = 0
+    if not isinstance(current.get("output_tokens"), int): current["output_tokens"] = 0
+    new_in = sum(md.prompt_token_count for md in usage_metadata_list if md and md.prompt_token_count is not None)
+    new_out = sum(md.candidates_token_count for md in usage_metadata_list if md and md.candidates_token_count is not None)
+    updated = {"input_tokens": current["input_tokens"] + new_in, "output_tokens": current["output_tokens"] + new_out}
+    logger.info(f"Usage: Current={format_number(current['input_tokens'])}/{format_number(current['output_tokens'])} + New={format_number(new_in)}/{format_number(new_out)} -> Total={format_number(updated['input_tokens'])}/{format_number(updated['output_tokens'])}")
+    if not save_json_file(updated, path): logger.error(f"Failed to save token usage: {path}")
 
 
-# --- AI SDK Functions begin here ---
-def load_system_instructions():
-    global SYS_INS
-    # Retrieve the file path from the environment variable
-    instructions_file_path = os.getenv('SYSTEM_INSTRUCTIONS_STRUCTURED_PATH')
+# --- Import local schemas to register them ---
+# ** CORRECTED IMPORT ** Assuming this utils.py is in src/utils/
+# and schema files are in src/data/. We import relative to src/.
+try:
+    # This works if the script running the import can find the 'src' package
+    # (e.g., running from project root, or sys.path includes project root)
+    from data import generic_JSON_response_schema
+    from data import PDF_page_JSON_schema
+    from data import files_response_schema
 
-    if instructions_file_path:
-        try:
-            # Open and read the system instructions file
-            with open(instructions_file_path, 'r') as file:
-                SYS_INS = file.read()
-            # print (SYS_INS)
-            # print ("sys_ins L70: ", sys_ins, "\n")
-        except Exception as e:
-            print(f"Error reading system instructions file: {e}")
-    else:
-        print("Environment variable 'SYSTEM_INSTRUCTIONS_PATH' not set.")
-
-
-
-def configure_genai():
-    global SYS_INS, PRO_MODEL_NAME, FLASH_MODEL_NAME, API_KEY_PAID_STR, API_KEY_FREE_STR
-
-    if len(sys.argv) < 3:
-        raise ValueError("Model type (pro/flash) and API key type (free/paid) must be provided.")
-
-    # SYS_INS = load_system_instructions ()
-    # print (f"sys ins {SYS_INS}")
-    model_type = sys.argv[1].lower()
-    api_key_type = sys.argv[2].lower()
-
-    if model_type == "pro":
-        model_name = os.environ.get(PRO_MODEL_NAME)
-    elif model_type == "flash":
-        model_name = os.environ.get(FLASH_MODEL_NAME)
-    else:
-        raise ValueError("Invalid model_type. Must be 'pro' or 'flash'.")
-
-    if api_key_type == "free":
-        api_key = os.environ.get(API_KEY_FREE_STR)
-        if not api_key:
-             raise ValueError(f"The {API_KEY_FREE_STR} environment variable is not set.")
-    elif api_key_type == "paid":
-        api_key = os.environ.get(API_KEY_PAID_STR)
-        if not api_key:
-            raise ValueError(f"The {API_KEY_PAID_STR} environment variable is not set.")
-    else:
-        raise ValueError("Invalid api_key_type. Must be 'free' or 'paid'.")
-
-    client = genai.Client(api_key=api_key)
-    return client, model_name
-
+    logger.info("Schema definition modules imported successfully for registration.")
+except ImportError as e:
+    logger.error(f"Could not import schema modules from 'data': {e}. Schemas may not be registered.")
+    # Attempt relative import as fallback (might work depending on execution context)
+    try:
+        from ..data import generic_JSON_response_schema # noqa
+        from ..data import PDF_page_JSON_schema # noqa
+        from ..data import files_response_schema
+        logger.info("Schema definition modules imported successfully using relative path.")
+    except ImportError:
+        logger.error(f"Relative import of schema modules also failed. Check structure and sys.path.")

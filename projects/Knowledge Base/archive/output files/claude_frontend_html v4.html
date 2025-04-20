@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy AI Response</title>
+    <style>
+        :root {
+            --primary-bg: #000000;
+            --secondary-bg: #1a1a1a;
+            --primary-text: #ffffff;
+            --secondary-text: #cccccc;
+            --accent-color: #4a90e2;
+            --card-bg: #2d2d2d;
+            --border-color: #444444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .summary-section, .notes-section {
+            background-color: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .list-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .item-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-type {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--accent-color);
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .item-content {
+            margin-bottom: 1rem;
+            word-break: break-word;
+        }
+
+        .item-metadata {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dummy AI Response</h1>
+        <div id="loading" class="loading">Loading data...</div>
+        <div id="summary" class="summary-section" style="display: none;"></div>
+        <div id="notes" class="notes-section" style="display: none;"></div>
+        <div id="listContainer" class="list-container"></div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('sample generic response.json');
+                const data = await response.json();
+                console.log (data)
+                renderData(data);
+            } catch (error) {
+                document.getElementById('loading').innerHTML = 'Error loading data: ' + error.message;
+            }
+        }
+
+        function renderData(data) {
+            document.getElementById('loading').style.display = 'none';
+
+            if (data.summary) {
+                const summaryElement = document.getElementById('summary');
+                summaryElement.style.display = 'block';
+                summaryElement.innerHTML = `<h2>Summary</h2><p>${data.summary}</p>`;
+            }
+
+            if (data.notes) {
+                const notesElement = document.getElementById('notes');
+                notesElement.style.display = 'block';
+                notesElement.innerHTML = `<h2>Notes</h2><p>${data.notes}</p>`;
+            }
+
+            const listContainer = document.getElementById('listContainer');
+            
+            data.structured_list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+
+                const content = getContentBasedOnType(item);
+                
+                card.innerHTML = `
+                    <div class="item-type">${item.type}</div>
+                    <div class="item-content">${content}</div>
+                    <div class="item-metadata">
+                        ${item.label ? `<p><strong>Label:</strong> ${item.label}</p>` : ''}
+                        ${item.description ? `<p><strong>Description:</strong> ${item.description}</p>` : ''}
+                        ${item.source ? `<p><strong>Source:</strong> ${item.source}</p>` : ''}
+                    </div>
+                `;
+
+                listContainer.appendChild(card);
+            });
+        }
+
+        function getContentBasedOnType(item) {
+            switch(item.type) {
+                case 'str':
+                    return item.string_content;
+                case 'int':
+                    return item.integer_content;
+                case 'float':
+                    return item.float_content;
+                case 'bool':
+                    return item.boolean_content.toString();
+                case 'list_str':
+                    return `<ul>${item.list_str_content.map(str => `<li>${str}</li>`).join('')}</ul>`;
+                case 'dict_str_items':
+                    return `<strong>${item.dict_str_content.key}:</strong> ${item.dict_str_content.value}`;
+                case 'dict_int_items':
+                    return `<strong>${item.dict_int_content.key}:</strong> ${item.dict_int_content.value}`;
+                case 'None':
+                    return 'null';
+                default:
+                    return 'Unknown type';
+            }
+        }
+
+        // Start loading data when page loads
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+</body>
+</html>

@@ -24,7 +24,9 @@ static-manifest*
 /projects/Knowledge Base/*.log
 /projects/Knowledge Base/README.md
 **/private/
-
+**/dist/
+**/build/
+**/node_modules/
 
 
 

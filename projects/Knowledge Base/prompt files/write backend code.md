@@ -1,0 +1,1 @@
+Frontend was supposed to redirect to results page showing the response, but that never happens. processing itself from backend was successful. Fix it. Touch only required files. Show complete file for every file you touch.

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dummy AI Response</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #00ffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #ff0080;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+        }
+
+        .item {
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+
+        .label {
+            color: #ff0080;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .description {
+            color: #00ffff;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .json-key {
+            color: #ff0080;
+            font-weight: bold;
+        }
+
+        .json-value {
+            color: #00ffff;
+        }
+
+        #loader {
+            text-align: center;
+            padding: 20px;
+            color: #ff0080;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .summary {
+            background: rgba(255, 0, 128, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dummy AI Response</h1>
+        <div id="loader">Loading data...</div>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('sample generic response.json');
+                const data = await response.json();
+                renderData(data[0]);
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('loader').innerHTML = 'Error loading data';
+            }
+        }
+
+        function renderData(data) {
+            const output = document.getElementById('output');
+            output.innerHTML = '';
+
+            // Render summary and notes if present
+            if (data.summary) {
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = 'summary';
+                summaryDiv.innerHTML = `
+                    <h2>Summary</h2>
+                    <p>${data.summary}</p>
+                `;
+                output.appendChild(summaryDiv);
+            }
+
+            // Render structured list
+            data.structured_list.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+
+                let content = '';
+                if (item.label) {
+                    content += `<div class="label">${item.label}</div>`;
+                }
+                if (item.description) {
+                    content += `<div class="description">${item.description}</div>`;
+                }
+
+                if (item.dict_str_content) {
+                    const value = item.dict_str_content.value;
+                    try {
+                        const parsedValue = JSON.parse(value);
+                        content += `<div class="content">
+                            <span class="json-key">${item.dict_str_content.key}:</span>
+                            <div class="json-value">${JSON.stringify(parsedValue, null, 2)}</div>
+                        </div>`;
+                    } catch {
+                        content += `<div class="content">
+                            <span class="json-key">${item.dict_str_content.key}:</span>
+                            <span class="json-value">${value}</span>
+                        </div>`;
+                    }
+                }
+
+                itemDiv.innerHTML = content;
+                output.appendChild(itemDiv);
+            });
+
+            document.getElementById('loader').style.display = 'none';
+        }
+
+        // Start loading data when page loads
+        window.onload = fetchData;
+    </script>
+</body>
+</html>

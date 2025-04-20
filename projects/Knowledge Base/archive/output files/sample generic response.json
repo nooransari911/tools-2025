@@ -1,0 +1,142 @@
+{
+        "structured_list": [
+          {
+            "type": "str",
+            "string_content": "Fusce dapibus, tellus ac cursus commodo, tortor mauris.",
+            "integer_content": null,
+            "float_content": null,
+            "boolean_content": null,
+            "list_str_content": null,
+            "dict_str_content": null,
+            "dict_int_content": null,
+            "description": "Placeholder text content.",
+            "source": "Source A",
+            "label": "TextEntry_01"
+          },
+          {
+            "type": "int",
+            "string_content": null,
+            "integer_content": 42,
+            "float_content": null,
+            "boolean_content": null,
+            "list_str_content": null,
+            "dict_str_content": null,
+            "dict_int_content": null,
+            "description": "Placeholder integer value.",
+            "source": "Source B",
+            "label": "NumericID_XYZ"
+          },
+          {
+            "type": "float",
+            "string_content": null,
+            "integer_content": null,
+            "float_content": 3.14159,
+            "boolean_content": null,
+            "list_str_content": null,
+            "dict_str_content": null,
+            "dict_int_content": null,
+            "description": "Placeholder float value.",
+            "source": "Source A",
+            "label": "Measurement_Value"
+          },
+          {
+            "type": "bool",
+            "string_content": null,
+            "integer_content": null,
+            "float_content": null,
+            "boolean_content": true,
+            "list_str_content": null,
+            "dict_str_content": null,
+            "dict_int_content": null,
+            "description": "Placeholder boolean true value.",
+            "source": "Source C",
+            "label": "Flag_Status_On"
+          },
+          {
+            "type": "bool",
+            "string_content": null,
+            "integer_content": null,
+            "float_content": null,
+            "boolean_content": false,
+            "list_str_content": null,
+            "dict_str_content": null,
+            "dict_int_content": null,
+            "description": "Placeholder boolean false value.",
+            "source": "Source B",
+            "label": "Flag_Status_Off"
+          },
+          {
+            "type": "list_str",
+            "string_content": null,
+            "integer_content": null,
+            "float_content": null,
+            "boolean_content": null,
+            "list_str_content": ["elementum", "integer", "enim", "neque"],
+            "dict_str_content": null,
+            "dict_int_content": null,
+            "description": "Placeholder list of strings.",
+            "source": "Source D",
+            "label": "String_List_ABC"
+          },
+          {
+            "type": "dict_str_items",
+            "string_content": null,
+            "integer_content": null,
+            "float_content": null,
+            "boolean_content": null,
+            "list_str_content": null,
+            "dict_str_content": {
+              "key": "AttributeName",
+              "value": "Attribute Value - Lorem"
+            },
+            "dict_int_content": null,
+            "description": "Placeholder key-value pair (str:str).",
+            "source": "Source A",
+            "label": "KV_Pair_Str_001"
+          },
+          {
+            "type": "dict_int_items",
+            "string_content": null,
+            "integer_content": null,
+            "float_content": null,
+            "boolean_content": null,
+            "list_str_content": null,
+            "dict_str_content": null,
+            "dict_int_content": {
+              "key": "CounterName",
+              "value": 101
+            },
+            "description": "Placeholder key-value pair (str:int).",
+            "source": "Source B",
+            "label": "KV_Pair_Int_002"
+          },
+          {
+            "type": "None",
+            "string_content": null,
+            "integer_content": null,
+            "float_content": null,
+            "boolean_content": null,
+            "list_str_content": null,
+            "dict_str_content": null,
+            "dict_int_content": null,
+            "description": "Represents an explicit null value.",
+            "source": "Source C",
+            "label": "Optional_Field_Null"
+          },
+          {
+            "type": "str",
+            "string_content": "Etiam porta sem malesuada magna mollis euismod.",
+            "integer_content": null,
+            "float_content": null,
+            "boolean_content": null,
+            "list_str_content": null,
+            "dict_str_content": null,
+            "dict_int_content": null,
+            "description": "Another placeholder text content block.",
+            "source": "Source D",
+            "label": "TextEntry_02"
+          }
+        ],
+        "notes": "This JSON object represents a sample structured output from an AI model, conforming to the StructuredListOutput schema. The content fields contain dummy 'lorem ipsum' style data for demonstration purposes only.",
+        "summary": "Example AI response containing a list of data items with different types (str, int, float, bool, list_str, dict_str_items, dict_int_items, None). All data is placeholder/dummy content."
+    }

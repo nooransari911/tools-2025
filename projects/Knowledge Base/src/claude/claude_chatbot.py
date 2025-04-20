@@ -692,9 +692,11 @@ def run_chatbot():
         # Output response
         if should_print.lower() == "print":
             print("\n\n", prompt_file_response, "\n\n")
-    
-        with open(output_file_path, "w") as output_file:
-            output_file.write(prompt_file_response)
+        if prompt_file_response:
+            with open(output_file_path, "w") as output_file:
+                output_file.write(prompt_file_response)
+        else:
+            print ("Response was None")
 
 
 

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structured Data Renderer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --color-background: #000000;
+            --color-text: #e0e0e0;
+            --color-primary: #00ffff; /* Cyan */
+            --color-secondary: #ff0080; /* Magenta */
+            --color-border: #333333;
+            --color-muted: #888888;
+            --color-code-bg: #1a1a1a;
+            --font-main: 'Roboto', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-text);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 2rem;
+            font-size: 16px;
+        }
+
+        #app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(20, 20, 20, 0.8); /* Slightly lighter background for container */
+            border-radius: 10px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1); /* Subtle cyan glow */
+            overflow: hidden; /* Ensures border-radius clips content */
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        header h1 {
+            color: var(--color-primary);
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px var(--color-primary);
+        }
+
+        #content-area {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .section h2 {
+            color: var(--color-secondary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-secondary);
+            display: inline-block; /* Fit border to text */
+            font-weight: 700;
+        }
+
+        #structured-list-container .list-item {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--color-border);
+            border-left: 5px solid var(--color-primary); /* Left accent */
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+         #structured-list-container .list-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 255, 255, 0.15);
+         }
+
+        .item-metadata {
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed var(--color-border);
+            padding-bottom: 1rem;
+        }
+
+        .item-metadata p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9em;
+        }
+
+        .item-metadata strong {
+            color: var(--color-primary);
+            margin-right: 0.5em;
+            font-weight: 700;
+            display: inline-block;
+            min-width: 80px; /* Align metadata labels */
+        }
+
+        .item-metadata .label {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--color-text); /* Label is important, make it stand out */
+        }
+         .item-metadata .label strong {
+             color: var(--color-secondary); /* Make 'Label:' part magenta */
+         }
+
+        .item-metadata .description {
+            color: var(--color-muted);
+        }
+
+        .item-metadata .source {
+            font-style: italic;
+            color: var(--color-muted);
+        }
+
+        .item-content {
+            margin-top: 1rem;
+        }
+
+        .item-content .content-type {
+            display: inline-block;
+            background-color: var(--color-secondary);
+            color: var(--color-background);
+            padding: 0.2em 0.6em;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-right: 0.8em;
+            vertical-align: middle;
+        }
+
+        .item-content .content-value {
+            display: inline-block;
+            vertical-align: middle;
+            word-break: break-word; /* Prevent long strings from overflowing */
+        }
+
+        .item-content .content-value-null {
+            color: var(--color-muted);
+            font-style: italic;
+        }
+
+        .item-content ul {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 1.5rem; /* Indent list */
+            margin-top: 0.5rem;
+        }
+
+        .item-content ul li {
+            position: relative;
+            padding-left: 1.2rem; /* Space for custom bullet */
+            margin-bottom: 0.3rem;
+        }
+
+        .item-content ul li::before {
+            content: '◇'; /* Diamond bullet */
+            color: var(--color-primary);
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 0.9em;
+        }
+
+        .key-value-pair {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+        }
+
+        .key-value-pair .key {
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-right: 0.5em;
+        }
+
+        .key-value-pair .value {
+            color: var(--color-text);
+        }
+
+        /* Styling for preformatted code (like JSON strings) */
+        pre {
+            background-color: var(--color-code-bg);
+            color: var(--color-text);
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto; /* Allow horizontal scrolling for long lines */
+            border: 1px solid var(--color-border);
+            margin-top: 0.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap; /* Wrap long lines */
+            word-wrap: break-word; /* Ensure words break correctly */
+        }
+
+        code {
+             font-family: 'Courier New', Courier, monospace;
+        }
+
+        #error-message {
+            color: #ff4d4d; /* Red for errors */
+            background-color: rgba(255, 77, 77, 0.1);
+            border: 1px solid #ff4d4d;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        #loading-message {
+            text-align: center;
+            color: var(--color-primary);
+            font-size: 1.2em;
+            padding: 2rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            #app-container {
+                 border-radius: 0;
+                 border-left: none;
+                 border-right: none;
+            }
+            header {
+                padding: 1rem 1.5rem;
+            }
+            #content-area {
+                padding: 1.5rem;
+            }
+            .section {
+                padding: 1rem;
+            }
+            #structured-list-container .list-item {
+                 padding: 1rem;
+            }
+            .item-metadata strong {
+                display: block; /* Stack label and value on small screens */
+                min-width: 0;
+                margin-bottom: 0.2em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        <header>
+            <h1>Structured Data Output</h1>
+        </header>
+
+        <div id="content-area">
+            <div id="loading-message">Loading data...</div>
+            <div id="error-message" style="display: none;"></div>
+
+            <div id="summary-section" class="section" style="display: none;">
+                <h2>Summary</h2>
+                <p id="summary-content"></p>
+            </div>
+
+            <div id="notes-section" class="section" style="display: none;">
+                <h2>Notes</h2>
+                <p id="notes-content"></p>
+            </div>
+
+            <div id="list-section" class="section" style="display: none;">
+                 <h2>Structured List</h2>
+                 <div id="structured-list-container">
+                     <!-- List items will be injected here by JavaScript -->
+                 </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Embed the example data directly for this single-file example
+        const jsonData = [
+            {
+                "structured_list": [
+                    {
+                        "type": "dict_str_items",
+                        "string_content": null, // Added to ensure validation passes if we were to run it
+                        "integer_content": null,
+                        "float_content": null,
+                        "boolean_content": null,
+                        "list_str_content": null,
+                        "dict_str_content": null,
+                        "dict_int_content": null,
+                        "description": "Assessment for llama-4-maverick-exp",
+                        "source": null,
+                        "label": "llama-4-maverick-exp_assessment"
+                    },
+                    {
+                        "type": "dict_str_items",
+                        "string_content": null,
+                        "integer_content": null,
+                        "float_content": null,
+                        "boolean_content": null,
+                        "list_str_content": null,
+                        "dict_str_content": {
+                            "key": "ArgumentConstruction",
+                            "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Constructs a strong, coherent argument linking scraped data, the 'digital commons' concept, open-source software reliance, and the ethical imperative for open-source AI. Effectively integrates points from the source post and comment (e.g., hypocrisy of scraping). Addresses counterarguments regarding profit motives. The logical flow is persuasive and well-structured.\" }"
+                        },
+                        "dict_int_content": null,
+                        "description": "Argument Construction Assessment",
+                        "source": null,
+                        "label": "llama-4-maverick-exp_ArgumentConstruction"
+                    },
+                    {
+                        "type": "dict_str_items",
+                        "dict_str_content": {
+                            "key": "WritingStyleAdherence",
+                            "value": "{ \"Rating\": \"Excellent\", \"Justification\": \"Adheres closely to the requested style: natural, human-like language with flowing prose. Explicitly avoids bullet points as requested. The tone is persuasive and balanced, achieving depth without being overly academic or simplistic. Successfully integrates source material organically into the narrative.\" }"
+                        },
+                         "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null,
+                        "description": "Writing Style Adherence Assessment", "source": null,
+                        "label": "llama-4-maverick-exp_WritingStyleAdherence"
+                    },
+                    {
+                        "type": "dict_str_items",
+                        "dict_str_content": {
+                            "key": "EthicalAnalysisQuality",
+                            "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Provides a solid ethical analysis, focusing on the privatization of the commons, the unpaid labor of data creators, and the hypocrisy of corporate ethics. It effectively uses the 'commons' concept and connects it to the open-source software ethos. The analysis balances the critique with potential business models for open source.\" }"
+                        },
+                        "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null,
+                        "description": "Ethical Analysis Quality Assessment", "source": null,
+                        "label": "llama-4-maverick-exp_EthicalAnalysisQuality"
+                    },
+                    {
+                        "type": "dict_str_items",
+                        "dict_str_content": {
+                            "key": "Overall",
+                            "value": "A strong response with a well-constructed argument, excellent adherence to style guidelines, and a robust ethical analysis."
+                        },
+                         "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null,
+                        "description": "Overall Summary", "source": null,
+                        "label": "llama-4-maverick-exp_Overall"
+                    },
+                    // ... (including all other items from the example)
+                    { "type": "dict_str_items", "dict_str_content": null, "description": "Assessment for qwen-max-2025-01-25", "label": "qwen-max-2025-01-25_assessment", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "ArgumentConstruction", "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Builds a clear and logical argument, effectively starting with the data source (collective knowledge/digital commons), moving through the ethics of privatization and reliance on open-source tools, and concluding with the case for open-source models. Integrates the scraping hypocrisy comment well.\" }"}, "description": "Argument Construction Assessment", "label": "qwen-max-2025-01-25_ArgumentConstruction", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "WritingStyleAdherence", "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Uses natural language and maintains a flowing prose structure as requested. The style is accessible yet conveys the argument's depth effectively. Avoids unnecessary jargon or overly complex sentences. The tone is persuasive and aligns with the prompt's requirements.\" }"}, "description": "Writing Style Adherence Assessment", "label": "qwen-max-2025-01-25_WritingStyleAdherence", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "EthicalAnalysisQuality", "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Provides a strong ethical analysis focusing on the 'digital commons,' unfair appropriation of collective labor, the hypocrisy noted in the comments, and the reliance on open-source software. Articulates the unfairness clearly and links it directly to the need for open source. Addresses corporate investment arguments.\" }"}, "description": "Ethical Analysis Quality Assessment", "label": "qwen-max-2025-01-25_EthicalAnalysisQuality", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "Overall", "value": "A well-executed response that effectively argues the ethical case for open-source AI, adhering well to style and content requirements."}, "description": "Overall Summary", "label": "qwen-max-2025-01-25_Overall", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": null, "description": "Assessment for qwq-32b", "label": "qwq-32b_assessment", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "ArgumentConstruction", "value": "{ \"Rating\": \"Good\", \"Justification\": \"Presents a clear thesis and argument structure, hitting key points like data exploitation, the commons concept, double standards, and the call for open source. The argument is logical but slightly less developed in its flow compared to top performers. Use of headings slightly breaks the 'flowing prose mainly' request.\" }"}, "description": "Argument Construction Assessment", "label": "qwq-32b_ArgumentConstruction", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "WritingStyleAdherence", "value": "{ \"Rating\": \"Good\", \"Justification\": \"The language is relatively natural and simple. However, the use of headings interrupts the requested 'flowing prose mainly' style, making it feel more like a structured summary than a synthesized essay. The tone is direct and aligns with the prompt's stance.\" }"}, "description": "Writing Style Adherence Assessment", "label": "qwq-32b_WritingStyleAdherence", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "EthicalAnalysisQuality", "value": "{ \"Rating\": \"Good\", \"Justification\": \"Clearly identifies the core ethical issues: theft of the commons, unpaid labor, double standards, and the need for democratization. The analysis is direct but could be more nuanced in exploring the complexities (e.g., deeper dive into corporate investment vs. public contribution).\" }"}, "description": "Ethical Analysis Quality Assessment", "label": "qwq-32b_EthicalAnalysisQuality", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "Overall", "value": "A decent response that captures the main arguments but is slightly hampered by its structure deviating from the requested prose style and a less nuanced ethical analysis compared to others."}, "description": "Overall Summary", "label": "qwq-32b_Overall", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": null, "description": "Assessment for qwen2.5-72b-instruct", "label": "qwen2.5-72b-instruct_assessment", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "ArgumentConstruction", "value": "{ \"Rating\": \"Good\", \"Justification\": \"The argument is logically structured, covering data ownership, consent, the commons concept, double standards, and the benefits of open source. However, the reliance on headings and a numbered list for benefits disrupts the 'flowing prose mainly' requirement, making it feel somewhat formulaic.\" }"}, "description": "Argument Construction Assessment", "label": "qwen2.5-72b-instruct_ArgumentConstruction", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "WritingStyleAdherence", "value": "{ \"Rating\": \"Fair\", \"Justification\": \"While the language is generally clear, the use of headings and a numbered list explicitly goes against the 'flowing prose mainly' instruction. It reads more like a structured report than a synthesized, persuasive thesis. The naturalness is impacted by this formatting choice.\" }"}, "description": "Writing Style Adherence Assessment", "label": "qwen2.5-72b-instruct_WritingStyleAdherence", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "EthicalAnalysisQuality", "value": "{ \"Rating\": \"Good\", \"Justification\": \"Addresses key ethical points like data ownership, consent, privatization of the commons, and double standards effectively. The explicit listing of open-source benefits adds clarity but lacks the persuasive depth of more integrated ethical reasoning found in prose-focused responses.\" }"}, "description": "Ethical Analysis Quality Assessment", "label": "qwen2.5-72b-instruct_EthicalAnalysisQuality", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "Overall", "value": "Presents the core arguments clearly but fails to adhere to the requested writing style (flowing prose), opting for a more structured format that weakens its effectiveness as a synthesized thesis."}, "description": "Overall Summary", "label": "qwen2.5-72b-instruct_Overall", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": null, "description": "Assessment for claude-3-7-sonnet-thinking-32k", "label": "claude-3-7-sonnet-thinking-32k_assessment", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "ArgumentConstruction", "value": "{ \"Rating\": \"Excellent\", \"Justification\": \"Exceptional argument construction. Establishes a strong thesis immediately ('profound irony', 'digital commons enclosure'). Seamlessly weaves together data sourcing, reliance on open-source tech, ethical hypocrisy (scraping double standard), and the case for open models. Addresses counterarguments (misuse, profit) effectively within the narrative flow.\" }"}, "description": "Argument Construction Assessment", "label": "claude-3-7-sonnet-thinking-32k_ArgumentConstruction", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "WritingStyleAdherence", "value": "{ \"Rating\": \"Excellent\", \"Justification\": \"Exemplary adherence to style. Uses natural, human-like, and persuasive language. The prose flows exceptionally well, creating a compelling narrative rather than just listing points. Achieves depth and nuance without sacrificing clarity. Perfectly matches the request for flowing prose.\" }"}, "description": "Writing Style Adherence Assessment", "label": "claude-3-7-sonnet-thinking-32k_WritingStyleAdherence", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "EthicalAnalysisQuality", "value": "{ \"Rating\": \"Excellent\", \"Justification\": \"Deep and nuanced ethical analysis. The 'digital commons' and 'enclosure' concepts are expertly employed. Effectively critiques the asymmetry of data contribution vs. benefit, the hypocrisy, and the reliance on open-source foundations. Balances the critique with a discussion of alternative profit models and responsible AI development.\" }"}, "description": "Ethical Analysis Quality Assessment", "label": "claude-3-7-sonnet-thinking-32k_EthicalAnalysisQuality", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "Overall", "value": "An outstanding response that excels in argument construction, perfectly adheres to the requested writing style, and provides a deep, persuasive ethical analysis. Sets a high bar."}, "description": "Overall Summary", "label": "claude-3-7-sonnet-thinking-32k_Overall", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": null, "description": "Assessment for claude-3-5-haiku", "label": "claude-3-5-haiku_assessment", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "ArgumentConstruction", "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Constructs a concise yet strong argument. Effectively uses terms like 'data expropriation' and 'intellectual enclosure' to frame the issue. Logically connects data scraping, lack of compensation, reliance on open-source infrastructure, and the ethical need for open models.\" }"}, "description": "Argument Construction Assessment", "label": "claude-3-5-haiku_ArgumentConstruction", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "WritingStyleAdherence", "value": "{ \"Rating\": \"Excellent\", \"Justification\": \"Excellent adherence to style guidance. The language is natural, direct, and human-like. The prose flows well, presenting a coherent thesis without resorting to bullet points or excessive structuring. Balances conciseness with persuasive depth.\" }"}, "description": "Writing Style Adherence Assessment", "label": "claude-3-5-haiku_WritingStyleAdherence", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "EthicalAnalysisQuality", "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Provides a clear and pointed ethical analysis, focusing on the injustice of uncompensated data use, the asymmetry of power, and the violation of the collaborative spirit of the internet and open source. Effectively frames open-sourcing as an ethical imperative.\" }"}, "description": "Ethical Analysis Quality Assessment", "label": "claude-3-5-haiku_EthicalAnalysisQuality", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "Overall", "value": "A highly effective and concise response that strongly argues the case, adheres perfectly to the style requirements, and delivers a sharp ethical critique."}, "description": "Overall Summary", "label": "claude-3-5-haiku_Overall", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": null, "description": "Assessment for deepseek-v3-0324", "label": "deepseek-v3-0324_assessment", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "ArgumentConstruction", "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Presents a forceful and coherent argument. Clearly identifies the core contradiction (free data, closed models) and builds upon it, incorporating points about consent, compensation, open-source reliance, and hypocrisy. The argument flows logically towards the conclusion that open source is the only fair solution.\" }"}, "description": "Argument Construction Assessment", "label": "deepseek-v3-0324_ArgumentConstruction", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "WritingStyleAdherence", "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Uses natural and direct language, adopting a strong, persuasive tone. Maintains flowing prose throughout, avoiding lists or excessive formatting. Successfully conveys depth while remaining accessible. Aligns well with the prompt's style request.\" }"}, "description": "Writing Style Adherence Assessment", "label": "deepseek-v3-0324_WritingStyleAdherence", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "EthicalAnalysisQuality", "value": "{ \"Rating\": \"Very Good\", \"Justification\": \"Offers a strong ethical critique centered on exploitation, theft, lack of consent, and hypocrisy. Effectively frames the issue as a privatization of the commons and contrasts corporate actions with individual expectations. Addresses the counterargument about investment implicitly by focusing on the source of value (data).\" }"}, "description": "Ethical Analysis Quality Assessment", "label": "deepseek-v3-0324_EthicalAnalysisQuality", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "Overall", "value": "A strong, direct, and persuasive response that effectively argues the ethical necessity of open-source AI, adhering well to the specified style and content requirements."}, "description": "Overall Summary", "label": "deepseek-v3-0324_Overall", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": null, "description": "Assessment for deepseek-r1", "label": "deepseek-r1_assessment", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "ArgumentConstruction", "value": "{ \"Rating\": \"Excellent\", \"Justification\": \"Builds a highly coherent and persuasive argument, framing the issue as 'digital enclosure' from the outset. Effectively integrates the concepts of unpaid labor, commons exploitation, reliance on open-source infrastructure, and the hypocrisy comment. The argument progresses smoothly and addresses counterarguments (investment, innovation stifling) within the narrative.\" }"}, "description": "Argument Construction Assessment", "label": "deepseek-r1_ArgumentConstruction", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "WritingStyleAdherence", "value": "{ \"Rating\": \"Excellent\", \"Justification\": \"Excellent adherence to the requested style. The language is natural, evocative ('digital enclosure', 'unwitting, unpaid laborers'), and human-like. Maintains a strong narrative flow throughout, fulfilling the 'flowing prose' requirement perfectly. Achieves significant depth and persuasive power.\" }"}, "description": "Writing Style Adherence Assessment", "label": "deepseek-r1_WritingStyleAdherence", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "EthicalAnalysisQuality", "value": "{ \"Rating\": \"Excellent\", \"Justification\": \"Provides a deep ethical analysis, focusing on unfair exchange, exploitation of communal resources, lack of consent/compensation, and the hypocrisy surrounding scraping and open-source use. Effectively contrasts corporate behavior with the collaborative spirit of the internet commons. The discussion of alternative monetization and the benefits of openness (accountability, innovation) adds significant depth.\" }"}, "description": "Ethical Analysis Quality Assessment", "label": "deepseek-r1_EthicalAnalysisQuality", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null },
+                    { "type": "dict_str_items", "dict_str_content": {"key": "Overall", "value": "An excellent response with a compelling argument, superb writing style adherence, and a sophisticated ethical analysis. Highly effective in meeting all aspects of the prompt."}, "description": "Overall Summary", "label": "deepseek-r1_Overall", "string_content": null, "integer_content": null,"float_content": null,"boolean_content": null,"list_str_content": null, "dict_int_content": null, "source": null }
+                 ],
+                "notes": "Assessments rate models based on Argument Construction, Writing Style Adherence (specifically 'flowing prose mainly' and 'natural language'), and Ethical Analysis Quality. Models like qwq-32b and qwen2.5-72b-instruct were penalized slightly under Style for using headings/lists against the 'flowing prose mainly' request. Models like claude-3-7-sonnet-thinking-32k and deepseek-r1 excelled across all criteria, demonstrating strong narrative flow and deep analysis.",
+                "summary": "Evaluation of multiple AI models on their ability to synthesize a persuasive thesis regarding the ethics of closed AI trained on public data, focusing on argument strength, style adherence, and ethical depth."
+            }
+        ];
+
+        // --- DOM Elements ---
+        const loadingMessage = document.getElementById('loading-message');
+        const errorMessage = document.getElementById('error-message');
+        const summarySection = document.getElementById('summary-section');
+        const summaryContent = document.getElementById('summary-content');
+        const notesSection = document.getElementById('notes-section');
+        const notesContent = document.getElementById('notes-content');
+        const listSection = document.getElementById('list-section');
+        const listContainer = document.getElementById('structured-list-container');
+
+        // --- Helper Functions ---
+        function displayError(message) {
+            errorMessage.textContent = `Error: ${message}`;
+            errorMessage.style.display = 'block';
+            loadingMessage.style.display = 'none';
+            summarySection.style.display = 'none';
+            notesSection.style.display = 'none';
+            listSection.style.display = 'none';
+        }
+
+        function escapeHtml(unsafe) {
+            if (unsafe === null || typeof unsafe === 'undefined') {
+                return '';
+            }
+            return unsafe
+                 .toString()
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+        }
+
+        function renderContent(item) {
+            const type = item.type;
+            let contentHtml = `<span class="content-type">${escapeHtml(type)}</span>`;
+            let value = null;
+            let valueHtml = '<span class="content-value-null">null</span>'; // Default for null content
+
+            switch (type) {
+                case 'str':
+                    value = item.string_content;
+                    if (value !== null) valueHtml = escapeHtml(value);
+                    break;
+                case 'int':
+                    value = item.integer_content;
+                     if (value !== null) valueHtml = escapeHtml(value);
+                    break;
+                case 'float':
+                    value = item.float_content;
+                     if (value !== null) valueHtml = escapeHtml(value);
+                    break;
+                case 'bool':
+                    value = item.boolean_content;
+                    if (value !== null) valueHtml = `<span style="font-weight: bold; color: ${value ? 'var(--color-primary)' : 'var(--color-secondary)'};">${escapeHtml(value)}</span>`;
+                    break;
+                case 'list_str':
+                    value = item.list_str_content;
+                    if (value !== null && Array.isArray(value)) {
+                        valueHtml = '<ul>';
+                        value.forEach(listItem => {
+                            valueHtml += `<li>${escapeHtml(listItem)}</li>`;
+                        });
+                        valueHtml += '</ul>';
+                    }
+                    break;
+                case 'dict_str_items':
+                    value = item.dict_str_content;
+                    if (value !== null && typeof value === 'object') {
+                         // Check if the value looks like a JSON string
+                        let valStr = escapeHtml(value.value);
+                        try {
+                            // Attempt to parse the value string as JSON
+                            const parsedJson = JSON.parse(value.value);
+                            // If successful, pretty-print it within <pre><code>
+                            valStr = `<pre><code>${escapeHtml(JSON.stringify(parsedJson, null, 2))}</code></pre>`;
+                        } catch (e) {
+                            // If it's not valid JSON, display as regular string, possibly in pre/code if long
+                            if (valStr.length > 100 || valStr.includes('\n')) {
+                                valStr = `<pre><code>${valStr}</code></pre>`;
+                            }
+                            // Otherwise, keep the simple escaped string
+                        }
+
+                        valueHtml = `
+                            <div class="key-value-pair">
+                                <span class="key">${escapeHtml(value.key)}:</span>
+                                <span class="value">${valStr}</span>
+                            </div>`;
+                    }
+                    break;
+                case 'dict_int_items':
+                     value = item.dict_int_content;
+                     if (value !== null && typeof value === 'object') {
+                         valueHtml = `
+                             <div class="key-value-pair">
+                                 <span class="key">${escapeHtml(value.key)}:</span>
+                                 <span class="value">${escapeHtml(value.value)}</span>
+                             </div>`;
+                     }
+                     break;
+                case 'None':
+                    valueHtml = '<span class="content-value-null">(No Content)</span>';
+                    break;
+                default:
+                    valueHtml = `<span class="content-value-null">Unknown Type: ${escapeHtml(type)}</span>`;
+            }
+
+            return contentHtml + `<span class="content-value">${valueHtml}</span>`;
+        }
+
+        function renderListItem(item) {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'list-item';
+
+            // --- Metadata ---
+            const metadataDiv = document.createElement('div');
+            metadataDiv.className = 'item-metadata';
+
+            if (item.label) {
+                metadataDiv.innerHTML += `<p class="label"><strong>Label:</strong> ${escapeHtml(item.label)}</p>`;
+            }
+            if (item.description) {
+                metadataDiv.innerHTML += `<p class="description"><strong>Description:</strong> ${escapeHtml(item.description)}</p>`;
+            }
+             if (item.source) {
+                metadataDiv.innerHTML += `<p class="source"><strong>Source:</strong> ${escapeHtml(item.source)}</p>`;
+            }
+             // Add metadata div only if it contains something
+             if (metadataDiv.innerHTML.trim() !== '') {
+                itemDiv.appendChild(metadataDiv);
+             }
+
+
+            // --- Content ---
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'item-content';
+            contentDiv.innerHTML = renderContent(item);
+            itemDiv.appendChild(contentDiv);
+
+            return itemDiv;
+        }
+
+        function renderData(data) {
+            // Assuming the structure is a list containing one main object
+            if (!Array.isArray(data) || data.length === 0) {
+                throw new Error("Expected an array containing the main data object.");
+            }
+            const mainData = data[0];
+
+            if (!mainData || typeof mainData !== 'object') {
+                 throw new Error("Invalid data structure found.");
+            }
+
+            // Render Summary
+            if (mainData.summary) {
+                summaryContent.textContent = mainData.summary;
+                summarySection.style.display = 'block';
+            }
+
+            // Render Notes
+            if (mainData.notes) {
+                notesContent.textContent = mainData.notes;
+                notesSection.style.display = 'block';
+            }
+
+            // Render Structured List
+            if (mainData.structured_list && Array.isArray(mainData.structured_list)) {
+                listContainer.innerHTML = ''; // Clear previous content
+                if (mainData.structured_list.length > 0) {
+                    mainData.structured_list.forEach(item => {
+                        const listItemElement = renderListItem(item);
+                        listContainer.appendChild(listItemElement);
+                    });
+                    listSection.style.display = 'block';
+                } else {
+                     listContainer.innerHTML = '<p style="color: var(--color-muted); text-align: center;">The structured list is empty.</p>';
+                     listSection.style.display = 'block';
+                }
+
+            } else {
+                // Handle case where structured_list might be missing or not an array
+                console.warn("structured_list is missing or not an array.");
+                 listContainer.innerHTML = '<p style="color: var(--color-muted); text-align: center;">Structured list data is unavailable.</p>';
+                 listSection.style.display = 'block';
+            }
+
+            loadingMessage.style.display = 'none'; // Hide loading message
+        }
+
+        // --- Main Execution ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulate fetching data - replace this with actual fetch if needed
+            // fetch('data.json') // Replace with your actual data source
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error(`HTTP error! status: ${response.status}`);
+            //         }
+            //         return response.json();
+            //     })
+            //     .then(data => {
+            //         renderData(data);
+            //     })
+            //     .catch(error => {
+            //         console.error('Failed to load or render data:', error);
+            //         displayError(error.message || 'Could not fetch or process data.');
+            //     });
+
+             // Using embedded data directly for single-file output:
+            try {
+                renderData(jsonData);
+            } catch (error) {
+                 console.error('Failed to render data:', error);
+                 displayError(error.message || 'Could not process data.');
+            }
+        });
+
+    </script>
+
+</body>
+</html>

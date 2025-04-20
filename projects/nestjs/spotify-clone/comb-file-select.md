@@ -265,7 +265,7 @@ export class CommonController {
     constructor (private readonly commonservice: CommonService) {};
 
 
-    @Get ('get-hello')
+    @Get ('hello')
     function_get_hello () {
         return this.commonservice.hello_world_html_string;
     }
@@ -385,10 +385,12 @@ export class CommonService {
     public src_db_base_url = "http://localhost:7000";
     public dest_db_base_url = "http://localhost:8000";
     public self_base_url = "http://localhost:3000";
+
     public success_str            : string    = "successful";
     public fail_not_found_str     : string    = "Not Found";
     public fail_internal_str      : string    = "Internal Server Error";
     public fail_badreq_str        : string    = "Bad Request";
+
     public success_code           : number    = 200;
     public fail_not_found_code    : number    = 404;
     public fail_internal_code     : number    = 500;
@@ -454,6 +456,22 @@ export class CommonService {
         catch (error) {
             throw new InternalServerExc ("Error fetching the objs");
         }
+    }
+
+
+
+
+
+    async get_from_dest_db_id_promise <T> (id: number): Promise <AxiosResponse <T>> {
+        try {
+            return axios.get <T> (`${this.dest_db_base_url}/checkout/${id}`);
+        }
+
+        catch (error) {
+            throw new InternalServerExc ("Failed to get from db");
+        }
+
+    
     }
 
 
@@ -537,7 +555,41 @@ export class CommonService {
         }
     }
         
-        
+
+
+
+
+    async checkout_checkin <T> (id: number): Promise <OperationResult> {
+        try {
+            await this.get_from_dest_db_id_promise<T>(id); // Await directly, no need for intermediate variable
+            return await this.delete_in_db(id);      // If we get here, status was 200
+        }
+
+
+
+        catch (error) {
+            if (axios.isAxiosError(error) && error.response?.status === 404) {
+                const objFromSource: T = await this.get_from_db_id<T>(id); // Get from source
+                return await this.post_to_db_obj<T>(objFromSource);         // Post to destination
+            }
+
+
+            // Handle other errors
+            if (axios.isAxiosError(error)) {
+                throw new InternalServerExc(`Axios Error: ${error.message}`);
+            }
+
+
+            throw new InternalServerExc("Failed to checkout/checkin");
+            
+        }
+
+    }
+
+
+
+
+    
         
 
 }
@@ -614,6 +666,16 @@ export class UsersService {
         const opres: OperationResult = await this.commonservice.delete_in_db (id);
         return opres;
     }
+
+
+
+
+    async service_checkout_checkin (id: number): Promise <OperationResult> {
+        return await this.commonservice.checkout_checkin (id);
+    }
+
+
+
 
 
 }
@@ -773,14 +835,20 @@ export class UsersController {
     async function_user_delete (
         @Query ('id', ParseIntPipe) id: number
     ): Promise <OperationResult> {
-        const hit_post_promise: Promise <OperationResult> = this.userservice.delete_user (id);
-        const await_promise: OperationResult = await hit_post_promise;
-        return await_promise;
+        return await this.userservice.delete_user (id);
     }
 
 
 
 
+
+
+    @Get ('check')
+    async route_check (
+        @Query ('id', ParseIntPipe) id: number
+    ) {
+        return this.userservice.service_checkout_checkin (id);
+    }
     
 
 }

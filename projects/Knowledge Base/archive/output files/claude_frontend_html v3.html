@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy AI Response</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #111111;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .model-assessment {
+            background-color: #222222;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .model-name {
+            color: #00ff88;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .assessment-detail {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #333333;
+            border-radius: 6px;
+        }
+
+        .assessment-label {
+            color: #00ccff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .assessment-content {
+            color: #ffffff;
+        }
+
+        .notes-section, .summary-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #222222;
+            border-radius: 8px;
+        }
+
+        .section-title {
+            color: #00ff88;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            color: #00ff88;
+            font-size: 1.2em;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .model-assessment {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dummy AI Response</h1>
+        <div id="content">
+            <div class="loading">Loading data...</div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('sample generic response.json');
+                const data = await response.json();
+                renderContent(data[0]);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('content').innerHTML = '<p style="color: red;">Error loading data</p>';
+            }
+        }
+
+        function renderContent(data) {
+            const content = document.getElementById('content');
+            let html = '';
+
+            // Group items by model
+            const modelGroups = {};
+            data.structured_list.forEach(item => {
+                if (item.label && item.label.includes('_')) {
+                    const modelName = item.label.split('_')[0];
+                    if (!modelGroups[modelName]) {
+                        modelGroups[modelName] = [];
+                    }
+                    modelGroups[modelName].push(item);
+                }
+            });
+
+            // Render each model's assessment
+            for (const [modelName, items] of Object.entries(modelGroups)) {
+                html += `<div class="model-assessment">
+                            <div class="model-name">${modelName}</div>`;
+
+                items.forEach(item => {
+                    if (item.dict_str_content) {
+                        const value = JSON.parse(item.dict_str_content.value);
+                        html += `
+                            <div class="assessment-detail">
+                                <div class="assessment-label">${item.dict_str_content.key}</div>
+                                <div class="assessment-content">
+                                    ${typeof value === 'string' ? value : `
+                                        Rating: ${value.Rating}<br>
+                                        ${value.Justification ? `Justification: ${value.Justification}` : ''}
+                                    `}
+                                </div>
+                            </div>`;
+                    }
+                });
+
+                html += '</div>';
+            }
+
+            // Render Notes and Summary
+            if (data.notes) {
+                html += `
+                    <div class="notes-section">
+                        <div class="section-title">Notes</div>
+                        <div>${data.notes}</div>
+                    </div>`;
+            }
+
+            if (data.summary) {
+                html += `
+                    <div class="summary-section">
+                        <div class="section-title">Summary</div>
+                        <div>${data.summary}</div>
+                    </div>`;
+            }
+
+            content.innerHTML = html;
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+</body>
+</html>

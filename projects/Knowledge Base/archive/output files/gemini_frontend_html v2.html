@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy AI Response</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+
+        :root {
+            --color-background: #000000;
+            --color-text: #e0e0e0;
+            --color-text-secondary: #a0a0a0;
+            --color-primary: #00ffff; /* Cyan */
+            --color-secondary: #ff0080; /* Magenta */
+            --color-border: #333333;
+            --color-card-bg: #121212;
+            --color-card-bg-hover: #1f1f1f;
+            --color-code-bg: #282c34;
+            --color-label: var(--color-secondary);
+            --color-key: var(--color-primary);
+            --color-value: var(--color-text);
+            --color-error: #ff6b6b;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-text);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 2rem;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            color: var(--color-primary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            text-shadow: 0 0 5px var(--color-primary);
+        }
+
+        .loading-message,
+        .error-message {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+
+        .loading-message {
+            color: var(--color-primary);
+            border: 1px dashed var(--color-primary);
+        }
+
+        .error-message {
+            color: var(--color-error);
+            background-color: rgba(255, 107, 107, 0.1);
+            border: 1px solid var(--color-error);
+            white-space: pre-wrap; /* Show error details potentially */
+        }
+
+        .output-section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: var(--color-card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+        }
+
+        .section-title {
+            color: var(--color-secondary);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-secondary);
+            display: inline-block;
+        }
+
+        .notes, .summary {
+            background-color: rgba(255, 0, 128, 0.05);
+            border-left: 4px solid var(--color-secondary);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            border-radius: 4px;
+        }
+
+        .list-container {
+            display: grid;
+            gap: 1.5rem;
+            /* Responsive grid - adjust columns based on width */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .list-item {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Ensure content doesn't overflow boundaries */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .list-item:hover {
+            background-color: var(--color-card-bg-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.15);
+        }
+
+        .item-header {
+            margin-bottom: 1rem;
+        }
+
+        .item-label {
+            font-weight: 700;
+            color: var(--color-label);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            word-wrap: break-word;
+        }
+
+        .item-description {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+
+        .item-type {
+            font-size: 0.8rem;
+            color: var(--color-primary);
+            background-color: rgba(0, 255, 255, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-family: monospace;
+        }
+
+        .item-content {
+            margin-bottom: 1rem;
+            flex-grow: 1; /* Allow content to fill space */
+            word-wrap: break-word; /* Prevent long strings from overflowing */
+            overflow-wrap: break-word;
+        }
+
+        .item-content pre {
+            background-color: var(--color-code-bg);
+            color: var(--color-text);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto; /* Allow horizontal scrolling for long code/JSON */
+            font-size: 0.9em;
+            white-space: pre-wrap; /* Wrap long lines */
+            word-wrap: break-word;
+        }
+
+        .item-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .item-content ul li {
+            background-color: rgba(0, 255, 255, 0.05);
+            border-left: 3px solid var(--color-primary);
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .item-content dl { /* For key-value pairs */
+            border-left: 3px solid var(--color-secondary);
+            padding-left: 1rem;
+            background-color: rgba(255, 0, 128, 0.05);
+            border-radius: 4px;
+            padding: 1rem;
+        }
+
+        .item-content dt {
+            font-weight: 500;
+            color: var(--color-key);
+            margin-bottom: 0.25rem;
+        }
+
+        .item-content dd {
+            margin-left: 0;
+            margin-bottom: 0.75rem;
+            color: var(--color-value);
+        }
+        .item-content dd:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-content .inner-json {
+            border: 1px solid var(--color-border);
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+         .item-content .inner-json dt {
+             color: var(--color-primary); /* Different key color for inner */
+             font-size: 0.9em;
+         }
+         .item-content .inner-json dd {
+             color: var(--color-text); /* Different value color for inner */
+             font-size: 0.9em;
+         }
+
+
+        .item-source {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: auto; /* Push to bottom */
+            padding-top: 0.5rem;
+            border-top: 1px dashed var(--color-border);
+        }
+        .item-source strong {
+            color: var(--color-text-secondary);
+        }
+
+        .null-content {
+            color: var(--color-text-secondary);
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="page-title">Dummy AI Response</h1>
+
+        <div id="loading" class="loading-message">
+            <p>Loading data...</p>
+        </div>
+
+        <div id="error" class="error-message" style="display: none;">
+            <p>Error loading data.</p>
+            <pre id="error-details"></pre>
+        </div>
+
+        <div id="data-container">
+            <!-- Data will be rendered here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchData('sample generic response.json'); // Replace with your JSON file path or URL
+        });
+
+        const loadingEl = document.getElementById('loading');
+        const errorEl = document.getElementById('error');
+        const errorDetailsEl = document.getElementById('error-details');
+        const dataContainerEl = document.getElementById('data-container');
+
+        async function fetchData(url) {
+            showLoading();
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
+                }
+                const data = await response.json();
+                hideLoading();
+                renderData(data);
+            } catch (error) {
+                console.error('Failed to fetch or parse data:', error);
+                showError(error);
+            }
+        }
+
+        function showLoading() {
+            loadingEl.style.display = 'block';
+            errorEl.style.display = 'none';
+            dataContainerEl.innerHTML = ''; // Clear previous data
+        }
+
+        function hideLoading() {
+            loadingEl.style.display = 'none';
+        }
+
+        function showError(error) {
+            hideLoading();
+            errorDetailsEl.textContent = error.message + (error.stack ? `\n\nStack Trace:\n${error.stack}` : '');
+            errorEl.style.display = 'block';
+        }
+
+        function renderData(data) {
+            if (!Array.isArray(data)) {
+                 showError(new Error("Fetched data is not an array as expected."));
+                 console.error("Data structure error: Expected root to be an array.", data);
+                 return;
+            }
+
+            dataContainerEl.innerHTML = ''; // Clear any previous content or error messages
+
+            data.forEach((outputSectionData, index) => {
+                 if (!outputSectionData || typeof outputSectionData !== 'object') {
+                     console.warn(`Skipping invalid section data at index ${index}:`, outputSectionData);
+                     return; // Skip if data is not a valid object
+                 }
+                const sectionEl = document.createElement('div');
+                sectionEl.className = 'output-section';
+
+                // Render Summary
+                if (outputSectionData.summary) {
+                    const summaryEl = document.createElement('div');
+                    summaryEl.className = 'summary';
+                    summaryEl.innerHTML = `<strong class="section-title">Summary:</strong> ${escapeHtml(outputSectionData.summary)}`;
+                    sectionEl.appendChild(summaryEl);
+                }
+
+                // Render Notes
+                if (outputSectionData.notes) {
+                    const notesEl = document.createElement('div');
+                    notesEl.className = 'notes';
+                    notesEl.innerHTML = `<strong class="section-title">Notes:</strong> ${escapeHtml(outputSectionData.notes)}`;
+                    sectionEl.appendChild(notesEl);
+                }
+
+                 // Render Structured List
+                if (outputSectionData.structured_list && Array.isArray(outputSectionData.structured_list)) {
+                    const listContainerEl = document.createElement('div');
+                    listContainerEl.className = 'list-container';
+
+                    outputSectionData.structured_list.forEach(item => {
+                         if (!item || typeof item !== 'object') {
+                             console.warn(`Skipping invalid list item:`, item);
+                             return; // Skip if item is not a valid object
+                         }
+                        const listItemEl = renderListItem(item);
+                        if (listItemEl) { // Only append if renderListItem succeeded
+                            listContainerEl.appendChild(listItemEl);
+                        }
+                    });
+                    sectionEl.appendChild(listContainerEl);
+                } else if (outputSectionData.structured_list) {
+                     console.warn(`'structured_list' exists but is not an array:`, outputSectionData.structured_list);
+                }
+
+
+                dataContainerEl.appendChild(sectionEl);
+            });
+        }
+
+        function renderListItem(item) {
+            // Basic validation of the item structure
+             if (!item.type) {
+                 console.warn("Skipping list item due to missing 'type':", item);
+                 return null; // Don't render items without a type
+             }
+
+            const el = document.createElement('div');
+            el.className = 'list-item';
+
+            const header = document.createElement('div');
+            header.className = 'item-header';
+
+            // Label
+            if (item.label) {
+                const labelEl = document.createElement('div');
+                labelEl.className = 'item-label';
+                labelEl.textContent = item.label;
+                header.appendChild(labelEl);
+            }
+
+            // Description
+            if (item.description) {
+                const descEl = document.createElement('div');
+                descEl.className = 'item-description';
+                descEl.textContent = item.description;
+                header.appendChild(descEl);
+            }
+
+             // Type
+            const typeEl = document.createElement('span');
+            typeEl.className = 'item-type';
+            typeEl.textContent = item.type;
+            header.appendChild(typeEl);
+
+            el.appendChild(header);
+
+            // Content
+            const contentEl = document.createElement('div');
+            contentEl.className = 'item-content';
+            contentEl.appendChild(renderContent(item)); // Use helper for content rendering
+            el.appendChild(contentEl);
+
+            // Source
+            if (item.source) {
+                const sourceEl = document.createElement('div');
+                sourceEl.className = 'item-source';
+                sourceEl.innerHTML = `<strong>Source:</strong> ${escapeHtml(item.source)}`;
+                el.appendChild(sourceEl);
+            }
+
+            return el;
+        }
+
+        function renderContent(item) {
+            const contentContainer = document.createElement('div');
+            let contentData = null;
+
+            // Find the correct content field based on type
+            switch (item.type) {
+                case 'str':
+                    contentData = item.string_content;
+                    if (contentData !== null && contentData !== undefined) {
+                        contentContainer.textContent = contentData;
+                    } else {
+                        contentContainer.innerHTML = `<span class="null-content">(No string content)</span>`;
+                    }
+                    break;
+                case 'int':
+                    contentData = item.integer_content;
+                     if (contentData !== null && contentData !== undefined) {
+                        contentContainer.textContent = contentData;
+                    } else {
+                        contentContainer.innerHTML = `<span class="null-content">(No integer content)</span>`;
+                    }
+                    break;
+                case 'float':
+                    contentData = item.float_content;
+                    if (contentData !== null && contentData !== undefined) {
+                        contentContainer.textContent = contentData;
+                    } else {
+                        contentContainer.innerHTML = `<span class="null-content">(No float content)</span>`;
+                    }
+                    break;
+                case 'bool':
+                    contentData = item.boolean_content;
+                    if (contentData !== null && contentData !== undefined) {
+                         // Style boolean for clarity
+                        contentContainer.innerHTML = `<span style="color: ${contentData ? 'var(--color-primary)' : 'var(--color-secondary)'}; font-weight: bold;">${contentData}</span>`;
+                    } else {
+                        contentContainer.innerHTML = `<span class="null-content">(No boolean content)</span>`;
+                    }
+                    break;
+                case 'list_str':
+                    contentData = item.list_str_content;
+                    if (Array.isArray(contentData)) {
+                        const ul = document.createElement('ul');
+                        if (contentData.length > 0) {
+                            contentData.forEach(str => {
+                                const li = document.createElement('li');
+                                li.textContent = str;
+                                ul.appendChild(li);
+                            });
+                        } else {
+                             ul.innerHTML = `<li><span class="null-content">(Empty list)</span></li>`;
+                        }
+                        contentContainer.appendChild(ul);
+                    } else {
+                        contentContainer.innerHTML = `<span class="null-content">(No list content or invalid format)</span>`;
+                    }
+                    break;
+                case 'dict_str_items':
+                case 'dict_int_items': // Treat both similarly for display
+                    contentData = item.type === 'dict_str_items' ? item.dict_str_content : item.dict_int_content;
+                     if (contentData && typeof contentData === 'object' && contentData.key !== undefined) {
+                        const dl = document.createElement('dl');
+                        const dt = document.createElement('dt');
+                        dt.textContent = contentData.key;
+                        dl.appendChild(dt);
+
+                        const dd = document.createElement('dd');
+                        // Special handling for value: could be primitive or stringified JSON
+                        renderDictionaryValue(dd, contentData.value);
+                        dl.appendChild(dd);
+
+                        contentContainer.appendChild(dl);
+                    } else if (contentData === null) {
+                         contentContainer.innerHTML = `<span class="null-content">(Dictionary content is null)</span>`;
+                    }
+                    else {
+                        contentContainer.innerHTML = `<span class="null-content">(No dictionary content or invalid format)</span>`;
+                         console.warn("Invalid dict content for item:", item);
+                    }
+                    break;
+                case 'None':
+                    contentContainer.innerHTML = `<span class="null-content">(Type is None)</span>`;
+                    break;
+                default:
+                    contentContainer.innerHTML = `<span class="null-content">(Unknown type: ${escapeHtml(item.type)})</span>`;
+                    console.warn("Unknown item type:", item.type, item);
+            }
+
+            return contentContainer;
+        }
+
+        function renderDictionaryValue(parentElement, value) {
+             // Check if the value is a string that looks like JSON
+             if (typeof value === 'string' && value.trim().startsWith('{') && value.trim().endsWith('}')) {
+                 try {
+                     const parsedJson = JSON.parse(value);
+                     // Render the parsed JSON as nested key-value pairs
+                     const innerDl = document.createElement('dl');
+                     innerDl.className = 'inner-json'; // Class for potential specific styling
+                     for (const key in parsedJson) {
+                         if (Object.hasOwnProperty.call(parsedJson, key)) {
+                             const innerDt = document.createElement('dt');
+                             innerDt.textContent = key;
+                             innerDl.appendChild(innerDt);
+
+                             const innerDd = document.createElement('dd');
+                             // Recursively render if value is another object/array, or just display
+                             if (typeof parsedJson[key] === 'object' && parsedJson[key] !== null) {
+                                 const pre = document.createElement('pre');
+                                 pre.textContent = JSON.stringify(parsedJson[key], null, 2);
+                                 innerDd.appendChild(pre);
+                             } else {
+                                innerDd.textContent = parsedJson[key];
+                             }
+                             innerDl.appendChild(innerDd);
+                         }
+                     }
+                     parentElement.appendChild(innerDl);
+                     return; // Parsed and rendered successfully
+                 } catch (e) {
+                     // Parsing failed, treat it as a regular string
+                     console.warn("Failed to parse potential JSON string in dict value:", value, e);
+                 }
+             }
+
+             // Fallback: Render the value as plain text (or number/boolean)
+            const pre = document.createElement('pre'); // Use pre for better formatting of multi-line strings
+            pre.style.backgroundColor = 'transparent'; // Reset default pre background if needed
+            pre.style.padding = '0';
+            pre.textContent = value;
+            parentElement.appendChild(pre);
+        }
+
+        // Simple HTML escaping function
+        function escapeHtml(unsafe) {
+            if (unsafe === null || unsafe === undefined) return '';
+            return String(unsafe)
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+        }
+
+    </script>
+
+</body>
+</html>

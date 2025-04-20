@@ -1,0 +1,473 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy AI Response</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --primary-text-color: #e0e0e0;
+            --secondary-text-color: #a0a0a0;
+            --accent-color: #007bff; /* A slightly brighter accent */
+            --border-color: #333333;
+            --card-bg-color: #1a1a1a;
+            --code-bg-color: #2c2c2c;
+            --label-color: #bbbbbb;
+            --source-color: #888888;
+            --notes-summary-bg: #111111;
+
+            --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            --font-size-base: 16px;
+            --font-size-h1: 2.5rem;
+            --font-size-h2: 1.8rem;
+            --font-size-label: 0.9rem;
+            --font-size-small: 0.85rem;
+
+            --spacing-unit: 1rem;
+            --card-padding: calc(var(--spacing-unit) * 1.5);
+            --content-max-width: 900px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: var(--font-size-base);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-text-color);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: calc(var(--spacing-unit) * 2);
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--primary-text-color);
+            font-size: var(--font-size-h1);
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: var(--spacing-unit);
+        }
+
+        #content-container {
+            width: 100%;
+        }
+
+        .loading-indicator,
+        .error-message {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 2);
+            color: var(--secondary-text-color);
+            font-style: italic;
+        }
+        .error-message {
+            color: #ff4d4d;
+            background-color: rgba(255, 77, 77, 0.1);
+            border: 1px solid #ff4d4d;
+            border-radius: 8px;
+        }
+
+        .structured-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .list-item-card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+            padding: var(--card-padding);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            overflow: hidden; /* Ensure content respects padding */
+        }
+
+        .list-item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: var(--spacing-unit);
+            flex-wrap: wrap; /* Wrap label and type if needed */
+            gap: var(--spacing-unit); /* Add gap between label and type */
+        }
+
+        .item-label {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-text-color);
+            margin-right: auto; /* Push type badge to the right */
+        }
+
+        .item-type-badge {
+            font-size: var(--font-size-small);
+            background-color: var(--accent-color);
+            color: #ffffff;
+            padding: 0.2em 0.6em;
+            border-radius: 12px;
+            text-transform: uppercase;
+            font-weight: 500;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .item-description {
+            font-size: 1rem;
+            color: var(--secondary-text-color);
+            margin-bottom: var(--spacing-unit);
+            font-style: italic;
+        }
+
+        .item-content {
+            margin-top: var(--spacing-unit);
+            padding: var(--spacing-unit);
+            background-color: var(--code-bg-color);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            overflow-wrap: break-word; /* Handle long strings */
+            word-wrap: break-word;
+            word-break: break-all; /* Force breaks if necessary */
+            color: var(--primary-text-color); /* Ensure content text is readable */
+        }
+
+        .item-content code { /* Style for code-like content */
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        .item-content ul {
+            list-style: disc;
+            margin-left: calc(var(--spacing-unit) * 1.5);
+            padding: 0;
+        }
+        .item-content ul li {
+             margin-bottom: calc(var(--spacing-unit) * 0.3);
+        }
+
+        .item-content .key-value-pair {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .item-content .key-value-pair .key {
+            font-weight: 600;
+            color: var(--label-color);
+            flex-shrink: 0; /* Prevent key from shrinking */
+        }
+        .item-content .key-value-pair .value {
+           color: var(--primary-text-color);
+        }
+
+        .item-source {
+            font-size: var(--font-size-small);
+            color: var(--source-color);
+            margin-top: var(--spacing-unit);
+            text-align: right;
+            font-style: italic;
+        }
+
+        .item-content-none {
+            font-style: italic;
+            color: var(--secondary-text-color);
+        }
+        .item-content-boolean-true {
+             color: #90ee90; /* Light green */
+             font-weight: bold;
+        }
+         .item-content-boolean-false {
+             color: #f08080; /* Light coral */
+             font-weight: bold;
+        }
+
+        .notes-section,
+        .summary-section {
+            margin-top: calc(var(--spacing-unit) * 2);
+            padding: var(--card-padding);
+            background-color: var(--notes-summary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .notes-section h2,
+        .summary-section h2 {
+            font-size: var(--font-size-h2);
+            color: var(--primary-text-color);
+            margin-bottom: var(--spacing-unit);
+            font-weight: 500;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .notes-section p,
+        .summary-section p {
+            color: var(--secondary-text-color);
+            line-height: 1.7;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            body {
+                padding: var(--spacing-unit);
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 0;
+            }
+            .list-item-card {
+                 padding: var(--spacing-unit);
+                 margin-bottom: var(--spacing-unit);
+            }
+             .item-header {
+                flex-direction: column; /* Stack label and type */
+                align-items: flex-start;
+                gap: calc(var(--spacing-unit) * 0.5); /* Reduce gap */
+            }
+            .item-label {
+                font-size: 1.15rem;
+            }
+             .item-type-badge {
+                align-self: flex-start; /* Align badge left */
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dummy AI Response</h1>
+
+        <div id="content-container">
+            <div class="loading-indicator">Loading data...</div>
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contentContainer = document.getElementById('content-container');
+            const jsonFilePath = 'sample generic response.json'; // The JSON file to fetch
+
+            // --- Helper function to safely create and append elements ---
+            function createElement(tag, options = {}) {
+                const element = document.createElement(tag);
+                if (options.className) element.className = options.className;
+                if (options.textContent) element.textContent = options.textContent;
+                if (options.innerHTML) element.innerHTML = options.innerHTML; // Use carefully
+                return element;
+            }
+
+            // --- Function to render a single ListDataItem ---
+            function renderListItem(item) {
+                const listItemCard = createElement('li', { className: 'list-item-card' });
+
+                // --- Header (Label and Type) ---
+                const header = createElement('div', { className: 'item-header' });
+                if (item.label) {
+                    header.appendChild(createElement('span', { className: 'item-label', textContent: item.label }));
+                }
+                header.appendChild(createElement('span', { className: 'item-type-badge', textContent: item.type }));
+                listItemCard.appendChild(header);
+
+                // --- Description ---
+                if (item.description) {
+                    listItemCard.appendChild(createElement('p', { className: 'item-description', textContent: item.description }));
+                }
+
+                // --- Content ---
+                const contentDiv = createElement('div', { className: 'item-content' });
+                let contentValue = null;
+                let valueRendered = false;
+
+                switch (item.type) {
+                    case 'str':
+                        contentValue = item.string_content;
+                        if (contentValue !== null && contentValue !== undefined) {
+                           contentDiv.appendChild(createElement('code', { textContent: contentValue }));
+                           valueRendered = true;
+                        }
+                        break;
+                    case 'int':
+                        contentValue = item.integer_content;
+                         if (contentValue !== null && contentValue !== undefined) {
+                            contentDiv.appendChild(createElement('code', { textContent: contentValue.toString() }));
+                            valueRendered = true;
+                        }
+                        break;
+                    case 'float':
+                        contentValue = item.float_content;
+                         if (contentValue !== null && contentValue !== undefined) {
+                            contentDiv.appendChild(createElement('code', { textContent: contentValue.toString() }));
+                            valueRendered = true;
+                        }
+                        break;
+                    case 'bool':
+                        contentValue = item.boolean_content;
+                         if (contentValue !== null && contentValue !== undefined) {
+                            const boolSpan = createElement('code', {
+                                textContent: contentValue ? 'true' : 'false',
+                                className: contentValue ? 'item-content-boolean-true' : 'item-content-boolean-false'
+                            });
+                            contentDiv.appendChild(boolSpan);
+                            valueRendered = true;
+                         }
+                        break;
+                    case 'list_str':
+                        contentValue = item.list_str_content;
+                        if (contentValue && Array.isArray(contentValue) && contentValue.length > 0) {
+                            const ul = createElement('ul');
+                            contentValue.forEach(str => {
+                                ul.appendChild(createElement('li', { innerHTML: `<code>${str}</code>` })); // Use innerHTML for potential simple formatting, be cautious
+                            });
+                            contentDiv.appendChild(ul);
+                            valueRendered = true;
+                        } else if (Array.isArray(contentValue) && contentValue.length === 0) {
+                            contentDiv.appendChild(createElement('span', { className: 'item-content-none', textContent: '(empty list)'}));
+                            valueRendered = true;
+                        }
+                        break;
+                    case 'dict_str_items':
+                        contentValue = item.dict_str_content;
+                        if (contentValue && typeof contentValue === 'object' && contentValue.key !== undefined && contentValue.value !== undefined) {
+                            const pairDiv = createElement('div', { className: 'key-value-pair' });
+                            pairDiv.appendChild(createElement('span', { className: 'key', textContent: `${contentValue.key}:` }));
+                            pairDiv.appendChild(createElement('code', { className: 'value', textContent: contentValue.value }));
+                            contentDiv.appendChild(pairDiv);
+                            valueRendered = true;
+                        }
+                        break;
+                    case 'dict_int_items':
+                         contentValue = item.dict_int_content;
+                         if (contentValue && typeof contentValue === 'object' && contentValue.key !== undefined && contentValue.value !== undefined) {
+                            const pairDiv = createElement('div', { className: 'key-value-pair' });
+                            pairDiv.appendChild(createElement('span', { className: 'key', textContent: `${contentValue.key}:` }));
+                            pairDiv.appendChild(createElement('code', { className: 'value', textContent: contentValue.value.toString() }));
+                            contentDiv.appendChild(pairDiv);
+                            valueRendered = true;
+                        }
+                        break;
+                    case 'None':
+                        contentDiv.appendChild(createElement('span', { className: 'item-content-none', textContent: '(None)'}));
+                        valueRendered = true;
+                        break;
+                    default:
+                        console.warn(`Unhandled item type: ${item.type}`);
+                        contentDiv.appendChild(createElement('span', { className: 'item-content-none', textContent: `(Unknown type: ${item.type})`}));
+                        valueRendered = true; // Mark as handled to avoid empty content message
+                }
+
+                // Only append contentDiv if some content was meant to be shown
+                 if (valueRendered) {
+                    listItemCard.appendChild(contentDiv);
+                 } else {
+                     // Optionally show a message if content is expected but missing/null
+                    // console.warn(`Item type ${item.type} but corresponding content is null or undefined.`);
+                    // const emptyContentDiv = createElement('div', { className: 'item-content' });
+                    // emptyContentDiv.appendChild(createElement('span', { className: 'item-content-none', textContent: '(content not provided)'}));
+                    // listItemCard.appendChild(emptyContentDiv);
+                 }
+
+
+                // --- Source ---
+                if (item.source) {
+                    listItemCard.appendChild(createElement('p', { className: 'item-source', textContent: `Source: ${item.source}` }));
+                }
+
+                return listItemCard;
+            }
+
+             // --- Function to render the entire response ---
+             function renderResponse(data) {
+                // Clear loading/error messages
+                contentContainer.innerHTML = '';
+
+                // --- Render Structured List ---
+                if (data.structured_list && Array.isArray(data.structured_list)) {
+                    const listElement = createElement('ul', { className: 'structured-list' });
+                    data.structured_list.forEach(item => {
+                        try {
+                           listElement.appendChild(renderListItem(item));
+                        } catch (renderError) {
+                            console.error("Error rendering list item:", item, renderError);
+                            // Optionally append an error placeholder for the specific item
+                            const errorItem = createElement('li', {className: 'list-item-card'});
+                            errorItem.appendChild(createElement('p', {className: 'error-message', textContent: 'Error rendering this item.'}));
+                            listElement.appendChild(errorItem);
+                        }
+                    });
+                    contentContainer.appendChild(listElement);
+                } else {
+                     contentContainer.appendChild(createElement('p', { className: 'secondary-text-color', textContent: 'No structured list found in the response.' }));
+                }
+
+                // --- Render Summary ---
+                if (data.summary) {
+                    const summarySection = createElement('div', { className: 'summary-section' });
+                    summarySection.appendChild(createElement('h2', { textContent: 'Summary' }));
+                    summarySection.appendChild(createElement('p', { textContent: data.summary }));
+                    contentContainer.appendChild(summarySection);
+                }
+
+                // --- Render Notes ---
+                if (data.notes) {
+                    const notesSection = createElement('div', { className: 'notes-section' });
+                    notesSection.appendChild(createElement('h2', { textContent: 'Notes' }));
+                    notesSection.appendChild(createElement('p', { textContent: data.notes }));
+                    contentContainer.appendChild(notesSection);
+                }
+             }
+
+
+            // --- Fetch and Render ---
+            fetch(jsonFilePath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status} - Could not fetch ${jsonFilePath}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data || typeof data !== 'object') {
+                         throw new Error(`Invalid JSON data received from ${jsonFilePath}`);
+                    }
+                    renderResponse(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching or processing JSON:', error);
+                    contentContainer.innerHTML = ''; // Clear loading message
+                    contentContainer.appendChild(
+                        createElement('div', {
+                            className: 'error-message',
+                            textContent: `Failed to load AI response: ${error.message}`
+                        })
+                    );
+                });
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,1772 @@
+======== ../AI_doc_processor_webapp/frontend/src/App.js ========
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { fetchSchemas, processDocument } from './services/api';
+import ResultsPage from './components/ResultsPage';
+import './index.css';
+
+// Uppy imports
+import Uppy from '@uppy/core';
+import { DragDrop } from '@uppy/react';
+
+function App() {
+	return (
+		<Routes>
+			<Route path="/" element={<MainForm />} />
+			<Route path="/results" element={<ResultsPage />} />
+		</Routes>
+	);
+}
+
+// --- Main Form Component ---
+function MainForm() {
+	const navigate = useNavigate();
+
+	// State variables
+	const [prompt, setPrompt] = useState('');
+	const [schemas, setSchemas] = useState([]);
+	const [selectedSchema, setSelectedSchema] = useState('');
+	const [selectedModel, setSelectedModel] = useState('flash');
+	const [selectedApiKeyType, setSelectedApiKeyType] = useState('paid');
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState(null);
+    const [fileCount, setFileCount] = useState(0);
+
+	// UseRef for Uppy instance
+    const uppyRef = useRef(null);
+    if (!uppyRef.current) {
+        uppyRef.current = new Uppy({
+            autoProceed: false,
+            debug: false, // Keep false unless debugging uppy
+            restrictions: { },
+            allowMultipleUploadBatches: true,
+        });
+        console.log("Uppy instance created.");
+    }
+
+    // Update file count when Uppy's file list changes
+    useEffect(() => {
+        const uppy = uppyRef.current;
+        if (!uppy) return;
+
+        const updateCounter = () => {
+            setFileCount(uppy.getFiles().length);
+        };
+
+        uppy.on('file-added', updateCounter);
+        uppy.on('file-removed', updateCounter);
+        uppy.on('restored', updateCounter);
+        uppy.on('reset', updateCounter);
+
+        updateCounter(); // Initial count
+
+        // Cleanup listeners
+        return () => {
+            // Only remove listeners if uppy instance still exists
+            if (uppyRef.current) {
+                 console.log("Cleaning up Uppy listeners...");
+                 uppyRef.current.off('file-added', updateCounter);
+                 uppyRef.current.off('file-removed', updateCounter);
+                 uppyRef.current.off('restored', updateCounter);
+                 uppyRef.current.off('reset', updateCounter);
+            }
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Run only once on mount
+
+    // Close Uppy instance on unmount
+    useEffect(() => {
+        const uppyInstance = uppyRef.current; // Capture instance for cleanup
+        // Return the cleanup function
+        return () => {
+            if (uppyInstance) {
+                console.log("Closing Uppy instance...");
+                try {
+                    uppyInstance.close({ reason: 'unmount' });
+                    // ** REMOVED uppyRef.current = null; **
+                } catch (closeError) {
+                    // Log error if closing fails, but don't crash
+                    console.error("Error closing Uppy instance:", closeError);
+                }
+            }
+        };
+    }, []); // Run only once on unmount
+
+
+	// Fetch schemas on mount (no changes)
+	const loadSchemas = useCallback(async () => {
+        // ... (same fetch logic as before)
+		try {
+			const schemaList = await fetchSchemas();
+			setSchemas(schemaList || []);
+			if (schemaList && schemaList.length > 0) {
+				if (!selectedSchema || !schemaList.includes(selectedSchema)) {
+					setSelectedSchema(schemaList[0]);
+				}
+			}
+		} catch (err) {
+			setError(`Failed to load schemas: ${err.message}`);
+			setSchemas([]);
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		loadSchemas();
+	}, [loadSchemas]);
+
+    // Handle API Key Type change (no changes)
+    const handleApiKeyTypeChange = (event) => {
+        setSelectedApiKeyType(event.target.value);
+    };
+
+	// Handle form submission (no changes)
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+        const uppy = uppyRef.current;
+        if (!uppy) return;
+        const currentFiles = uppy.getFiles();
+		if (currentFiles.length === 0) { setError("Please add files or folders."); return; }
+		if (!prompt.trim()) { setError("Please enter a prompt."); return; }
+		setIsLoading(true);
+		setError(null);
+		const formData = new FormData();
+		formData.append('prompt', prompt);
+		formData.append('schema_name', selectedSchema);
+		formData.append('model_type', selectedModel);
+		formData.append('api_key_type', selectedApiKeyType);
+        currentFiles.forEach(file => { formData.append('files', file.data, file.name); });
+		console.log("Submitting FormData...");
+		try {
+			const response = await processDocument(formData);
+			setError(null);
+			uppy.reset();
+			navigate('/results', { state: { resultData: response } });
+		} catch (err) {
+			 console.error("Form submission -> API error:", err);
+			 setError(err.message || "An unexpected error occurred.");
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	// JSX for the main form (no changes)
+	return (
+		<div className="app-container">
+			<h1>AI Document Processor</h1>
+			{error && !isLoading && <div className="error-message">{error}</div>}
+			<form onSubmit={handleSubmit}>
+				{/* Uppy Input */}
+				<div className="form-group">
+					<label htmlFor="uppy-drag-drop">1. Add Documents / Folders</label>
+					{uppyRef.current && (
+                        <DragDrop id="uppy-drag-drop" uppy={uppyRef.current} locale={{ strings: { dropHereOr: 'Drop files or folders here, or %{browse}', browse: 'browse', } }} note="Files/folders added will be processed." height="200px" width="100%" disabled={isLoading}/>
+                    )}
+                    <p className='file-count-display'>{fileCount} file(s) added.</p>
+				</div>
+				{/* Prompt Input */}
+				<div className="form-group">
+					<label htmlFor="prompt">2. Enter Processing Prompt</label>
+					<textarea id="prompt" value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="e.g., Summarize..." required disabled={isLoading} rows={4} />
+				</div>
+				{/* Schema Selector */}
+				<div className="form-group">
+					<label htmlFor="schema-select">3. Select Output Schema (Optional)</label>
+					<select id="schema-select" value={selectedSchema} onChange={(e) => setSelectedSchema(e.target.value)} disabled={isLoading || schemas.length === 0}>
+						{schemas.length === 0 && <option value="">Loading...</option>}
+                        {schemas.map((schema) => (<option key={schema} value={schema}>{schema}</option>))}
+					</select>
+				</div>
+				 {/* Model Selector */}
+				 <div className="form-group">
+					<label>4. Select Model</label>
+					<div className="radio-group">
+						<label><input type="radio" value="flash" checked={selectedModel === 'flash'} onChange={(e) => setSelectedModel(e.target.value)} disabled={isLoading} /> Flash</label>
+						<label><input type="radio" value="pro" checked={selectedModel === 'pro'} onChange={(e) => setSelectedModel(e.target.value)} disabled={isLoading} /> Pro</label>
+					</div>
+				</div>
+                {/* API Key Type Selector */}
+                <div className="form-group">
+					<label>5. Select API Key Type</label>
+					<div className="radio-group">
+						<label><input type="radio" value="paid" checked={selectedApiKeyType === 'paid'} onChange={handleApiKeyTypeChange} disabled={isLoading}/> Paid Tier</label>
+						<label><input type="radio" value="free" checked={selectedApiKeyType === 'free'} onChange={handleApiKeyTypeChange} disabled={isLoading} /> Free Tier</label>
+					</div>
+				</div>
+				{/* Submit Button */}
+				<button type="submit" disabled={isLoading || fileCount === 0}>
+					{isLoading ? 'Processing...' : `Process ${fileCount} File(s)`}
+				</button>
+			</form>
+			{isLoading && <div className="loading-message">Processing documents, please wait...</div>}
+		</div>
+	);
+}
+
+export default App;
+
+
+======== ../AI_doc_processor_webapp/frontend/src/index.css ========
+/* Dark Mode Base */
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-color: #000000; /* Pure Black Background */
+	color: #e0e0e0; /* Light Grey Text */
+	padding: 20px;
+	line-height: 1.6;
+}
+
+/* Code elements */
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
+	background-color: #2a2a2a; /* Dark grey background for code */
+	color: #f5f5f5; /* Lighter text for code */
+	padding: 3px 6px;
+	border-radius: 4px;
+	font-size: 0.9em;
+}
+
+/* Main container */
+.app-container {
+	max-width: 900px;
+	margin: 30px auto;
+	padding: 30px 40px;
+	background-color: #121212; /* Very dark grey, slightly off-black */
+	border-radius: 12px;
+	border: 1px solid #333; /* Subtle border */
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Headings */
+h1, h2, h3 {
+	color: #eeeeee; /* Lighter headings */
+	margin-top: 0;
+	font-weight: 500;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 40px;
+	color: #00bcd4; /* Cyan Accent */
+	font-weight: 600;
+	letter-spacing: 1px;
+}
+
+/* Form elements */
+label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: 600;
+	color: #b0b0b0; /* Lighter grey for labels */
+	font-size: 0.95rem;
+}
+
+input[type="text"],
+textarea,
+select {
+	width: 100%;
+	padding: 12px 15px;
+	margin-bottom: 20px;
+	border: 1px solid #424242; /* Dark grey border */
+	border-radius: 6px;
+	box-sizing: border-box;
+	font-size: 1rem;
+	background-color: #212121; /* Dark input background */
+	color: #e0e0e0; /* Light text in inputs */
+	transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #212121 inset !important;
+    -webkit-text-fill-color: #e0e0e0 !important;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+	border-color: #00bcd4; /* Cyan focus border */
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.3); /* Cyan focus glow */
+}
+
+textarea {
+	min-height: 120px;
+	resize: vertical;
+}
+
+/* Buttons */
+button {
+	background-color: #00bcd4;
+	color: #000000;
+	padding: 14px 30px;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 1.1rem;
+	font-weight: 600;
+	transition: background-color 0.3s ease, transform 0.1s ease;
+	display: block;
+	width: 100%;
+	margin-top: 15px;
+}
+
+button:hover:not(:disabled) {
+	background-color: #4dd0e1;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 188, 212, 0.2);
+}
+
+button:disabled {
+	background-color: #424242;
+	color: #757575;
+	cursor: not-allowed;
+	opacity: 0.8;
+}
+
+/* Form grouping */
+.form-group {
+	margin-bottom: 30px;
+}
+
+/* Radio buttons */
+.radio-group label {
+	display: inline-block;
+	margin-right: 25px;
+	font-weight: normal;
+	cursor: pointer;
+	color: #b0b0b0;
+	padding: 5px 0;
+}
+.radio-group input[type="radio"] {
+	width: auto;
+	margin-right: 8px;
+	vertical-align: middle;
+	cursor: pointer;
+	accent-color: #00bcd4;
+}
+
+/* Loading and Error messages */
+.loading-message,
+.error-message,
+.warning-message,
+.info-message {
+	margin-top: 30px;
+	padding: 15px 25px;
+	border-radius: 6px;
+	text-align: center;
+	font-size: 1rem;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.loading-message {
+	background-color: #0f3a3f;
+	color: #b2ebf2;
+	border-color: #26c6da;
+}
+
+.error-message {
+	background-color: #422020;
+	color: #ffcdd2;
+	border-color: #e57373;
+	font-weight: 500;
+}
+
+.warning-message {
+    background-color: #4f4016;
+    color: #fff3c4;
+    border-color: #ffca28;
+}
+.warning-message strong {
+    color: #ffe082;
+}
+
+.info-message {
+    background-color: #1d3c56;
+    color: #d0e7ff;
+    border-color: #4a90e2;
+}
+
+/* Helper text for selected file count with Uppy */
+.file-count-display {
+	font-size: 0.9em;
+	color: #9e9e9e;
+	margin-top: 10px; /* Space below Uppy */
+	margin-bottom: 0;
+	display: block;
+	text-align: center;
+}
+
+/* --- Uppy Specific Styles --- */
+/* Import base Uppy CSS */
+@import '@uppy/core/dist/style.min.css';
+@import '@uppy/drag-drop/dist/style.min.css';
+/* @import '@uppy/progress-bar/dist/style.min.css'; */ /* Only if using ProgressBar */
+
+/* Customize Uppy DragDrop */
+.uppy-DragDrop-container {
+    background-color: #2a2a2a !important;
+    border: 2px dashed #555 !important;
+    border-radius: 8px !important;
+    margin-bottom: 10px !important; /* Reduced margin */
+    transition: border-color 0.2s ease;
+}
+
+.uppy-DragDrop-container:hover,
+.uppy-DragDrop--isDragOver {
+    border-color: #00bcd4 !important;
+}
+
+.uppy-DragDrop-inner {
+    color: #b0b0b0 !important;
+}
+
+.uppy-DragDrop-label {
+    font-size: 1.1rem !important;
+}
+
+.uppy-DragDrop-note {
+    color: #777 !important;
+    font-size: 0.9rem !important;
+}
+
+
+======== ../AI_doc_processor_webapp/frontend/src/index.js ========
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+	<React.StrictMode>
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
+	</React.StrictMode>
+);
+
+
+======== ../AI_doc_processor_webapp/frontend/src/components/ResultsPage.css ========
+/* Results Page Specific Styles (Dark Mode - Multi-File - Final) */
+
+.results-page-container {
+	max-width: 1100px;
+	margin: 30px auto;
+	padding: 30px 40px;
+	background-color: #0a0a0a;
+	border-radius: 8px;
+	border: 1px solid #2c2c2c;
+}
+
+.results-page-container h1 {
+	color: #00bcd4;
+	text-align: center;
+	margin-bottom: 30px;
+	font-weight: 600;
+    font-size: 1.8rem;
+}
+
+.back-link-container {
+	margin-bottom: 35px;
+	text-align: center;
+}
+
+.back-link-container a {
+	color: #4dd0e1;
+	text-decoration: none;
+	font-weight: 500;
+	transition: color 0.2s ease, background-color 0.2s ease;
+	padding: 8px 15px;
+	border-radius: 4px;
+	border: 1px solid #4dd0e1;
+}
+
+.back-link-container a:hover {
+	color: #121212;
+    background-color: #4dd0e1;
+	text-decoration: none;
+}
+
+/* Full width messages */
+.full-width-message {
+    margin-left: -40px;
+    margin-right: -40px;
+    padding: 15px 40px;
+    border-radius: 0;
+    margin-bottom: 30px;
+    border-left: none;
+    border-right: none;
+}
+.results-page-container .error-message { }
+.results-page-container .warning-message { }
+.results-page-container .info-message { }
+
+
+.results-content-area {
+	margin-top: 20px;
+}
+
+/* Styling for each file's result block */
+.file-result-section {
+    border: 1px solid #333;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    padding: 25px;
+    background-color: #1a1a1a;
+    transition: border-color 0.3s ease;
+}
+
+/* Highlight sections with errors */
+.file-error-section {
+    border-color: #e57373;
+    background-color: #2a1a1a;
+}
+
+.file-result-header {
+    color: #00bcd4;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #555;
+    font-weight: 500;
+}
+
+.file-error-message {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+    background-color: #422020;
+    color: #ffcdd2;
+    border: 1px solid #e57373;
+    border-radius: 4px;
+}
+.file-error-message strong {
+    color: #ff8a80;
+}
+
+/* Section within a file result */
+.sub-result-section {
+    margin-bottom: 30px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #424242;
+}
+
+.sub-result-section h3 {
+	color: #bdbdbd;
+	font-size: 1.15rem;
+	font-weight: 600;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.copy-button {
+    background-color: #333;
+    color: #bdbdbd;
+    border: 1px solid #555;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    width: auto;
+    margin-top: 0;
+    font-weight: 400;
+    min-width: 100px;
+    text-align: center;
+}
+
+.copy-button:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+.copy-button.copied {
+    background-color: #00695c;
+    color: #e0f2f1;
+    cursor: default;
+    border-color: #00897b;
+}
+.copy-button:disabled {
+    opacity: 0.8;
+    cursor: default;
+}
+
+/* JSON viewer wrapper */
+.json-viewer-wrapper {
+	background-color: #1e1e1e;
+	border: 1px solid #424242;
+	border-radius: 6px;
+	overflow: visible;
+}
+/* Apply scroll within the JsonViewer's own container if needed */
+.json-viewer-wrapper > div { 
+    /* max-height: 70vh; */ /* REMOVED - Let it expand */
+    overflow: visible; /* Let content determine height */
+}
+
+
+/* Markdown wrapper */
+.markdown-content-wrapper {
+    padding-right: 0;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    background-color: transparent;
+    /* Let content expand */
+}
+
+.markdown-content {
+	color: #e0e0e0;
+	line-height: 1.7;
+}
+
+/* Markdown Element Styling */
+.markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 { color: #eeeeee; margin-top: 1.6em; margin-bottom: 0.8em; padding-bottom: 0.4em; border-bottom: 1px solid #424242; font-weight: 600; text-align: left; }
+.markdown-content h1 { font-size: 1.8em; color: #4dd0e1; }
+.markdown-content h2 { font-size: 1.5em; color: #ce93d8; }
+.markdown-content h3 { font-size: 1.25em; color: #80cbc4; }
+.markdown-content h4 { font-size: 1.1em; color: #90a4ae; border-bottom: none; }
+.markdown-content h5, .markdown-content h6 { color: #b0bec5; border-bottom: none; font-weight: 500; }
+.markdown-content p { margin-bottom: 1em; }
+.markdown-content a { color: #4dd0e1; text-decoration: none; }
+.markdown-content a:hover { text-decoration: underline; }
+.markdown-content strong { font-weight: bold; color: #f5f5f5; }
+.markdown-content em { font-style: italic; }
+.markdown-content pre { background-color: #2a2a2a; color: #d0d0d0; padding: 15px; margin: 1.5em 0; border-radius: 6px; overflow-x: auto; border: 1px solid #424242; }
+.markdown-content pre code { background-color: transparent; padding: 0; font-size: 0.9em; line-height: 1.4; }
+.markdown-content p > code, .markdown-content li > code { font-size: 0.9em; }
+.markdown-content ul, .markdown-content ol { padding-left: 30px; margin-bottom: 1em; }
+.markdown-content li { margin-bottom: 0.5em; }
+.markdown-content blockquote { border-left: 4px solid #0097a7; margin: 1.5em 0; padding: 0.5em 15px; color: #b0b0b0; background-color: #212121; }
+.markdown-content blockquote p { margin-bottom: 0.5em; }
+.markdown-content table { border-collapse: collapse; margin: 1.5em 0; width: 100%; display: block; overflow-x: auto; }
+.markdown-content th, .markdown-content td { border: 1px solid #424242; padding: 10px 12px; text-align: left; }
+.markdown-content th { background-color: #2a2a2a; font-weight: bold; color: #eeeeee; }
+.markdown-content tr:nth-child(even) { background-color: #212121; }
+
+/* Raw output box (fallback) */
+.raw-output-box-results {
+	background-color: #2a2a2a;
+	border: 1px solid #424242;
+	padding: 15px;
+	border-radius: 6px;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 0.9rem;
+	color: #d0d0d0;
+	line-height: 1.5;
+}
+
+/* Overall Usage Stats */
+.overall-usage {
+    margin-top: 50px;
+    padding-top: 25px;
+    border-top: 2px solid #555;
+}
+
+.usage-stats-results h3 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 15px;
+    color: #00bcd4;
+}
+.usage-stats-results p {
+	margin: 8px 0;
+	font-size: 0.95rem;
+    color: #b0b0b0;
+}
+.usage-stats-results strong {
+	color: #e0e0e0;
+	min-width: 150px;
+	display: inline-block;
+}
+
+
+======== ../AI_doc_processor_webapp/frontend/src/components/ResultsPage.js ========
+import React, { useState } from 'react';
+import { useLocation, Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { JsonViewer } from '@textea/json-viewer';
+import './ResultsPage.css';
+
+// --- JSDoc type definitions for clarity (optional but helpful) --- 
+/**
+ * @typedef {object} SingleFileResult
+ * @property {string} file_name
+ * @property {'success' | 'error'} status
+ * @property {string | null | undefined} raw_output
+ * @property {any | null | undefined} structured_output
+ * @property {string | null | undefined} error_message
+ */
+
+/**
+ * @typedef {object} UsageMetadata
+ * @property {number | null | undefined} prompt_token_count
+ * @property {number | null | undefined} candidates_token_count
+ * @property {number | null | undefined} total_token_count
+ */
+
+/**
+ * @typedef {object} ResultsData
+ * @property {'success' | 'error' | 'partial_success'} status
+ * @property {string | null | undefined} overall_error_message
+ * @property {SingleFileResult[]} results
+ * @property {string | null | undefined} schema_used
+ * @property {UsageMetadata | null | undefined} overall_usage_metadata
+ */
+
+/**
+ * Default empty state matching the ResultsData structure
+ * @type {ResultsData}
+ */
+const defaultResultsData = {
+	status: 'error',
+	overall_error_message: 'No result data found or invalid format. Please go back and process documents.',
+	results: [],
+	schema_used: null,
+	overall_usage_metadata: null
+};
+
+function ResultsPage() {
+	const location = useLocation();
+
+	/** @type {ResultsData} */
+	const result = location.state?.resultData && Array.isArray(location.state.resultData.results)
+		? location.state.resultData
+		: defaultResultsData;
+
+	const {
+		status: overallStatus,
+		overall_error_message,
+		results,
+		schema_used,
+		overall_usage_metadata
+	} = result;
+
+    /** @type {[Record<string, string>, React.Dispatch<React.SetStateAction<Record<string, string>>>]} */
+	const [copyStatus, setCopyStatus] = useState({}); // { [key: string]: 'Copy' | 'Copied!' | 'Failed' }
+
+    // Generic copy function (no type annotations needed for parameters)
+    const copyToClipboard = (text, type, index) => {
+		const key = `${type}-${index}`;
+		if (!navigator.clipboard || !text) {
+            console.error('Clipboard API not available or text is empty.');
+            setCopyStatus(prev => ({ ...prev, [key]: 'Copy Failed' }));
+            setTimeout(() => setCopyStatus(prev => ({ ...prev, [key]: 'Copy' })), 2000);
+            return;
+        }
+
+        navigator.clipboard.writeText(text).then(() => {
+            setCopyStatus(prev => ({ ...prev, [key]: 'Copied!' }));
+            setTimeout(() => setCopyStatus(prev => ({ ...prev, [key]: 'Copy' })), 1500);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            setCopyStatus(prev => ({ ...prev, [key]: 'Copy Failed' }));
+            setTimeout(() => setCopyStatus(prev => ({ ...prev, [key]: 'Copy' })), 2000);
+        });
+    };
+
+	// RETURN STATEMENT STARTS HERE - NO TYPE ANNOTATIONS BEFORE THIS
+	return (
+		<div className="results-page-container">
+			<h1>Processing Results</h1>
+
+			<div className="back-link-container">
+				<Link to="/">← Process More Documents</Link>
+			</div>
+
+			{/* Display overall error/status messages */}
+			{overallStatus === 'error' && overall_error_message && (
+				<div className="error-message full-width-message">
+					<strong>Error:</strong> {overall_error_message}
+				</div>
+			)}
+            {overallStatus === 'partial_success' && (
+				<div className="warning-message full-width-message">
+					<strong>Note:</strong> Some files encountered errors during processing.
+				</div>
+			)}
+            {(overallStatus === 'success' || overallStatus === 'partial_success') && (!results || results.length === 0) && (
+                <div className="info-message full-width-message">
+                    Processing completed, but no valid files were found or processed.
+                </div>
+            )}
+
+			{/* --- Loop through results for each file --- */} 
+			<div className="results-content-area">
+                {results && results.length > 0 && results.map((fileResult, index) => {
+                    const jsonCopyKey = `json-${index}`;
+                    const rawCopyKey = `raw-${index}`;
+                    const currentJsonCopyText = copyStatus[jsonCopyKey] || 'Copy JSON';
+                    const currentRawCopyText = copyStatus[rawCopyKey] || 'Copy Raw Text';
+                    const isFileError = fileResult.status === 'error';
+                    const isJsonParseWarning = fileResult.status === 'success' && fileResult.error_message && fileResult.structured_output === null;
+
+                    let rawTitle = "Response";
+                    if (isJsonParseWarning) {
+                        rawTitle = "Raw Output (JSON Parsing Failed)";
+                    } else if (!fileResult.structured_output && fileResult.raw_output) {
+                        rawTitle = "Response (Rendered as Markdown)";
+                    } else if (fileResult.structured_output && fileResult.raw_output) {
+                        rawTitle = "Raw Output (Fallback)";
+                    }
+
+                    return (
+                        <section key={index} className={`result-section file-result-section ${isFileError ? 'file-error-section' : ''}`}>
+                            <h2 className="file-result-header">File: {fileResult.file_name || `Item ${index + 1}`}</h2>
+
+                            {isFileError && fileResult.error_message && (
+                                <div className="error-message file-error-message">
+                                    <strong>Error:</strong> {fileResult.error_message}
+                                </div>
+                            )}
+                             {isJsonParseWarning && fileResult.error_message && (
+                                <div className="warning-message file-error-message">
+                                    <strong>Note:</strong> {fileResult.error_message}
+                                </div>
+                            )}
+
+                            {/* Structured Output for this file */}
+                            {fileResult.structured_output && (
+                                <div className="sub-result-section">
+                                    <header className="section-header">
+                                        <h3>Structured Output ({schema_used || 'N/A'})</h3>
+                                        <button
+                                            onClick={() => copyToClipboard(JSON.stringify(fileResult.structured_output, null, 2), 'json', index)}
+                                            className={`copy-button ${currentJsonCopyText !== 'Copy JSON' ? 'copied' : ''}`}
+                                            disabled={currentJsonCopyText !== 'Copy JSON'}
+                                        >
+                                            {currentJsonCopyText}
+                                        </button>
+                                    </header>
+                                    <div className="json-viewer-wrapper">
+                                        <JsonViewer
+                                            value={fileResult.structured_output}
+                                            theme="vscode" dark={true} indentWidth={2}
+                                            collapsed={false} enableClipboard={false}
+                                            displayDataTypes={false} displayObjectSize={true}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Raw Output for this file */}
+                            {fileResult.raw_output && (
+                                <div className="sub-result-section">
+                                    <header className="section-header">
+                                        <h3>{rawTitle}</h3>
+                                         <button
+                                            onClick={() => copyToClipboard(fileResult.raw_output, 'raw', index)}
+                                            className={`copy-button ${currentRawCopyText !== 'Copy Raw Text' ? 'copied' : ''}`}
+                                            disabled={currentRawCopyText !== 'Copy Raw Text'}
+                                        >
+                                            {currentRawCopyText}
+                                        </button>
+                                    </header>
+                                    {!fileResult.structured_output ? (
+                                        <div className="markdown-content-wrapper">
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{fileResult.raw_output}</ReactMarkdown>
+                                        </div>
+                                    ) : (
+                                        <pre className="raw-output-box-results">{fileResult.raw_output}</pre>
+                                    )}
+                                </div>
+                            )}
+
+                             {fileResult.status === 'success' && !fileResult.raw_output && !fileResult.structured_output && (
+                                 <p><i>No output content generated for this file.</i></p>
+                             )}
+                        </section>
+                    )
+                })}
+
+				{/* --- Overall Usage Statistics --- */} 
+				{overall_usage_metadata && (overallStatus === 'success' || overallStatus === 'partial_success') && (
+					<section className="result-section usage-stats-results overall-usage">
+						<h3>Overall Usage Statistics</h3>
+						<p><strong>Total Input Tokens:</strong> {overall_usage_metadata.prompt_token_count?.toLocaleString() ?? 'N/A'}</p>
+						<p><strong>Total Output Tokens:</strong> {overall_usage_metadata.candidates_token_count?.toLocaleString() ?? 'N/A'}</p>
+						<p><strong>Grand Total Tokens:</strong> {overall_usage_metadata.total_token_count?.toLocaleString() ?? 'N/A'}</p>
+					</section>
+				)}
+
+			</div>
+		</div>
+	);
+}
+
+export default ResultsPage;
+
+
+======== ../AI_doc_processor_webapp/frontend/src/components/OutputDisplay.css ========
+.output-container {
+	margin-top: 40px;
+	padding: 25px 35px;
+	background-color: #1e1e1e; /* Slightly lighter dark background for results */
+	border: 1px solid #424242; /* Dark grey border */
+	border-radius: 8px;
+}
+
+.output-container h2 {
+	margin-top: 0;
+	color: #00bcd4; /* Cyan */
+	border-bottom: 2px solid #424242;
+	padding-bottom: 15px;
+	margin-bottom: 25px;
+	font-weight: 500;
+	font-size: 1.5rem;
+}
+
+.output-section {
+	margin-bottom: 30px;
+}
+
+.output-section h3 {
+	margin-bottom: 15px;
+	color: #bdbdbd; /* Lighter grey for subheadings */
+	font-size: 1.15rem;
+	font-weight: 600;
+	border-bottom: 1px solid #424242;
+	padding-bottom: 8px;
+}
+
+/* Styling for the raw text output box */
+.raw-output-box {
+	background-color: #2a2a2a; /* Darker background for code/raw text */
+	border: 1px solid #424242;
+	padding: 15px;
+	border-radius: 5px;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	max-height: 500px;
+	overflow-y: auto;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 0.9rem;
+	color: #d0d0d0; /* Slightly lighter text for raw output */
+	line-height: 1.5;
+}
+
+/* Styling for usage stats */
+.usage-stats p {
+	margin: 8px 0;
+	font-size: 0.95rem;
+    color: #b0b0b0;
+}
+.usage-stats strong {
+	color: #e0e0e0;
+	min-width: 120px;
+	display: inline-block;
+}
+
+/* Error / Warning messages inside results */
+.output-container .error-message {
+	/* Uses global .error-message style */
+	margin-bottom: 25px;
+	text-align: left;
+    border-width: 2px;
+}
+.output-container .warning-message { /* Style warnings differently */
+    margin-top: 25px;
+    padding: 15px 25px;
+    border-radius: 6px;
+    text-align: left;
+    font-size: 1rem;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #4f4016; /* Dark Orange/Yellow background */
+    color: #fff3c4; /* Light Yellow text */
+    border-color: #ffca28; /* Amber border */
+    margin-bottom: 25px;
+}
+.output-container .warning-message strong {
+    color: #ffe082; /* Slightly darker yellow for strong text */
+}
+
+
+/* Styling for @textea/json-viewer */
+/* Ensure the viewer takes the theme prop for dark mode */
+
+
+.output-section p i {
+	color: #9e9e9e; /* Medium grey for italic notes */
+}
+
+
+======== ../AI_doc_processor_webapp/frontend/src/components/OutputDisplay.js ========
+import React from 'react';
+import { JsonViewer } from '@textea/json-viewer';
+import './OutputDisplay.css';
+
+const OutputDisplay = ({ result }) => {
+	if (!result) {
+		return null;
+	}
+
+	const {
+		status,
+		raw_output,
+		structured_output,
+		schema_used,
+		usage_metadata,
+		error_message // Can be error OR warning (like failed JSON parse)
+	} = result;
+
+	const hasStructuredData = structured_output !== null && structured_output !== undefined;
+	const wasStructuredAttempted = schema_used && schema_used !== '(No Schema - Plain Text)';
+	const isProcessingError = status === 'error'; // Use status to determine if it was a hard error
+	const isParsingWarning = status === 'success' && error_message; // Success but with a post-processing issue
+
+	return (
+		<div className="output-container">
+			<h2>Processing Result</h2>
+
+			{/* Display hard processing error */}
+			{isProcessingError && error_message && (
+				<div className="error-message">
+					<strong>Processing Error:</strong> {error_message}
+				</div>
+			)}
+
+            {/* Display parsing/validation warning */}
+            {isParsingWarning && error_message && (
+				<div className="warning-message"> {/* Style this differently? */} 
+					<strong>Note:</strong> {error_message}
+				</div>
+			)}
+
+			{/* Display Structured Output Section - only if attempted */}
+			{wasStructuredAttempted && (
+				 <div className="output-section">
+					<h3>Structured Output ({schema_used || 'Attempted'})</h3>
+					{hasStructuredData ? (
+						<JsonViewer
+							value={structured_output}
+                            theme="vscode" // Example dark theme for json-viewer
+                            dark={true}
+                            indentWidth={2}
+                            collapsed={false}
+                            enableClipboard={true}
+                            displayDataTypes={false}
+                            displayObjectSize={true}
+                            style={{ padding: '15px', borderRadius: '5px', backgroundColor: '#1e1e1e' /* Dark background for viewer */ }}
+						/>
+					) : (
+						// Don't show if processing error, error message already covers it
+                        // Show only if success but parsing failed (isParsingWarning)
+                        isParsingWarning && <p><i>JSON parsing failed. See raw output below.</i></p>
+					)}
+				</div>
+			)}
+
+			{/* Display Raw Output Section - always show if available */}
+			{raw_output && (
+				<div className="output-section">
+					<h3>Raw Output</h3>
+					<pre className="raw-output-box">{raw_output}</pre>
+				</div>
+			)}
+
+			{/* Display Usage Statistics Section - only on success */}
+			{usage_metadata && status === 'success' && (
+				<div className="output-section usage-stats">
+					<h3>Usage Statistics</h3>
+					<p><strong>Input Tokens:</strong> {usage_metadata.prompt_token_count?.toLocaleString() ?? 'N/A'}</p>
+					<p><strong>Output Tokens:</strong> {usage_metadata.candidates_token_count?.toLocaleString() ?? 'N/A'}</p>
+					<p><strong>Total Tokens:</strong> {usage_metadata.total_token_count?.toLocaleString() ?? 'N/A'}</p>
+				</div>
+			)}
+
+			{/* Fallback message */}
+			{status === 'success' && !raw_output && !hasStructuredData && !isParsingWarning && (
+				 <p><i>Processing completed successfully, but the model returned no output content.</i></p>
+			)}
+		</div>
+	);
+};
+
+export default OutputDisplay;
+
+
+======== ../AI_doc_processor_webapp/frontend/src/services/api.js ========
+import axios from 'axios';
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+
+const apiClient = axios.create({
+	baseURL: API_BASE_URL,
+	headers: {
+		'Accept': 'application/json',
+	},
+});
+
+/**
+ * Fetches the list of available schema names from the backend.
+ * @returns {Promise<string[]>}
+ * @throws {Error}
+ */
+export const fetchSchemas = async () => {
+	console.log(`Fetching schemas from ${API_BASE_URL}/schemas`);
+	try {
+		const response = await apiClient.get('/schemas');
+		if (response.data && Array.isArray(response.data.schemas)) {
+			return response.data.schemas;
+		} else {
+			throw new Error("Invalid response format for schemas.");
+		}
+	} catch (error) {
+		console.error("Error fetching schemas:", error.response || error.message);
+		const detail = error.response?.data?.detail;
+		throw new Error(detail || "Failed to fetch schemas.");
+	}
+};
+
+/**
+ * Sends the document processing request.
+ * @param {FormData} formData
+ * @returns {Promise<object>}
+ * @throws {Error}
+ */
+export const processDocument = async (formData) => {
+	console.log(`Sending processing request to ${API_BASE_URL}/process`);
+	try {
+		console.log("FormData entries before sending:");
+        for (let [key, value] of formData.entries()) {
+            if (value instanceof File) {
+                console.log(`  ${key}: File(name=${value.name}, size=${value.size}, type=${value.type})`);
+            } else {
+                console.log(`  ${key}: ${value}`);
+            }
+        }
+
+		const response = await apiClient.post('/process', formData, {
+			// timeout: 600000 // 10 minutes
+		});
+		console.log("Processing response received:", response.data);
+		return response.data;
+	} catch (error) {
+		console.error("Error processing document:", error.response || error.message);
+		const backendErrorMsg = error.response?.data?.error_message || error.response?.data?.detail;
+		throw new Error(backendErrorMsg || `Request failed with status ${error.response?.status || 'unknown'}`);
+	}
+};
+
+
+======== ../AI_doc_processor_webapp/backend/app/__init__.py ========
+
+
+
+======== ../AI_doc_processor_webapp/backend/app/main.py ========
+# ai_doc_processor_webapp/backend/app/main.py
+import os
+import sys
+import pathlib
+import logging
+from typing import Optional, List # Import List
+
+# Third-party imports
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+# --- Setup logging ---
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+main_logger = logging.getLogger("api_main")
+
+# --- Path setup and sys.path modification ---
+try:
+	backend_dir = pathlib.Path(__file__).resolve().parent.parent
+	webapp_root = backend_dir.parent
+	original_project_root = webapp_root.parent / "Knowledge Base" # ** ADJUST IF NEEDED **
+	main_logger.info(f"Original project root: {original_project_root}")
+	if not original_project_root.is_dir(): main_logger.warning("Original project root not found!")
+	original_project_root_str = str(original_project_root)
+	if original_project_root_str not in sys.path:
+		sys.path.insert(0, original_project_root_str)
+		main_logger.info(f"Added to sys.path: {original_project_root_str}")
+except Exception as path_e: main_logger.critical(f"Path error: {path_e}", exc_info=True); sys.exit(1)
+
+# --- Load .env ---
+dotenv_path = backend_dir / ".env"
+if dotenv_path.is_file(): load_dotenv(dotenv_path=dotenv_path, override=True); main_logger.info(f"Loaded .env: {dotenv_path}")
+else: main_logger.warning(f"Backend .env not found: {dotenv_path}")
+
+# --- Imports ---
+try:
+	from src.utils import gemini_utils
+	from .schemas.api_models import ProcessResponse, SchemaListResponse, ProcessForm # Import ProcessForm
+	from .core.processor import process_document_web_multi # Import new multi processor
+	main_logger.info("Imports successful.")
+except ImportError as e: main_logger.critical(f"Import failed: {e}", exc_info=True); sys.exit(1)
+except Exception as import_e: main_logger.critical(f"Unexpected Import Error: {import_e}", exc_info=True); sys.exit(1)
+
+# --- FastAPI App & CORS ---
+app = FastAPI(title="AI Document Processor API", version="1.7.0 MULTI")
+frontend_origin = os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")
+app.add_middleware(CORSMiddleware, allow_origins=[frontend_origin], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+main_logger.info(f"CORS for: {frontend_origin}")
+
+# --- API Endpoints ---
+
+@app.get("/api/schemas", response_model=SchemaListResponse, summary="Get Schemas")
+async def get_available_schemas():
+	"""Retrieves the list of registered schema names."""
+	try:
+		schema_names = list(gemini_utils.SCHEMA_REGISTRY.keys()); schema_names.insert(0, "(No Schema - Plain Text)")
+		return SchemaListResponse(schemas=schema_names)
+	except Exception as e: main_logger.error(f"Schema registry error: {e}", exc_info=True); raise HTTPException(status_code=500, detail="Schema load error.")
+
+# --- REWRITTEN /api/process endpoint for MULTIPLE FILES --- 
+@app.post("/api/process", response_model=ProcessResponse, summary="Process Uploaded Documents")
+async def process_files_endpoint(
+	# ** Expect a LIST of files under the key 'files' **
+	files: List[UploadFile] = File(..., description="One or more document files to process."),
+	# ** Inject form fields using Depends and the Pydantic model **
+	form_data: ProcessForm = Depends()
+):
+	"""Handles multiple file uploads and triggers batch processing."""
+	main_logger.info(f"Processing request for {len(files)} file(s): schema='{form_data.schema_name}', model='{form_data.model_type}', key='{form_data.api_key_type}'")
+	
+	if not files:
+		 raise HTTPException(status_code=400, detail="No files were uploaded.")
+
+	files_data_to_process = []
+	processed_filenames = set()
+
+	try:
+		# --- Read all files first --- 
+		for file in files:
+			if not file.filename:
+				main_logger.warning("Skipping upload with no filename.")
+				continue # Skip files without names
+			# Prevent duplicate filenames in the same request if needed
+			if file.filename in processed_filenames:
+				main_logger.warning(f"Duplicate filename '{file.filename}' in request, skipping second instance.")
+				continue
+			
+			content = await file.read()
+			if not content:
+				main_logger.warning(f"Skipping empty file: {file.filename}")
+				continue # Skip empty files
+			
+			files_data_to_process.append((file.filename, content, file.content_type or 'application/octet-stream'))
+			processed_filenames.add(file.filename)
+			await file.close() # Close file after reading
+		
+		if not files_data_to_process:
+			 raise HTTPException(status_code=400, detail="No valid files found to process after initial checks.")
+
+		main_logger.info(f"Prepared {len(files_data_to_process)} files for processing.")
+
+		# --- Call Core Logic for MULTIPLE files --- 
+		result_data = await process_document_web_multi(
+			files_data=files_data_to_process,
+			form_data=form_data # Pass the validated form data model
+		)
+		main_logger.info(f"Multi-file processor completed with status: {result_data.get('status')}")
+		return ProcessResponse(**result_data)
+
+	except HTTPException as http_exc:
+		main_logger.warning(f"HTTPException: {http_exc.status_code} - {http_exc.detail}")
+		raise http_exc # Re-raise validation/early errors
+	except Exception as e:
+		main_logger.error(f"!!! UNEXPECTED Endpoint Error: {type(e).__name__}: {e}", exc_info=True)
+		# Return a structured error response even for unexpected errors
+		return ProcessResponse(
+			status="error",
+			overall_error_message=f"Internal Server Error: {type(e).__name__}",
+			results=[]
+		)
+
+
+# --- Health Check & Root Endpoints ---
+@app.get("/api/health", summary="Health Check")
+async def health_check(): return {"status": "ok"}
+@app.get("/", summary="API Root")
+async def read_root(): return {"message": "API running"}
+
+
+======== ../AI_doc_processor_webapp/backend/app/schemas/api_models.py ========
+# ai_doc_processor_webapp/backend/app/schemas/api_models.py
+from pydantic import BaseModel, Field
+from typing import Optional, List, Dict, Any
+
+# --- Model for Overall Usage --- 
+class UsageMetadata(BaseModel):
+    """ Structure for aggregated token usage information. """
+    prompt_token_count: int = 0
+    candidates_token_count: int = 0
+    total_token_count: int = 0
+
+# --- Model for a Single File's Result --- 
+# ** ADDED MISSING MODEL DEFINITION **
+class SingleFileResult(BaseModel):
+    """ Structure for the result of processing a single file. """
+    file_name: str
+    status: str = "success" # 'success' or 'error'
+    raw_output: Optional[str] = None
+    structured_output: Optional[Any] = None
+    error_message: Optional[str] = None
+    # Per-file usage could be added here if needed later
+    # usage_metadata: Optional[UsageMetadata] = None 
+
+# --- Model for the Overall API Response (for Multi-File) --- 
+class ProcessResponse(BaseModel):
+    """ Structure for the final response from the /process endpoint. """
+    status: str = "success" # 'success', 'error', 'partial_success'
+    overall_error_message: Optional[str] = None
+    results: List[SingleFileResult] = [] # List of results for each file
+    schema_used: Optional[str] = None
+    overall_usage_metadata: Optional[UsageMetadata] = None
+
+# --- Model for Schema List Response --- 
+class SchemaListResponse(BaseModel):
+    """ Response structure for the /schemas endpoint. """
+    schemas: List[str]
+
+# --- Optional: Model for Form Fields (if using Depends) ---
+# Kept here for potential future use, though not currently used by main.py
+class ProcessForm(BaseModel):
+    """ Defines the expected form fields if using Depends(). """
+    prompt: str = Field(..., description="Instructions for processing.")
+    schema_name: str = Field(..., description="Schema name or '(No Schema - Plain Text)'.")
+    model_type: str = Field(..., description="Model type ('pro' or 'flash').")
+    api_key_type: str = Field(..., description="API key type ('free' or 'paid').")
+
+
+======== ../AI_doc_processor_webapp/backend/app/schemas/__pycache__/api_models.cpython-313.pyc ========
+�
+
+    h�  �                   �   � S SK JrJr  S SKJrJrJrJr   " S S\5      r " S S\5      r	 " S S\5      r
+ " S	 S
+\5      r " S S\5      rg
+)�    )�	BaseModel�Field)�Optional�List�Dict�Anyc                   �D   � \ rS rSr% SrSr\\S'   Sr\\S'   Sr	\\S'   Sr
+g)	�
+UsageMetadata�   z2Structure for aggregated token usage information. r   �prompt_token_count�candidates_token_count�total_token_count� N)�__name__�
+__module__�__qualname__�__firstlineno__�__doc__r   �int�__annotations__r
+   r   �__static_attributes__r   �    �f/home/ansarimn/Downloads/tools-2025/projects/AI_doc_processor_webapp/backend/app/schemas/api_models.pyr
+   r
+      s&   � �=�����"#��C�#���s�r   r
+   c                   �n   � \ rS rSr% Sr\\S'   Sr\\S'   Sr\	\   \S'   Sr
+\	\   \S'   Sr\	\   \S	'   S
+r
+g)�SingleFileResult�   z6Structure for the result of processing a single file. �	file_name�success�statusN�
+raw_output�structured_output�
+error_messager   )r   r   r   r   r   �strr   r   r    r   r!   r   r"   r   r   r   r   r   r      s?   � �A��N��F�C�� $�J���
+�$�'+��x��}�+�#'�M�8�C�=�'r   r   c                   �x   � \ rS rSr% SrSr\\S'   Sr\	\   \S'   / r
+\\   \S'   Sr
+\	\   \S'   Sr\	\   \S	'   S
+rg)�ProcessResponse�   z=Structure for the final response from the /process endpoint. r   r   N�overall_error_message�results�schema_used�overall_usage_metadatar   )r   r   r   r   r   r   r#   r   r'   r   r(   r   r   r)   r*   r
+   r   r   r   r   r%   r%      sL   � �H��F�C��+/��8�C�=�/�&(�G�T�"�
+#�(�!%�K��#��%�6:��H�]�3�:r   r%   c                   �*   � \ rS rSr% Sr\\   \S'   Srg)�SchemaListResponse�"   z.Response structure for the /schemas endpoint. �schemasr   N)	r   r   r   r   r   r   r#   r   r   r   r   r   r,   r,   "   s   � �9�
+�#�Y�r   r,   c                   �z   � \ rS rSr% Sr\" SSS9r\\S'   \" SSS9r	\\S'   \" SS	S9r
+\\S
+'   \" SSS9r\\S'   S
+rg)�ProcessForm�(   z5Defines the expected form fields if using Depends(). .zInstructions for processing.)�description�promptz*Schema name or '(No Schema - Plain Text)'.�schema_namezModel type ('pro' or 'flash').�
+model_typez API key type ('free' or 'paid').�api_key_typer   N)
+r   r   r   r   r   r   r3   r#   r   r4   r5   r6   r   r   r   r   r0   r0   (   sM   � �@���)G�H�F�C�H��S�.Z�[�K��[��C�-M�N�J��N��c�/Q�R�L�#�Rr   r0   N)
+�pydanticr   r   �typingr   r   r   r   r
+   r   r%   r,   r0   r   r   r   �<module>r9      sL   �� %� ,� ,��I� �(�y� (�;�i� ;��� �S�)� Sr   
+
+======== ../AI_doc_processor_webapp/backend/app/__pycache__/main.cpython-313.pyc ========
+�
+
+    MhY  �                   �  � S SK r S SKrS SKrS SKrS SKJrJr  S SKJrJ	r	J
+r
+JrJrJ
+r
+  S SKJr  S SKJr  \R$                  " \R&                  SS9  \R(                  " S5      r \R,                  " \5      R1                  5       R2                  R2                  r\R2                  r\R2                  S	-  r\R;                  S
+\ 35        \R=                  5       (       d  \R?                  S5        \ " \5      r!\!\RD                  ;  a0  \RD                  RG                  S \!5        \R;                  S\! 35        \S-  r(\(RS                  5       (       a  \" \(SS9  \R;                  S\( 35        O\R?                  S\( 35         S SK*J+r+  SSK,J-r-J.r.J/r/  SSK0J1r1  \R;                  S5        \" SSS9r5\ Rl                  " SS5      r7\5Rq                  \\7/SS /S /S!9  \R;                  S"\7 35        \5Rs                  S#\.S$S%9S& 5       r:\5Rw                  S'\-S(S%9\	" S)S*S+9\
+" 5       4S,\\
+   S-\/4S. jj5       r<\5Rs                  S/S0S19S2 5       r=\5Rs                  S3S4S19S5 5       r>g! \$ a0  r%\RM                  S
+\% 3SS9  \RN                  " S5         Sr%C%GNYSr%C%ff = f! \2 a0  r3\RM                  S\3 3SS9  \RN                  " S5         Sr3C3GN Sr3C3f\$ a0  r4\RM                  S\4 3SS9  \RN                  " S5         Sr4C4GNTSr4C4ff = f)6�    N)�Optional�List)�FastAPI�File�
+UploadFile�Form�
+HTTPException�Depends)�CORSMiddleware)�load_dotenvz1%(asctime)s [%(levelname)s] %(name)s: %(message)s)�level�format�api_mainzKnowledge BasezOriginal project root: z Original project root not found!zAdded to sys.path: zPath error: T��exc_info�   z.env)�dotenv_path�overridez
+Loaded .env: zBackend .env not found: )�gemini_utils)�ProcessResponse�SchemaListResponse�ProcessForm)�process_document_web_multizImports successful.zImport failed: zUnexpected Import Error: zAI Document Processor APIz1.7.0 MULTI)�title�version�FRONTEND_ORIGINzhttp://localhost:3000�*)�
+allow_origins�allow_credentials�
+allow_methods�
+allow_headersz
+CORS for: z/api/schemaszGet Schemas)�response_model�summaryc               �   ��   #   �  [        [        R                  R                  5       5      o R	                  SS5        [        U S9$ ! [         a&  n[        R                  SU 3SS9  [        SSS	9eS
+nAff = f7f)z.Retrieves the list of registered schema names.r   z(No Schema - Plain Text))�schemaszSchema registry error: Tr   i�  zSchema load error.��status_code�detailN)
+�listr   �SCHEMA_REGISTRY�keys�insertr   �	Exception�main_logger�errorr	   )�schema_names�es     �X/home/ansarimn/Downloads/tools-2025/projects/AI_doc_processor_webapp/backend/app/main.py�get_available_schemasr3   4   s�   � � �[��l�2�2�7�7�9�:�,�<O�<O�PQ�Sm�<n�	�L�	1�1���  [��)�)�,C�A�3�*G�RV�)�W�_l�y|�  FZ�  `[�  Z[��  [�s)   �A8�A A �A8�
+A5�!A0�0A5�5A8z/api/processzProcess Uploaded Documents.z&One or more document files to process.)�description�files�	form_datac              �   �6  #   � [         R                  S[        U 5       SUR                   SUR                   SUR
+                   S3	5        U (       d
+  [
+        SSS9e/ n[        5       n U  GH  nUR                  (       d  [         R                  S	5        M,  UR                  U;   a%  [         R                  S
+UR                   S35        Ma  UR                  5       I Sh  v�N nU(       d$  [         R                  S
+UR                   35        M�  UR                  UR                  XTR                  =(       d    S45        UR                  UR                  5        UR                  5       I Sh  v�N   GM
+     U(       d
+  [
+        SSS9e[         R                  S[        U5       S35        [        UUS9I Sh  v�N n[         R                  SUR!                  S5       35        [#        S0 UD6$  GN N� N;! [         a6  n[         R                  SUR$                   SUR&                   35        UeSnAf[(         aX  n[         R+                  S[-        U5      R.                   SU 3SS9  [#        SS[-        U5      R.                   3/ S9s SnA$ SnAff = f7f)z<Handles multiple file uploads and triggers batch processing.zProcessing request for z file(s): schema='z
+', model='z', key='�'i�  zNo files were uploaded.r&   z!Skipping upload with no filename.zDuplicate filename 'z'' in request, skipping second instance.NzSkipping empty file: zapplication/octet-streamz5No valid files found to process after initial checks.z	Prepared z files for processing.)�
+files_datar6   z,Multi-file processor completed with status: �statuszHTTPException: z - z!!! UNEXPECTED Endpoint Error: z: Tr   r/   zInternal Server Error: )r:   �overall_error_message�results� )r.   �info�len�schema_name�
+model_type�api_key_typer	   �set�filename�warning�read�append�content_type�add�closer   �getr   r'   r(   r-   r/   �type�__name__)	r5   r6   �files_data_to_process�processed_filenames�file�content�result_data�http_excr1   s	            r2   �process_files_endpointrT   =   s|  � � � 
+���+�C��J�<�7I�)�J_�J_�I`�`j�kt�k�k�  kA�  AI�  JS�  J`�  J`�  Ia�  ab�  c�  d�
+�	�3�/H�	I�I����u��+��d�
+�-�-����;�<��
+�m�m�*�*����.�t�}�}�o�=d�e�f���9�9�;�
+�7�
+����/��
+�
+��?�@���������9J�9J�9h�Nh� i�j����4�=�=�)�	
+������! �$ 
+�
+�C�0g�
+h�h�
+���Y�s�#8�9�:�:P�Q�R� 1�#�
+�� �+� ���A�+�/�/�RZ�B[�A\�]�^�	�	'�;�	'�'�) � ��� 	� �
+�����(<�(<�'=�S����@Q�R�S��.��� �
+���5�d�1�g�6F�6F�5G�r�!��M�X\��]�	�
+�2�4��7�3C�3C�2D�E�
+�
+� ���s|   �A'J�*A6G6 � G/�!B
+G6 �.G2�/A	G6 �8G4�95G6 �.J�/G6 �2G6 �4G6 �6
+J� 1H1�1
+J�>A
+J�J�J�J�Jz/api/healthzHealth Check)r#   c               �   �   #   � SS0$ 7f)Nr:   �okr=   r=   �    r2   �health_checkrX   |   s   � � �"*�D�!1�1��   ��/zAPI Rootc               �   �   #   � SS0$ 7f)N�messagezAPI runningr=   r=   rW   r2   �	read_rootr]   ~   s   � � �(�-�8�8�rY   )?�os�sys�pathlib�logging�typingr   r   �fastapir   r   r   r   r	   r
+   �fastapi.middleware.corsr   �dotenvr   �basicConfig�INFO�	getLoggerr.   �Path�__file__�resolve�parent�backend_dir�webapp_root�original_project_rootr>   �is_dirrE   �str�original_project_root_str�pathr,   r-   �path_e�critical�exitr   �is_file�	src.utilsr   �schemas.api_modelsr   r   r   �core.processorr   �ImportErrorr1   �import_e�app�getenv�frontend_origin�add_middlewarerK   r3   �postrT   rX   r]   r=   rW   r2   �<module>r�      s6  �� 	� 
+� � � !� L� K� 2� � � � �'�,�,�/b� c����
+�+��
+f��|�|�H�%�-�-�/�6�6�=�=���!�!��$�+�+�.>�>�����+�,A�+B�C�D��$�$�&�&��(;�(;�<^�(_� �!6�7���S�X�X�-��(�(�/�/�!�.�/�
+���(�)B�(C�D�E� �F�"�������+�+��M�{�O_�O_�bo�p{�o|�`}�O~����4�[�M�B�C�w�#�Q�Q�7����'�(�
+ �/��G���)�)�-�/F�G�� � � �>�/�1B�VZ�kn�jo�  AD�  @E� �  F� � � �:�o�.�/� 0� ����(:�M��R�[� S�[� ���.��B^��_�  ��1Y�Z�!�)�	:��Z��:� 
+�	:� `�:�| ������/� 1� 0� 1�����j��!� 8� "� 8��G � e�K�0�0�<��x�1H�SW�0�X�Z]�Zb�Zb�cd�Ze�Ze�� e�� � `��-�-���s�.C�d�-�S�UX�U]�U]�^_�U`�U`��� v�k�2�2�5N�x�j�3Y�dh�2�i�kn�ks�ks�tu�kv�kv�� v�s=   �#CI �?'J �J�"%J
+�
+J�K?�%K�	K?�%K:�:K?
+
+======== ../AI_doc_processor_webapp/backend/app/__pycache__/__init__.cpython-313.pyc ========
+�
+
+    ��h   �                   �   � g )N� r   �    �\/home/ansarimn/Downloads/tools-2025/projects/AI_doc_processor_webapp/backend/app/__init__.py�<module>r      s   �r   
+
+======== ../AI_doc_processor_webapp/backend/app/__pycache__/main-alt.cpython-313.pyc ========
+�
+
+    ��h  �                   �.  � S SK r S SKrS SKrS SKrS SKJr  S SKJrJrJ	r	J
+r
+JrJr  S SK
+Jr  S SKJr  \R"                  " \R$                  SS9  \R&                  " S5      r \R*                  " \5      R/                  5       R0                  R0                  r\R0                  r\R0                  S	-  r\R9                  S
+\ 35        \R;                  5       (       d  \R=                  S5        \" \5      r \ \RB                  ;  a0  \RB                  RE                  S \ 5        \R9                  S\  35        \S-  r'\'RQ                  5       (       a  \" \'SS9  \R9                  S\' 35        O\R=                  S\' 35         S SK)J*r*  SSK+J,r,J-r-  SSK.J/r/  \R9                  S5        \" SSS9r3\ Rh                  " SS5      r5\3Rm                  \\5/SS /S /S!9  \R9                  S"\5 35        \3Ro                  S#\-S$S%9S& 5       r8\3Rs                  S'\,S(S%9\" SS)S*9\
+" SS+S*9\
+" SS,S*9\
+" S-S.S*94S/\\	   S0\\   S1\\   S2\\   4S3 jj5       r:\3Ro                  S4S5S69S7 5       r;\3Ro                  S8S9S69S: 5       r<g! \# a0  r$\RK                  S
+\$ 3SS9  \RL                  " S5         Sr$C$GNpSr$C$ff = f! \0 a0  r1\RK                  S\1 3SS9  \RL                  " S5         Sr1C1GN9Sr1C1f\# a0  r2\RK                  S\2 3SS9  \RL                  " S5         Sr2C2GNmSr2C2ff = f);�    N)�Optional)�FastAPI�File�
+UploadFile�Form�
+HTTPException�Request)�CORSMiddleware)�load_dotenvz1%(asctime)s [%(levelname)s] %(name)s: %(message)s)�level�format�api_mainzKnowledge BasezOriginal project root: z Original project root not found!zAdded to sys.path: zPath error: T��exc_info�   z.env)�dotenv_path�overridez
+Loaded .env: zBackend .env not found: )�gemini_utils)�ProcessResponse�SchemaListResponse)�process_document_webzImports successful.zImport failed: zUnexpected Import Error: zAI Document Processor APIz1.3.0 DEBUG)�title�version�FRONTEND_ORIGINzhttp://localhost:3000�*)�
+allow_origins�allow_credentials�
+allow_methods�
+allow_headersz
+CORS for: z/api/schemaszGet Schemas)�response_model�summaryc               �   ��   #   �  [        [        R                  R                  5       5      o R	                  SS5        [        U S9$ ! [         a&  n[        R                  SU 3SS9  [        SSS	9eS nAff = f7f)
+Nr   �(No Schema - Plain Text))�schemaszSchema registry error: Tr   ��  zSchema load error.��status_code�detail)
+�listr   �SCHEMA_REGISTRY�keys�insertr   �	Exception�main_logger�errorr   )�schema_names�es     �\/home/ansarimn/Downloads/tools-2025/projects/AI_doc_processor_webapp/backend/app/main-alt.py�get_available_schemasr3   4   s�   � � �^��L�8�8�=�=�?�@��BU�BU�VW�Ys�Bt�!�,�7�7���  ^�;�,�,�/F�q�c�-J�UY�,�Z�bo�|�  I]�  c^�  ]^��  ^�s)   �A8�A A �A8�
+A5�!A0�0A5�5A8z/api/processz"Process Document (Debug Signature)z'The document file (Optional for debug).)�descriptionz"Instructions (Optional for debug).z!Schema name (Optional for debug).�flashz Model type (Optional for debug).�file�prompt�schema_name�
+model_typec              �   �  #   � [         R                  S5        [         R                  SU SU SU (       a  U R                  OS S[        U5       35         U c  [         R	                  S5        [        S	S
+S9eU R                  (       d  [         R	                  S5        [        S	S
+S9eUb  UR
+                  5       (       d  [         R	                  S5        [        S	SS9eUb  UR                  5       S;  a"  [         R	                  SU 35        [        S	SS9eU R                  5       I Sh  v�N nU(       d-  [         R                  SU R                   S35        [        SSS9e[         R                  S[        U5       SU R                   S35        Sn[        R                  " [        R                  5      (       a+  [        R                  " [        R                  5      (       d  Sn[         R                  SU 35        [!        UU R"                  =(       d    SUU=(       d    SUUS9I Sh  v�N n[         R                  S UR%                  S!5       35        ['        S*0 UD6U (       a  U R)                  5       I Sh  v�N   $ $  GNZ NY N! [
+         a6  n[         R                  S"UR*                   S#UR,                   35        UeSnAf[.         aR  n[         R	                  S$[1        U5      R2                   S%U 3S&S'9  [        S(S)[1        U5      R2                   3S9eSnAff = f! U (       a  U R)                  5       I Sh  v�N    f f = f7f)+zODEBUG VERSION: Handles upload with optional fields to bypass strict validation.z--- DEBUG ENDPOINT HIT ---z"Received data (Optional): schema='z
+', model='z	', file='zNo Filez', prompt provided: Nz1DEBUG ENDPOINT: No file part received in request.i�  zMissing 'file' part in request.r&   z7DEBUG ENDPOINT: File part received but has no filename.z Missing filename in file upload.z0DEBUG ENDPOINT: Missing or empty 'prompt' field.z+Missing or empty 'prompt' field in request.)�pror5   z1DEBUG ENDPOINT: Invalid or missing 'model_type': z:Invalid or missing 'model_type'. Must be 'pro' or 'flash'.zUploaded file 'z' is empty.i�  zUploaded file content is empty.zRead z
+ bytes from '�'�paid�freezUsing API key type: zapplication/octet-streamr#   )�file_content�file_mime_typer7   r8   r9   �api_key_typezProcessor status: �statuszHTTPException in endpoint: z - z5!!! UNEXPECTED ERROR IN /api/process DEBUG ENDPOINT: z: Tr   r%   zInternal Server Error: � )r.   �info�filename�boolr/   r   �strip�lower�read�warning�len�os�getenvr   �API_KEY_FREE_ENV_VAR�API_KEY_PAID_ENV_VARr   �content_type�getr   �closer'   r(   r-   �type�__name__)	r6   r7   r8   r9   �contentrA   �result_data�http_excr1   s	            r2   �process_file_endpoint_debugrX   =   s  � � � ���1�2����9�+��j�Q[�P\�\e�w{�fj�fs�fs�  BK�  fL�  L`�  ae�  fl�  am�  `n�  o�  p�0$��<����Q�R��C�8Y�Z�Z��}�}�
+�
+�
+�X�
+Y� �S�9[�\�
+\��>���������P�Q��C�8e�f�f����!1�!1�!3�;K�!K�
+�
+�
+�!R�S]�R^�_�
+`� �S�9u�v�
+v� �	�	��#������/�$�-�-��� L�M��C�8Y�Z�Z����5��W���m�D�M�M�?�!�L�M� ��
+�9�9�\�6�6�7�7��	�	�,�Jk�Jk�@l�@l�  ~D�nz����/��~�>�?� 1� ��,�,�J�0J��#�A�'A�!�%�
+
+� 
+�� 	���-�k�o�o�h�.G�-H�I�J��-��-� �t�z�z�|�#�#�4�? $�
+�$ $�� � ����9�(�:N�:N�9O�s�S[�Sb�Sb�Rc�d�e����� b����Q�RV�WX�RY�Rb�Rb�Qc�ce�fg�eh�i�tx��y���6M�d�ST�g�N^�N^�M_�4`�a�a��b�� �t�z�z�|�#�#�4�s�   �AM�CJ �+J�,DJ �.J�/5J �$M�>J
+�?M�J �J �
+M�
+L&�1K�
+L&�A
+L!�!L&�&L) �)M�M�M�Mz/api/healthzHealth Check)r!   c               �   �   #   � SS0$ 7f)NrB   �okrC   rC   �    r2   �health_checkr\   }   s   � � �"*�D�!1�1��   ��/zAPI Rootc               �   �   #   � SS0$ 7f)N�messagezAPI runningrC   rC   r[   r2   �	read_rootra      s   � � �(�-�8�8�r]   )=rL   �sys�pathlib�logging�typingr   �fastapir   r   r   r   r   r	   �fastapi.middleware.corsr
+   �dotenvr   �basicConfig�INFO�	getLoggerr.   �Path�__file__�resolve�parent�backend_dir�webapp_root�original_project_rootrD   �is_dirrJ   �str�original_project_root_str�pathr,   r-   �path_e�critical�exitr   �is_file�	src.utilsr   �schemas.api_modelsr   r   �core.processorr   �ImportErrorr1   �import_e�apprM   �frontend_origin�add_middlewarerQ   r3   �postrX   r\   ra   rC   r[   r2   �<module>r�      so  �� 	� 
+� � � � L� K� 2� � � � �'�,�,�/b� c����
+�+��
+f��,�,�x�(�0�0�2�9�9�@�@�K��$�$�K�'�.�.�1A�A�����.�/D�.E�F�G� �'�'�)�)�;�+>�+>�?a�+b� #�$9� :�� ����0�������4�5����.�/H�.I�J�K� �F�"�������+�+��M�{�O_�O_�bo�p{�o|�`}�O~����4�[�M�B�C�w�&�G�4����*�+�
+ �/��G���)�)�-�/F�G�� � � �>�/�1B�VZ�kn�jo�  AD�  @E� �  F� � � �:�o�.�/� 0� ����(:�M��R�^� S�^� ���.��Bf��g� "&�d�8a�!b� ��3W�X�!%�d�8[�!\� $�W�:\� ]�;$�
+�:�
+�;$� 
+�S�M�;$� �#��	;$�
+ ��
+�;$� h�;$�~ ������/� 1� 0� 1�����j��!� 8� "� 8��I � e�K�0�0�<��x�1H�SW�0�X�Z]�Zb�Zb�cd�Ze�Ze�� e�� � `��-�-���s�.C�d�-�S�UX�U]�U]�^_�U`�U`��� v�k�2�2�5N�x�j�3Y�dh�2�i�kn�ks�ks�tu�kv�kv�� v�s=   �!CI1 �=%J* �1J'�7%J"�"J'�*L�0%K�	L�$%L�L
+
+======== ../AI_doc_processor_webapp/backend/app/core/processor.py ========
+# ai_doc_processor_webapp/backend/app/core/processor.py
+import os
+import json
+import logging
+import asyncio
+from typing import Optional, Dict, Any, List, Union, Tuple
+
+# Third-party imports
+from google.genai import types
+import google.api_core.exceptions
+from pydantic import BaseModel
+
+# Import schemas and utils
+from ..schemas.api_models import SingleFileResult, UsageMetadata
+# Assumes main.py added original project root to sys.path
+try:
+    from src.utils import gemini_utils
+    logger = logging.getLogger("api_processor")
+    logger.info("Processor: Imported refactored gemini_utils.")
+except ImportError as e:
+    print(f"FATAL Processor Import Error: Check sys.path. Error: {e}", file=sys.stderr)
+    raise
+
+async def process_document_web_multi(
+    files_data: List[Tuple[str, bytes, str]], # List of (filename, content_bytes, mime_type)
+    form_data: 'ProcessForm', # Use the Pydantic model for form fields
+) -> Dict[str, Any]:
+    """
+    Processes multiple documents for the web app using refactored gemini_utils.
+    Loops through files, calls API for each, aggregates results.
+    """
+    # Initialize overall response structure
+    overall_result = {
+        "status": "success",
+        "overall_error_message": None,
+        "results": [],
+        "schema_used": None,
+        "overall_usage_metadata": {"prompt_token_count": 0, "candidates_token_count": 0, "total_token_count": 0}
+    }
+    all_succeeded = True
+    any_succeeded = False
+
+    logger.info(f"Processing {len(files_data)} files: schema='{form_data.schema_name}', model='{form_data.model_type}', key='{form_data.api_key_type}'")
+
+    try:
+        # --- 1. Determine Mode & Schema ONCE for the batch ---
+        effective_schema_name = form_data.schema_name if form_data.schema_name != "(No Schema - Plain Text)" else None
+        selected_schema_class = None
+        is_structured_mode = False
+        if effective_schema_name:
+            selected_schema_class = gemini_utils.resolve_schema_class(effective_schema_name)
+            if selected_schema_class:
+                resolved_name = selected_schema_class.__name__
+                overall_result["schema_used"] = resolved_name
+                is_structured_mode = True
+                if resolved_name == gemini_utils.DEFAULT_SCHEMA_NAME and effective_schema_name != gemini_utils.DEFAULT_SCHEMA_NAME:
+                    logger.warning(f"Schema fallback: '{effective_schema_name}' -> '{resolved_name}'.")
+                    overall_result["schema_used"] = f"{effective_schema_name} (Not Found -> Default: {resolved_name})"
+            else: is_structured_mode = False
+        else: is_structured_mode = False
+        logger.info(f"Batch Mode: Structured={is_structured_mode}, Schema='{overall_result['schema_used'] or 'None'}'")
+
+        # --- 2. Configure Gemini Client & Model ONCE --- 
+        client, model_name = gemini_utils.configure_gemini(form_data.model_type, form_data.api_key_type)
+
+        # --- 3. Load System Instructions ONCE --- 
+        sys_instructions_str = gemini_utils.load_system_instructions(is_structured_mode)
+
+        # --- 4. Prepare Common Generation Config Args --- 
+        gen_config_args = { "max_output_tokens": 8192 }
+        if sys_instructions_str: gen_config_args["system_instruction"] = sys_instructions_str
+        if is_structured_mode and selected_schema_class:
+            gen_config_args["response_mime_type"] = "application/json"
+            gen_config_args["response_schema"] = selected_schema_class
+        try:
+            # Use correct type: GenerateContentConfig
+            base_generation_config = types.GenerateContentConfig(**gen_config_args)
+            logger.debug("Created base GenerateContentConfig.")
+        except Exception as config_err: raise ValueError(f"Internal config error: {config_err}") from config_err
+
+
+        # --- 5. Loop Through Files and Process Each --- 
+        total_prompt_tokens = 0
+        total_candidates_tokens = 0
+        total_tokens = 0
+
+        for filename, file_content, file_mime_type in files_data:
+            logger.info(f"Processing file: {filename} ({len(file_content)} bytes)")
+            single_file_result = SingleFileResult(file_name=filename, status="processing") # Use Pydantic model
+            
+            try:
+                # --- 5a. Prepare Input Content for this file --- 
+                contents: List[Union[str, types.Part]] = []
+                processed_mime_type = file_mime_type.lower() if file_mime_type else 'application/octet-stream'
+                if processed_mime_type.startswith("text/") or processed_mime_type == "application/json":
+                    try: contents = [file_content.decode("utf-8-sig"), form_data.prompt]
+                    except UnicodeDecodeError: raise ValueError("Failed to decode text file as UTF-8.")
+                elif processed_mime_type in ["application/pdf", "image/jpeg", "image/png", "image/webp", "image/gif", "image/jpg"]:
+                    mime_map = {'image/jpg': 'image/jpeg'}; final_mime = mime_map.get(processed_mime_type, processed_mime_type)
+                    contents = [types.Part.from_bytes(data=file_content, mime_type=final_mime), form_data.prompt]
+                else: raise ValueError(f"Unsupported file type: {processed_mime_type}")
+
+                # --- 5b. Call Gemini API (using asyncio.to_thread) --- 
+                logger.debug(f"Calling API for {filename}...")
+                gemini_response = await asyncio.to_thread(
+                    gemini_utils.generate_gemini_content, # Sync function
+                    genai_client=client, model_name=model_name, contents=contents,
+                    generation_config=base_generation_config, is_structured_mode=is_structured_mode
+                )
+                logger.debug(f"API call completed for {filename}.")
+
+                # --- 5c. Process Response for this file --- 
+                single_file_result.raw_output = gemini_response.text
+                if gemini_response.usage_metadata:
+                    prompt_tokens = gemini_response.usage_metadata.prompt_token_count or 0
+                    candidates_tokens = gemini_response.usage_metadata.candidates_token_count or 0
+                    total_prompt_tokens += prompt_tokens
+                    total_candidates_tokens += candidates_tokens
+                    total_tokens += gemini_response.usage_metadata.total_token_count or (prompt_tokens + candidates_tokens)
+                    # Maybe store per-file usage if needed: 
+                    # single_file_result.usage_metadata = UsageMetadata(...) 
+
+                if is_structured_mode:
+                    parsed_obj = gemini_utils.parse_json_from_response_text(gemini_response.text)
+                    if parsed_obj is not None: 
+                        single_file_result.structured_output = parsed_obj
+                    else: 
+                        logger.warning(f"JSON parse failed for file: {filename}")
+                        single_file_result.error_message = "Model response not valid JSON."
+                        # Keep status success, but note the parsing issue
+                
+                single_file_result.status = "success"
+                any_succeeded = True
+
+            # --- 5d. Handle Errors for this specific file --- 
+            except (google.api_core.exceptions.GoogleAPIError, ValueError, Exception) as file_e:
+                logger.error(f"Error processing file {filename}: {type(file_e).__name__}: {file_e}", exc_info=False) # Log less verbosely in loop
+                single_file_result.status = "error"
+                error_prefix = "API Error" if isinstance(file_e, google.api_core.exceptions.GoogleAPIError) else \
+                               "Input Error" if isinstance(file_e, ValueError) else \
+                               "Processing Error"
+                single_file_result.error_message = f"{error_prefix}: {str(file_e)[:200]}"
+                all_succeeded = False # Mark overall status as partial
+            
+            overall_result["results"].append(single_file_result.model_dump()) # Append result dict
+
+        # --- 6. Finalize Overall Status and Usage --- 
+        if not any_succeeded and files_data: # Check if list wasn't empty
+            overall_result["status"] = "error"
+            overall_result["overall_error_message"] = "Processing failed for all files."
+        elif not all_succeeded:
+            overall_result["status"] = "partial_success"
+        # Else status remains "success"
+
+        overall_result["overall_usage_metadata"] = {
+            "prompt_token_count": total_prompt_tokens,
+            "candidates_token_count": total_candidates_tokens,
+            "total_token_count": total_tokens
+        }
+        logger.info(f"Overall Usage: {overall_result['overall_usage_metadata']}")
+
+    # --- Handle Errors occurring before the loop --- 
+    except (ValueError, ImportError, Exception) as setup_e:
+        logger.error(f"Error during setup before processing files: {type(setup_e).__name__}: {setup_e}", exc_info=True)
+        overall_result["status"] = "error"
+        overall_result["overall_error_message"] = f"Setup Error: {str(setup_e)[:250]}"
+        overall_result["results"] = [] # No individual results if setup failed
+        overall_result["overall_usage_metadata"] = None
+
+    logger.info(f"Processor finished. Overall Status: {overall_result['status']}")
+    return overall_result
+
+
+======== ../AI_doc_processor_webapp/backend/app/core/__pycache__/processor.cpython-313.pyc ========
+�
+
+    /�h�$  �                   �@  � S SK r S SKrS SKrS SKrS SKJrJrJrJrJ	r	J
+r
+  S SKJr  S SK
+rS SKJr  SSKJrJr   S SKJr  \R,                  " S5      r\R1                  S	5        S\\
+\\\4      S
+SS\\\4   4S jr g! \ a  r\" S
+\ 3\R:                  S9  e SrCff = f)�    N)�Optional�Dict�Any�List�Union�Tuple)�types)�	BaseModel�   )�SingleFileResult�
+UsageMetadata)�gemini_utils�
+api_processorz,Processor: Imported refactored gemini_utils.z5FATAL Processor Import Error: Check sys.path. Error: )�file�
+files_data�	form_data�ProcessForm�returnc              �   �0  #   � SS/ SSSSS.S.nSnSn[         R                  S[        U 5       S	UR                   S
+UR                   SUR
+                   S3	5         UR                  S
+:w  a  UR                  OSnSnSnU(       a�  [        R                  " U5      nU(       ab  UR                  nX�S'   SnU[        R                  :X  a;  U[        R                  :w  a'  [         R                  SU SU S35        U SU S3US'   OSnOSn[         R                  SU SUS   =(       d    S S35        [        R                  " UR                  UR
+                  5      u  p�[        R                  " U5      nSS0nU(       a  X�S'   U(       a  U(       a	  SUS'   XlS'    [        R                  " SG0 UD6n
+[         R                  S5        SnSnSnU  GHL  u  nnn[         R                  SU S [        U5       S!35        [%        US"S#9n / nU(       a  UR'                  5       OS$nUR)                  S%5      (       d  US:X  a  UR+                  S&5      UR,                  /nOUUS(;   aA  S)S*0nUR1                  UU5      n[        R2                  R5                  UUS+9UR,                  /nO[#        S,U 35      e[         R                  S-U S.35        [6        R8                  " [        R:                  X�UX�S/9I Sh  v�N n[         R                  S0U S135        UR<                  Ul        UR@                  (       am  UR@                  RB                  =(       d    SnUR@                  RD                  =(       d    SnUU-
+  nUU-
+  nUUR@                  RF                  =(       d    UU-   -
+  nU(       aJ  [        RH                  " UR<                  5      nUb  UUl%        O[         R                  S2U 35        S3Ul&        SUl'        SnUS<   Ra                  URc                  5       5        GMO     U(       d  U (       a  S7US='   S>US?'   OU(       d  S@US='   UUUS.USA'   [         R                  SBUSA    35        [         R                  SFUS=    35        U$ ! [          a  n[#        SU 35      UeSnAff = f! [.         a    [#        S'5      ef = f GN�! [P        RR                  RT                  RV                  ["        [         4 a�  n[         RY                  S4U S5[[        U5      R                   S5U 3SS69  S7Ul'        []        U[P        RR                  RT                  RV                  5      (       a  S8O[]        U["        5      (       a  S9OS:nU S5[_        U5      SS;  3Ul&        Sn SnAGN�SnAff = f! ["        [d        [         4 a[  n [         RY                  SC[[        U 5      R                   S5U  3SS69  S7US='   SD[_        U 5      SSE  3US?'   / US<'   SUSA'    Sn A GN�Sn A ff = f7f)Hz�
+Processes multiple documents for the web app using refactored gemini_utils.
+Loops through files, calls API for each, aggregates results.
+�successNr   )�prompt_token_count�candidates_token_count�total_token_count)�status�overall_error_message�results�schema_used�overall_usage_metadataTFzProcessing z files: schema='z
+', model='z', key='�'z(No Schema - Plain Text)r   zSchema fallback: 'z' -> 'z'.z (Not Found -> Default: �)zBatch Mode: Structured=z
+, Schema='�None�max_output_tokensi    �system_instructionzapplication/json�response_mime_type�response_schemaz#Created base GenerateContentConfig.zInternal config error: zProcessing file: z (z bytes)�
+processing)�	file_namer   zapplication/octet-streamztext/z	utf-8-sigz$Failed to decode text file as UTF-8.)zapplication/pdf�
+image/jpegz	image/pngz
+image/webpz	image/gif�	image/jpgr)   r(   )�data�	mime_typezUnsupported file type: zCalling API for z...)�genai_client�
+model_name�contents�generation_config�is_structured_modezAPI call completed for �.zJSON parse failed for file: zModel response not valid JSON.zError processing file z: )�exc_info�errorz	API ErrorzInput ErrorzProcessing Error��   r   r   z Processing failed for all files.r   �partial_successr   zOverall Usage: z,Error during setup before processing files: z
+Setup Error: ��   z$Processor finished. Overall Status: � )3�logger�info�len�schema_name�
+model_type�api_key_typer   �resolve_schema_class�__name__�DEFAULT_SCHEMA_NAME�warning�configure_gemini�load_system_instructionsr	   �GenerateContentConfig�debug�	Exception�
+ValueErrorr   �lower�
+startswith�decode�prompt�UnicodeDecodeError�get�Part�
+from_bytes�asyncio�	to_thread�generate_gemini_content�text�
+raw_output�usage_metadatar   r   r   �parse_json_from_response_text�structured_output�
+error_messager   �google�api_core�
+exceptions�GoogleAPIErrorr3   �type�
+isinstance�str�append�
+model_dump�ImportError)!r   r   �overall_result�
+all_succeeded�
+any_succeeded�effective_schema_name�selected_schema_classr0   �
+resolved_name�clientr-   �sys_instructions_str�gen_config_args�base_generation_config�
+config_err�total_prompt_tokens�total_candidates_tokens�total_tokens�filename�file_content�file_mime_type�single_file_resultr.   �processed_mime_type�mime_map�
+final_mime�gemini_response�
+prompt_tokens�candidates_tokens�
+parsed_obj�file_e�error_prefix�setup_es!                                    �b/home/ansarimn/Downloads/tools-2025/projects/AI_doc_processor_webapp/backend/app/core/processor.py�process_document_web_multir�      s�  � � � �!%���9:�VW�no�"p��N� �M��M�
+�K�K�+�c�*�o�.�.>�y�?T�?T�>U�U_�`i�`t�`t�_u�u}�  H�  U�  U�  ~V�  VW�  X�  Y�{8�9B�9N�9N�Rl�9l�	� 5� 5�rv�� $��"�� �$0�$E�$E�F[�$\�!�$� 5� >� >�
+�0=�}�-�%)�"� �L�$D�$D�D�I^�bn�  cC�  cC�  JC��N�N�%7�8M�7N�f�Ub�Tc�ce�#f�g�7L�6M�Me�fs�et�tu�4v�N�=�1��',�$�#(� ����-�.@�-A��N�[h�Li�Ls�ms�Kt�tu�v�w� *�:�:�9�;O�;O�QZ�Qg�Qg�h���  ,�D�D�EW�X�� 0��7���I]�1E�!F��"7�4F�O�0�1�1F�-�.�	q�%*�%@�%@�%S�?�%S�"��L�L�>�?�
+  ��"#����6@�2�H�l�N��K�K�+�H�:�R��L�8I�7J�'�R�S�!1�H�\�!Z��4
+&�9;��@N�n�&:�&:�&<�Tn�#�&�1�1�'�:�:�>Q�Ug�>g�%1�%8�%8��%E�y�GW�GW�$X��(�  -C�  C� +�\�:�H����Vi�k~�I�J� %�
+�
+� 5� 5�<�S]� 5� ^�`i�`p�`p�q�H�&�)@�AT�@U�'V�W�W� ���/��z��=�>�(/�(9�(9� �8�8�!'��&<�)� #��
+ ���6�x�j��B�C� 1@�0D�0D�"�-�"�1�1�$3�$B�$B�$U�$U�$Z�YZ�M�(7�(F�(F�(]�(]�(b�ab�%�'�=�8�'�+�/@�@�+� �O�$B�$B�$T�$T�${�Yf�iz�Yz�{�L� &�!-�!K�!K�O�L`�L`�!a�J�!�-�?I�*�<����)E�h�Z�'P�Q�;[�*�8� -6�"�)� $�
+� 
+�9�%�,�,�-?�-J�-J�-L�M�u 7A�z ��'.�N�8�$�6X�N�2�3��'8�N�8�$� #6�&=�!-�4
+��/�0�
+ 	���o�n�5M�&N�%O�P�Q� �K�K�6�~�h�7O�6P�Q�R����y �p�j�;R�S]�R^�9_�.`�fp�(p��p��$ .�g�Z�@f�5g�/g�g��#��> �O�O�.�.�=�=�z�9�U� 
+&����5�h�Z�r�$�v�,�BW�BW�AX�XZ�[a�Zb�c�ns��t�,3�"�)�.8�����A[�A[�Aj�Aj�.k�.k�{�0:�6�:�0N�0N�}�1� � 7C�^�2�c�&�k�RV�SV�FW�EX�3Y�"�0� %�
+��
+&��6 
+��Y�/� 8����C�D��M�DZ�DZ�C[�[]�^e�]f�g�rv��w�#*��x� �4A�#�g�,�t�PS�BT�AU�2V��.�/�$&��y�!�37��/�0��8�s�   �AX�D>V# �+R �?V# �7S�>R'�BS�2S �3DS�9A0V# �)X�
+R$�R�R$�$V# �'R=�=S�3V �6BV�V# �V � V# �#X�8AX�X�X�X)!�os�json�loggingrP   �typingr   r   r   r   r   r   �google.genair	   �google.api_core.exceptionsrY   �pydanticr
+   �schemas.api_modelsr   r
+   �	src.utilsr   �	getLoggerr8   r9   rb   �e�print�sys�stderrr_   �bytesr�   r7   �    r   �<module>r�      s�   �� 	� � � � :� :� � !� � A�
+�&�
+�
+�
+��
+/�F�
+�K�K�>�?�
+S��U�3��s�?�+�,�S��S� 
+�#�s�(�^�S��	 � 
+�	�A�!��
+E�C�J�J�W�	��
+�s   �)A= �=B�B�B
+
