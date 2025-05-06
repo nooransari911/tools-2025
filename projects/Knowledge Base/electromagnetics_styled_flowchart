@@ -1,0 +1,24 @@
+// Styled Electromagnetics Learning Path
+digraph {
+	bgcolor="#F5F5F5" nodesep=0.8 rankdir=TB ranksep=0.6
+	phase1 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8">
+                 <TR><TD ALIGN="CENTER"><FONT FACE="Helvetica" COLOR="white" POINT-SIZE="14"><B>Phase 1:</B></FONT></TD></TR>
+                 <TR><TD ALIGN="CENTER"><FONT FACE="Helvetica" COLOR="white" POINT-SIZE="12">Foundational Electromagnetic Concepts</FONT></TD></TR>
+               </TABLE>> fillcolor="#2E75B6" fixedsize=true fontcolor=white fontname=Helvetica height=1.0 shape=box style="filled,rounded" width=4.0]
+	phase2 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8">
+                 <TR><TD ALIGN="CENTER"><FONT FACE="Helvetica" COLOR="white" POINT-SIZE="14"><B>Phase 2:</B></FONT></TD></TR>
+                 <TR><TD ALIGN="CENTER"><FONT FACE="Helvetica" COLOR="white" POINT-SIZE="12">Wave Propagation & Transmission Lines</FONT></TD></TR>
+               </TABLE>> fillcolor="#ED7D31" fixedsize=true fontcolor=white fontname=Helvetica height=1.0 shape=box style="filled,rounded" width=4.0]
+	phase3 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8">
+                 <TR><TD ALIGN="CENTER"><FONT FACE="Helvetica" COLOR="white" POINT-SIZE="14"><B>Phase 3:</B></FONT></TD></TR>
+                 <TR><TD ALIGN="CENTER"><FONT FACE="Helvetica" COLOR="white" POINT-SIZE="12">Antenna Fundamentals</FONT></TD></TR>
+               </TABLE>> fillcolor="#2E75B6" fixedsize=true fontcolor=white fontname=Helvetica height=1.0 shape=box style="filled,rounded" width=4.0]
+	phase4 [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8">
+                 <TR><TD ALIGN="CENTER"><FONT FACE="Helvetica" COLOR="white" POINT-SIZE="14"><B>Phase 4:</B></FONT></TD></TR>
+                 <TR><TD ALIGN="CENTER"><FONT FACE="Helvetica" COLOR="white" POINT-SIZE="12">Introduction to AEDT & HFSS Simulation</FONT></TD></TR>
+               </TABLE>> fillcolor="#ED7D31" fixedsize=true fontcolor=white fontname=Helvetica height=1.0 shape=box style="filled,rounded" width=4.0]
+	edge [arrowhead=normal color="#A0A0A0" penwidth=2.0]
+	phase1 -> phase2
+	phase2 -> phase3
+	phase3 -> phase4
+}
