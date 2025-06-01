@@ -1,0 +1,2 @@
+categories: ["SEMrush Site Audit", "Technical SEO", "Static Site SEO", "Website Auditing", "Crawlability", "Indexability", "On-Page SEO", "Website Performance", "Digital Marketing", "Website Audit", "SEO Tools"]
+tags: ["SEMrush Site Audit", "Technical SEO", "Static Site SEO", "Website Auditing", "Crawlability", "Indexability", "On-Page SEO", "Website Performance", "Digital Marketing", "Website Audit", "SEO Tools"]

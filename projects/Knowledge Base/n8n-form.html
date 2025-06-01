@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-512.png" />
+
+    <title>N8N POST Request Form</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "SF Pro Display",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0f0f23 0%,
+          #1a1a2e 50%,
+          #16213e 100%
+        );
+        color: #e2e8f0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          radial-gradient(
+            circle at 20% 50%,
+            rgba(120, 119, 198, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 119, 198, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 80%,
+            rgba(120, 219, 255, 0.1) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .container {
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        border-radius: 24px;
+        padding: 40px;
+        width: 100%;
+        max-width: 480px;
+        box-shadow:
+          0 25px 50px -12px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(255, 255, 255, 0.05);
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(120, 219, 255, 0.4),
+          transparent
+        );
+        border-radius: 24px 24px 0 0;
+      }
+
+      .container:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 35px 60px -12px rgba(0, 0, 0, 0.6),
+          0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+      h1 {
+        color: #f8fafc;
+        text-align: center;
+        margin-bottom: 32px;
+        font-size: 28px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.02em;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+        position: relative;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #cbd5e1;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: color 0.2s ease;
+      }
+
+      input[type="text"],
+      input[type="email"] {
+        width: 100%;
+        padding: 16px 20px;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 12px;
+        font-size: 16px;
+        color: #f1f5f9;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+      }
+
+      input[type="text"]:-webkit-autofill,
+      input[type="email"]:-webkit-autofill,
+      input[type="text"]:-webkit-autofill:hover,
+      input[type="email"]:-webkit-autofill:hover,
+      input[type="text"]:-webkit-autofill:focus,
+      input[type="email"]:-webkit-autofill:focus {
+        -webkit-text-fill-color: #f1f5f9 !important;
+        -webkit-box-shadow: 0 0 0px 1000px rgba(15, 23, 42, 0.6) inset !important;
+        background-color: rgba(15, 23, 42, 0.6) !important;
+        border: 1px solid rgba(148, 163, 184, 0.2) !important;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus {
+        outline: none;
+        border-color: #60a5fa;
+        box-shadow:
+          0 0 0 3px rgba(96, 165, 250, 0.1),
+          0 1px 3px rgba(0, 0, 0, 0.1);
+        background: rgba(15, 23, 42, 0.8);
+        transform: translateY(-1px);
+      }
+
+      input[type="text"]:focus:-webkit-autofill,
+      input[type="email"]:focus:-webkit-autofill {
+        -webkit-box-shadow:
+          0 0 0px 1000px rgba(15, 23, 42, 0.8) inset !important,
+          0 0 0 3px rgba(96, 165, 250, 0.1),
+          0 1px 3px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      input[type="text"]::placeholder,
+      input[type="email"]::placeholder {
+        color: rgba(148, 163, 184, 0.4);
+        font-style: italic;
+        font-weight: 300;
+      }
+
+      fieldset {
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        background: rgba(15, 23, 42, 0.3);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      fieldset:hover {
+        border-color: rgba(148, 163, 184, 0.3);
+        background: rgba(15, 23, 42, 0.4);
+      }
+
+      legend {
+        font-weight: 600;
+        color: #e2e8f0;
+        padding: 0 16px;
+        font-size: 16px;
+        background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+
+      .radio-group label {
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 12px 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        background: rgba(15, 23, 42, 0.4);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        flex: 1;
+        min-width: 0;
+        text-transform: none;
+        letter-spacing: normal;
+        color: #cbd5e1;
+      }
+
+      .radio-group label:hover {
+        border-color: #60a5fa;
+        background: rgba(96, 165, 250, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .radio-group input[type="radio"] {
+        margin-right: 12px;
+        accent-color: #60a5fa;
+        transform: scale(1.2);
+      }
+
+      .radio-group input[type="radio"]:checked + span {
+        color: #60a5fa;
+      }
+
+      .radio-group label:has(input:checked) {
+        border-color: #60a5fa;
+        background: rgba(96, 165, 250, 0.1);
+        box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.2);
+      }
+
+      button[type="submit"] {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        color: white;
+        padding: 18px 32px;
+        border: none;
+        border-radius: 16px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        width: 100%;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+      }
+
+      button[type="submit"]::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      button[type="submit"]:hover {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+      }
+
+      button[type="submit"]:hover::before {
+        left: 100%;
+      }
+
+      button[type="submit"]:active {
+        transform: translateY(0);
+      }
+
+      .message {
+        margin-top: 24px;
+        padding: 16px 20px;
+        border-radius: 12px;
+        text-align: center;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+        animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .message.success {
+        background: rgba(34, 197, 94, 0.1);
+        color: #4ade80;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+      }
+
+      .message.error {
+        background: rgba(239, 68, 68, 0.1);
+        color: #f87171;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+      }
+
+      /* Required indicator */
+      .required {
+        color: #f87171;
+        font-size: 12px;
+        margin-left: 4px;
+      }
+
+      /* Loading state */
+      .loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .loading button[type="submit"] {
+        background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+        cursor: not-allowed;
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 640px) {
+        .container {
+          padding: 32px 24px;
+          margin: 16px;
+        }
+
+        .radio-group {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .radio-group label {
+          flex: none;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+
+      /* Focus indicators for accessibility */
+      button:focus-visible,
+      input:focus-visible {
+        outline: 2px solid #60a5fa;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Send Data to Webhook</h1>
+      <form id="webhookForm">
+        <fieldset>
+          <legend>Target Environment</legend>
+          <div class="radio-group">
+            <label for="env-prod">
+              <input
+                type="radio"
+                id="env-prod"
+                name="environment"
+                value="prod"
+                checked
+                required
+              />
+              <span>Production</span>
+            </label>
+            <label for="env-test">
+              <input
+                type="radio"
+                id="env-test"
+                name="environment"
+                value="test"
+                required
+              />
+              <span>Test</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-group">
+          <label for="email"
+            >Email Address <span class="required">*</span></label
+          >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="dummy.user@example.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="name">Full Name <span class="required">*</span></label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Jane Doe"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="city">City <span class="required">*</span></label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            placeholder="Metropolis"
+            required
+          />
+        </div>
+
+        <button type="submit">Send POST Request</button>
+      </form>
+      <div id="responseMessage" class="message" style="display: none"></div>
+    </div>
+
+    <script>
+      document
+        .getElementById("webhookForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const form = event.target;
+          const container = document.querySelector(".container");
+
+          // Add loading state
+          container.classList.add("loading");
+
+          const email = document.getElementById("email").value;
+          const name = document.getElementById("name").value;
+          const city = document.getElementById("city").value;
+          const environment = document.querySelector(
+            'input[name="environment"]:checked',
+          ).value;
+
+          const webhookId = "16ce6d65-ecbb-49b1-a2d9-fede0799156e";
+          let baseUrl = "https://static-manifest.app.n8n.cloud/";
+          let targetUrlPath;
+
+          if (environment === "prod") {
+            targetUrlPath = `webhook/${webhookId}`;
+          } else {
+            targetUrlPath = `webhook-test/${webhookId}`;
+          }
+          const fullUrl = baseUrl + targetUrlPath;
+
+          const data = {
+            time: new Date().toISOString(),
+            email: email,
+            name: name,
+            city: city,
+          };
+
+          const responseMessageDiv = document.getElementById("responseMessage");
+          responseMessageDiv.style.display = "none";
+          responseMessageDiv.className = "message";
+
+          try {
+            const response = await fetch(fullUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            });
+
+            let responseData;
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+              responseData = await response.json();
+            } else {
+              responseData = await response.text();
+            }
+
+            console.log("Response Status:", response.status);
+            console.log("Response Data:", responseData);
+
+            if (response.ok) {
+              responseMessageDiv.textContent = `✓ Success! Data sent to ${environment} environment successfully.`;
+              responseMessageDiv.classList.add("success");
+            } else {
+              responseMessageDiv.textContent = `✗ Error: ${response.status} ${response.statusText}. Please try again.`;
+              responseMessageDiv.classList.add("error");
+            }
+          } catch (error) {
+            console.error("Fetch Error:", error);
+            responseMessageDiv.textContent =
+              "✗ Network Error: Could not send request. Please check your connection.";
+            responseMessageDiv.classList.add("error");
+          }
+
+          // Remove loading state
+          container.classList.remove("loading");
+          responseMessageDiv.style.display = "block";
+        });
+
+      // Add smooth focus transitions
+      const inputs = document.querySelectorAll(
+        'input[type="text"], input[type="email"]',
+      );
+      inputs.forEach((input) => {
+        input.addEventListener("focus", function () {
+          this.parentElement.querySelector("label").style.color = "#60a5fa";
+        });
+
+        input.addEventListener("blur", function () {
+          this.parentElement.querySelector("label").style.color = "#cbd5e1";
+        });
+      });
+    </script>
+  </body>
+</html>

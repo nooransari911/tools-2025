@@ -6,14 +6,16 @@ import json
 import logging
 import pathlib
 from multiprocessing import Manager
-from typing import Optional, List, Dict, Any, Union, Type, Tuple
-
-# Third-party imports
-from pydantic import BaseModel, Field
+from typing import Optional, List, Dict, Any, Union, Type, Tuple, TypeVar
+from pydantic import BaseModel, ValidationError as PydanticValidationError, Field
 from google.genai import types
 from google import genai
 import google.api_core.exceptions
 from dotenv import load_dotenv
+from src.utils.errors import JSONValidationError
+
+
+
 
 # --- Configuration Constants ---
 SCHEMA_ENV_VAR = "STRUCTURED_OUTPUT_JSON_SCHEMA"
@@ -29,6 +31,9 @@ SYS_INS_STRUCT_PATH_ENV_VAR = "SYSTEM_INSTRUCTIONS_STRUCTURED_PATH"
 
 # --- Global State ---
 SCHEMA_REGISTRY: Dict[str, Type[BaseModel]] = {}
+SCHEMA_DEFINITIONS: Dict[str, Dict[str, Any]] = {} # Value is a schema dict
+
+
 try:
     _manager = Manager()
     CLI_USAGE_METADATA_PROXY = _manager.list()
@@ -48,35 +53,207 @@ def format_number(num: Optional[int]) -> str:
     try: return f"{int(num):,}"
     except (ValueError, TypeError): return str(num)
 
+
+ModelType = TypeVar('ModelType', bound=BaseModel)
+
+
+
+
+
 # --- Schema Registration ---
+
+
 def register_schema(cls: Type[BaseModel]):
-    """Decorator to register a Pydantic BaseModel schema."""
-    # (Implementation same as before)
-    if not isinstance(cls, type) or not issubclass(cls, BaseModel): raise TypeError("Must be BaseModel subclass")
+    """
+    Decorator to register a Pydantic BaseModel schema and its JSON definition.
+    """
+    global SCHEMA_REGISTRY, SCHEMA_DEFINITIONS # Declare use of globals
+
+    if not isinstance(cls, type) or not issubclass(cls, BaseModel):
+        raise TypeError(f"Decorated class '{cls.__name__ if hasattr(cls, '__name__') else cls}' must be a Pydantic BaseModel subclass.")
+
     schema_name = cls.__name__
-    if schema_name in SCHEMA_REGISTRY: logger.warning(f"Schema '{schema_name}' overwritten.")
+
+    if schema_name in SCHEMA_REGISTRY:
+        logger.warning(f"Schema class '{schema_name}' is being overwritten in SCHEMA_REGISTRY.")
+    if schema_name in SCHEMA_DEFINITIONS:
+        logger.warning(f"Schema definition for '{schema_name}' is being overwritten in SCHEMA_DEFINITIONS.")
+
     SCHEMA_REGISTRY[schema_name] = cls
-    logger.debug(f"Registered schema '{schema_name}'")
+
+    # Generate and store the JSON schema definition (as a dict)
+    try:
+        if hasattr(cls, 'model_json_schema'): # Pydantic v2+
+            schema_dict = cls.model_json_schema()
+        elif hasattr(cls, 'schema'): # Pydantic v1
+            schema_dict = cls.schema()
+        else:
+            logger.error(
+                f"Could not generate JSON schema for '{schema_name}'. "
+                "Class does not have 'model_json_schema()' or 'schema()' method."
+            )
+            # Optionally, you might want to remove it from SCHEMA_REGISTRY too or handle this error differently
+            # For now, we'll just not add it to SCHEMA_DEFINITIONS
+            return cls
+        SCHEMA_DEFINITIONS[schema_name] = schema_dict
+        logger.debug(f"Registered schema class '{schema_name}' and its JSON definition.")
+    except Exception as e:
+        logger.error(f"Error generating JSON schema for '{schema_name}': {e}")
+        # Decide if you want to proceed without its definition or raise the error
+        # If it's critical, you might: del SCHEMA_REGISTRY[schema_name]; raise
+
     return cls
 
+
+
+
+
 def resolve_schema_class(schema_name_override: Optional[str] = None) -> Optional[Type[BaseModel]]:
-    """Resolves schema class via param, env var, or default."""
-    # (Implementation same as before)
-    if not SCHEMA_REGISTRY or DEFAULT_SCHEMA_NAME not in SCHEMA_REGISTRY:
-         logger.critical(f"Default schema '{DEFAULT_SCHEMA_NAME}' not in registry."); sys.exit(1)
-    default_class = SCHEMA_REGISTRY[DEFAULT_SCHEMA_NAME]
-    target_name = schema_name_override or os.getenv(SCHEMA_ENV_VAR) or DEFAULT_SCHEMA_NAME
-    source = "param" if schema_name_override else "env" if os.getenv(SCHEMA_ENV_VAR) else "default"
-    chosen_class = SCHEMA_REGISTRY.get(target_name.strip())
+    """
+    Resolves schema class via param, env var, or default.
+    Returns None if the schema is not found, not a Pydantic BaseModel,
+    or if the default schema is targeted but unavailable/invalid.
+    """
+    if not SCHEMA_REGISTRY:
+        logger.warning("No schemas registered. Cannot resolve any schema.")
+        return None
+
+    # Determine the target schema name and source
+    target_name: str
+    source: str
+    is_default_target = False # Flag to know if we are trying to resolve the default schema
+
+    if schema_name_override:
+        target_name = schema_name_override.strip()
+        source = "param"
+    elif os.getenv(SCHEMA_ENV_VAR):
+        env_schema_name = os.getenv(SCHEMA_ENV_VAR)
+        if not env_schema_name or not env_schema_name.strip():
+            logger.warning(f"Environment variable '{SCHEMA_ENV_VAR}' is set but empty. Falling back to default schema.")
+            target_name = DEFAULT_SCHEMA_NAME
+            source = "default_after_empty_env"
+            is_default_target = True
+        else:
+            target_name = env_schema_name.strip()
+            source = "env"
+    else:
+        # Fallback to default schema name
+        target_name = DEFAULT_SCHEMA_NAME
+        source = "default"
+        is_default_target = True
+
+    # Try to get the chosen class from the registry
+    chosen_class = SCHEMA_REGISTRY.get(target_name)
+
     if chosen_class:
-        logger.info(f"Resolved schema '{target_name}' using {source}.")
         if not issubclass(chosen_class, BaseModel):
-             logger.error(f"Resolved '{target_name}' not a BaseModel. Using default.")
-             return default_class
+            logger.error(
+                f"Resolved schema '{target_name}' (source: {source}) is not a Pydantic BaseModel subclass. "
+                "Cannot use this schema."
+            )
+            # If the problematic schema is the default one, this is more critical.
+            if is_default_target:
+                logger.error(
+                    f"The default schema '{DEFAULT_SCHEMA_NAME}' is invalid (not a BaseModel). "
+                    "JSON output requiring a default schema might fail."
+                )
+            return None # Do not use an invalid schema
+        logger.info(f"Resolved schema '{target_name}' using {source}.")
         return chosen_class
     else:
-        logger.warning(f"Schema '{target_name}' ({source}) not found. Using default '{DEFAULT_SCHEMA_NAME}'.")
-        return default_class
+        # Schema not found in registry
+        logger.warning(f"Schema '{target_name}' (source: {source}) not found in SCHEMA_REGISTRY.")
+        # If the default schema was targeted and not found, it's a notable warning.
+        if is_default_target: # This implies target_name == DEFAULT_SCHEMA_NAME
+             logger.warning(
+                f"Default schema '{DEFAULT_SCHEMA_NAME}' is not registered. "
+                "Operations relying on it may not function as expected or "
+                "structured output will be model-inferred if no other schema is specified."
+            )
+        return None # Simply return None if any schema (including default if it was the target) is not found.
+
+
+# --- New print_all_schemas function ---
+def print_all_schemas():
+    """
+    Prints all registered schema definitions (from SCHEMA_DEFINITIONS) as a single JSON object.
+    """
+    global SCHEMA_DEFINITIONS # Access the global dictionary
+
+    if not SCHEMA_DEFINITIONS:
+        print("No schema definitions are currently registered or generated.")
+        return
+
+    try:
+        # SCHEMA_DEFINITIONS already contains dictionaries, so json.dumps will format them correctly
+        schemas_json_str = json.dumps(SCHEMA_DEFINITIONS, indent=4)
+        print(schemas_json_str)
+    except TypeError as e:
+        # This might happen if a schema definition itself contains non-serializable types,
+        # though less likely if generated by Pydantic's methods.
+        logger.error(f"Error serializing schema definitions to JSON: {e}")
+        print(f"Error: Could not serialize schema definitions. Details: {e}")
+        # For debugging, you could print the problematic dictionary:
+        # import pprint
+
+
+def print_schema_summary():
+    """
+    Prints a summary of all registered schemas: their names and descriptions.
+    """
+    global SCHEMA_REGISTRY # We need the model classes for docstrings and schema attributes
+
+    if not SCHEMA_REGISTRY:
+        print("No schemas are currently registered.")
+        return
+
+    print("Available Schemas:\n" + ("-" * 20))
+
+    for name, model_class in sorted(SCHEMA_REGISTRY.items()): # Sort for consistent output
+        title = name # Default title is the class name
+        description = "No description available." # Default description
+
+        # Attempt to get title and description from the Pydantic model's schema definition
+        # This requires generating the schema on-the-fly if not already stored,
+        # or accessing it from SCHEMA_DEFINITIONS if populated.
+        # For simplicity here, let's try to generate it if needed or fetch from SCHEMA_DEFINITIONS.
+
+        schema_def = SCHEMA_DEFINITIONS.get(name) # Check if pre-generated
+        if not schema_def and hasattr(model_class, 'model_json_schema'): # Pydantic V2
+            try:
+                schema_def = model_class.model_json_schema()
+            except Exception as e:
+                logger.warning(f"Could not generate schema for {name} to get summary: {e}")
+        elif not schema_def and hasattr(model_class, 'schema'): # Pydantic V1
+             try:
+                schema_def = model_class.schema()
+             except Exception as e:
+                logger.warning(f"Could not generate schema for {name} to get summary: {e}")
+
+
+        if schema_def:
+            title_from_schema = schema_def.get('title', name) # Use schema 'title' if present
+            description_from_schema = schema_def.get('description')
+
+            if title_from_schema and title_from_schema != name: # Only use if different and not empty
+                title = title_from_schema
+            if description_from_schema:
+                description = description_from_schema.split('\n')[0] # First line of schema description
+        
+        # Fallback or supplement with class docstring if schema description is missing/generic
+        if (not description_from_schema or description == "No description available.") and model_class.__doc__:
+            class_docstring = model_class.__doc__.strip()
+            first_line_of_docstring = class_docstring.split('\n')[0]
+            if first_line_of_docstring: # Check if not empty after stripping
+                description = first_line_of_docstring
+
+
+        print(f"  {title}:") # Use the potentially overridden title
+        print(f"    Name: {name}") # Always show the actual class name / registry key
+        print(f"    Description: {description}")
+        print("-" * 20)
+
+
 
 
 # --- System Instructions ---
@@ -171,8 +348,133 @@ def generate_gemini_content(
         return response
     except google.api_core.exceptions.GoogleAPIError as e:
         logger.error(f"Gemini API Error: {e}", exc_info=False); raise # Re-raise specific error
+
+    except genai.errors.ClientError as e:
+        # err_str  = json.dumps (e, indent=4)
+        err_mess = json.dumps (e.details, indent=4)
+        err_code = e.code
+
+        # print (f"complete error: {err_str}\n\n\n\n")
+        # print (f"code: {err_code}\n\nerror message: {err_mess}\n\n\n\n")
+        print (f"code: {err_code}\n\n")
+
+        print("--- Quota Violation Details ---")
+        found_and_displayed_quota_info = False
+
+        if isinstance(e.details, dict) and \
+           'error' in e.details and \
+           isinstance(e.details.get('error'), dict) and \
+           'details' in e.details['error'] and \
+           isinstance(e.details['error'].get('details'), list):
+        
+            error_details_list = e.details['error']['details']
+        
+            for detail_item in error_details_list:
+                if isinstance(detail_item, dict) and \
+                   detail_item.get('@type') == 'type.googleapis.com/google.rpc.QuotaFailure':
+                
+                    violations = detail_item.get('violations')
+                    if isinstance(violations, list) and violations:
+                        print("Quota(s) Exceeded (from QuotaFailure):")
+                        for violation in violations:
+                            if isinstance(violation, dict):
+                                found_and_displayed_quota_info = True # Mark that we found and are displaying info
+                                print(f"  - Quota Metric: {violation.get('quotaMetric', 'N/A')}")
+                                print(f"    Quota ID: {violation.get('quotaId', 'N/A')}")
+                            
+                                dimensions = violation.get('quotaDimensions')
+                                if isinstance(dimensions, dict) and dimensions:
+                                    print(f"    Dimensions:")
+                                    for dim_key, dim_value in dimensions.items():
+                                        print(f"      {dim_key.capitalize()}: {dim_value}")
+                                elif dimensions is not None: # It exists but isn't a dict or is empty
+                                    print(f"    Dimensions: {dimensions} (Note: not a populated dictionary)")
+                                else: # dimensions key is not present or is None
+                                    print(f"    Dimensions: Not specified")
+                                print("    --------------------") # Separator for each violation
+                        print("-" * 30) # Separator for the end of a QuotaFailure block processing
+                    elif violations is None:
+                        print("QuotaFailure detail found, but no 'violations' key present.")
+                    elif not isinstance(violations, list):
+                        print(f"QuotaFailure detail found, but 'violations' is not a list (type: {type(violations)}).")
+                    else: # violations is an empty list
+                        print("QuotaFailure detail found, but the 'violations' list is empty.")
+    
+        if not found_and_displayed_quota_info:
+            print("No specific quota violation details were found or 'e.details' was not in the expected format to extract them.")
+            # For debugging, you might want to see the structure if it failed:
+            # print("\nDebug information: Structure of e.details:")
+            # if isinstance(e.details, (dict, list)):
+            #     try:
+            #         print(json.dumps(e.details, indent=2))
+            #     except Exception as dump_error:
+            #         print(f"Could not dump e.details as JSON: {dump_error}")
+            #         print(f"Raw e.details: {e.details}")
+            # elif e.details is not None:
+            #     print(str(e.details))
+            # else:
+            #     print("e.details is None.")
+
+
+
     except Exception as e:
         logger.error(f"Unexpected Gemini generation error: {e}", exc_info=True); raise
+
+
+
+def validate_json_string_against_model(
+    json_string: str,
+    model_class: Type[ModelType]
+) -> ModelType:
+    """
+    Validates a JSON string against a given Pydantic BaseModel class.
+
+    Args:
+        json_string: The JSON string to validate.
+        model_class: The Pydantic BaseModel class to validate against.
+
+    Returns:
+        An instance of the model_class populated with data from json_string.
+
+    Raises:
+        JSONValidationError: If the json_string is not valid JSON,
+                             or if it does not conform to the model_class schema.
+    """
+    try:
+        # Pydantic v2+ uses model_validate_json
+        # For Pydantic v1, you would use: model_class.parse_raw(json_string)
+        validated_model_instance = model_class.model_validate_json(json_string)
+        return validated_model_instance
+    except PydanticValidationError as e:
+        # Catch Pydantic's specific validation error
+        error_message = (
+            f"JSON data failed validation against model '{model_class.__name__}'."
+        )
+        # Raise our custom exception, chaining the original Pydantic error
+        raise JSONValidationError(error_message, pydantic_error=e) from e
+    except json.JSONDecodeError as e:
+        # This case is often caught by Pydantic's model_validate_json as well,
+        # resulting in a PydanticValidationError. However, explicitly catching it
+        # can be useful if pre-processing the string before Pydantic sees it,
+        # or for extremely malformed JSON that Pydantic might not parse cleanly.
+        # Pydantic's ValidationError for invalid JSON usually has type 'json_invalid'.
+        error_message = f"Invalid JSON format: {e.msg}"
+        # We don't have a pydantic_error here, but we could create a mock one or pass None
+        # For simplicity, let's just pass the message.
+        # To be more consistent, one could construct a minimal PydanticValidationError-like structure
+        # if needed by the consumer of JSONValidationError.
+        raise JSONValidationError(error_message) from e
+    except Exception as e:
+        # Catch any other unexpected errors during the process
+        error_message = f"An unexpected error occurred during JSON validation: {str(e)}"
+        raise JSONValidationError(error_message) from e
+
+
+
+
+
+
+
 
 # --- Output File Handling (for CLI) ---
 def load_json_file(file_path: Union[str, pathlib.Path]) -> Optional[Dict]:
@@ -226,7 +528,102 @@ def parse_json_from_response_text(response_text: str) -> Optional[Any]:
     try: return json.loads(stripped)
     except json.JSONDecodeError: return None
 
+
+
 def write_output_files(
+    responses: List[str],
+    output_config_path: str,
+    is_structured_mode: bool
+) -> None:
+    """
+    Parses responses and writes them to versioned output files.
+    If structured_mode is True, attempts to parse responses as JSON.
+    Successfully parsed JSON objects are aggregated:
+    - Single-element lists are unwrapped.
+    - All processed objects are collected into a list for the JSON file.
+    If JSON parsing/aggregation is successful, writes to a .json file.
+    Responses that are not parsed as JSON, or if JSON writing fails,
+    are written to a .md file.
+    """
+    try:
+        _ver, base_path = get_next_output_version(output_config_path)
+        json_path = base_path.with_suffix(".json")
+        other_path = base_path.with_suffix(".md")
+        
+        # Ensure the parent directory for outputs exists
+        # This might be redundant if get_next_output_version or save_json_file already do this
+        base_path.parent.mkdir(parents=True, exist_ok=True)
+
+        original_parsed_json_objects: List[Any] = []
+        other_content_items: List[str] = []
+
+        for resp_text in responses:
+            parsed_obj = None
+            if is_structured_mode:
+                try:
+                    # parse_json_from_response_text should return None if resp_text is not valid JSON
+                    parsed_obj = parse_json_from_response_text(resp_text)
+                except Exception as e:
+                    logger.error(f"Error during call to parse_json_from_response_text: {e}", exc_info=True)
+                    # Treat as unparsable, parsed_obj remains None
+            
+            if parsed_obj is not None:
+                original_parsed_json_objects.append(parsed_obj)
+            else:
+                # This includes:
+                # 1. Not in structured mode.
+                # 2. In structured mode, but resp_text was not valid JSON (parse_json_from_response_text returned None).
+                # 3. In structured mode, but parse_json_from_response_text raised an error.
+                other_content_items.append(resp_text)
+
+        if original_parsed_json_objects:
+            # Aggregate the parsed JSON objects according to the specified rules
+            aggregated_json_payload: List[Any] = []
+            for item in original_parsed_json_objects:
+                if isinstance(item, list) and len(item) == 1:
+                    aggregated_json_payload.append(item[0])  # Unwrap single-element lists
+                else:
+                    aggregated_json_payload.append(item)
+            
+            if save_json_file(aggregated_json_payload, json_path):
+                logger.info(f"Aggregated JSON data successfully written to {json_path}")
+            else:
+                logger.error(f"Failed to write aggregated JSON data to {json_path}.")
+                # Add original parsed JSON objects (before aggregation) to other_content_items
+                # so they are included in the .md file.
+                failed_json_strings = [
+                    f"--- FAILED JSON WRITE (original parsed object shown below) ---\n{str(obj)[:1000]}\n--- END ---"
+                    for obj in original_parsed_json_objects
+                ]
+                other_content_items.extend(failed_json_strings)
+        
+        elif is_structured_mode: # No JSON objects were parsed, but we were in structured mode.
+            logger.warning("Structured mode was enabled, but no JSON content was successfully parsed from responses.")
+
+        if other_content_items:
+            try:
+                # Ensure parent directory exists (might be redundant if done earlier, but safe)
+                other_path.parent.mkdir(parents=True, exist_ok=True)
+                with open(other_path, 'w', encoding='utf-8') as f:
+                    for i, item_text in enumerate(other_content_items):
+                        f.write(str(item_text))
+                        # Add separator between items, and ensure last item ends with a newline
+                        if len(other_content_items) > 1 and i < len(other_content_items) - 1:
+                            f.write(f"\n\n{'='*20} Response Separator {'='*20}\n\n")
+                        elif not str(item_text).endswith('\n'):
+                            f.write('\n')
+                logger.info(f"Wrote {len(other_content_items)} non-JSON/raw items to {other_path}")
+            except Exception as e:
+                logger.error(f"Failed to write to non-JSON/raw output file {other_path}: {e}", exc_info=True)
+                
+    except Exception as e:
+        # Catch-all for errors in the output writing process itself (e.g., path issues, permissions)
+        logger.error(f"An unexpected error occurred in write_output_files: {e}", exc_info=True)
+
+
+
+
+def write_output_files_obs(
     responses: List[str],
     output_config_path: str,
     is_structured_mode: bool
@@ -287,6 +684,8 @@ try:
     from data import generic_JSON_response_schema
     from data import PDF_page_JSON_schema
     from data import files_response_schema
+    from data import files_schema
+    from data import front_matter_schema
 
     logger.info("Schema definition modules imported successfully for registration.")
 except ImportError as e:
@@ -296,6 +695,7 @@ except ImportError as e:
         from ..data import generic_JSON_response_schema # noqa
         from ..data import PDF_page_JSON_schema # noqa
         from ..data import files_response_schema
+        from data import files_schema
         logger.info("Schema definition modules imported successfully using relative path.")
     except ImportError:
         logger.error(f"Relative import of schema modules also failed. Check structure and sys.path.")

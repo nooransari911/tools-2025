@@ -3,7 +3,7 @@ from src.utils.gemini_utils import register_schema
 from pydantic import BaseModel # Added for schema definition
 from typing import Optional, List # Added for strong typing in schema
 
-
+@register_schema
 class PdfPageContent(BaseModel):
     """
     Represents the extracted content structure of a single PDF page,

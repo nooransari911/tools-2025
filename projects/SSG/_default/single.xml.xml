@@ -1,0 +1,22 @@
+{{- /* layouts/_default/single.xml.xml */ -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<page>
+  <title>{{ .Title | transform.XMLEscape }}</title>
+  <permalink>{{ .Permalink }}</permalink>
+  <date>{{ .Date.Format "2006-01-02" }}</date>
+  <lastmod>{{ .Lastmod.Format "2006-01-02" }}</lastmod>
+  <summary>{{ .Summary | plainify | transform.XMLEscape }}</summary>
+  <content>{{ .Plain | transform.XMLEscape }}</content>
+  {{/* Example for HTML content within CDATA */}}
+  {{/* <content><![CDATA[{{ .Content }}]]></content> */}}
+  {{ with .Params.tags }}
+  <tags>
+    {{ range . }}<tag>{{ . | transform.XMLEscape }}</tag>{{ end }}
+  </tags>
+  {{ end }}
+  {{ with .Params.categories }}
+  <categories>
+    {{ range . }}<category>{{ . | transform.XMLEscape }}</category>{{ end }}
+  </categories>
+  {{ end }}
+</page>

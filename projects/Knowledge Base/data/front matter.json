@@ -1,0 +1,41 @@
+[
+    {
+        "path": "rel path to file from some base directory",
+        "title": "title of the content page",
+        "list-title": "title displayed on list/home pages; optionally different from title;",
+        "subtitle": "clarifies title, incites curiosity, motivation for reading, bluntly stating the core irony/paradox in the essay if any, etc.",
+        "date": "date created (or modified, but only if created is not easily available); ISO standard form date YYYY-MM-DD",
+        "categories": "categories for content; narrower in scope and more specific than tags;",
+        "tags": "broader themes, subjects, domains, etc.",
+        "set": "like tags, but explicitly forms a set of articles; tags are standard terminology, set is that but augmented by me; optionally sets can be nested and have subsets for a clean organization;",
+        "weight": "represents a weight; used for sorting;",
+        "draft": "is it a draft? false by default;",
+        "description": "description/summary of article for SEO/search engine",
+        "summary": "description/summary of article but for reader; optionally to be displayed on list pages;",
+        "featured_image": "a featured image for article, if any;"
+    },
+
+
+    {
+        "path": "rel path to file from the base directory; base dir set explicitly;",
+        "date": "date created (or modified, but only if created is not easily available); ISO standard form date YYYY-MM-DD",
+        "weight": "set to 100",
+        "draft": "false by default;",
+        "featured_image": "set to /feature.jpg"
+    },
+
+
+
+    {
+        "title": "title of the content page",
+        "list-title": "title displayed on list/home pages; optionally different from title;",
+        "subtitle": "clarifies title, incites curiosity, motivation for reading, bluntly stating the core irony/paradox in the essay if any, etc.",
+        "categories": "categories for content; narrower in scope and more specific than tags;",
+        "tags": "broader themes, subjects, domains, etc.",
+        "set": "like tags, but explicitly forms a set of articles; tags are standard terminology, set is that but augmented by me; optionally sets can be nested and have subsets for a clean organization;",
+        "description": "description/summary of article for SEO/search engine",
+        "summary": "description/summary of article but for reader; optionally to be displayed on list pages;"
+    }    
+
+    
+]

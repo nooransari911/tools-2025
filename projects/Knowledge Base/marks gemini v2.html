@@ -1,0 +1,1099 @@
+add option to edit main question number. main ques number should be simple form
+field with rename/edit option. now calculate total best case, worst marks as
+well in addition to total likely mark. add new input : weight for worst case
+assuming weight for best case is 1. this is used for the weighted averaging.
+there is a ghost extra purple line at the top main box at homepage. fix it add
+navbar at side that shows all questions as tree. support easy navigation from
+there, collapsing questions, resizing width, etc, essentially a modern fully
+featured sidebar. move the main buttons (add ques, export, calculate, etc.) to
+the sidebar. input fields for marks put input value number at too much left,
+meaning they are almost on the border of field box. optimize it each diagram,
+introduction, explanation/operation/details, graph get separate marks. its not a
+checkbox like here, its evaluation criteria. also remove "up-down" arrows in all
+text input fields ```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Marks Entry System</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --bg-primary: #0f0f23;
+        --bg-secondary: #1a1a2e;
+        --bg-tertiary: #16213e;
+        --glass-bg: rgba(30, 41, 59, 0.85);
+        --glass-border: rgba(148, 163, 184, 0.1);
+        --text-primary: #f8fafc;
+        --text-secondary: #e2e8f0;
+        --text-muted: #cbd5e1;
+        --accent-blue: #60a5fa;
+        --accent-purple: #a855f7;
+        --accent-pink: #f472b6;
+        --success-color: #34d399;
+        --error-color: #f87171;
+        --warning-color: #fbbf24;
+      }
+
+      body {
+        font-family:
+          "SF Pro Display",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--bg-primary) 0%,
+          var(--bg-secondary) 50%,
+          var(--bg-tertiary) 100%
+        );
+        color: var(--text-primary);
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          radial-gradient(
+            circle at 20% 50%,
+            rgba(102, 126, 234, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(168, 85, 247, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 80%,
+            rgba(96, 165, 250, 0.15) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        position: relative;
+        animation: slideInUp 0.6s ease-out;
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--primary-gradient);
+        border-radius: 24px 24px 0 0;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
+      }
+
+      .header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        font-weight: 300;
+      }
+
+      .controls {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary {
+        background: var(--primary-gradient);
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-secondary {
+        background: rgba(148, 163, 184, 0.1);
+        color: var(--text-secondary);
+        border: 1px solid var(--glass-border);
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      .question-card {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.5s ease-out forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .question-card:hover {
+        border-color: rgba(148, 163, 184, 0.3);
+        background: rgba(15, 23, 42, 0.8);
+        transform: translateY(-2px);
+      }
+
+      .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--glass-border);
+      }
+
+      .question-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        background: var(--secondary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .question-number {
+        background: var(--primary-gradient);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      .subquestion-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .subquestion-card {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(148, 163, 184, 0.08);
+        border-radius: 12px;
+        padding: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .subquestion-card:hover {
+        background: rgba(30, 41, 59, 0.6);
+        border-color: rgba(148, 163, 184, 0.2);
+      }
+
+      .subquestion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .subquestion-title {
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .max-marks-badge {
+        background: var(--success-gradient);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .input-group {
+        margin-bottom: 16px;
+      }
+
+      .input-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .input-field:focus {
+        outline: none;
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+        background: rgba(15, 23, 42, 0.8);
+      }
+
+      .criteria-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .criteria-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: rgba(15, 23, 42, 0.3);
+        border-radius: 8px;
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .criteria-item:hover {
+        background: rgba(15, 23, 42, 0.5);
+        border-color: rgba(148, 163, 184, 0.2);
+      }
+
+      .criteria-checkbox {
+        accent-color: var(--accent-blue);
+        transform: scale(1.1);
+      }
+
+      .criteria-label {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        cursor: pointer;
+      }
+
+      .scoring-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .scoring-item {
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        border-radius: 8px;
+        padding: 12px;
+        text-align: center;
+      }
+
+      .scoring-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .scoring-value {
+        font-size: 1.125rem;
+        font-weight: 600;
+        padding: 4px 0;
+      }
+
+      .best-case {
+        color: var(--success-color);
+      }
+      .worst-case {
+        color: var(--error-color);
+      }
+      .likely-case {
+        color: var(--accent-blue);
+      }
+
+      .results-section {
+        margin-top: 40px;
+        padding: 24px;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+      }
+
+      .results-header {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .results-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: var(--success-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .total-score {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--accent-blue);
+        text-align: center;
+        margin: 20px 0;
+        text-shadow: 0 0 30px rgba(96, 165, 250, 0.3);
+      }
+
+      .delete-btn {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .delete-btn:hover {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        transform: translateY(-1px);
+      }
+
+      .loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        z-index: 1000;
+        animation: slideInRight 0.3s ease-out;
+        backdrop-filter: blur(10px);
+      }
+
+      .notification.success {
+        background: rgba(52, 211, 153, 0.1);
+        color: var(--success-color);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+      }
+
+      .notification.error {
+        background: rgba(248, 113, 113, 0.1);
+        color: var(--error-color);
+        border: 1px solid rgba(248, 113, 113, 0.3);
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(100px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 24px 16px;
+          margin: 16px;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .controls {
+          flex-direction: column;
+        }
+
+        .scoring-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .total-score {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Advanced Marks Entry System</h1>
+        <p>Intelligent grading with weighted scenario analysis</p>
+      </div>
+
+      <div class="controls">
+        <button
+          class="btn btn-primary"
+          onclick="MarksEntrySystem.addQuestion()"
+        >
+          Add Question
+        </button>
+        <button
+          class="btn btn-secondary"
+          onclick="MarksEntrySystem.calculateTotal()"
+        >
+          Calculate Total
+        </button>
+        <button
+          class="btn btn-secondary"
+          onclick="MarksEntrySystem.exportResults()"
+        >
+          Export Results
+        </button>
+        <button class="btn btn-secondary" onclick="MarksEntrySystem.clearAll()">
+          Clear All
+        </button>
+      </div>
+
+      <div id="questions-container"></div>
+
+      <div class="results-section" id="results-section" style="display: none">
+        <div class="results-header">
+          <h2 class="results-title">Final Results</h2>
+        </div>
+        <div class="total-score" id="total-score">0</div>
+        <div id="results-breakdown"></div>
+      </div>
+    </div>
+
+    <script>
+      // Main application class following Single Responsibility Principle
+      class MarksEntrySystem {
+        static instance = null;
+        static questions = [];
+        static questionCounter = 0;
+
+        // Singleton pattern implementation
+        static getInstance() {
+          if (!this.instance) {
+            this.instance = new MarksEntrySystem();
+          }
+          return this.instance;
+        }
+
+        // Initialize the system
+        static init() {
+          try {
+            this.getInstance();
+            this.loadFromStorage();
+            this.render();
+          } catch (error) {
+            ErrorHandler.handle(error, "Failed to initialize system");
+          }
+        }
+
+        // Add new question
+        static addQuestion() {
+          try {
+            this.questionCounter++;
+            const question = new Question(this.questionCounter);
+            this.questions.push(question);
+            this.render();
+            this.saveToStorage();
+            NotificationService.show("Question added successfully", "success");
+          } catch (error) {
+            ErrorHandler.handle(error, "Failed to add question");
+          }
+        }
+
+        // Remove question by ID
+        static removeQuestion(questionId) {
+          try {
+            this.questions = this.questions.filter((q) => q.id !== questionId);
+            this.render();
+            this.saveToStorage();
+            NotificationService.show(
+              "Question removed successfully",
+              "success",
+            );
+          } catch (error) {
+            ErrorHandler.handle(error, "Failed to remove question");
+          }
+        }
+
+        // Calculate total marks
+        static calculateTotal() {
+          try {
+            let total = 0;
+            this.questions.forEach((question) => {
+              question.subquestions.forEach((subq) => {
+                total += subq.getLikelyCase();
+              });
+            });
+
+            this.displayResults(total);
+            NotificationService.show(
+              "Total calculated successfully",
+              "success",
+            );
+          } catch (error) {
+            ErrorHandler.handle(error, "Failed to calculate total");
+          }
+        }
+
+        // Display results
+        static displayResults(total) {
+          const resultsSection = document.getElementById("results-section");
+          const totalScore = document.getElementById("total-score");
+          const breakdown = document.getElementById("results-breakdown");
+
+          totalScore.textContent = total.toFixed(2);
+
+          let breakdownHTML = '<div class="scoring-grid">';
+          this.questions.forEach((question) => {
+            const questionTotal = question.getQuestionTotal();
+            breakdownHTML += `
+                        <div class="scoring-item">
+                            <div class="scoring-label">Question ${question.id}</div>
+                            <div class="scoring-value likely-case">${questionTotal.toFixed(2)}</div>
+                        </div>
+                    `;
+          });
+          breakdownHTML += "</div>";
+
+          breakdown.innerHTML = breakdownHTML;
+          resultsSection.style.display = "block";
+        }
+
+        // Export results to JSON
+        static exportResults() {
+          try {
+            const data = {
+              timestamp: new Date().toISOString(),
+              questions: this.questions.map((q) => q.toJSON()),
+              totalMarks: this.getTotalMarks(),
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], {
+              type: "application/json",
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `marks-entry-${new Date().toISOString().split("T")[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            NotificationService.show(
+              "Results exported successfully",
+              "success",
+            );
+          } catch (error) {
+            ErrorHandler.handle(error, "Failed to export results");
+          }
+        }
+
+        // Clear all data
+        static clearAll() {
+          try {
+            if (confirm("Are you sure you want to clear all data?")) {
+              this.questions = [];
+              this.questionCounter = 0;
+              this.render();
+              this.saveToStorage();
+              document.getElementById("results-section").style.display = "none";
+              NotificationService.show("All data cleared", "success");
+            }
+          } catch (error) {
+            ErrorHandler.handle(error, "Failed to clear data");
+          }
+        }
+
+        // Get total marks
+        static getTotalMarks() {
+          return this.questions.reduce((total, question) => {
+            return total + question.getQuestionTotal();
+          }, 0);
+        }
+
+        // Render the UI
+        static render() {
+          const container = document.getElementById("questions-container");
+          container.innerHTML = "";
+
+          this.questions.forEach((question, index) => {
+            const questionElement = question.render();
+            questionElement.style.animationDelay = `${index * 0.1}s`;
+            container.appendChild(questionElement);
+          });
+        }
+
+        // Save to localStorage (in-memory storage for demo)
+        static saveToStorage() {
+          try {
+            // In a real application, this would save to localStorage
+            // For demo purposes, we'll just store in a variable
+            window.marksData = {
+              questions: this.questions.map((q) => q.toJSON()),
+              questionCounter: this.questionCounter,
+            };
+          } catch (error) {
+            ErrorHandler.handle(error, "Failed to save data");
+          }
+        }
+
+        // Load from localStorage (in-memory storage for demo)
+        static loadFromStorage() {
+          try {
+            if (window.marksData) {
+              this.questionCounter = window.marksData.questionCounter || 0;
+              this.questions = window.marksData.questions.map((qData) =>
+                Question.fromJSON(qData),
+              );
+            }
+          } catch (error) {
+            ErrorHandler.handle(error, "Failed to load data");
+          }
+        }
+      }
+
+      // Question class
+      class Question {
+        constructor(id) {
+          this.id = id;
+          this.subquestions = [];
+          this.subquestionCounter = 0;
+          this.addSubquestion(); // Add initial subquestion
+        }
+
+        addSubquestion() {
+          this.subquestionCounter++;
+          const subquestion = new Subquestion(this.id, this.subquestionCounter);
+          this.subquestions.push(subquestion);
+          return subquestion;
+        }
+
+        removeSubquestion(subquestionId) {
+          this.subquestions = this.subquestions.filter(
+            (sq) => sq.id !== subquestionId,
+          );
+        }
+
+        getQuestionTotal() {
+          return this.subquestions.reduce(
+            (total, sq) => total + sq.getLikelyCase(),
+            0,
+          );
+        }
+
+        render() {
+          const questionDiv = document.createElement("div");
+          questionDiv.className = "question-card";
+          questionDiv.innerHTML = `
+                    <div class="question-header">
+                        <h3 class="question-title">Question ${this.id}</h3>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <span class="question-number">Q${this.id}</span>
+                            <button class="btn btn-secondary" onclick="MarksEntrySystem.questions.find(q => q.id === ${this.id}).addSubquestionAndRender()">
+                                Add Subquestion
+                            </button>
+                            <button class="delete-btn" onclick="MarksEntrySystem.removeQuestion(${this.id})">
+                                Delete Question
+                            </button>
+                        </div>
+                    </div>
+                    <div class="subquestion-grid" id="subquestions-${this.id}">
+                        ${this.subquestions.map((sq) => sq.render()).join("")}
+                    </div>
+                `;
+          return questionDiv;
+        }
+
+        addSubquestionAndRender() {
+          this.addSubquestion();
+          MarksEntrySystem.render();
+          MarksEntrySystem.saveToStorage();
+        }
+
+        toJSON() {
+          return {
+            id: this.id,
+            subquestions: this.subquestions.map((sq) => sq.toJSON()),
+            subquestionCounter: this.subquestionCounter,
+          };
+        }
+
+        static fromJSON(data) {
+          const question = new Question(data.id);
+          question.subquestionCounter = data.subquestionCounter;
+          question.subquestions = data.subquestions.map((sqData) =>
+            Subquestion.fromJSON(sqData),
+          );
+          return question;
+        }
+      }
+
+      // Subquestion class
+      class Subquestion {
+        constructor(questionId, id) {
+          this.questionId = questionId;
+          this.id = id;
+          this.maxMarks = 0;
+          this.bestCase = 0;
+          this.worstCase = 0;
+          this.criteria = {
+            diagram: false,
+            background: false,
+            operation: false,
+            graph: false,
+          };
+        }
+
+        getLikelyCase() {
+          // Weighted average: 1 part best case, 1.3 parts worst case
+          return (this.bestCase * 1 + this.worstCase * 1.3) / 2.3;
+        }
+
+        updateValue(field, value) {
+          try {
+            if (
+              field === "maxMarks" ||
+              field === "bestCase" ||
+              field === "worstCase"
+            ) {
+              this[field] = parseFloat(value) || 0;
+            } else if (field.startsWith("criteria.")) {
+              const criteriaField = field.split(".")[1];
+              this.criteria[criteriaField] = value;
+            }
+            MarksEntrySystem.saveToStorage();
+          } catch (error) {
+            ErrorHandler.handle(error, "Failed to update value");
+          }
+        }
+
+        render() {
+          return `
+                    <div class="subquestion-card">
+                        <div class="subquestion-header">
+                            <h4 class="subquestion-title">Subquestion ${this.id}</h4>
+                            <span class="max-marks-badge">Max: ${this.maxMarks}</span>
+                            <button class="delete-btn" onclick="MarksEntrySystem.questions.find(q => q.id === ${this.questionId}).removeSubquestion(${this.id}); MarksEntrySystem.render(); MarksEntrySystem.saveToStorage();">
+                                Delete
+                            </button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label class="input-label">Max Marks</label>
+                            <input type="number" class="input-field" value="${this.maxMarks}" 
+                                   onchange="MarksEntrySystem.questions.find(q => q.id === ${this.questionId}).subquestions.find(sq => sq.id === ${this.id}).updateValue('maxMarks', this.value)">
+                        </div>
+
+                        <div class="criteria-grid">
+                            <label class="criteria-item">
+                                <input type="checkbox" class="criteria-checkbox" ${this.criteria.diagram ? "checked" : ""}
+                                       onchange="MarksEntrySystem.questions.find(q => q.id === ${this.questionId}).subquestions.find(sq => sq.id === ${this.id}).updateValue('criteria.diagram', this.checked)">
+                                <span class="criteria-label">Diagram</span>
+                            </label>
+                            <label class="criteria-item">
+                                <input type="checkbox" class="criteria-checkbox" ${this.criteria.background ? "checked" : ""}
+                                       onchange="MarksEntrySystem.questions.find(q => q.id === ${this.questionId}).subquestions.find(sq => sq.id === ${this.id}).updateValue('criteria.background', this.checked)">
+                                <span class="criteria-label">Background</span>
+                            </label>
+                            <label class="criteria-item">
+                                <input type="checkbox" class="criteria-checkbox" ${this.criteria.operation ? "checked" : ""}
+                                       onchange="MarksEntrySystem.questions.find(q => q.id === ${this.questionId}).subquestions.find(sq => sq.id === ${this.id}).updateValue('criteria.operation', this.checked)">
+                                <span class="criteria-label">Operation</span>
+                            </label>
+                            <label class="criteria-item">
+                                <input type="checkbox" class="criteria-checkbox" ${this.criteria.graph ? "checked" : ""}
+                                       onchange="MarksEntrySystem.questions.find(q => q.id === ${this.questionId}).subquestions.find(sq => sq.id === ${this.id}).updateValue('criteria.graph', this.checked)">
+                                <span class="criteria-label">Graph</span>
+                            </label>
+                        </div>
+
+                        <div class="scoring-grid">
+                            <div class="scoring-item">
+                                <div class="scoring-label">Best Case</div>
+                                <input type="number" class="input-field scoring-value best-case" value="${this.bestCase}"
+                                       onchange="MarksEntrySystem.questions.find(q => q.id === ${this.questionId}).subquestions.find(sq => sq.id === ${this.id}).updateValue('bestCase', this.value)">
+                            </div>
+                            <div class="scoring-item">
+                                <div class="scoring-label">Worst Case</div>
+                                <input type="number" class="input-field scoring-value worst-case" value="${this.worstCase}"
+                                       onchange="MarksEntrySystem.questions.find(q => q.id === ${this.questionId}).subquestions.find(sq => sq.id === ${this.id}).updateValue('worstCase', this.value)">
+                            </div>
+                            <div class="scoring-item">
+                                <div class="scoring-label">Likely Case</div>
+                                <div class="scoring-value likely-case">${this.getLikelyCase().toFixed(2)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+        }
+
+        toJSON() {
+          return {
+            questionId: this.questionId,
+            id: this.id,
+            maxMarks: this.maxMarks,
+            bestCase: this.bestCase,
+            worstCase: this.worstCase,
+            criteria: { ...this.criteria },
+          };
+        }
+
+        static fromJSON(data) {
+          const subquestion = new Subquestion(data.questionId, data.id);
+          subquestion.maxMarks = data.maxMarks;
+          subquestion.bestCase = data.bestCase;
+          subquestion.worstCase = data.worstCase;
+          subquestion.criteria = { ...data.criteria };
+          return subquestion;
+        }
+      }
+
+      // Error handling service
+      class ErrorHandler {
+        static handle(error, userMessage = "An error occurred") {
+          console.error("Error:", error);
+          NotificationService.show(userMessage, "error");
+        }
+      }
+
+      // Notification service
+      class NotificationService {
+        static show(message, type = "success") {
+          const notification = document.createElement("div");
+          notification.className = `notification ${type}`;
+          notification.textContent = message;
+          document.body.appendChild(notification);
+
+          setTimeout(() => {
+            notification.style.animation = "slideInRight 0.3s ease-out reverse";
+            setTimeout(() => {
+              if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+              }
+            }, 300);
+          }, 3000);
+        }
+      }
+
+      // Input validation service
+      class ValidationService {
+        static validateNumber(value, min = 0, max = Infinity) {
+          const num = parseFloat(value);
+          if (isNaN(num)) return false;
+          return num >= min && num <= max;
+        }
+
+        static validateRequired(value) {
+          return value !== null && value !== undefined && value !== "";
+        }
+      }
+
+      // Data export service
+      class ExportService {
+        static toCSV(data) {
+          const headers = [
+            "Question",
+            "Subquestion",
+            "Max Marks",
+            "Best Case",
+            "Worst Case",
+            "Likely Case",
+          ];
+          const rows = [];
+
+          data.questions.forEach((question) => {
+            question.subquestions.forEach((subq) => {
+              rows.push([
+                `Q${question.id}`,
+                `SQ${subq.id}`,
+                subq.maxMarks,
+                subq.bestCase,
+                subq.worstCase,
+                subq.getLikelyCase().toFixed(2),
+              ]);
+            });
+          });
+
+          const csvContent = [headers, ...rows]
+            .map((row) => row.join(","))
+            .join("\n");
+
+          return csvContent;
+        }
+      }
+
+      // Initialize the application when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        try {
+          MarksEntrySystem.init();
+        } catch (error) {
+          ErrorHandler.handle(error, "Failed to start application");
+        }
+      });
+
+      // Auto-save functionality
+      setInterval(() => {
+        try {
+          MarksEntrySystem.saveToStorage();
+        } catch (error) {
+          console.warn("Auto-save failed:", error);
+        }
+      }, 30000); // Auto-save every 30 seconds
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", function (e) {
+        if (e.ctrlKey || e.metaKey) {
+          switch (e.key) {
+            case "n":
+              e.preventDefault();
+              MarksEntrySystem.addQuestion();
+              break;
+            case "s":
+              e.preventDefault();
+              MarksEntrySystem.saveToStorage();
+              NotificationService.show("Data saved", "success");
+              break;
+            case "e":
+              e.preventDefault();
+              MarksEntrySystem.exportResults();
+              break;
+          }
+        }
+      });
+
+      // Add smooth scrolling for better UX
+      function smoothScrollTo(element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+
+      // Real-time calculation updates
+      function updateCalculations() {
+        MarksEntrySystem.questions.forEach((question) => {
+          question.subquestions.forEach((subquestion) => {
+            const likelyElement = document.querySelector(
+              `[data-likely-case="${question.id}-${subquestion.id}"]`,
+            );
+            if (likelyElement) {
+              likelyElement.textContent = subquestion
+                .getLikelyCase()
+                .toFixed(2);
+            }
+          });
+        });
+      }
+
+      // Enhanced input handling with debouncing
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      // Add visual feedback for actions
+      function addVisualFeedback(element, type = "success") {
+        element.style.transform = "scale(0.95)";
+        element.style.transition = "transform 0.1s ease";
+
+        setTimeout(() => {
+          element.style.transform = "scale(1)";
+          if (type === "success") {
+            element.style.borderColor = "var(--success-color)";
+            setTimeout(() => {
+              element.style.borderColor = "";
+            }, 1000);
+          }
+        }, 100);
+      }
+    </script>
+  </body>
+</html>
+```

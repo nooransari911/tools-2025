@@ -1,0 +1,30 @@
+[
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": "nothing. just testing stuff out. ignore"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "type": "thinking",
+                "thinking": "The user is just asking me to ignore this message, as they're testing something. I should provide a minimal response acknowledging this without creating a complex answer.",
+                "signature": "EqoBCkgIAxABGAIiQLcRVK6mvnQNYXZg8ApZcNU8Aam+bCoootcK/Wnoaecj9Jc5N6r7rVPmwcmBRa4IjjeeIm8gNQXRfaS4MhBPeqkSDIHoAKmmjzwmtrZuAhoMwls6v/xH0LD2CjeBIjDTXqiVAe5F58lLbv/486Eo3MF5BuVzmjrkIHVP8oEHya5UiB2b2gPtTD7kmf45VIQqEMyuxm34YRD9I1m6H48rR7w="
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "type": "text",
+                "text": "I understand you're just testing. No problem at all."
+            }
+        ]
+    }
+]

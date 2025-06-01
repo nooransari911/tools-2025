@@ -4,15 +4,17 @@ import time
 import readline
 
 import base64, json, pprint
-import humanize
+import pathlib
 
 
 
 import boto3
+from botocore import config
 from botocore.client import Config
 from botocore.exceptions import ClientError
 from dotenv import load_dotenv
 import logging
+from src.utils import gemini_utils as utils
 
 
 logger = logging.getLogger(__name__)
@@ -28,7 +30,7 @@ INPUT_JSONL_FILE_NAME = os.getenv ("INPUT_JSONL_FILE_NAME")
 S3_DEST = os.getenv ("S3_DESTINATION_BUCKET")
 OUTPUT_JSONL_FILE_NAME = os.getenv ("OUTPUT_JSONL_FILE_NAME")
 TOKENS_STORE_JSON_FILE_NAME = os.getenv ("CLAUDE_TOKENS_STORE_JSON_FILE_NAME")
-
+READ_TIMEOUT = 86400
 
 
 
@@ -95,7 +97,7 @@ def configure_bedrock_runtime():
     # Bedrock config.  Crucial for long generation tasks.
     custom_config = Config(
         connect_timeout=840,
-        read_timeout=840,
+        read_timeout=READ_TIMEOUT,
         region_name=region_name,  # Always a good idea to specify the region
         #  retries = {  # Optional: Configure retry behavior
         #      'max_attempts': 5, # Example: Retry up to 5 times.
@@ -112,7 +114,8 @@ def configure_bedrock_runtime():
             service_name='bedrock-runtime',
             aws_access_key_id=credentials['AccessKeyId'],
             aws_secret_access_key=credentials['SecretAccessKey'],
-            aws_session_token=credentials['SessionToken']
+            aws_session_token=credentials['SessionToken'],
+            config=custom_config
         )
         return bedrock_runtime
     except Exception as e:
@@ -134,7 +137,7 @@ def configure_bedrock(session_name="DeepseekR1Session"):
     # Bedrock config.  Crucial for long generation tasks.
     custom_config = Config(
         connect_timeout=840,
-        read_timeout=840,
+        read_timeout=READ_TIMEOUT,
         region_name=region_name,  # Always a good idea to specify the region
         #  retries = {  # Optional: Configure retry behavior
         #      'max_attempts': 5, # Example: Retry up to 5 times.
@@ -150,7 +153,8 @@ def configure_bedrock(session_name="DeepseekR1Session"):
             service_name='bedrock',
             aws_access_key_id=credentials['AccessKeyId'],
             aws_secret_access_key=credentials['SecretAccessKey'],
-            aws_session_token=credentials['SessionToken']
+            aws_session_token=credentials['SessionToken'],
+            config=custom_config
         )
         return bedrock
     except Exception as e:
@@ -434,6 +438,12 @@ def prepare_message(text_string, role="user"):
     }
 
 
+def prepare_message_generic (obj, role="user"):
+    """Formats a text string for Claude Messages."""
+    return {
+        "role": role,
+        "content": [obj]
+    }
 
 
 
@@ -490,19 +500,22 @@ def generate_response(bedrock_runtime, model_id, system_prompts, messages, max_o
 
     body = {
         "anthropic_version": "bedrock-2023-05-31",
+        "anthropic_beta": ["output-128k-2025-02-19"],
         "max_tokens": max_op_tokens,
         "system": system_prompts,
         "messages": messages
     }
-    # if should_deep_think.lower () == "true":
-    #     body ["thinking"] = {
-    #         "type": "enabled",
-    #         "budget_tokens": int (deep_think_budget)
-    #     }
+    if should_deep_think.lower () == "true":
+        body ["thinking"] = {
+            "type": "enabled",
+            "budget_tokens": int (deep_think_budget)
+        }
 
     body_string = json.dumps (
         body
     )
+
+    # print (body_string)
 
     try:
         response = bedrock_runtime.invoke_model(
@@ -537,21 +550,25 @@ def generate_response(bedrock_runtime, model_id, system_prompts, messages, max_o
 
         raw_content = response_body ['content']
         output_message = []
+        thinking_message = []
 
 
         
         for content in raw_content:
             if content ["type"].lower () == "text":
                 output_message.append (content ["text"])
+
+            if content ["type"].lower () == "thinking":
+                thinking_message.append (content)
+
             else:
                 continue
 
-        return_string = "".join (output_message)
-        
-        print (f"Size of response: {sys.getsizeof (return_string)}B")
 
-        return return_string
 
+        output_message_str = "".join (output_message)
+        print (f"Size of response: {sys.getsizeof (output_message_str)}B")
+        return (thinking_message, output_message_str)
 
         # response_body = json.loads(response.get('body').read())
    
@@ -594,7 +611,8 @@ def run_chatbot():
 
 
     # model_id = "us.anthropic.claude-3-7-sonnet-20250219-v1:0" 
-    model_id = "us.anthropic.claude-3-5-sonnet-20241022-v2:0" 
+    # model_id = "us.anthropic.claude-3-5-sonnet-20241022-v2:0"
+    model_id = "us.anthropic.claude-sonnet-4-20250514-v1:0"
     system_prompts = load_system_instructions()
     messages = []  # Initialize conversation history
     content = []
@@ -625,7 +643,7 @@ def run_chatbot():
         # print (initial_message)
 
         messages.append (initial_message)
-        initial_response = generate_response (bedrock_runtime, model_id, system_prompts, messages)
+        _, initial_response = generate_response (bedrock_runtime, model_id, system_prompts, messages)
         # print ("\n\nResponse body dump: ")
         # print (json.dumps (initial_response, indent = 4))
     
@@ -683,22 +701,39 @@ def run_chatbot():
         messages.append(text_file_message)
     
         # Generate and process response
-        prompt_file_response = generate_response(bedrock_runtime, model_id, system_prompts, messages)
+        thinking_message, prompt_file_response = generate_response(bedrock_runtime, model_id, system_prompts, messages)
         print(f"Size of response: {sys.getsizeof(prompt_file_response)}B")
         print("\n\n")
-    
-        messages.append(prepare_message(prompt_file_response, "assistant"))  # Add AI response to history
+        # print (json.dumps (thinking_message, indent=4))
+        
+        messages.append (prepare_message_generic (thinking_message [0], "assistant"))
+        messages.append (prepare_message (prompt_file_response, "assistant"))  # Add AI response to history
+        thinking_message_str = f"<think>\n{thinking_message [0] ["thinking"]}\n</think>\n\n\n\n"
+        
     
         # Output response
         if should_print.lower() == "print":
             print("\n\n", prompt_file_response, "\n\n")
         if prompt_file_response:
             with open(output_file_path, "w") as output_file:
-                output_file.write(prompt_file_response)
+                output_file.write (thinking_message_str)
+                output_file.write (prompt_file_response)
         else:
             print ("Response was None")
 
 
+
+
+    file_v_path_str = pathlib.Path ("./data/output_file_version.json").resolve ()
+    file_v = utils.load_json_file (file_v_path_str)
+    file_v_int = int (file_v ["claude messages conversation version"])
+    file_v_int = file_v_int + 1
+    file_v ["claude messages conversation version"] = file_v_int
+
+    dest_messages_file_path_str = f"./data/claude/Claude Messages Conversation {file_v_int}.json"
+
+
+    utils.save_json_file (file_v, file_v_path_str, indent=4)
 
 
     print("\033[92mChatbot started. Type 'exit' to quit or press Ctrl+D.\033[0m")
@@ -716,18 +751,34 @@ def run_chatbot():
                 # print (user_input)
                 # print (json.dumps (prepare_message (user_input, "user")))
                 messages.append (prepare_message (user_input, "user"))  # Add user message to history
+                # print (json.dumps (messages, indent=4))
                 start_time = time.time()
-                response_message = generate_response(bedrock_runtime, model_id, system_prompts, messages)
+                raw_response = generate_response(bedrock_runtime, model_id, system_prompts, messages) 
+                if raw_response:
+                    thinking_message, response_message = raw_response
+                else:
+                    raise ValueError ("Empty response")
                 end_time = time.time()
+                # print (json.dumps (thinking_message [0], indent=4))
 
 
 
                 if response_message:
+                    messages.append (prepare_message_generic (thinking_message [0], "assistant"))
                     messages.append (prepare_message (response_message, "assistant")) #add ai response to history
                     elapsed_time = end_time - start_time
+
+
+                    utils.save_json_file (messages, dest_messages_file_path_str, indent=4)
+
+
+
+
+
+
                     # Print the text content of the response
 
-                    print (f"\n\033[91mChatbot ({elapsed_time:.2f}s):\033[0m\n{response_message}\n\n\n\n")
+                    print (f"\n\033[91mChatbot ({elapsed_time:.2f}s):\n<think>\n{thinking_message [0] ["thinking"]}\n</think>\n\n\033[0m\n{response_message}\n\n\n\n")
 
         except KeyboardInterrupt:
             print("^C")
@@ -757,4 +808,12 @@ def run_chatbot():
 
 if __name__ == "__main__":
     # dev_main ()
-    run_chatbot()
+    try:
+        run_chatbot()
+
+    except KeyboardInterrupt:
+        print ("^C")
+        sys.exit (0)
+    except EOFError:
+        print ("^D")
+        sys.exit (0)

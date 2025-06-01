@@ -1,0 +1,235 @@
+{{- define "main" }}
+
+{{- if (and site.Params.profileMode.enabled .IsHome) }}
+{{- partial "index_profile.html" . }}
+{{- else }} {{/* if not profileMode */}}
+
+{{/* These initial variable declarations for $pages_to_list and $subsections_to_display appear experimental or overwritten later. */}}
+{{/* Preserving them as per your template, but note $pages_to_list is redefined before primary use. */}}
+{{- $pages_to_list := "" -}}
+{{- $pages_to_list := "" -}} {{/* Note: duplicate, as in original */}}
+{{- $subsections_to_display := "" -}}
+{{- $all_site_sections := .Site.Sections.ByWeight -}} {{/* Or just .Site.Sections if not using weight */}}
+{{/* --- TEST: Create a new slice from the sections --- */}}
+{{- $sections_as_slice := slice -}}
+{{- range $all_site_sections -}}
+    {{- $sections_as_slice = $sections_as_slice | append . -}}
+{{- end -}}
+{{- $pages_to_list = $sections_as_slice -}}
+{{/* --- END TEST --- */}}
+{{- $subsections_to_display = slice -}}
+
+
+{{- if not .IsHome | and .Title }}
+    {{/* --- DEBUG BLOCK FOR NON-HOME LIST PAGES (like /content/, /tags/foo/) --- */}}
+    <hr>
+    <h3 style="color: red; background-color: #ffe0e0; padding: 5px;">DEBUG: Current Page Context (NOT Homepage)</h3>
+    <pre style="background-color: #e0f7fa; padding: 10px; border: 1px solid #ccc; white-space: pre-wrap; word-wrap: break-word; font-size: 12px; max-height: 400px; overflow-y: auto;">
+    Current Page (.):
+      Title: {{ .Title | default "N/A" }}
+      LinkTitle: {{ .LinkTitle | default "N/A" }}
+      {{- with .File -}}
+      File.Path: {{ .Path | default "N/A" }}
+      File.Dir: {{ .Dir | default "N/A" }}
+      File.UniqueID: {{ .UniqueID | default "N/A" }}
+      {{- else -}}
+      File Object: nil (This page likely does not correspond to a direct file, e.g., taxonomy term/list)
+      {{- end -}}
+      Path (logical path): {{ .Path | default "N/A" }}
+      Section (logical section name): {{ .Section | default "N/A" }}
+      Permalink: {{ .Permalink | default "N/A" }}
+      RelPermalink: {{ .RelPermalink | default "N/A" }}
+      Kind: {{ .Kind | default "N/A" }}
+      IsPage: {{ .IsPage }}
+      IsSection: {{ .IsSection }}
+      IsHome: {{ .IsHome }}
+      Content (first 50 chars): {{ ( .Content | plainify | truncate 50) | default "N/A" }}
+      Params: {{ .Params | jsonify (dict "indent" "  ") }}
+      {{/* Data: {{ .Data | jsonify (dict "indent" "  ") }} */}} {{/* Temporarily commented out problematic line */}}
+      Data (raw, be careful with large output): {{/* printf "%#v" .Data */}} {{/* Alternative, might be very verbose */}}
+      RegularPages count: {{ len .RegularPages }}
+      Sections (sub-sections) count: {{ len .Sections }}
+      .Pages count (before pagination): {{ len .Pages }}
+    </pre>
+    <hr>
+    {{/* --- END DEBUG BLOCK FOR NON-HOME LIST PAGES --- */}}
+
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>
+    {{ .Title }}
+    {{- if and (or (eq .Kind `term`) (eq .Kind `section`)) (.Param "ShowRssButtonInSectionTermList") }}
+    {{- with .OutputFormats.Get "rss" }}
+    <a href="{{ .RelPermalink }}" title="RSS" aria-label="RSS">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" height="23">
+        <path d="M4 11a9 9 0 0 1 9 9" />
+        <path d="M4 4a16 16 0 0 1 16 16" />
+        <circle cx="5" cy="19" r="1" />
+      </svg>
+    </a>
+    {{- end }}
+    {{- end }}
+  </h1>
+  {{- if .Description }}
+  <div class="post-description">
+    {{ .Description | markdownify }}
+  </div>
+  {{- end }}
+</header>
+{{- end }} {{/* End of 'if not .IsHome | and .Title' */}}
+
+{{- if .Content }}
+<div class="post-content">
+  {{- if not (.Param "disableAnchoredHeadings") }}
+  {{- partial "anchored_headings.html" .Content -}}
+  {{- else }}{{ .Content }}{{ end }}
+</div>
+{{- end }}
+
+{{/* This $pages definition seems unused as it's immediately followed by another $pages re-definition */}}
+{{/* {{- $pages := union .RegularPages .Sections }} */}}
+
+
+{{- $pages_to_list_from_sections := slice -}}
+{{- range .Site.Sections.ByWeight -}}
+    {{- $pages_to_list_from_sections = $pages_to_list_from_sections | append . -}}
+{{- end -}}
+
+{{- $pages := "" -}}
+{{- if .IsHome }} {{/* This .IsHome refers to the top-level page context */}}
+
+    {{/* --- DEBUG BLOCK FOR HOMEPAGE --- */}}
+    <hr>
+    <h3 style="color: red; background-color: #e0ffe0; padding: 5px;">DEBUG: .Site.Sections on Homepage (/)</h3>
+    <pre style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ccc; white-space: pre-wrap; word-wrap: break-word; font-size: 12px; max-height: 400px; overflow-y: auto;">
+    {{- range $i, $section_page := .Site.Sections.ByWeight }}
+    --- Section Item #{{ add $i 1 }} (from .Site.Sections.ByWeight) ---
+    Title: {{ $section_page.Title | default "N/A" }}
+    LinkTitle: {{ $section_page.LinkTitle | default "N/A" }}
+    Weight: {{ $section_page.Weight | default "N/A" }}
+    {{- with $section_page.File -}}
+    File.Path: {{ .Path | default "N/A" }}
+    File.Dir: {{ .Dir | default "N/A" }}
+    File.UniqueID: {{ .UniqueID | default "N/A" }}
+    {{- else -}}
+    File Object for section: nil (This is unexpected for a section page from .Site.Sections!)
+    {{- end -}}
+    Path (logical path): {{ $section_page.Path | default "N/A" }}
+    Section (logical section name): {{ $section_page.Section | default "N/A" }}
+    Permalink: {{ $section_page.Permalink | default "N/A" }}
+    RelPermalink: {{ $section_page.RelPermalink | default "N/A" }}
+    Kind: {{ $section_page.Kind | default "N/A" }}
+    IsPage: {{ $section_page.IsPage }}
+    IsSection: {{ $section_page.IsSection }}
+    Content (first 50 chars): {{ ($section_page.Content | plainify | truncate 50) | default "N/A" }}
+    Params: {{ $section_page.Params |jsonify (dict "indent" "  ") }}
+    -------------------------------------
+    {{- else }}
+    .Site.Sections.ByWeight is empty or nil.
+    {{- end }}
+    </pre>
+    <hr>
+    {{/* --- END DEBUG BLOCK FOR HOMEPAGE --- */}}
+
+    {{- $pages = $pages_to_list_from_sections -}}
+{{- else }} {{/* Not .IsHome */}}
+    {{- $pages = union .RegularPages .Sections -}}
+{{- end }}
+
+{{/* Removed one of the duplicate $paginator lines. This is the one that's used. */}}
+{{- $paginator := .Paginate $pages }}
+
+{{- if and .IsHome site.Params.homeInfoParams (eq $paginator.PageNumber 1) }}
+{{- partial "home_info.html" . }}
+{{- end }}
+<br><br><br><br>
+{{- $term := .Data.Term }}
+
+{{- range $index, $page := $paginator.Pages }}
+
+{{- $class := "post-entry" }}
+
+{{- $user_preferred := or site.Params.disableSpecial1stPost site.Params.homeInfoParams }}
+{{- if (and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) (not $user_preferred)) }}
+{{- $class = "first-entry" }}
+{{- else if $term }}
+{{- $class = "post-entry tag-entry" }}
+{{- end }}
+
+{{/* --- <p>{{ $page.Permalink }}</p> --- */}}
+
+
+{{- $class = "post-entry tag-entry" }} {{/* This overrides the previous $class logic. As in original. */}}
+
+
+<article class="{{ $class }}">
+  {{- $isHidden := ($page.Param "cover.hiddenInList") | default ($page.Param "cover.hidden") | default false }}
+  {{- partial "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden) }}
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">
+      {{- $page.Title }}
+      {{- if $page.Draft }}
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+      {{- end }}
+    </h2>
+  </header>
+  {{- if (ne ($page.Param "hideSummary") true) }}
+  <div class="entry-content">
+    <p>{{ $page.Summary | plainify | htmlUnescape }}{{ if $page.Truncated }}...{{ end }}</p>
+  </div>
+  {{- end }}
+
+  {{/* --- MODIFICATION START --- */}}
+  {{/* Check if the main page being rendered is NOT the homepage */}}
+  {{- if not $.IsHome }}
+    {{/* If NOT on the homepage, show meta and the full entry link */}}
+    {{- if not ($page.Param "hideMeta") }}
+    <footer class="entry-footer">
+      {{- partial "post_meta.html" $page -}}
+    </footer>
+    {{- end }}
+
+  {{- else }}
+    {{/* If on the homepage ($.IsHome is true), the post-meta and entry-link are omitted as per request. */}}
+    {{/* The article will still render its cover, title, and summary (if not hidden). */}}
+    {{/* If you want items on the homepage to still be clickable (e.g., title or cover), */}}
+    {{/* that logic would need to be part of the header or cover.html partial respectively. */}}
+  {{- end }}
+  <a class="entry-link" aria-label="post link to {{ $page.Title | plainify }}" href="{{ $page.Permalink }}"></a>
+  {{/* --- MODIFICATION END --- */}}
+
+</article>
+{{- end }} {{/* End of range $paginator.Pages */}}
+
+{{- if gt $paginator.TotalPages 1 }}
+<footer class="page-footer">
+  <nav class="pagination">
+    {{- if $paginator.HasPrev }}
+    <a class="prev" href="{{ $paginator.Prev.URL | absURL }}">
+      « {{ i18n "prev_page" }}
+      {{- if (.Param "ShowPageNums") }}
+      {{- sub $paginator.PageNumber 1 }}/{{ $paginator.TotalPages }}
+      {{- end }}
+    </a>
+    {{- end }}
+    {{- if $paginator.HasNext }}
+    <a class="next" href="{{ $paginator.Next.URL | absURL }}">
+      {{ i18n "next_page" }}
+      {{- if (.Param "ShowPageNums") }}
+      {{- add 1 $paginator.PageNumber }}/{{ $paginator.TotalPages }}
+      {{- end }} »
+    </a>
+    {{- end }}
+  </nav>
+</footer>
+{{- end }}
+
+{{- end }}{{/* end profileMode */}}
+
+{{- end }}{{- /* end main */ -}}

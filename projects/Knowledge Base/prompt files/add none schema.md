@@ -1,0 +1,1 @@
+In this code, schema name is required. Make schema name optional, optional in the sense that the schema can be None. Generate only changes at function level, not entire code. Intent is structured mode but schema remains none, so model automatically creates a new schema

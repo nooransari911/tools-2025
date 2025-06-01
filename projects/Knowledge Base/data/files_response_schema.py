@@ -8,6 +8,13 @@ from typing import Optional, List, Dict, Any, Union, Type # Ensure Type is impor
 class FileListDataItem(BaseModel):
     """
     Represents a single data item within a list, designed to represent a file with its path and contents.
+
+    JSON Representation:
+    {
+        "file": "File path relative to base dir",
+        "content": "Content of the file"
+    }
+
     """
     file: str = Field(None, description="File path relative to base dir")
     content: str = Field (None, description="Content of the file")

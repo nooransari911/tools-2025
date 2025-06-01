@@ -1,0 +1,245 @@
+
+
+
+
+
+{{ if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{{- ( site.Params.schema.publisherType | default "Organization") | title -}}",
+  "name": {{ site.Title }},
+  "url": {{ site.Home.Permalink }},
+  "description": {{ site.Params.description | plainify | truncate 180 | safeHTML }},
+  {{- if (eq site.Params.schema.publisherType "Person") }}
+  "image": {{ site.Params.assets.favicon | default "favicon-512.png" | absURL }},
+  {{- else }}
+  "logo": {{ site.Params.assets.favicon | default "favicon-512.png" | absURL }},
+  {{- end }}
+  "sameAs": [
+    {{- if site.Params.schema.sameAs }}
+      {{ range $i, $e := site.Params.schema.sameAs }}{{ if $i }}, {{ end }}{{ trim $e " " }}{{ end }}
+    {{- else}}
+      {{ range $i, $e := site.Params.SocialIcons }}{{ if $i }}, {{ end }}{{ trim $e.url " " | safeURL }}{{ end }}
+    {{- end}}
+  ]
+}
+</script>
+{{- else if (or .IsPage .IsSection) }}
+{{/* BreadcrumbList */}}
+{{- $url := replace .Parent.Permalink ( printf "%s" site.Home.Permalink) "" }}
+{{- $lang_url := strings.TrimPrefix ( printf "%s/" .Lang) $url }}
+{{- $bc_list := (split $lang_url "/")}}
+
+{{- $scratch := newScratch }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+  {{- range $index, $element := $bc_list }}
+
+    {{- $scratch.Add "path" (printf "%s/" $element ) | safeJS }}
+    {{- $bc_pg := site.GetPage ($scratch.Get "path") -}}
+
+    {{- if (and ($bc_pg) (gt (len . ) 0))}}
+    {{- if (and $index)}}, {{end }}
+    {
+      "@type": "ListItem",
+      "position": {{ add 1 $index  }},
+      "name": {{ $bc_pg.Name }},
+      "item": {{ $bc_pg.Permalink | safeHTML }}
+    }
+    {{- end }}
+
+  {{- end }}
+  {{- /*  self-page addition  */ -}}
+  {{- if (ge (len $bc_list) 2) }}, {{end }}
+    {
+      "@type": "ListItem",
+      "position": {{len $bc_list}},
+      "name": {{ .Name }},
+      "item": {{ .Permalink | safeHTML }}
+    }
+  ]
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+{{- if .IsPage }}
+
+{{/* --- Variable Definitions for JSON-LD --- */}}
+
+{{/* Article Body Preview Logic */}}
+{{ $fullContent := .Content }}
+{{ $plainContent := $fullContent | htmlUnescape | plainify }}
+{{ $charCount := len $plainContent }}
+{{ $previewProportion := site.Params.jsonLd.previewProportion | default 0.40 }}
+{{ $minPreviewChars := site.Params.jsonLd.minPreviewChars | default 400 }}
+{{ $maxPreviewChars := site.Params.jsonLd.maxPreviewChars | default 40000 }}
+{{ $targetLength := mul $charCount $previewProportion | int }}
+{{ $previewLength := $targetLength }}
+{{ if lt $targetLength $minPreviewChars }}{{ $previewLength = $minPreviewChars }}{{ end }}
+{{ if gt $targetLength $maxPreviewChars }}{{ $previewLength = $maxPreviewChars }}{{ end }}
+{{ if gt $previewLength $charCount }}{{ $previewLength = $charCount }}{{ end }}
+{{ $articleBodyPreview := $plainContent | truncate $previewLength }}
+
+{{/* Description */}}
+{{ $description := .Description | default .Summary | plainify }}
+
+{{/* Keywords */}}
+{{ $keywordsList := .Params.keywords | default .Params.tags }}
+
+{{/* Author Information */}}
+{{ $authorInfo := .Params.author | default site.Params.author }}
+
+{{/* Publisher Type */}}
+{{ $publisherType := site.Params.schema.publisherType | default "Organization" | title }}
+
+{{/* Favicon Path for Publisher Logo */}}
+{{ $faviconPath := site.Params.assets.favicon | default "favicon-512.png" }}
+
+{{/* Page Images (potentially for cover/image) */}}
+{{ $pageImages := slice }}
+{{ if not .Params.cover.image }}
+  {{ $pageImages = partialCached "templates/_funcs/get-page-images" . . }}
+{{ end }}
+
+{{/* Article Sections Logic */}}
+{{- $pageSections := "" -}} {{/* Will hold final section(s) data: string or slice */}}
+{{- $sectionDataType := "" -}} {{/* "string" or "slice" to control JSON output */}}
+
+{{- if .Params.sections -}}
+    {{- $fmSections := .Params.sections -}}
+    {{- if reflect.IsSlice $fmSections -}}
+        {{- if gt (len $fmSections) 0 -}}
+            {{- if eq (len $fmSections) 1 -}}
+                {{- $pageSections = index $fmSections 0 -}}
+                {{- $sectionDataType = "string" -}}
+            {{- else -}}
+                {{- $pageSections = $fmSections -}}
+                {{- $sectionDataType = "slice" -}}
+            {{- end -}}
+        {{- end -}}
+    {{- else if $fmSections }} {{/* If .Params.sections is a single string */}}
+        {{- $pageSections = $fmSections -}}
+        {{- $sectionDataType = "string" -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if not $sectionDataType -}} {{/* Fallback to Hugo's .Section if front matter sections weren't usable */}}
+    {{- if .Section -}}
+        {{- $pageSections = .Section -}}
+        {{- $sectionDataType = "string" -}}
+    {{- end -}}
+{{- end -}}
+
+{{/* --- End Variable Definitions --- */}}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ .Title | plainify | safeJS }}",
+  "name": "{{ .Title | plainify | safeJS }}",
+  "description": "{{ $description | safeJS }}",
+  {{- if $sectionDataType }}
+  "articleSection":
+    {{- if eq $sectionDataType "string" -}}
+      "{{ $pageSections | title | safeJS }}"
+    {{- else if eq $sectionDataType "slice" -}}
+      [{{- range $i, $sec := $pageSections -}}
+        {{ if $i }}, {{ end }}"{{ $sec | title | safeJS }}"
+      {{- end }}]
+    {{- end }},
+  {{- end }}
+  {{- if $keywordsList }}
+  "keywords": [
+    {{- range $i, $e := $keywordsList -}}
+      {{ if $i }}, {{ end }}"{{ $e | plainify | safeJS }}"
+    {{- end -}}
+  ],
+  {{- else }}
+  "keywords": [],
+  {{- end }}
+  "articleBody": "{{ $articleBodyPreview | safeJS }}",
+  "wordCount" : {{ .WordCount }},
+  "inLanguage": "{{ (.Language.Lang | default "en-us") | safeJS }}",
+  {{- $coverImageURL := "" -}}
+  {{- if .Params.cover.image -}}
+    {{- if (ne .Params.cover.relative true) -}}
+      {{- $coverImageURL = .Params.cover.image | absURL -}}
+    {{- else -}}
+      {{- $coverImageURL = (path.Join .RelPermalink .Params.cover.image ) | absURL -}}
+    {{- end -}}
+  {{- else if gt (len $pageImages) 0 -}}
+    {{- with index $pageImages 0 -}}
+      {{- $coverImageURL = .Permalink -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $coverImageURL }}
+  "image": "{{ $coverImageURL | safeJS }}",
+  {{- end }}
+  "datePublished": "{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" | safeJS }}",
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" | safeJS }}",
+  {{- with $authorInfo }}
+  "author":
+    {{- if (or (eq (printf "%T" .) "[]string") (eq (printf "%T" .) "[]interface {}")) -}}
+  [{{- range $i, $v := . -}}
+  {{- if $i }}, {{end -}}
+  {
+    "@type": "Person",
+    "name": "{{ $v | safeJS }}"
+  }
+  {{- end }}],
+    {{- else -}}
+  {
+    "@type": "Person",
+    "name": "{{ . | safeJS }}"
+  },
+    {{- end -}}
+  {{- end }}
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ .Permalink | safeJS }}"
+  },
+  "publisher": {
+    "@type": "{{ $publisherType | safeJS }}",
+    "name": "{{ site.Title | safeJS }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ $faviconPath | absURL | safeJS }}"
+    }
+  }
+}
+</script>
+{{- end }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{/* .IsPage end */}}
+
+{{- end -}}

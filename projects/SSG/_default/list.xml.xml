@@ -1,0 +1,17 @@
+{{- /* layouts/_default/list.xml.xml */ -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<pagesList>
+  <title>{{ .Title | transform.XMLEscape }}</title>
+  <kind>{{ .Kind | transform.XMLEscape }}</kind>
+  <permalink>{{ .Permalink }}</permalink>
+  <items>
+  {{ range .Pages }}
+    <item>
+      <title>{{ .Title | transform.XMLEscape }}</title>
+      <permalink>{{ .Permalink }}</permalink>
+      <date>{{ .Date.Format "2006-01-02" }}</date>
+      <summary>{{ .Summary | plainify | transform.XMLEscape }}</summary>
+    </item>
+  {{ end }}
+  </items>
+</pagesList>

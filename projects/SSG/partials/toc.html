@@ -1,0 +1,138 @@
+{{/*
+    Table of Contents Partial
+    Generates a TOC from page headers.
+    Can use Hugo's built-in TOC or a custom generator.
+*/}}
+
+{{/* Find all H1-H6 headers in the content */}}
+{{- $headers := findRE "<h[1-6][^>]*>(.|\n])+?</h[1-6]>" .Content -}}
+{{- $has_headers := ge (len $headers) 1 -}}
+
+{{/* Only render TOC if headers are present */}}
+{{- if $has_headers -}}
+    <div class="toc">
+        <details {{ if (.Param "TocOpen") }} open{{ end }}>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">{{- i18n "toc" | default "Table of Contents" }}</span>
+            </summary>
+            <div class="inner">
+                {{/* Option to use Hugo's built-in .TableOfContents */}}
+                {{- if (.Param "UseHugoToc") -}}
+                    {{ .TableOfContents }}
+                {{/* Custom TOC generation logic */}}
+                {{- else -}}
+                    {{/* Determine the smallest header level present (e.g., H1=1, H2=2). This is $largest in original, renamed to $minHeaderLevelInToc for clarity. */}}
+                    {{- $minHeaderLevelInToc := 6 -}}
+                    {{- range $headers -}}
+                        {{- $headerLevelStr := index (findRE "[1-6]" . 1) 0 -}}
+                        {{- $headerLevel := $headerLevelStr | int -}}
+                        {{- if lt $headerLevel $minHeaderLevelInToc -}}
+                            {{- $minHeaderLevelInToc = $headerLevel -}}
+                        {{- end -}}
+                    {{- end -}}
+
+                    {{/* Determine the level of the first header in the document */}}
+                    {{- $firstActualHeaderLevelStr := index (findRE "[1-6]" (index $headers 0) 1) 0 -}}
+                    {{- $firstActualHeaderLevel := $firstActualHeaderLevelStr | int -}}
+
+                    {{/* Scratchpad to keep track of "bare" <ul> tags. These are <ul> elements opened
+                         to create nesting levels, where the level itself might need specific closing handling. */}}
+                    {{- $.Scratch.Set "bareul" slice -}}
+
+                    <ul> {{/* Root <ul> for the TOC */}}
+                        {{/* Add initial <ul> tags if the first header is not of the $minHeaderLevelInToc.
+                             Example: If $minHeaderLevelInToc is H1 (1) but document starts with H2 (2),
+                             one <ul> is opened here. `bareul` stores the level of this initial ul. */}}
+                        {{- range $i_init_ul := seq (sub $firstActualHeaderLevel $minHeaderLevelInToc) -}}
+                            <ul>
+                                {{- $.Scratch.Add "bareul" (sub (add $minHeaderLevelInToc $i_init_ul) 1) -}}
+                        {{- end -}}
+
+                        {{/* Iterate through headers to build the TOC list */}}
+                        {{- range $i, $headerHTML := $headers -}}
+                            {{- $currentHeaderLevelStr := index (findRE "[1-6]" $headerHTML 1) 0 -}}
+                            {{- $currentHeaderLevel := $currentHeaderLevelStr | int -}}
+
+                            {{/* Extract ID and text from header HTML */}}
+                            {{- $idAttributeMatch := findRE "(id=\"(.*?)\")" $headerHTML -}}
+                            {{- $cleanedID := "" -}}
+                            {{- if $idAttributeMatch -}}
+                                {{- $idAttribute := index $idAttributeMatch 0 -}}
+                                {{- $cleanedID = replace (replace $idAttribute "id=\"" "") "\"" "" -}}
+                            {{- end -}}
+                            {{- $headerText := replaceRE "<h[1-6][^>]*?>((.|\n])+?)</h[1-6]>" "$1" $headerHTML | safeHTML -}}
+
+                            {{/* Logic for all headers except the first one */}}
+                            {{- if ne $i 0 -}}
+                                {{- $prevHeaderLevelStr := index (findRE "[1-6]" (index $headers (sub $i 1)) 1) 0 -}}
+                                {{- $prevHeaderLevel := $prevHeaderLevelStr | int -}}
+
+                                {{/* If current header is deeper than previous, open new <ul> */}}
+                                {{- if gt $currentHeaderLevel $prevHeaderLevel -}}
+                                    {{- range $level := seq $prevHeaderLevel (sub $currentHeaderLevel 1) -}}
+                                        <ul>
+                                            {{/* Record levels of "bare" <ul> tags if condition met.
+                                                 The condition `ne $prevHeaderLevel .` means it adds levels
+                                                 that are more than one step deeper during a multi-level jump. */}}
+                                            {{- if ne $prevHeaderLevel $level -}}
+                                                {{- $.Scratch.Add "bareul" $level -}}
+                                            {{- end -}}
+                                    {{- end -}}
+                                {{/* If current header is same level or shallower */}}
+                                {{- else -}}
+                                    </li> {{/* Close the previous <li> */}}
+                                    {{/* If current header is shallower, close <ul> and potentially <li> */}}
+                                    {{- if lt $currentHeaderLevel $prevHeaderLevel -}}
+                                        {{- range $level := seq (sub $prevHeaderLevel 1) -1 $currentHeaderLevel -}}
+                                            {{- if in ($.Scratch.Get "bareul") $level -}}
+                                                </ul>
+                                                {{/* Pop from bareul scratchpad */}}
+                                                {{- $tmp := $.Scratch.Get "bareul" -}}
+                                                {{- $.Scratch.Delete "bareul" -}}
+                                                {{- $.Scratch.Set "bareul" slice -}}
+                                                {{- range seq (sub (len $tmp) 1) -}}
+                                                    {{- $.Scratch.Add "bareul" (index $tmp (sub . 1)) -}}
+                                                {{- end -}}
+                                            {{- else -}}
+                                                </ul>
+                                            </li>
+                                            {{- end -}}
+                                        {{- end -}}
+                                    {{- end -}}
+                                {{- end -}}
+                            {{- end -}} {{/* End: if ne $i 0 */}}
+
+                            <li>
+                                <a href="#{{ $cleanedID }}" aria-label="{{ $headerText | plainify }}">{{ $headerText | plainify }}</a>
+                        {{- end -}} {{/* End: range $headers */}}
+
+                        {{/* Base level for final closing logic (this was $firstHeaderLevel := $largest in original's closing part) */}}
+                        {{- $baseLevelForFinalClose := $minHeaderLevelInToc -}}
+                        {{- $lastHeaderLevelStr := index (findRE "[1-6]" (index $headers (sub (len $headers) 1)) 1) 0 -}}
+                        {{- $lastHeaderLevel := $lastHeaderLevelStr | int -}}
+
+                        </li> {{/* Close the last <li> item */}}
+
+                        {{/* Close remaining <ul> and <li> tags based on levels, from last header up to base level */}}
+                        {{- range $i_close := seq (sub $lastHeaderLevel $baseLevelForFinalClose) -}}
+                            {{- $levelToCheck := add $i_close $baseLevelForFinalClose -}}
+                            {{- if in ($.Scratch.Get "bareul") $levelToCheck -}}
+                                </ul>
+                                {{/* Pop from bareul scratchpad (not strictly needed for closing, but good hygiene if bareul was reused) */}}
+                                {{- $tmp := $.Scratch.Get "bareul" -}}
+                                {{- $.Scratch.Delete "bareul" -}}
+                                {{- $.Scratch.Set "bareul" slice -}}
+                                {{- range seq (sub (len $tmp) 1) -}}
+                                    {{- $.Scratch.Add "bareul" (index $tmp (sub . 1)) -}}
+                                {{- end -}}
+                            {{- else -}}
+                                </ul>
+                                </li>
+                            {{- end -}}
+                        {{- end -}}
+                    </ul> {{/* Close the root <ul> */}}
+                {{- end -}} {{/* End: if .Param "UseHugoToc" */}}
+            </div> {{/* End: .inner */}}
+        </details>
+    </div> {{/* End: .toc */}}
+{{- end -}} {{/* End: if $has_headers */}}

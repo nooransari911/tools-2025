@@ -1,0 +1,153 @@
+<meta name="test-meta-tag" content="Hi Hello" />
+<meta name="test-meta-tag" content="Hi Hello" />
+<meta name="test-meta-tag" content="Hi Hello" />
+<meta name="test-meta-tag" content="Hi Hello" />
+
+{{/* layouts/partials/extend_head.html */}} {{/* Meta tags from your example -
+kept for structure */}}
+<meta name="test-meta-tag" content="Hi Hello" />
+<meta name="test-meta-tag" content="Hi Hello" />
+<meta name="test-meta-tag" content="Hi Hello" />
+<meta name="test-meta-tag" content="Hi Hello" />
+
+{{/* Other things you have that ARE working */}}
+<meta name="some-other-meta" content="This part works!" />
+
+{{/* --- START: Define Truncated Content Variables --- */}} {{-
+$truncatedTextContent := "" -}} {{/* Initialize */}} {{- if .IsPage -}} {{/*
+Ensure we are on a page context where .Content is relevant */}} {{- if .Content
+-}} {{- $fullContent := .Content -}} {{- $plainContentForTruncation :=
+$fullContent | htmlUnescape | plainify -}} {{- $charCount := len
+$plainContentForTruncation -}} {{/* Fetch or define truncation parameters.
+Hierarchy: 1. site.Params.jsonLd.textSpecificParam 2.
+site.Params.jsonLd.generalParam 3. Hardcoded default */}} {{- $previewProportion
+:= site.Params.jsonLd.textPreviewProportion | default
+(site.Params.jsonLd.previewProportion | default 0.40) -}} {{- $minPreviewChars
+:= site.Params.jsonLd.textMinPreviewChars | default
+(site.Params.jsonLd.minPreviewChars | default 400) -}} {{- $maxPreviewChars :=
+site.Params.jsonLd.textMaxPreviewChars | default
+(site.Params.jsonLd.maxPreviewChars | default 40000) -}} {{- $targetLength :=
+mul $charCount $previewProportion | int -}} {{- $textPreviewLength :=
+$targetLength -}} {{- if lt $targetLength $minPreviewChars }}{{
+$textPreviewLength = $minPreviewChars }}{{ end -}} {{- if gt $targetLength
+$maxPreviewChars }}{{ $textPreviewLength = $maxPreviewChars }}{{ end -}} {{- if
+gt $textPreviewLength $charCount }}{{ $textPreviewLength = $charCount }}{{ end
+-}} {{- $truncatedTextContent = $plainContentForTruncation | truncate
+$textPreviewLength -}} {{- end -}} {{- end -}} {{/* --- END: Define Truncated
+Content Variables --- */}} {{- $schemaType := .Params.schema_org_type | default
+"" | lower -}} {{- $normalizedType := $schemaType | replaceRE "[-_]" "" -}} {{-
+if or (eq $normalizedType "essay") (eq $schemaType "creative-work") (eq
+$schemaType "creativework") -}} {{- $jsonld := dict -}} {{- $jsonld = merge
+$jsonld (dict "@context" "https://schema.org") -}} {{- $jsonld = merge $jsonld
+(dict "@type" "CreativeWork") -}} {{- with .Title -}} {{- $jsonld = merge
+$jsonld (dict "name" (. | plainify)) -}} {{- $jsonld = merge $jsonld (dict
+"headline" (. | plainify)) -}} {{- end -}} {{- with .Summary -}} {{- $jsonld =
+merge $jsonld (dict "description" (. | plainify)) -}} {{- $jsonld = merge
+$jsonld (dict "abstract" (. | plainify)) -}} {{- end -}} {{- if
+$truncatedTextContent -}} {{/* Use the prepared truncated content if available
+*/}} {{- $jsonld = merge $jsonld (dict "text" $truncatedTextContent) -}} {{- end
+-}} {{- with .Permalink -}} {{- $jsonld = merge $jsonld (dict "url" .) -}} {{-
+$jsonld = merge $jsonld (dict "mainEntityOfPage" .) -}} {{- end -}} {{- with
+.Date -}} {{- $jsonld = merge $jsonld (dict "dateCreated" (.Format
+"2006-01-02T15:04:05Z07:00")) -}} {{- $jsonld = merge $jsonld (dict
+"datePublished" (.Format "2006-01-02T15:04:05Z07:00")) -}} {{- end -}} {{- with
+.Lastmod -}} {{- $jsonld = merge $jsonld (dict "dateModified" (.Format
+"2006-01-02T15:04:05Z07:00")) -}} {{- end -}} {{- with .Params.author -}} {{- if
+reflect.IsSlice . -}} {{- $authors := slice -}} {{- range . -}} {{- if
+reflect.IsMap . -}} {{- $author := dict "@type" "Person" -}} {{- with .name
+-}}{{- $author = merge $author (dict "name" .) -}}{{- end -}} {{- with .url
+-}}{{- $author = merge $author (dict "url" .) -}}{{- end -}} {{- with .email
+-}}{{- $author = merge $author (dict "email" .) -}}{{- end -}} {{- $authors =
+$authors | append $author -}} {{- else -}} {{- $authors = $authors | append
+(dict "@type" "Person" "name" (string .)) -}} {{- end -}} {{- end -}} {{-
+$jsonld = merge $jsonld (dict "author" $authors) -}} {{- else -}} {{- $jsonld =
+merge $jsonld (dict "author" (dict "@type" "Person" "name" (string .))) -}} {{-
+end -}} {{- end -}} {{- with .Params.genre -}} {{- $jsonld = merge $jsonld (dict
+"genre" .) -}} {{- end -}} {{- with .Params.keywords -}} {{- if reflect.IsSlice
+. -}} {{- $jsonld = merge $jsonld (dict "keywords" .) -}} {{- else -}} {{-
+$jsonld = merge $jsonld (dict "keywords" (split . ",")) -}} {{- end -}} {{- end
+-}} {{- with .Params.license -}} {{- $jsonld = merge $jsonld (dict "license" .)
+-}} {{- end -}} {{- with .Params.inLanguage -}} {{- $jsonld = merge $jsonld
+(dict "inLanguage" .) -}} {{- else -}} {{- with site.LanguageCode -}} {{-
+$jsonld = merge $jsonld (dict "inLanguage" .) -}} {{- end -}} {{- end -}} {{-
+with .Params.wordCount -}} {{- $jsonld = merge $jsonld (dict "wordCount" .) -}}
+{{- else -}} {{- with .WordCount -}} {{- $jsonld = merge $jsonld (dict
+"wordCount" .) -}} {{- end -}} {{- end -}} {{- with .Params.audience -}} {{-
+$jsonld = merge $jsonld (dict "audience" (dict "@type" "Audience" "audienceType"
+.)) -}} {{- end -}} {{- with .Params.citation -}} {{- if reflect.IsSlice . -}}
+{{- $jsonld = merge $jsonld (dict "citation" .) -}} {{- else -}} {{- $jsonld =
+merge $jsonld (dict "citation" .) -}} {{- end -}} {{- end -}}
+
+<script type="application/ld+json">
+  {{- $jsonld -}}
+</script>
+
+{{- else if or (eq $normalizedType "notes") (eq $schemaType "learning-resource")
+(eq $schemaType "learningresource") -}} {{- $jsonld := dict -}} {{- $jsonld =
+merge $jsonld (dict "@context" "https://schema.org") -}} {{- $jsonld = merge
+$jsonld (dict "@type" "LearningResource") -}} {{- with .Title -}} {{- $jsonld =
+merge $jsonld (dict "name" (. | plainify)) -}} {{- $jsonld = merge $jsonld (dict
+"headline" (. | plainify)) -}} {{- end -}} {{- with .Summary -}} {{- $jsonld =
+merge $jsonld (dict "description" (. | plainify)) -}} {{- $jsonld = merge
+$jsonld (dict "abstract" (. | plainify)) -}} {{- end -}} {{- if
+$truncatedTextContent -}} {{/* Use the prepared truncated content if available
+*/}} {{- $jsonld = merge $jsonld (dict "text" $truncatedTextContent) -}} {{- end
+-}} {{- with .Permalink -}} {{- $jsonld = merge $jsonld (dict "url" .) -}} {{-
+$jsonld = merge $jsonld (dict "mainEntityOfPage" .) -}} {{- end -}} {{- with
+.Date -}} {{- $jsonld = merge $jsonld (dict "dateCreated" (.Format
+"2006-01-02T15:04:05Z07:00")) -}} {{- $jsonld = merge $jsonld (dict
+"datePublished" (.Format "2006-01-02T15:04:05Z07:00")) -}} {{- end -}} {{- with
+.Lastmod -}} {{- $jsonld = merge $jsonld (dict "dateModified" (.Format
+"2006-01-02T15:04:05Z07:00")) -}} {{- end -}} {{- with .Params.author -}} {{- if
+reflect.IsSlice . -}} {{- $authors := slice -}} {{- range . -}} {{- if
+reflect.IsMap . -}} {{- $author := dict "@type" "Person" -}} {{- with .name
+-}}{{- $author = merge $author (dict "name" .) -}}{{- end -}} {{- with .url
+-}}{{- $author = merge $author (dict "url" .) -}}{{- end -}} {{- with .email
+-}}{{- $author = merge $author (dict "email" .) -}}{{- end -}} {{- $authors =
+$authors | append $author -}} {{- else -}} {{- $authors = $authors | append
+(dict "@type" "Person" "name" (string .)) -}} {{- end -}} {{- end -}} {{-
+$jsonld = merge $jsonld (dict "author" $authors) -}} {{- else -}} {{- $jsonld =
+merge $jsonld (dict "author" (dict "@type" "Person" "name" (string .))) -}} {{-
+end -}} {{- end -}} {{- with .Params.learningResourceType -}} {{- $jsonld =
+merge $jsonld (dict "learningResourceType" .) -}} {{- else -}} {{- $jsonld =
+merge $jsonld (dict "learningResourceType" "notes") -}} {{- end -}} {{- with
+.Params.educationalLevel -}} {{- $jsonld = merge $jsonld (dict
+"educationalLevel" .) -}} {{- end -}} {{- with .Params.educationalUse -}} {{-
+$jsonld = merge $jsonld (dict "educationalUse" .) -}} {{- end -}} {{- with
+.Params.keywords -}} {{- if reflect.IsSlice . -}} {{- $jsonld = merge $jsonld
+(dict "keywords" .) -}} {{- else -}} {{- $jsonld = merge $jsonld (dict
+"keywords" (split . ",")) -}} {{- end -}} {{- end -}} {{- with .Params.about -}}
+{{- if reflect.IsSlice . -}} {{- $topics := slice -}} {{- range . -}} {{-
+$topics = $topics | append (dict "@type" "Thing" "name" .) -}} {{- end -}} {{-
+$jsonld = merge $jsonld (dict "about" $topics) -}} {{- else -}} {{- $jsonld =
+merge $jsonld (dict "about" (dict "@type" "Thing" "name" .)) -}} {{- end -}} {{-
+end -}} {{- with .Params.teaches -}} {{- if reflect.IsSlice . -}} {{- $jsonld =
+merge $jsonld (dict "teaches" .) -}} {{- else -}} {{- $jsonld = merge $jsonld
+(dict "teaches" .) -}} {{- end -}} {{- end -}} {{- with .Params.timeRequired -}}
+{{- $jsonld = merge $jsonld (dict "timeRequired" .) -}} {{- end -}} {{- with
+.Params.typicalAgeRange -}} {{- $jsonld = merge $jsonld (dict "typicalAgeRange"
+.) -}} {{- end -}} {{- with .Params.competencyRequired -}} {{- if
+reflect.IsSlice . -}} {{- $jsonld = merge $jsonld (dict "competencyRequired" .)
+-}} {{- else -}} {{- $jsonld = merge $jsonld (dict "competencyRequired" .) -}}
+{{- end -}} {{- end -}} {{- with .Params.license -}} {{- $jsonld = merge $jsonld
+(dict "license" .) -}} {{- end -}} {{- with .Params.inLanguage -}} {{- $jsonld =
+merge $jsonld (dict "inLanguage" .) -}} {{- else -}} {{- with site.LanguageCode
+-}} {{- $jsonld = merge $jsonld (dict "inLanguage" .) -}} {{- end -}} {{- end
+-}} {{- with .Params.audience -}} {{- $jsonld = merge $jsonld (dict "audience"
+(dict "@type" "EducationalAudience" "educationalRole" .)) -}} {{- end -}}
+
+<script type="application/ld+json">
+  {{ $jsonld }}
+</script>
+
+{{- end -}} {{/* Icon link from your example - kept for structure */}} {{ if
+.Site.Params.ext_favicon }}
+
+<link
+  rel="icon"
+  type="image/png"
+  sizes="{{ .Site.Params.favicon_size }}x{{ .Site.Params.favicon_size }}"
+  href="https://img.icons8.com/nolan/{{ .Site.Params.favicon_size }}/google-web-search.png"
+/>
+
+{{ end }}
