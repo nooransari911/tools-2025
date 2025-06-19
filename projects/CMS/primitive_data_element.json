@@ -1,0 +1,93 @@
+{
+    "Section": {
+        "type": "object",
+        "properties": {
+            "Dummy": {
+                "type": "string"
+            }
+        }
+    },
+    "H1Heading": {
+        "allOf": [{
+            "$ref": "#/Heading"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "Level": {
+                    "const": 1
+                }
+            }
+        }]
+    },
+    "Heading": {
+        "allOf": [{
+            "$ref": "#/TextElement"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "Level": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 16
+                }
+            }
+        }]
+    },
+    "Paragraph": {
+        "$ref": "#/TextElement"
+    },
+    "List": {
+        "type": "object",
+        "properties": {
+            "IsOrdered": {
+                "type": "boolean"
+            },
+            "ListData": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "Image": {
+        "allOf": [
+            "$ref": "#/Link",
+            {
+                "type": "object",
+                "properties": {
+                    "Caption": {
+                        "type": "string"
+                    },
+                    "AltText": {
+                        "type": "string"
+                    }
+                }
+            }
+        ]
+    }
+    "Link": {
+        "type": "object",
+        "properties": {
+            "DisplayText": {
+                "type": "string"
+            },
+            "URI": {
+                "type": "string"
+            }
+        }
+    },
+    "Table": {
+        "type": "object"
+    },
+    "TextElement": {
+        "type": "object",
+        "properties": {
+            "text": {
+                "type": "string"
+            }
+        }
+    }
+}

@@ -426,7 +426,7 @@
 .share-buttons {
     padding: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     overflow-x: auto;
     gap: 10px;
 }

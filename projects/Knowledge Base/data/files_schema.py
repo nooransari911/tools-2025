@@ -2,7 +2,6 @@ from src.utils.gemini_utils import register_schema
 from pydantic import BaseModel, Field # Added for schema definition
 from typing import Optional, List # Added for strong typing in schema
 
-@register_schema
 class FileData(BaseModel):
     """
     Represents a file, storing its relative path and its textual contents.

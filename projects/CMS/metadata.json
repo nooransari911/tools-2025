@@ -1,0 +1,19 @@
+{
+    "Metadata": {
+        "type": "object",
+        "description": "Metadata for document",
+        "properties": {
+            "CreatedAt": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "LastModified": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "Author": {
+                "$ref": "./author.json#/AuthorSchema"
+            }
+        }
+    }
+}

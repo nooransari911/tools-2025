@@ -1,4 +1,7 @@
-Please generate a comprehensive and in-depth article on the topic of: XYZ
+Please generate a comprehensive and in-depth article based on the provided outline here. Strictly follow the instructions based on the instructions section given below. XYZ will be used to represent topic/content
+
+
+# Instructions
 
 I. Tone and Style:
 *   Maintain a formal, analytical, and objective tone throughout the article.
@@ -32,7 +35,3 @@ III. Content Requirements:
 IV. Length and Detail:
 *   The article should be substantive and detailed, aiming for a length that allows for a thorough exploration of XYZ without being unnecessarily verbose. (As a guideline, consider a length comparable to a well-developed encyclopedia entry or a short academic paper, likely several substantial paragraphs per section).
 
-
-
-
-By following these guidelines, produce a high-quality, informative article on XYZ.

@@ -1,0 +1,46 @@
+{
+    "DataElement": {
+        "type": "object",
+        "properties": {
+            "ElementId": {
+                "type": "string",
+            },
+            "ParentElementId": {
+                "type": ["string", "null"]
+            },
+            "ParentDocumentId": {
+                "type": "string"
+            },
+            "ChildElementId": {
+                "type": "string"
+            },
+            "ElementType": {
+                "type": "string",
+                "enum": ["Section", "Heading", "Paragraph", "List", "Table", "Image", "Link"]
+            },
+            "Content": {
+                "oneOf": [
+                    "$ref": "./primitive_data_element.json#/Section",
+                    "$ref": "./primitive_data_element.json#/Heading",
+                    "$ref": "./primitive_data_element.json#/Paragraph",
+                    "$ref": "./primitive_data_element.json#/List",
+                    "$ref": "./primitive_data_element.json#/Table",
+                    "$ref": "./primitive_data_element.json#/Image",
+                    "$ref": "./primitive_data_element.json#/Link"
+                ],
+                "discriminator": {
+                    "propertyName": "ElementType",
+                    "mapping": {
+                        "Section": "./primitive_data_element.json#/Section",
+                        "Heading": "./primitive_data_element.json#/Heading",
+                        "Paragraph": "./primitive_data_element.json#/Paragraph",
+                        "List": "./primitive_data_element.json#/List",
+                        "Link": "./primitive_data_element.json#/Link",
+                        "Image": "./primitive_data_element.json#/Image",
+                        "Table": "./primitive_data_element.json#/Table"
+                    }
+                }
+            }
+        }
+    }
+}

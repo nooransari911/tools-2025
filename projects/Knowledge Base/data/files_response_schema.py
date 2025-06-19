@@ -4,7 +4,6 @@ from src.utils.gemini_utils import register_schema
 from pydantic import BaseModel, RootModel, Field, model_validator
 from typing import Optional, List, Dict, Any, Union, Type # Ensure Type is imported
 
-@register_schema
 class FileListDataItem(BaseModel):
     """
     Represents a single data item within a list, designed to represent a file with its path and contents.

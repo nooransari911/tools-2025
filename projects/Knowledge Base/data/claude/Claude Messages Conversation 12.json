@@ -1,0 +1,30 @@
+[
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "text",
+                "text": "who are you"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "type": "thinking",
+                "thinking": "I need to provide a concise and focused response about who I am without unnecessary details.",
+                "signature": "ErcBCkgIBBABGAIiQKcSMhgsJG5bBawusDMk4hRO+T9JpXwNReWUtdyvbvtAIshhKE31LvbgOpBDie4fXKMzoPgb0jYlQyqlKDHfdcMSDJvWYyuV9sF1j72QSxoMNvSYEr2WeO4w9HLLIjD8GfFEeN+azeLngUFwA33Y+Cj1deUuNZbwqAccZck0wxujT9mPJOY+DjIeykC+A78qHV1bPJo+92PbJFImKvtbFA9ljfzmL/j9XJaFXijE"
+            }
+        ]
+    },
+    {
+        "role": "assistant",
+        "content": [
+            {
+                "type": "text",
+                "text": "# About Me\n\nI'm Claude, an AI assistant created by Anthropic to be helpful, harmless, and honest. I'm designed to have conversations, answer questions, assist with various tasks, and provide information across a wide range of topics. I aim to be respectful, accurate, and useful in our interactions."
+            }
+        ]
+    }
+]

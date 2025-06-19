@@ -16,6 +16,8 @@ ssh -T git@github.com
 
 rsync -avz /home/ansarimn/.config/helix/ /home/ansarimn/Downloads/notes/system/helix/ > /dev/null
 rsync -avz /home/ansarimn/.config/nvim/ /home/ansarimn/Downloads/notes/system/nvim/ > /dev/null
+rsync -avz /home/ansarimn/.config/lvim /home/ansarimn/Downloads/notes/system/lvim/ > /dev/null
+
 rsync -avz /home/ansarimn/.config/bat/ /home/ansarimn/Downloads/notes/system/bat/ > /dev/null
 
 rsync -avz /home/ansarimn/Downloads/essays/themes/papermod/layouts/ /home/ansarimn/Downloads/tools-2025/projects/SSG/ > /dev/null

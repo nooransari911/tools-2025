@@ -1,0 +1,22 @@
+{
+    "AdditionalMetadata": {
+        "Version": {
+            "type": "string",
+        },
+        "Description": {
+            "type": "string"
+        },
+        "Tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "Collaborators": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

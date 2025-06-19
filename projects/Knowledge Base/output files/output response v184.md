@@ -1,0 +1,2 @@
+categories: ["Microsoft Business Strategy", "Software Licensing", "Vendor Lock-in", "Market Dominance", "Antitrust Investigation", "Subscription Models", "Psychological Manipulation", "Artificial Scarcity", "Enterprise Software", "Cloud Computing"]
+tags: ["Microsoft Business Strategy", "Software Licensing", "Vendor Lock-in", "Market Dominance", "Antitrust Investigation", "Subscription Models", "Psychological Manipulation", "Artificial Scarcity", "Enterprise Software", "Cloud Computing"]

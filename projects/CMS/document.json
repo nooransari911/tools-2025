@@ -1,0 +1,33 @@
+{
+    "DocumentSchema": {
+        "type": "object",
+        "properties": {
+            "Title": {
+                "type": "string",
+                "description": "Title of document"
+            },
+            "DocId": {
+                "type": "string",
+                "description": "Unique id of document"
+            },
+            "Metadata": {
+                "$ref": "./metadata.json#/Metadata"
+            },
+            "AdditionalMetadata": {
+                "$ref": "./additional_metadata.json#/AdditionalMetadata"
+            },
+            "AllDataElements": {
+                "type": "array",
+                "items": {
+                    "$ref": "./data_element.json#/DataElement"
+                }
+            },
+            "Structure": {
+                "type": "array",
+                "items": {
+                    "$ref": "./primitive_data_element.json#/H1Heading"
+                }
+            }
+        }
+    }
+}

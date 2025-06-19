@@ -1,4 +1,9 @@
-# your_original_project/src/utils/gemini_utils.py
+
+
+
+
+
+
 
 import os
 import sys
@@ -28,7 +33,7 @@ API_KEY_PAID_ENV_VAR = "API_KEY_PAID"
 API_KEY_FREE_ENV_VAR = "API_KEY_FREE"
 SYS_INS_PATH_ENV_VAR = "SYSTEM_INSTRUCTIONS_PATH"
 SYS_INS_STRUCT_PATH_ENV_VAR = "SYSTEM_INSTRUCTIONS_STRUCTURED_PATH"
-
+MAX_TIMEOUT = 600 * 1000
 # --- Global State ---
 SCHEMA_REGISTRY: Dict[str, Type[BaseModel]] = {}
 SCHEMA_DEFINITIONS: Dict[str, Dict[str, Any]] = {} # Value is a schema dict
@@ -317,7 +322,7 @@ def configure_gemini(
 
     # Configure Client
     try:
-        client = genai.Client(api_key=api_key)
+        client = genai.Client(api_key=api_key, http_options=types.HttpOptions(timeout=MAX_TIMEOUT))
         logger.info(f"Gemini client configured successfully.")
         return client, model_name
     except Exception as e:

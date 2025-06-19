@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: left;
     min-height: 0px;
     margin: var(--gap) 0 calc(var(--gap) * 2) 0;
 }

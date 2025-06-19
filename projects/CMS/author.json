@@ -1,0 +1,15 @@
+{
+    "AuthorSchema": {
+        "type": "object",
+        "properties": {
+            "Name": {
+                "type": "string",
+                "pattern": "^[a-zA-Z .]+$"
+            },
+            "UserId": {
+                "type": "string",
+                "description": "Globally unique user id"
+            }
+        }
+    }
+}
