@@ -10,6 +10,8 @@ All original functions are included, with modifications isolated to the service 
 import os, re
 import sys
 import time
+from datetime import datetime
+import uuid
 import readline
 import base64
 import json
@@ -47,15 +49,18 @@ load_dotenv("/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/.env")
 
 # --- MODIFIED: Fireworks.ai Configuration (Replaces Vertex AI Config) ---
 # Strip leading/trailing whitespace and newlines from the key
+AWS_API_GW_API_KEY = os.getenv ("AWS_API_GW_API_KEY").strip ()
 API_KEY = os.getenv("FIREWORKS_API_KEY").strip()
 
 
-
+AWS_API_GW = "https://z8sw7kg1o2.execute-api.us-west-2.amazonaws.com/v1-initial/api/AI/logs"
 API_URL = "https://api.fireworks.ai/inference/v1/chat/completions"
 #API_URL = "https://webhook.site/c39f67cc-7bc7-46d1-ab68-dca68eba4dac"
 
 # --- Application Configuration (Unchanged) ---
 TOKENS_STORE_JSON_FILE_NAME = os.getenv("CLAUDE_TOKENS_STORE_JSON_FILE_NAME")
+SESSION_ID = str (uuid.uuid4 ())
+logger.info (f"SESSION ID: {SESSION_ID}")
 
 
 def validate_api_key():
@@ -284,7 +289,8 @@ def generate_response(
             deployment_type="serverless",
             api_key=API_KEY
         )
-
+        reqid = None
+        reqtime = datetime.now().astimezone().isoformat()
         response_generator = llm.chat.completions.create(
             messages=messages,
             max_tokens=max_op_tokens,
@@ -299,8 +305,12 @@ def generate_response(
             if chunk.choices and chunk.choices[0].delta.content:
                 response_text += chunk.choices[0].delta.content
 
+            if hasattr (chunk, "id") and chunk.id:
+                reqid = chunk.id
+                
+
             # Capture usage info from the final chunk if available
-            if hasattr(chunk, "usage") and chunk.usage:
+            if hasattr (chunk, "usage") and chunk.usage:
                 input_tokens = chunk.usage.prompt_tokens
                 output_tokens = chunk.usage.completion_tokens
                 stop_reason = chunk.choices[0].finish_reason if chunk.choices else "unknown"
@@ -318,6 +328,22 @@ def generate_response(
             logger.info(f"{'Output tokens':<15}: {usage_info['completion_token_count']}")
             logger.info(f"{'Stop reason':<15}: {usage_info['stop_reason']}")
             logger.info("-" * 40)
+
+        if reqid:
+            reqlogbody = {
+                "timestamp": reqtime,
+                "request_id": reqid,
+                "model_id": model_id,
+                "session_id": SESSION_ID
+            }
+            headers = {
+                "Content-Type": "application/json",
+                "x-api-key": AWS_API_GW_API_KEY
+            }
+            awsapigwreq = requests.post (AWS_API_GW, json=reqlogbody, headers=headers)
+            
+            logger.info (f"Timestamp: {reqtime}")
+            logger.info (f"Request Id: {reqid}")
 
         match = re.search(r'<think>(.*?)</think>', response_text, re.DOTALL)
         if match:
@@ -431,7 +457,7 @@ def run_chatbot():
     dest_dir = pathlib.Path("./data/claude/").resolve()
     os.makedirs(dest_dir, exist_ok=True)
     dest_messages_file_path_str = dest_dir / f"Claude_Messages_Conversation_v{file_v_int}.json"
-    # utils.save_json_file(file_v, file_v_path_str, indent=4)
+    utils.save_json_file(file_v, file_v_path_str, indent=4)
 
     print("\033[92mChatbot started. Type 'exit' to quit or press Ctrl+D.\033[0m")
     while True:
@@ -454,7 +480,7 @@ def run_chatbot():
                     if thinking_content:
                         messages.append(prepare_message (f"<think>\n{thinking_content}\n</think>\n\n", "assistant"))
                     messages.append(prepare_message (response_text, "assistant"))
-                    # utils.save_json_file(messages, str(dest_messages_file_path_str), indent=4)
+                    utils.save_json_file(messages, str(dest_messages_file_path_str), indent=4)
                     
                     elapsed_time = end_time - start_time
                     # 'thinking_blocks' is None, so this part of the output will be empty.

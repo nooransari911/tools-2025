@@ -1,4 +1,5 @@
 {
-    "version": 184,
-    "base_filepath_pattern": "./output files/output response v{version}"
+    "version": 186,
+    "base_filepath_pattern": "./output files/output response v{version}",
+    "claude messages conversation version": 1
 }

@@ -1,6 +1,6 @@
-Please generate a comprehensive and in-depth article based on the provided outline here.
+Please generate a comprehensive and in-depth outline for an article. Topic: the entire conversation here.
 
-both the article must be:
+both the article and outline must be:
 * properly structured into sections using markdown headings
 * avoid use of bold
 * use paragraph/long from style for content; bullets must be used only where needed
@@ -41,7 +41,3 @@ III. Content Requirements:
 IV. Length and Detail:
 *   The article should be substantive and detailed, aiming for a length that allows for a thorough exploration of XYZ without being unnecessarily verbose. (As a guideline, consider a length comparable to a well-developed encyclopedia entry or a short academic paper, likely several substantial paragraphs per section).
 
-
-
-
-By following these guidelines, produce a high-quality, informative article on XYZ.

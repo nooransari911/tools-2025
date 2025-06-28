@@ -1,6 +1,6 @@
-PFA Attached essay. You will be modifying aorts of the essay, not generating an entirely new essay. Leave unchanged content strictly verbatim and as-is.
+PFA Attached essay. You will be modifying parts of the essay, not generating an entirely new essay. Leave unchanged content strictly verbatim and as-is.
 
-In that essay, "Artificial Scarcity" section should really be abstract/high-level describing how MS artifically engineers scarcity and aggressive fragmentation to extort as much as possible. Details of such specific instances must be moved to "Feature parity" section. Also rewrite the "Feature parity" section to be about detailed descriptions of specific instances of MS doing this.
+Parts of essay are some combiantion of confusing, unclear, imprecise, hard to read/follow,bad flow, badly strutcured sentences, too long/convoluted sentences, etc. Fix them
 
 
 
