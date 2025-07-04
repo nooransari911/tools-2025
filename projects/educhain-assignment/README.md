@@ -1,7 +1,15 @@
 # Project setup
 `mcp1.py` file contains the mcp server. All tools are in this file.
 
-The `settings.json` and `mcp.json` files contain the VS code MCP setup files. Included 3 sample images for PYQs and resume PDF.
+The `settings.json` and `mcp.json` files contain the VS code MCP setup files. Alternatively I have also included equivalent config file or Claude Desktop. The command field in the json files should point to the correct python executable that has dependencies installed.
+
+I have included 3 sample images for PYQs and resume PDF in this folder. Sample input and output are included in this file.
+
+Dependencies:
+langchain_google_genai
+mcp.server.fastmcp
+pydantic
+educhain
 
 
 
