@@ -1,0 +1,21 @@
+{
+  // 💡 Inputs are prompted on first server start, then stored securely by VS Code.
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "perplexity-key",
+      "description": "Perplexity API Key",
+      "password": true
+    }
+  ],
+  "servers": {
+        "edulearn": {
+          "type": "stdio",
+          "command": "/home/ansarimn/Downloads/tools-2025/projects/langchain0/venv/bin/python3",
+          "args": [
+            "/home/ansarimn/Downloads/tools-2025/projects/edulearn/mcp1.py"
+          ]
+        }
+  }
+}
+
