@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SV Testbench Architecture Visualization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* Dark blue-slate */
+            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 2rem 2rem;
+            color: #e5e7eb;
+        }
+        
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .component-card {
+            background: rgba(15, 23, 42, 0.6); /* Darker slate */
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .component-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0, rgba(56, 189, 248, 0.15), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .component-card:hover:before {
+            opacity: 1;
+        }
+
+        .component-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+        
+        .parameter-badge {
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            color: #67e8f9;
+        }
+
+        .diagram-container {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            backdrop-filter: blur(12px);
+        }
+        
+    </style>
+</head>
+<body class="bg-slate-950 text-gray-200 min-h-screen">
+    
+    <!-- Header -->
+    <header class="text-center pb-8 mb-16 pt-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+            <span class="text-cyan-400">SystemVerilog</span> 
+            <span class="text-red-400">Testbench</span> 
+            Architecture
+        </h1>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">A modern visualization of a standard UVM-style verification environment for an ALU design.</p>
+        <div class="parameter-badge inline-block px-4 py-2 rounded-full text-sm code-font mt-6">
+            PARAMETER N = 32
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 md:px-6 pb-12">
+        
+        <!-- Architecture Diagram Canvas -->
+        <div class="diagram-container rounded-2xl p-4 md:p-8 overflow-hidden mb-16">
+            <h3 class="text-2xl font-bold text-white text-center mb-8 flex items-center justify-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M12 14s-4-2-4-5V5l4-2 4 2v2"></path><path d="m12.5 12.5-5 3"></path><path d="M17 8.5 7.5 14"></path></svg>
+                Architecture Data Flow
+            </h3>
+            
+            <div class="mermaid text-center w-full">
+graph LR
+    %% Define a clear left-to-right flow
+    
+    %% Column 1: Stimulus Generation
+    subgraph STIMULUS
+        GEN(Generator) -->|gen2drv| DRV(Driver)
+    end
+
+    %% Column 2: DUT Interaction
+    subgraph INTERFACE
+        VIF(Virtual Interface)
+    end
+    
+    subgraph DESIGN
+        DUT(ALU)
+    end
+
+    %% Column 3: Verification Components
+    subgraph VERIFICATION
+        direction TB
+        subgraph MONITORS
+           IMON(Input Monitor)
+           OMON(Output Monitor)
+        end
+        subgraph CHECKERS
+            REF(Reference Model) --> |ref2scb| SCB(Scoreboard)
+        end
+    end
+
+    %% Define connections between components
+    DRV --> VIF
+    VIF -- drives --> DUT -- is probed by --> VIF
+    VIF -- probes inputs --> IMON
+    VIF -- probes outputs --> OMON
+    IMON -->|imon2ref| REF
+    IMON -->|imon2scb| SCB
+    OMON -->|omon2scb| SCB
+
+
+    %% Styling
+    classDef stimulus fill:#440c1b,stroke:#ef4444,stroke-width:2px,color:#fff;
+    classDef driver fill:#0c3c49,stroke:#06b6d4,stroke-width:2px,color:#fff;
+    classDef monitor fill:#062e16,stroke:#22c55e,stroke-width:2px,color:#fff;
+    classDef monitor-out fill:#4a2408,stroke:#f97316,stroke-width:2px,color:#fff;
+    classDef checker fill:#494a08,stroke:#eab308,stroke-width:2px,color:#fff;
+    classDef ref-model fill:#2e1041,stroke:#a855f7,stroke-width:2px,color:#fff;
+    classDef interface fill:#143642,stroke:#2dd4bf,stroke-width:2px,color:#fff;
+    classDef dut fill:#0c3c49,stroke:#22d3ee,stroke-width:2px,color:#fff;
+
+    class GEN stimulus;
+    class DRV driver;
+    class IMON monitor;
+    class OMON monitor-out;
+    class SCB checker;
+    class REF ref-model;
+    class VIF interface;
+    class DUT dut;
+            </div>
+        </div>
+        
+        <!-- Component Descriptions -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Generator -->
+            <div class="component-card rounded-xl p-6">
+                <h3 class="text-xl font-bold text-red-400 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    Generator
+                </h3>
+                <p class="text-sm text-gray-400 mt-2">Generates random stimulus transactions based on constraints.</p>
+            </div>
+            <!-- Driver -->
+            <div class="component-card rounded-xl p-6">
+                <h3 class="text-xl font-bold text-cyan-400 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12H4a8 8 0 0 1 8-8V0"></path><path d="M20 12h-8a8 8 0 0 1 8 8v4"></path><path d="m16 16 4 4 4-4"></path></svg>
+                    Driver
+                </h3>
+                <p class="text-sm text-gray-400 mt-2">Receives transactions and drives them onto the physical interface signals.</p>
+            </div>
+            <!-- Monitors -->
+            <div class="component-card rounded-xl p-6">
+                <h3 class="text-xl font-bold text-green-400 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6l6-6"></path><path d="M21.5 22v-6l-6 6"></path><path d="M2 21.5l6-6"></path><path d="M22 2.5l-6 6"></path></svg>
+                    Monitors
+                </h3>
+                <p class="text-sm text-gray-400 mt-2">Passively capture signal activity on the interface and convert it back into transactions.</p>
+            </div>
+            <!-- Reference Model -->
+            <div class="component-card rounded-xl p-6">
+                <h3 class="text-xl font-bold text-purple-400 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+                    Reference Model
+                </h3>
+                <p class="text-sm text-gray-400 mt-2">A behavioral model that calculates the expected "golden" result for a given input.</p>
+            </div>
+            <!-- Scoreboard -->
+            <div class="component-card rounded-xl p-6">
+                <h3 class="text-xl font-bold text-yellow-300 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                    Scoreboard
+                </h3>
+                 <p class="text-sm text-gray-400 mt-2">Compares expected results from the Reference Model with actual results from the Monitors.</p>
+            </div>
+            <!-- DUT & VIF -->
+            <div class="component-card rounded-xl p-6">
+                <h3 class="text-xl font-bold text-teal-300 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                    DUT & Interface
+                </h3>
+                 <p class="text-sm text-gray-400 mt-2">The Design Under Test and the Virtual Interface that provides access to it.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-gray-500 text-sm py-8 border-t border-gray-900 mt-16">
+        <p>SystemVerilog Testbench Architecture • Modern Verification Environment</p>
+    </footer>
+
+    <!-- Mermaid.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        // Initialize Mermaid.js
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            fontFamily: 'JetBrains Mono, monospace',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis' // Use curved lines for a modern look
+            },
+            // Custom theme variables to match the page
+            themeVariables: {
+                background: 'transparent', // Make diagram background transparent
+                primaryColor: '#1f2937',
+                primaryTextColor: '#e5e7eb',
+                primaryBorderColor: '#4b5563',
+                lineColor: '#4b5563',
+                secondaryColor: '#374151',
+                tertiaryColor: '#1f2937'
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 # image_downloader.py
 
 import logging
-import os, sys
+import os, sys, re
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Tuple, Optional
@@ -52,6 +52,50 @@ def extract_image_urls(html_content: str, css_class: str) -> List[str]:
 
     return image_urls
 
+def extract_image_urls_alt(html_content: str, css_class: str) -> List[str]:
+    """
+    Parses malformed HTML and extracts image URLs matching a specific CSS class.
+    Uses regex to handle malformed HTML that BeautifulSoup can't parse properly.
+
+    Responsibility: HTML parsing and data extraction for malformed HTML.
+    """
+    import re
+    
+    # Pattern to find img tags with src attribute
+    # This handles malformed attributes like class=" aligncenter="" size-full"=""
+    img_pattern = r'<img[^>]*src=["\']([^"\']+)["\'][^>]*>'
+    
+    # Find all img tags with src
+    img_matches = re.findall(img_pattern, html_content, re.IGNORECASE | re.DOTALL)
+    
+    if not img_matches:
+        logging.warning("No img tags with src found.")
+        return []
+    
+    # For each img tag, check if it contains the CSS class
+    image_urls = []
+    
+    # Find full img tag content for class checking
+    full_img_pattern = r'<img[^>]*src=["\']([^"\']+)["\'][^>]*>'
+    
+    for match in re.finditer(full_img_pattern, html_content, re.IGNORECASE | re.DOTALL):
+        img_tag = match.group(0)
+        src_url = match.group(1)
+        
+        # Check if the CSS class appears anywhere in the img tag
+        # Handle cases where class attribute might be malformed
+        if css_class in img_tag:
+            image_urls.append(src_url)
+    
+    if not image_urls:
+        logging.warning(f"No images found with class '{css_class}' in malformed HTML.")
+    else:
+        logging.info(f"Found {len(image_urls)} matching images in malformed HTML.")
+    
+    return image_urls
+
+
+
 def download_image(image_url: str, destination_folder: str) -> None:
     """
     Downloads a single image to a specified folder.
@@ -98,7 +142,7 @@ def process_webpage_task(target_dir: str, page_url: str) -> None:
     if not html:
         return
 
-    image_urls = extract_image_urls(html, css_class="aligncenter size-full")
+    image_urls = extract_image_urls_alt(html, css_class="aligncenter size-full")
     if not image_urls:
         return
 

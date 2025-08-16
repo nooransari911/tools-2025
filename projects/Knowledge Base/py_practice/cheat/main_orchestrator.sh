@@ -13,7 +13,7 @@ S3_BUCKET_BASE_NAME_IMAGES="test-img"
 
 # Scripts to be called
 ACTION_A_COPY_SCRIPT="/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/py_practice/cheat/action_A.py"
-ACTION_A_PROCESS_SCRIPT="/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/single Doc processor.py"
+ACTION_A_PROCESS_SCRIPT="/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/single Doc processor f.py"
 AI_WORKING_DIR="/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/"
 
 
@@ -87,7 +87,7 @@ inotifywait -m -e create --format '%w%f' "$SOURCE_DIR_A" "$SOURCE_DIR_B" | while
             done
 
             echo "--> Step 2: Executing data processing script..."
-            python3 "$ACTION_A_PROCESS_SCRIPT" \
+            AI_PROVIDER=fireworks python3 "$ACTION_A_PROCESS_SCRIPT" \
                 -i "$AI_WORKING_DIR/img/test/" pro paid \
                 "$AI_WORKING_DIR/prompt files/solve test q.md" \
                 -o "$AI_WORKING_DIR/data/output_file_version.json" \

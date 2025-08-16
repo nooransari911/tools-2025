@@ -50,6 +50,8 @@ load_dotenv("/home/ansarimn/Downloads/tools-2025/projects/Knowledge Base/.env")
 # --- MODIFIED: Fireworks.ai Configuration (Replaces Vertex AI Config) ---
 # Strip leading/trailing whitespace and newlines from the key
 AWS_API_GW_API_KEY = os.getenv ("AWS_API_GW_API_KEY").strip ()
+if not AWS_API_GW_API_KEY:
+    logger.warn ("WARNING: AWS API GW API KEY is not set")
 API_KEY = os.getenv("FIREWORKS_API_KEY").strip()
 
 
@@ -348,6 +350,8 @@ def generate_response(
         match = re.search(r'<think>(.*?)</think>', response_text, re.DOTALL)
         if match:
             think_content = match.group(1)
+            response_text = re.sub (r"<think>.*?</think>", "", response_text, flags=re.DOTALL).strip ()
+
         else:
             print("No <think> block found.")
 
@@ -374,15 +378,20 @@ def run_chatbot():
     validate_api_key() # MODIFIED: Replaced client configuration
     
     # MODIFIED: Use Fireworks.ai model ID from .env
-    model_id = os.getenv("FIREWORKS_MODEL", "accounts/fireworks/models/deepseek-r1-basic")
+    model_id = os.getenv("FIREWORKS_MODEL", "accounts/fireworks/models/qwen3-235b-a22b-thinking-2507")
     logger.info(f"Using model: {model_id}")
 
     system_prompts = load_system_instructions()
     messages = []
     messages.append (prepare_message(text_string=system_prompts, role="system"))
-#     print ("in main")
-#     print (type (messages [0]))
-#     print (type (messages))
+
+    # --- MODIFICATION: Check for headless mode ---
+    is_headless = "--headless" in sys.argv
+    if is_headless:
+        # Remove the flag so it doesn't interfere with other argument parsing
+        sys.argv.remove("--headless")
+        logger.info("Running in headless (non-interactive) mode.")
+    # --- END OF MODIFICATION ---
 
     # --- Retaining original command-line argument processing logic ---
     if len(sys.argv) > 1:
@@ -406,9 +415,13 @@ def run_chatbot():
                     logger.error("Failed to get initial response for images.")
         
         elif mode == "file":
+            # --- MODIFICATION: Adjust argument count check ---
             if len(sys.argv) < 5:
-                print("Usage: python your_script.py file <prompt_file> <text_path> <output_file> [print]")
+                print("Usage: python -m src.fireworks_chatbot [--headless] file <prompt_file> <text_path> <output_file>")
                 sys.exit(1)
+            # --- END OF MODIFICATION ---
+
+
             prompt_file_path, text_path, output_file_path = sys.argv[2], sys.argv[3], sys.argv[4]
             should_print = sys.argv[5].lower() == "print" if len(sys.argv) > 5 else False
 
@@ -436,13 +449,18 @@ def run_chatbot():
                 with open(output_file_path, "w") as f:
                     # 'thinking_blocks' will be None, so this check prevents an error
                     if thinking_content:
-                        f.write(f"<think>\n{thinking_content}\n</think>\n\n")
+                        pass
+                        # f.write(f"<think>\n{thinking_content}\n</think>\n\n")
                     f.write(response_text)
                 if should_print:
                     print("\n--- Response ---\n", response_text)
             else:
                 logger.error("Failed to get response for file-based prompt.")
-            #sys.exit(0) # Exit after file processing
+            # --- MODIFICATION: Exit only if in headless mode ---
+            if is_headless:
+                logger.info("Headless mode: Exiting after file processing.")
+                sys.exit(0)
+            # --- END OF MODIFICATION ---
 
     # --- Conversation History Setup (Unchanged) ---
     file_v_path_str = pathlib.Path("./data/output_file_version.json").resolve()

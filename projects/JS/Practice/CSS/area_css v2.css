@@ -1,0 +1,141 @@
+/* dark.css */
+
+:root {
+    --tri-H: 207;
+    --tri-S: 71%;
+    --tri-L: 55%;
+    --rect-H: 280;
+    --rect-S: 91%;
+    --rect-L: 55%;
+    --circ-H: 180;
+    --circ-S: 91%;
+    --circ-L: 55%;
+    --teal: #003b56;
+    --glass-effect-l1: #ffffff20;
+    --glass-effect-l2: #ffffff40;
+    --dark-gray: #101010;
+    --light-gray: #444444;
+    --input-button-padding: 10px 20px;
+    --main-text-font-size: 20px;
+    --transition-time-std: 0.3s;
+    --transition-time-slow: 0.4s;
+}
+
+
+body {
+    /* Set minimum height to 100% of the viewport height */
+    min-height: 100vh;
+    /* It's also good practice to remove the default browser margin */
+    margin: 0;
+    background: url("../../static/img/synthwave_bg.jpg");
+    background-color: #101010;
+    color: #c0c0c0;
+    /* font-family: "Roboto"; */
+    font-family: sans-serif;
+}
+
+
+#Areas_Calculator {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+
+.Shape {
+    margin-bottom: 80px;
+    border: 4px solid var(--dark-gray);
+    border-radius: 38px;
+    padding: 28px 28px;
+    font-size: 16px;
+    max-width: 400px;
+    background-color: var(--dark-gray);
+    backdrop-filter: blur(20px);
+}
+
+
+.Shape h2 {
+    /* color: #00143f; */
+    font-size: 40px;
+    margin-top: 10px;
+    margin-top: 10px;
+}
+
+.Shape form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 45px;
+    margin-top: 20px;
+}
+
+
+.Shape .Result {
+    font-size: var(--main-text-font-size);
+    margin-top: 35px;
+}
+
+
+.Shape:hover {
+    /* background-color: #282828; */
+    background-color: var(--glass-effect-l1);
+    backdrop-filter: blur(20px);
+    color: #000000;
+}
+
+
+.Shape:hover input {
+    background-color: var(--glass-effect-l2);
+    color: #000000;
+}
+
+.Shape:hover input::placeholder {
+    color: #000000;
+}
+
+
+.Shape:hover button {
+    background-color: var(--glass-effect-l2);
+    color: #000000;
+}
+
+.Shape,
+.Shape:hover button,
+.Shape:hover input,
+.Shape:hover h2 {
+    transition: transform var(--transition-time-std) ease, box-shadow var(--transition-time-std) ease, background-color var(--transition-time-slow) ease, color var(--transition-time-std) ease;
+}
+
+input {
+    font-size: var(--main-text-font-size);
+    background-color: #444444;
+    color: #c0c0c0;
+    border: 1px solid #555555;
+    border-radius: 12px;
+    /* height: 20px; */
+    padding: var(--input-button-padding);
+    max-width: 140px;
+}
+
+
+input::placeholder {
+    color: #c0c0c0;
+    font-family: sans-serif;
+    text-align: center;
+    transition: transform var(--transition-time-std) ease, box-shadow var(--transition-time-std) ease, background-color var(--transition-time-slow) ease, color var(--transition-time-std) ease;
+}
+
+
+
+
+button {
+    font-size: var(--main-text-font-size);
+    padding: var(--input-button-padding);
+    cursor: pointer;
+    background-color: var(--light-gray);
+    color: #e0e0e0;
+    border: 1px solid var(--light-gray);
+    border-radius: 12px;
+}

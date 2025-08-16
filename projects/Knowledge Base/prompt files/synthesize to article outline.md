@@ -1,10 +1,11 @@
 Please generate a comprehensive and in-depth outline for an article. Topic: the entire conversation here.
 
 both the article and outline must be:
-* properly structured into sections using markdown headings
-* avoid use of bold
-* use paragraph/long from style for content; bullets must be used only where needed
-* use simple natural human-like language (but no conversational tone); i expect it to be sharp, comprehensive, highly detailed and "technical" (in a sense)
+- properly structured into sections using markdown headings
+- avoid use of bold
+- use paragraph/long from style for content; bullets must be used only where needed
+- use simple natural human-like language (but no conversational tone); i expect it to be sharp, comprehensive, highly detailed and "technical" (in a sense)
+- Use simple natural human-like language (but no conversational tone); i expect it to be sharp, comprehensive, highly detailed and "technical" (in a sense). Avoid using "....,....,...." sentence structure. use flat, simple, direct, active sentences
 
 
 

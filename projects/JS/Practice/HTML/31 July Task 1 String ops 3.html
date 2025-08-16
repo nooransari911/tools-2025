@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>String Operations</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #fff0f5;
+      color: #4b2e2e;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .section-box {
+      background: linear-gradient(to right, #ffe4e1, #f9c6d0);
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      color: #4b2e2e;
+      border: 2px solid #f8bbd0;
+      box-shadow: 0 0 15px rgba(255, 192, 203, 0.4);
+      margin-top: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(to right, #fffafa, #ffe4e1);
+      color: #4b2e2e;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(to right, #ffb6c1, #ff69b4);
+      color: white;
+      margin-top: 10px;
+    }
+
+    #outputSection h3 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #c71585;
+      border-bottom: 1px solid #f8bbd0;
+      padding-bottom: 10px;
+    }
+
+    .resultBox {
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 10px;
+      font-size: 18px;
+      background: linear-gradient(to right, #ffe6eb, #ffeaf4);
+    }
+
+    /* Custom Dropdown Styling */
+    .custom-dropdown {
+      position: relative;
+      width: 90%;
+      margin: 0 auto 15px auto;
+      font-size: 16px;
+    }
+
+    .dropdown-selected {
+      padding: 10px;
+      background: linear-gradient(to right, #fffafa, #ffe4e1);
+      border-radius: 10px;
+      border: none;
+      box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      text-align: left;
+      position: relative;
+    }
+
+    .dropdown-selected::after {
+      content: "▾";
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #a0527d;
+    }
+
+    .dropdown-options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to right, #ffe4e1, #f9c6d0);
+      border-radius: 0 0 10px 10px;
+      border: 1px solid #f8bbd0;
+      box-shadow: 0 5px 10px rgba(255, 182, 193, 0.2);
+      z-index: 999;
+      display: none;
+    }
+
+    .dropdown-option {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .dropdown-option:hover {
+      background-color: #ffe6ec;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Input Section -->
+  <div id="inputSection" class="section-box">
+    <h2>🌸 String Operations 🌸</h2>
+
+    <input type="text" id="inputString" placeholder="Enter your string"><br>
+
+    <div id="replaceCharContainer" style="display: none;">
+      <input type="text" id="replacementChar" placeholder="Enter a character to replace with" maxlength="1"><br>
+    </div>
+
+    <!-- Custom Dropdown -->
+    <div class="custom-dropdown" onclick="toggleDropdown(event)">
+      <div id="selectedOption" class="dropdown-selected">Reverse String</div>
+      <div id="dropdownList" class="dropdown-options">
+        <div class="dropdown-option" onclick="selectOption('reverse')">Reverse String</div>
+        <div class="dropdown-option" onclick="selectOption('palindrome')">Check Palindrome</div>
+        <div class="dropdown-option" onclick="selectOption('replace')">Replace First Character</div>
+      </div>
+    </div>
+
+    <button onclick="processString()">Run</button>
+  </div>
+
+  <!-- Output Section -->
+  <div id="outputSection" class="section-box">
+    <h3>Result</h3>
+    <div id="resultContent"></div>
+  </div>
+
+  <script>
+    let currentOperation = 'reverse';
+
+    function toggleDropdown(e) {
+      const dropdown = document.getElementById("dropdownList");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    function selectOption(value) {
+      const labelMap = {
+        reverse: "Reverse String",
+        palindrome: "Check Palindrome",
+        replace: "Replace First Character"
+      };
+
+      document.getElementById("selectedOption").innerText = labelMap[value];
+      currentOperation = value;
+      document.getElementById("dropdownList").style.display = "none";
+
+      // Show/hide replace input
+      document.getElementById("replaceCharContainer").style.display =
+        value === "replace" ? "block" : "none";
+    }
+
+    window.addEventListener("click", function (e) {
+      if (!e.target.closest(".custom-dropdown")) {
+        document.getElementById("dropdownList").style.display = "none";
+      }
+    });
+
+    function processString() {
+      const str = document.getElementById("inputString").value;
+      const ch = document.getElementById("replacementChar").value;
+      const resultContent = document.getElementById("resultContent");
+
+      resultContent.innerHTML = ""; // Clear previous
+
+      if (!str) {
+        alert("Please enter a string.");
+        return;
+      }
+
+      if (currentOperation === "replace" && !ch) {
+        alert("Please enter a replacement character.");
+        return;
+      }
+
+      let resultText = "";
+
+      if (currentOperation === "reverse") {
+        resultText = "Reversed String: " + str.split('').reverse().join('');
+      } else if (currentOperation === "palindrome") {
+        const cleaned = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        const isPalin = cleaned === cleaned.split('').reverse().join('');
+        resultText = isPalin ? "Yes 🌸 It's a palindrome!" : "No ❌ Not a palindrome.";
+      } else if (currentOperation === "replace") {
+        resultText = "Modified String: " + ch + str.slice(1);
+      }
+
+      const resultBox = document.createElement("div");
+      resultBox.className = "resultBox";
+      resultBox.innerText = resultText;
+      resultContent.appendChild(resultBox);
+    }
+  </script>
+
+</body>
+</html>

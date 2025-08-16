@@ -1,0 +1,133 @@
+/* --- Root Variables & Base Styles --- */
+:root {
+    /* --glass-effect-l1: #00ffe14b; */
+    /* --glass-effect-l3: #ff544b34; */
+    --glass-effect-l1: #00ffe13a;
+    --glass-effect-l2: #ffffff40;
+    --glass-effect-l3: #ff005d2f;
+    --dark-gray: #101010;
+    --light-gray: #444444;
+    --input-button-padding: 10px 20px;
+    --main-text-font-size: 20px;
+    --transition-time-std: 0.3s;
+    --transition-time-slow: 0.4s;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    /* The synthwave background from your reference. Uncomment if you have the file. */
+    background: url("../../static/img/synthwave_bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    background-color: #101010;
+    color: #c0c0c0;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+/* --- Card Styling (Adapted from .Shape) --- */
+.Mul {
+    text-align: center;
+    border: 4px solid var(--dark-gray);
+    border-radius: 38px;
+    padding: 28px;
+    max-width: 400px;
+    width: 100%;
+    background-color: var(--dark-gray);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.Mul h2 {
+    font-size: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* --- Final, Simplified Form Layout --- */
+
+/* Use flexbox to center the input and button */
+.Mul form {
+    display: flex;
+    justify-content: center; /* Center-aligns the items */
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* Give the input a fixed, appropriate width */
+.Mul form input {
+    width: 90px;
+    flex: none; /* Remove any previous flex behavior */
+}
+
+/* Give the button a fixed, appropriate width */
+.Mul form button {
+    width: 120px;
+    flex: none; /* Remove any previous flex behavior */
+}
+
+.Mul p {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+/* --- Global Input/Button Styles --- */
+input {
+    font-size: var(--main-text-font-size);
+    background-color: var(--light-gray);
+    color: #c0c0c0;
+    border: 1px solid #555555;
+    border-radius: 12px;
+    padding: var(--input-button-padding);
+    max-width: 180px;
+    text-align: center;
+}
+
+input::placeholder {
+    color: #c0c0c0;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+button {
+    font-size: var(--main-text-font-size);
+    padding: var(--input-button-padding);
+    cursor: pointer;
+    background-color: var(--light-gray);
+    color: #e0e0e0;
+    border: 1px solid var(--light-gray);
+    border-radius: 12px;
+    max-width: 220px;
+}
+
+/* --- Hover Effects (Adapted from .Shape:hover) --- */
+.Mul:hover {
+    background-color: var(--glass-effect-l1);
+    color: #000000;
+}
+
+.Mul:hover input {
+    background-color: var(--glass-effect-l2);
+    color: #000000;
+}
+
+.Mul:hover input::placeholder {
+    color: #000000;
+}
+
+.Mul:hover button {
+    background-color: var(--glass-effect-l2);
+    color: #000000;
+}
+
+/* --- Transitions (Adapted from .Shape transitions) --- */
+.Mul,
+.Mul:hover button,
+.Mul:hover input,
+.Mul:hover h2,
+input::placeholder {
+    transition: background-color var(--transition-time-slow) ease, color var(--transition-time-std) ease;
+}

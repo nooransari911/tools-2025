@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive JS Event Showcase (Tailwind Dark Theme)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font and scrollbar for a better look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* For Webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937; /* bg-gray-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563; /* bg-gray-600 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* bg-gray-500 */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-300">
+
+    <header class="text-center border-b border-gray-700 pb-8 mb-8 pt-8">
+        <h1 class="text-4xl font-bold text-white mb-2">Comprehensive JS Event Showcase 🚀</h1>
+        <p class="text-gray-400">Interact with the elements below to see various DOM events in action.</p>
+        <p class="text-cyan-400 mt-2">Location: Pune, Maharashtra, India | Time: <span id="time-display"></span></p>
+    </header>
+
+    <main class="container flex flex-wrap lg:flex-nowrap gap-8 max-w-7xl mx-auto px-4 pb-8">
+        <!-- Area for interactive elements -->
+        <div class="interactive-area bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 w-full lg:w-3/5">
+            <h2 class="text-2xl font-semibold text-white mb-6">Interactive Elements</h2>
+
+            <!-- Mouse Events Section -->
+            <div class="event-section mb-8">
+                <h3 class="text-xl font-semibold text-cyan-400 mb-3">Mouse Events</h3>
+                <div id="mouse-area" class="interactive-box bg-gray-700 border-2 border-dashed border-gray-500 rounded-lg p-8 text-center text-gray-400 select-none transition-colors duration-300 hover:bg-gray-600 hover:border-cyan-400">
+                    <p>Move, Click, Double Click, and scroll your mouse wheel inside this box.</p>
+                </div>
+            </div>
+
+            <!-- Keyboard & Form Events Section -->
+            <div class="event-section mb-8">
+                <h3 class="text-xl font-semibold text-cyan-400 mb-3">Form & Keyboard Events</h3>
+                <form id="sample-form" novalidate>
+                    <label for="text-input" class="block mb-2 text-sm font-medium text-gray-400">Text Input:</label>
+                    <input type="text" id="text-input" placeholder="Type, focus, blur, copy, paste..." autocomplete="off" class="w-full bg-gray-700 border border-gray-600 text-gray-200 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none mb-4 transition">
+                    <label for="select-input" class="block mb-2 text-sm font-medium text-gray-400">Select Dropdown:</label>
+                    <select id="select-input" class="w-full bg-gray-700 border border-gray-600 text-gray-200 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none mb-4 transition">
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
+                    </select>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 hover:scale-[1.02] shadow-md">Submit Form</button>
+                </form>
+            </div>
+
+            <!-- Drag & Drop Events -->
+            <div class="event-section">
+                <h3 class="text-xl font-semibold text-cyan-400 mb-3">Drag & Drop Events</h3>
+                <div class="drag-container flex gap-4 items-stretch">
+                    <div id="drag-source" draggable="true" class="flex items-center justify-center p-5 bg-green-600 text-white rounded-lg cursor-grab active:cursor-grabbing font-bold transition-transform hover:scale-105">Drag Me</div>
+                    <div id="drop-target" class="interactive-box flex-grow bg-gray-700 border-2 border-dashed border-gray-500 rounded-lg p-8 text-center text-gray-400 select-none transition-colors duration-300">Drop Target</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Area for logging events -->
+        <div class="log-area bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 w-full lg:w-2/5 h-[700px] flex flex-col">
+            <h2 class="text-2xl font-semibold text-white mb-4">Event Log</h2>
+            <button id="clear-log-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:scale-[1.02] shadow-md mb-4">Clear Log</button>
+            <ul id="event-log" class="flex-grow overflow-y-auto bg-black bg-opacity-40 font-mono text-sm rounded-lg p-4">
+                <!-- Log entries will be dynamically added here -->
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        /**
+         * Main initialization function.
+         */
+        document.addEventListener('DOMContentLoaded', initializeEventHandlers);
+
+        /**
+         * Sets up all event listeners for the interactive elements on the page.
+         */
+        function initializeEventHandlers() {
+            // --- Element Selection ---
+            const mouseArea = document.getElementById('mouse-area');
+            const textInput = document.getElementById('text-input');
+            const selectInput = document.getElementById('select-input');
+            const sampleForm = document.getElementById('sample-form');
+            const dragSource = document.getElementById('drag-source');
+            const dropTarget = document.getElementById('drop-target');
+            const eventLog = document.getElementById('event-log');
+            const clearLogBtn = document.getElementById('clear-log-btn');
+            const timeDisplay = document.getElementById('time-display');
+
+            // --- Core Event Logger ---
+            const logEvent = (eventName, details = '') => {
+                const li = document.createElement('li');
+                li.className = 'flex justify-between py-1.5 border-b border-gray-700/50 animate-fade-in';
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'text-cyan-400 font-semibold';
+                nameSpan.textContent = eventName;
+
+                const detailsSpan = document.createElement('span');
+                detailsSpan.className = 'text-gray-400';
+                detailsSpan.textContent = details;
+
+                li.appendChild(nameSpan);
+                li.appendChild(detailsSpan);
+                
+                eventLog.prepend(li);
+            };
+
+            // --- Named Event Handler Functions ---
+
+            function handleDOMLoaded() {
+                logEvent('DOMContentLoaded', 'Document is ready. Script initialized.');
+            }
+            function handleWindowLoad() {
+                logEvent('load', 'Page and all resources finished loading.');
+            }
+            function handleWindowResize() {
+                logEvent('resize', `Viewport: ${window.innerWidth}x${window.innerHeight}`);
+            }
+            function handleWindowScroll() {
+                logEvent('scroll', `Y-Offset: ${Math.round(window.scrollY)}px`);
+            }
+            function handleMouseMove(event) {
+                logEvent('mousemove', `(x: ${event.offsetX}, y: ${event.offsetY})`);
+            }
+            function handleMouseClick(event) {
+                logEvent('click', `(Button: ${event.button})`);
+            }
+            function handleMouseDoubleClick() {
+                logEvent('dblclick');
+            }
+            function handleMouseDown() {
+                logEvent('mousedown');
+            }
+            function handleMouseUp() {
+                logEvent('mouseup');
+            }
+            function handleMouseOver() {
+                logEvent('mouseover', 'Entered the box');
+            }
+            function handleMouseOut() {
+                logEvent('mouseout', 'Left the box');
+            }
+            function handleWheel(event) {
+                const direction = event.deltaY > 0 ? 'Down' : 'Up';
+                logEvent('wheel', `Scrolled ${direction}`);
+            }
+            function handleKeyDown(event) {
+                logEvent('keydown', `Key: ${event.key}, Code: ${event.code}`);
+            }
+            function handleKeyUp(event) {
+                logEvent('keyup', `Key: ${event.key}`);
+            }
+            function handleFormSubmit(event) {
+                event.preventDefault();
+                logEvent('submit', 'Form submission prevented.');
+            }
+            function handleInputChange(event) {
+                logEvent('change', `New value: ${event.target.value}`);
+            }
+            function handleInput(event) {
+                logEvent('input', `Current value: ${event.target.value}`);
+            }
+            function handleFocus(event) {
+                logEvent('focus', `Element focused: ${event.target.id}`);
+            }
+            function handleBlur(event) {
+                logEvent('blur', `Element blurred: ${event.target.id}`);
+            }
+            function handleCopy() {
+                logEvent('copy', 'Text was copied from input.');
+            }
+            function handlePaste() {
+                logEvent('paste', 'Text was pasted into input.');
+            }
+            function handleDragStart(event) {
+                event.dataTransfer.setData('text/plain', event.target.id);
+                logEvent('dragstart', 'Started dragging the element.');
+            }
+            function handleDragOver(event) {
+                event.preventDefault();
+            }
+            function handleDragEnter() {
+                dropTarget.classList.add('bg-green-800', 'border-green-500');
+                logEvent('dragenter', 'Element entered the drop zone.');
+            }
+            function handleDragLeave() {
+                dropTarget.classList.remove('bg-green-800', 'border-green-500');
+                logEvent('dragleave', 'Element left the drop zone.');
+            }
+            function handleDrop(event) {
+                event.preventDefault();
+                dropTarget.classList.remove('bg-green-800', 'border-green-500');
+                const data = event.dataTransfer.getData('text/plain');
+                logEvent('drop', `Dropped element with id: ${data}`);
+            }
+            function handleClearLog() {
+                eventLog.innerHTML = '';
+            }
+            function updateTime() {
+                // As per your request, using the provided static time.
+                const staticTime = "7:19 PM IST";
+                const now = new Date(); // We can use this to make the seconds tick if desired
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                timeDisplay.textContent = `Thursday, July 17, 2025 at 7:19:${seconds} PM IST`;
+            }
+
+            // --- Event Listener Attachments ---
+            handleDOMLoaded();
+            window.addEventListener('load', handleWindowLoad);
+            window.addEventListener('resize', handleWindowResize);
+            window.addEventListener('scroll', handleWindowScroll);
+            mouseArea.addEventListener('mousemove', handleMouseMove);
+            mouseArea.addEventListener('click', handleMouseClick);
+            mouseArea.addEventListener('dblclick', handleMouseDoubleClick);
+            mouseArea.addEventListener('mousedown', handleMouseDown);
+            mouseArea.addEventListener('mouseup', handleMouseUp);
+            mouseArea.addEventListener('mouseover', handleMouseOver);
+            mouseArea.addEventListener('mouseout', handleMouseOut);
+            mouseArea.addEventListener('wheel', handleWheel);
+            textInput.addEventListener('keydown', handleKeyDown);
+            textInput.addEventListener('keyup', handleKeyUp);
+            textInput.addEventListener('focus', handleFocus);
+            textInput.addEventListener('blur', handleBlur);
+            textInput.addEventListener('input', handleInput);
+            textInput.addEventListener('change', handleInputChange);
+            textInput.addEventListener('copy', handleCopy);
+            textInput.addEventListener('paste', handlePaste);
+            selectInput.addEventListener('change', handleInputChange);
+            sampleForm.addEventListener('submit', handleFormSubmit);
+            dragSource.addEventListener('dragstart', handleDragStart);
+            dropTarget.addEventListener('dragover', handleDragOver);
+            dropTarget.addEventListener('dragenter', handleDragEnter);
+            dropTarget.addEventListener('dragleave', handleDragLeave);
+            dropTarget.addEventListener('drop', handleDrop);
+            clearLogBtn.addEventListener('click', handleClearLog);
+            
+            // Set up the clock
+            setInterval(updateTime, 1000);
+            updateTime(); // Initial call
+        }
+    </script>
+</body>
+</html>

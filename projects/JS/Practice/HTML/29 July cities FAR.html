@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Development Intensity (FSI/FAR) Comparison</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #141414;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #controls {
+      margin-bottom: 15px;
+    }
+    #chartContainer {
+      position: relative;
+      height: 70vh;
+      width: 90vw;
+      margin: auto;
+    }
+    canvas {
+      background-color: #141414;
+    }
+    select {
+      padding: 5px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h2>Development Intensity (FSI/FAR) Comparison</h2>
+
+  <div id="controls">
+    <label for="sortSelect">Sort by:</label>
+    <select id="sortSelect">
+      <option value="original">Original Order</option>
+      <option value="alphabetical">Building Name (A→Z)</option>
+      <option value="fsi-asc">FSI Ascending</option>
+      <option value="fsi-desc">FSI Descending</option>
+      <option value="city-group">Group by City</option>
+    </select>
+  </div>
+
+  <div id="chartContainer">
+    <canvas id="fsiChart"></canvas>
+  </div>
+
+  <script>
+    const rawData = [
+      { label: 'The Ruby (Dadar W)', value: 5.13, city: 'Mumbai' },
+      { label: 'Oberoi Commerz III (Goregaon)', value: 7.76, city: 'Mumbai' },
+      { label: 'Lodha Bellevue (Mahalaxmi)', value: 6.28, city: 'Mumbai' },
+      { label: 'Lodha World Towers', value: 10.45, city: 'Mumbai' },
+      { label: 'Nathani Heights (Dadar E)', value: 16.33, city: 'Mumbai' },
+      { label: 'Nahar Excalibur (Mahalaxmi)', value: 5.13, city: 'Mumbai' },
+      { label: 'Monte South (Byculla)', value: 5.93, city: 'Mumbai' },
+      { label: 'Northern Hills (Dahisar)', value: 8.18, city: 'Mumbai' },
+      { label: '2 IFC (HK)', value: 11.00, city: 'Hong Kong' },
+      { label: 'Shanghai Tower', value: 18.97, city: 'Shanghai' },
+      { label: 'Ping An FC', value: 24.30, city: 'Shenzhen' },
+      { label: 'Tour Société Générale', value: 11.20, city: 'Paris' },
+      { label: 'Tour Total (TotalEnergies)', value: 5.27, city: 'Paris' },
+      { label: 'Rainier Square Tower', value: 19.68, city: 'Seattle' },
+      { label: 're:Invent (Amazon HQ)', value: 8.22, city: 'Seattle' }
+    ];
+
+    const cityColors = {
+      'Mumbai': '#19D4FF',
+      'Hong Kong': '#FFD700',
+      'Shanghai': '#32FF7E',
+      'Shenzhen': '#FF33E6',
+      'Paris': '#FF8C00',
+      'Seattle': '#ADFF2F'
+    };
+
+    let chart; 
+
+    function renderChart(data) {
+      const labels = data.map(d => d.label);
+      const values = data.map(d => d.value);
+      const bgColors = data.map(d => cityColors[d.city] || '#CCCCCC');
+
+      const ctx = document.getElementById('fsiChart').getContext('2d');
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'FSI / FAR',
+            data: values,
+            backgroundColor: bgColors,
+            borderColor: '#ffffff',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: ctx => ctx.parsed.y.toFixed(2)
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: '#FFFFFF',
+                maxRotation: 45,
+                minRotation: 45,
+                autoSkip: false
+              },
+              grid: { display: false }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: { color: '#FFFFFF' },
+              grid: { color: '#444444' }
+            }
+          }
+        }
+      });
+    }
+
+    function sortData(criteria) {
+      let sorted = [...rawData];
+      if (criteria === 'alphabetical') {
+        sorted.sort((a, b) => a.label.localeCompare(b.label));
+      } else if (criteria === 'fsi-asc') {
+        sorted.sort((a, b) => a.value - b.value);
+      } else if (criteria === 'fsi-desc') {
+        sorted.sort((a, b) => b.value - a.value);
+      } else if (criteria === 'city-group') {
+        // Group by city, then original order within each group
+        sorted.sort((a, b) => {
+          if (a.city === b.city) return rawData.indexOf(a) - rawData.indexOf(b);
+          return a.city.localeCompare(b.city);
+        });
+      }
+      return sorted;
+    }
+
+    document.getElementById('sortSelect').addEventListener('change', e => {
+      const sorted = sortData(e.target.value);
+      renderChart(sorted);
+    });
+
+    // Initial render
+    renderChart(rawData);
+  </script>
+</body>
+</html>

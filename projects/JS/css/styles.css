@@ -1,0 +1,85 @@
+/* Define theme colors using CSS variables */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --button-bg: #f0f0f0;
+    --switch-bg: #cccccc;
+    --switch-fg: #ffffff;
+}
+
+[data-theme="dark"] {
+    --bg-color: #222222;
+    --text-color: #eeeeee;
+    --button-bg: #444444;
+    --switch-bg: #555555;
+    --switch-fg: #222222;
+}
+
+/* General page styles */
+body {
+    font-family: sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+/* The toggle switch styles */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide the default HTML checkbox */
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--switch-bg);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--switch-fg);
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3; /* Or use a CSS variable */
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}

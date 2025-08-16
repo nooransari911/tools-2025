@@ -1,0 +1,221 @@
+/* dark.css */
+
+:root {
+    --tri-H: 207;
+    --tri-S: 71%;
+    --tri-L: 55%;
+    --rect-H: 280;
+    --rect-S: 91%;
+    --rect-L: 55%;
+    --circ-H: 180;
+    --circ-S: 91%;
+    --circ-L: 55%;
+    --teal: #003b56;
+}
+
+
+body {
+    /* Set minimum height to 100% of the viewport height */
+    min-height: 100vh;
+    /* It's also good practice to remove the default browser margin */
+    margin: 0;
+    /* background: url("../../static/img/synthwave_bg.jpg"); */
+    background-color: #101010;
+/*     background: linear-gradient(
+        135deg,
+        hsl(
+            var(--circ-H),
+            var(--circ-S),
+            var(--circ-L)
+        ),
+        hsl(
+            var(--rect-H),
+            var(--rect-S),
+            var(--rect-L)
+        )
+    ); */
+    color: #c0c0c0;
+    font-family: sans-serif;
+}
+
+
+#Areas_Calculator {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* The one-liner */
+    gap: 0.5rem;
+    /* Optional: adds space between columns */
+    padding: 1rem;
+    text-align: center;
+}
+
+/* #Tri {
+    background: linear-gradient(165deg, hsl(var(--tri-H), var(--tri-S), var(--tri-L)), hsl(206, 72%, 18%));
+}
+
+#Tri h2 {
+    color: hsl(
+        calc(var(--tri-H) + 180 - 100),
+        var(--tri-S),
+        var(--tri-L)
+    );
+}
+
+
+
+
+#Circ {
+    background: linear-gradient(135deg, hsl(var(--circ-H), var(--circ-S), var(--circ-L)), hsl(207, 33%, 45%));
+}
+
+#Circ h2 {
+    color: hsl(
+        calc(var(--circ-H) + 180 - 100),
+        var(--circ-S),
+        var(--circ-L)
+    );
+} */
+
+
+
+
+
+
+
+#Tri, #Rect, #Circ{
+    /* background: linear-gradient(135deg, hsl(var(--rect-H), var(--rect-S), var(--rect-L)), hsl(337, 72%, 18%)); */
+/*     background: linear-gradient(
+        135deg,
+        hsl(
+            var(--circ-H),
+            var(--circ-S),
+            var(--circ-L)
+        ),
+        hsl(
+            var(--rect-H),
+            var(--rect-S),
+            var(--rect-L)
+        )
+    ); */
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Shape {
+    margin-bottom: 80px;
+    border: 2px solid #444444;
+    border-radius: 16px;
+    padding: 28px;
+    font-size: 16px;
+    max-width: 400px;
+    
+}
+
+
+.Shape h2 {
+    /* color: #00143f; */
+    font-size: 40px;
+    margin-top: 10px;
+    margin-top: 10px;
+}
+
+.Shape form {
+    display: flex;
+    flex-direction: column;
+    /* Stack items on top of each other */
+    align-items: center;
+    /* Center the items horizontally */
+    gap: 45px;
+    /* Add space between each item */
+    margin-top: 20px;
+    /* Add some space below the heading */
+}
+
+.Shape:hover input {
+    background-color: #ffffff20;
+    color: #000000;
+    border: 0px;
+}
+
+.Shape:hover input::placeholder {
+    color: #000000;
+}
+
+.Shape:hover {
+    /* background-color: #282828; */
+    background: linear-gradient(
+        165deg,
+        hsl(
+            var(--circ-H),
+            var(--circ-S),
+            var(--circ-L)
+        ),
+        hsl(
+            var(--rect-H),
+            var(--rect-S),
+            var(--rect-L)
+        )
+    );
+    color: #000000;
+}
+
+
+.Shape .Result {
+    font-size: 20px;
+    margin-top: 35px;
+}
+
+
+
+
+input {
+    font-size: 20px;
+    background-color: #444444;
+    color: #c0c0c0;
+    /* margin-right: 10px; */
+    /* margin-left: 20px; */
+    border: 1px solid #555555;
+    border-radius: 12px;
+    height: 20px;
+    padding: 15px;
+    max-width: 140px;
+}
+
+
+input::placeholder {
+    color: #c0c0c0;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+
+
+
+button {
+    font-size: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #555555;
+    border-radius: 12px;
+    /* margin-left: 20px; */
+}
+
+button:hover {
+    background-color: #ffffff10;
+    color: #000000;
+}

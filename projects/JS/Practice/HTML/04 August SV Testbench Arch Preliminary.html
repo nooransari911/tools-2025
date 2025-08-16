@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SV Testbench Architecture Visualization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+        
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .glow-cyan {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        
+        .glow-crimson {
+            box-shadow: 0 0 20px rgba(255, 0, 80, 0.3);
+        }
+        
+        .connection-line {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.6), rgba(255, 0, 80, 0.6));
+            height: 2px;
+            z-index: 1;
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+        
+        .hover-glow:hover {
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+        
+        .parameter-badge {
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 80, 0.2));
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        .signal-flow {
+            animation: flow 3s linear infinite;
+        }
+        
+        @keyframes flow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100 min-h-screen">
+    
+    <!-- Header -->
+    <header class="text-center border-b border-gray-800 pb-8 mb-12 pt-8">
+        <h1 class="text-5xl font-bold text-white mb-4">
+            <span class="text-cyan-400">SystemVerilog</span> 
+            <span class="text-red-400">Testbench</span> 
+            Architecture
+        </h1>
+        <p class="text-gray-400 text-lg">ALU Verification Environment Visualization</p>
+        <div class="parameter-badge inline-block px-4 py-2 rounded-full text-sm code-font mt-4">
+            Parameter N = 32-bit ALU
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pb-12">
+        
+        <!-- DUT Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block relative">
+                <div class="bg-gradient-to-br from-gray-900 to-gray-800 border-2 border-cyan-400 rounded-2xl p-8 glow-cyan hover-glow">
+                    <h2 class="text-3xl font-bold text-cyan-400 mb-4">🔧 Device Under Test</h2>
+                    <div class="code-font text-xl text-white mb-2">ALU Module</div>
+                    <div class="text-gray-400 text-sm">32-bit Arithmetic Logic Unit</div>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <span class="bg-green-600 px-3 py-1 rounded text-xs">ADD</span>
+                        <span class="bg-blue-600 px-3 py-1 rounded text-xs">VEC_AND</span>
+                        <span class="bg-purple-600 px-3 py-1 rounded text-xs">VEC_OR</span>
+                        <span class="bg-orange-600 px-3 py-1 rounded text-xs">RED_ANDA</span>
+                    </div>
+                </div>
+                <!-- Interface connection -->
+                <div class="absolute -left-4 top-1/2 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold text-xs">
+                    IF
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Testbench Components Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            
+            <!-- Generator -->
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 border border-red-400 rounded-xl p-6 glow-crimson hover-glow relative">
+                <div class="flex items-center mb-4">
+                    <div class="w-3 h-3 bg-red-400 rounded-full mr-3 pulse"></div>
+                    <h3 class="text-xl font-bold text-red-400">Generator</h3>
+                </div>
+                <div class="code-font text-sm text-gray-300 mb-3">class generator #(N=32)</div>
+                <ul class="text-sm text-gray-400 space-y-1">
+                    <li>• Random transaction generation</li>
+                    <li>• Configurable repeat count</li>
+                    <li>• Mailbox: gen2drv</li>
+                </ul>
+                <div class="mt-4 bg-black bg-opacity-30 rounded p-2 code-font text-xs text-cyan-300">
+                    txn.randomize()
+                </div>
+            </div>
+
+            <!-- Driver -->
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 border border-cyan-400 rounded-xl p-6 glow-cyan hover-glow relative">
+                <div class="flex items-center mb-4">
+                    <div class="w-3 h-3 bg-cyan-400 rounded-full mr-3 pulse"></div>
+                    <h3 class="text-xl font-bold text-cyan-400">Driver</h3>
+                </div>
+                <div class="code-font text-sm text-gray-300 mb-3">class driver #(N=32)</div>
+                <ul class="text-sm text-gray-400 space-y-1">
+                    <li>• Drives inputs to DUT</li>
+                    <li>• Virtual interface handling</li>
+                    <li>• Clocking block synchronization</li>
+                </ul>
+                <div class="mt-4 bg-black bg-opacity-30 rounded p-2 code-font text-xs text-cyan-300">
+                    vif.driver_cb.A <= txn.A
+                </div>
+            </div>
+
+            <!-- Input Monitor -->
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 border border-green-400 rounded-xl p-6 hover-glow relative" style="box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);">
+                <div class="flex items-center mb-4">
+                    <div class="w-3 h-3 bg-green-400 rounded-full mr-3 pulse"></div>
+                    <h3 class="text-xl font-bold text-green-400">Input Monitor</h3>
+                </div>
+                <div class="code-font text-sm text-gray-300 mb-3">class input_monitor #(N=32)</div>
+                <ul class="text-sm text-gray-400 space-y-1">
+                    <li>• Captures input transactions</li>
+                    <li>• Mailbox: imon2ref, imon2scb</li>
+                    <li>• Passive monitoring</li>
+                </ul>
+                <div class="mt-4 bg-black bg-opacity-30 rounded p-2 code-font text-xs text-green-300">
+                    @(vif.monitor_cb)
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Reference Model & Output Monitor Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            
+            <!-- Reference Model -->
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 border border-purple-400 rounded-xl p-6 hover-glow relative" style="box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);">
+                <div class="flex items-center mb-4">
+                    <div class="w-3 h-3 bg-purple-400 rounded-full mr-3 pulse"></div>
+                    <h3 class="text-xl font-bold text-purple-400">Reference Model</h3>
+                </div>
+                <div class="code-font text-sm text-gray-300 mb-3">class ref_model #(N=32)</div>
+                <ul class="text-sm text-gray-400 space-y-1 mb-4">
+                    <li>• Mirrors DUT functionality</li>
+                    <li>• Golden reference calculations</li>
+                    <li>• Mailbox: imon2ref, ref2scb</li>
+                    <li>• OPCODET enum support</li>
+                </ul>
+                <div class="bg-black bg-opacity-30 rounded p-3 code-font text-xs">
+                    <div class="text-purple-300 mb-2">case (in_txn.sel)</div>
+                    <div class="text-gray-400 ml-2">ADD: {status[0], Z} = A + B;</div>
+                    <div class="text-gray-400 ml-2">VEC_AND: Z = A & B;</div>
+                    <div class="text-gray-400 ml-2">...</div>
+                </div>
+            </div>
+
+            <!-- Output Monitor -->
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 border border-orange-400 rounded-xl p-6 hover-glow relative" style="box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);">
+                <div class="flex items-center mb-4">
+                    <div class="w-3 h-3 bg-orange-400 rounded-full mr-3 pulse"></div>
+                    <h3 class="text-xl font-bold text-orange-400">Output Monitor</h3>
+                </div>
+                <div class="code-font text-sm text-gray-300 mb-3">class output_monitor #(N=32)</div>
+                <ul class="text-sm text-gray-400 space-y-1">
+                    <li>• Captures DUT outputs</li>
+                    <li>• Mailbox: omon2scb</li>
+                    <li>• Result validation ready</li>
+                </ul>
+                <div class="mt-4 bg-black bg-opacity-30 rounded p-2 code-font text-xs text-orange-300">
+                    txn.Z = vif.monitor_cb.Z
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Scoreboard - Central Component -->
+        <div class="flex justify-center mb-16">
+            <div class="bg-gradient-to-br from-gray-900 to-gray-700 border-2 border-yellow-400 rounded-2xl p-8 max-w-2xl glow-yellow hover-glow" style="box-shadow: 0 0 30px rgba(255, 255, 0, 0.3);">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="w-4 h-4 bg-yellow-400 rounded-full mr-4 pulse"></div>
+                    <h3 class="text-2xl font-bold text-yellow-400">🏆 Scoreboard</h3>
+                </div>
+                <div class="code-font text-sm text-gray-300 mb-4 text-center">class scoreboard #(N=32)</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="text-center">
+                        <div class="text-red-400 font-bold">imon2scb</div>
+                        <div class="text-xs text-gray-400">Input Stream</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-purple-400 font-bold">ref2scb</div>
+                        <div class="text-xs text-gray-400">Expected Stream</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-orange-400 font-bold">omon2scb</div>
+                        <div class="text-xs text-gray-400">Actual Stream</div>
+                    </div>
+                </div>
+                <div class="bg-black bg-opacity-40 rounded-lg p-4 code-font text-xs">
+                    <div class="text-yellow-300 mb-2">// Transaction correlation & comparison</div>
+                    <div class="text-gray-400">scoreboard_entry item_map[int];</div>
+                    <div class="text-gray-400">int id_order_q[$];</div>
+                    <div class="text-green-400 mt-2">✓ Passed: {passed_count}</div>
+                    <div class="text-red-400">✗ Failed: {failed_count}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transaction & Interface Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            
+            <!-- Transaction Class -->
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 border border-blue-400 rounded-xl p-6 hover-glow relative" style="box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);">
+                <div class="flex items-center mb-4">
+                    <div class="w-3 h-3 bg-blue-400 rounded-full mr-3 pulse"></div>
+                    <h3 class="text-xl font-bold text-blue-400">Transaction</h3>
+                </div>
+                <div class="code-font text-sm text-gray-300 mb-3">class transaction #(N=32)</div>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <div class="text-cyan-400 font-semibold">Inputs:</div>
+                        <ul class="text-gray-400 text-xs space-y-1">
+                            <li>• rand bit [N-1:0] A, B</li>
+                            <li>• rand bit [7:0] sel</li>
+                            <li>• int id (unique)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="text-red-400 font-semibold">Outputs:</div>
+                        <ul class="text-gray-400 text-xs space-y-1">
+                            <li>• bit Zvalid</li>
+                            <li>• bit [N-1:0] Z</li>
+                            <li>• bit Zsc, [7:0] status</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interface -->
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 border border-teal-400 rounded-xl p-6 hover-glow relative" style="box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);">
+                <div class="flex items-center mb-4">
+                    <div class="w-3 h-3 bg-teal-400 rounded-full mr-3 pulse"></div>
+                    <h3 class="text-xl font-bold text-teal-400">ALU Interface</h3>
+                </div>
+                <div class="code-font text-sm text-gray-300 mb-3">interface aluintf #(N=32)</div>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Clocking Blocks:</span>
+                        <span class="text-teal-300">driver_cb, monitor_cb</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Modports:</span>
+                        <span class="text-teal-300">driver, monitor</span>
+                    </div>
+                    <div class="bg-black bg-opacity-30 rounded p-2 code-font text-xs text-teal-300">
+                        @(posedge clk) timing control
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Architecture Diagram Canvas -->
+        <div class="bg-gray-900 bg-opacity-60 border border-gray-700 rounded-2xl p-4 md:p-8 overflow-hidden">
+            <h3 class="text-2xl font-bold text-white text-center mb-6 flex items-center justify-center">
+                <span class="text-3xl mr-3">🏗️</span>
+                Architecture Data Flow
+            </h3>
+            
+            <!-- This div will be populated by Mermaid.js -->
+            <div class="mermaid text-center">
+---
+title: SystemVerilog Testbench Flow
+---
+graph LR
+    subgraph Stimulus
+        GEN(Generator) -->|gen2drv| DRV(Driver)
+    end
+
+    subgraph DUT & Interface
+        direction TB
+        DRV --> VIF(Virtual Interface)
+        VIF --> DUT(ALU)
+    end
+
+    subgraph Verification
+        direction LR
+        subgraph Monitors
+            direction TB
+            IMON(Input Monitor)
+            OMON(Output Monitor)
+        end
+        subgraph Checkers
+            direction TB
+            REF(Reference Model) --> SCB(Scoreboard)
+        end
+    end
+
+    %% Connections
+    DUT --> VIF
+    VIF --> IMON
+    VIF --> OMON
+    
+    IMON -->|imon2ref| REF
+    IMON -->|imon2scb| SCB
+    OMON -->|omon2scb| SCB
+    
+    %% Styling
+    classDef stimulus fill:#440c1b,stroke:#ef4444,stroke-width:2px,color:#fff;
+    classDef driver fill:#0c3c49,stroke:#06b6d4,stroke-width:2px,color:#fff;
+    classDef monitor-in fill:#062e16,stroke:#22c55e,stroke-width:2px,color:#fff;
+    classDef monitor-out fill:#4a2408,stroke:#f97316,stroke-width:2px,color:#fff;
+    classDef checker fill:#494a08,stroke:#eab308,stroke-width:2px,color:#fff;
+    classDef ref-model fill:#2e1041,stroke:#a855f7,stroke-width:2px,color:#fff;
+    classDef interface fill:#143642,stroke:#2dd4bf,stroke-width:2px,color:#fff;
+    classDef dut fill:#0c3c49,stroke:#22d3ee,stroke-width:2px,color:#fff;
+
+    class GEN stimulus;
+    class DRV driver;
+    class IMON monitor-in;
+    class OMON monitor-out;
+    class SCB checker;
+    class REF ref-model;
+    class VIF interface;
+    class DUT dut;
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center text-gray-500 text-sm py-8 border-t border-gray-800 mt-16">
+        <p>SystemVerilog Testbench Architecture • Modern Verification Environment</p>
+    </footer>
+
+    <!-- Mermaid.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        // Initialize Mermaid.js
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            fontFamily: 'JetBrains Mono, monospace',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            },
+            // Custom theme variables to match the page
+            themeVariables: {
+                background: '#111827',
+                primaryColor: '#1f2937',
+                primaryTextColor: '#e5e7eb',
+                primaryBorderColor: '#4b5563',
+                lineColor: '#6b7280',
+                secondaryColor: '#374151',
+                tertiaryColor: '#1f2937'
+            }
+        });
+    </script>
+
+</body>
+</html>

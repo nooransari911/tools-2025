@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Calculator</title>
+    <!-- Assuming your js file is in a folder named 'js' -->
+    <script src="../js/calculator.js"></script>
+</head>
+
+<body>
+    <div id="Calculator" class="Calculator">
+        <div id="Add">
+            <h2>Addition</h2>
+            <form id="AddForm">
+                <input type="number" id="AddNum1" placeholder="Number 1" required />
+                <input type="number" id="AddNum2" placeholder="Number 2" required />
+                <button id="AddSubmitButton" type="button">Add</button>
+            </form>
+            <p id="AddResult"></p>
+        </div>
+        <div id="Sub">
+            <h2>Subtraction</h2>
+            <form id="SubForm">
+                <input type="number" id="SubNum1" placeholder="Number 1" required />
+                <input type="number" id="SubNum2" placeholder="Number 2" required />
+                <button id="SubSubmitButton" type="button">Sub</button>
+            </form>
+            <p id="SubResult"></p>
+        </div>
+        <div id="Mul">
+            <h2>Multiplication</h2>
+            <form id="MulForm">
+                <input type="number" id="MulNum1" placeholder="Number 1" required />
+                <input type="number" id="MulNum2" placeholder="Number 2" required />
+                <button id="MulSubmitButton" type="button">Mul</button>
+            </form>
+            <p id="MulResult"></p>
+        </div>
+        <div id="Div">
+            <h2>Division</h2>
+            <!-- CORRECTED: Changed form id from "AddForm" to "DivForm" -->
+            <form id="DivForm">
+                <input type="number" id="DivNum1" placeholder="Number 1" required />
+                <input type="number" id="DivNum2" placeholder="Number 2" required />
+                <button id="DivSubmitButton" type="button">Div</button>
+            </form>
+            <p id="DivResult"></p>
+        </div>
+    </div>
+</body>
+
+</html>

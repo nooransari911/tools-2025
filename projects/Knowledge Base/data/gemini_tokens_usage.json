@@ -1,4 +1,4 @@
 {
-    "input_tokens": 672650,
-    "output_tokens": 37094
+    "version": 2,
+    "base_filepath_pattern": "./output files/output_v{version}"
 }

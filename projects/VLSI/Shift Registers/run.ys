@@ -1,0 +1,28 @@
+# --------------------------------------------------------------------------
+# Yosys Synthesis Script
+# --------------------------------------------------------------------------
+
+# 1. Read the design file. 
+#    The -sv flag is crucial to enable SystemVerilog features like 'typedef enum'.
+read_verilog -sv design.sv
+
+# 2. Run the standard synthesis passes. 
+#    These correspond to the "-p" arguments from your command line.
+hierarchy -top PISO_N
+proc
+opt
+memory
+opt
+fsm
+opt
+
+# 3. Generate the visualization.
+#    This command creates the SVG diagram.
+# show -colors 1 -viewer touch -format svg
+
+# 4. Write the synthesized output netlist.
+#    This corresponds to the "-o synth.v" argument.
+write_verilog synth.v
+
+# Optional: Print statistics about the synthesized design
+stat

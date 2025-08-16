@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Areas Calculator</title>
+    <script src="../js/area.js"></script>
+    <link href="../CSS/area_css v2.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="Areas_Calculator" class="Areas Calculator" style="margin-top: 80px;">
+        <div id="Tri" class="Shape">
+            <h2>Area of Triangle</h2>
+            <form id="TriForm">
+                <input type="number" id="TriHeight" placeholder="Height" required />
+                <input type="number" id="TriBase" placeholder="Base" required />
+                <button id="TriSubmitButton" type="button">Calculate Area</button>
+            </form>
+            <p id="TriResult" class="Result"></p>
+        </div>
+
+        
+<!--         <div id="Sq" class="Shape">
+            <h2>Area of Square</h2>
+            <form id="SqForm">
+                <input type="number" id="SqSide" placeholder="Side" required />
+                <button id="SqSubmitButton" type="button">Calculate Area</button>
+            </form>
+            <p id="SqResult" class="Result"></p>
+        </div> -->
+        
+
+
+        <div id="Rect" class="Shape">
+            <h2>Area of Rectangle</h2>
+            <form id="RectForm">
+                <input type="number" id="RectHeight" placeholder="Height" required />
+                <input type="number" id="RectBase" placeholder="Base" required />
+                <button id="RectSubmitButton" type="button">Calculate Area</button>
+            </form>
+            <p id="RectResult" class="Result"></p>
+        </div>
+
+
+        <!-- <div id="Circ" class="Shape" style="background: linear-gradient(135deg, hsl(222, 100%, 76%), hsl(207, 33%, 45%));"> -->
+        <div id="Circ" class="Shape">
+            <!-- <h2 style="color: #951e00;">Area of Circle</h2> -->
+            <h2>Area of Circle</h2>
+            <form id="CircForm">
+                <input type="number" id="CircRad" placeholder="Radius" required />
+                <button id="CircSubmitButton" type="button">Calculate Area</button>
+            </form>
+            <p id="CircResult" class="Result"></p>
+        </div>
+
+    </div>
+</body>
+
+</html>

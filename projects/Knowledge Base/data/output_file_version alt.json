@@ -1,0 +1,4 @@
+{
+    "version": 210,
+    "base_filepath_pattern": "./output files/chain_output-v{version}"
+}
