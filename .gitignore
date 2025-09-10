@@ -24,7 +24,6 @@ static-manifest*
 /projects/Knowledge Base/*.md
 !/projects/Knowledge Base/README.md
 /projects/Knowledge Base/*.log
-/projects/Knowledge Base/README.md
 **/private/
 **/dist/
 **/build/
