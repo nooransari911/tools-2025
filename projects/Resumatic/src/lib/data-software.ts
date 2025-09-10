@@ -156,6 +156,23 @@ export const initialResumeData: ResumeData = {
     }
   ],
 
+  // workExperience: [
+  //   {
+  //     id: nanoid(),
+  //     position: 'Team Member',
+  //     company: 'Major Project: AXI-APB Bridge (VLSI Domain)',
+  //     //location: 'Pune, MH',
+  //     dates: 'Jul 2025 - Present',
+  //     description: [
+  //       "Part of 3-member team for our final year project",
+  //       "Project involves connecting various subsystems within a processor",
+  //       "Design the core architecture and protocol logic and coordinate team efforts.",
+  //       "Pioneer the initial research and proof-of-concept work that establishes the project foundation for the team.",
+  //       "Mentor teammates through design challenges and code reviews."
+  //      ]
+  //   }
+  // ],
+
   experience: [
     {
       id: nanoid(),
@@ -163,10 +180,10 @@ export const initialResumeData: ResumeData = {
       company: '',
       dates: 'Jul 2025',
       description:
-`• Objective: To eliminate manual formatting and guarantee a robust, pixel-perfect layout.
-• Engineered a Next.js application to generate resume PDFs.
-• Designed a clean, modern layout for optimal clarity
-• Decoupled data from presentation, guaranteeing layout integrity.`,
+`•  Objective: To eliminate manual formatting and guarantee a robust, pixel-perfect layout.
+•  Engineered a Next.js application to generate resume PDFs.
+•  Designed a clean, modern layout for optimal clarity
+•  Decoupled data from presentation, guaranteeing layout integrity.`,
     },
     {
       id: nanoid(),
@@ -174,11 +191,11 @@ export const initialResumeData: ResumeData = {
       company: '',
       dates: 'Jun 2025',
       description:
-`• Objective: To automate document processing with AI using latest AI models
-• Architected as a highly modular system with clean seperation of concerns to maximize maintainability and extensibility
-• Automated workflow: loading files, versioned outputs, automatic file updates
-• Special features: parallel processing, interactive chat, supports different providers, flexible output options
-• Integrated robust error handling, logging, & dynamic configuration`,
+`•  Objective: To automate document processing using latest AI models
+•  Architected as a highly modular system with clean seperation of concerns to maximize maintainability and extensibility
+•  Automated workflow: loading files, versioned outputs, automatic file updates
+•  Special features: parallel processing, interactive chat, supports different providers, flexible output options
+•  Integrated robust error handling, logging, & dynamic configuration`,
     },
     {
       id: nanoid(),
@@ -186,9 +203,9 @@ export const initialResumeData: ResumeData = {
       company: '',
       dates: 'May 2025',
       description:
-`• Tech stack: Static site generator (Hugo), AWS (S3, Cloudfront, Lambda)
-• Developed dynamic redirects and page migrations, SEO optimizations, automated search indexing and cache refresh, invalidations
-• Created custom program to automate creation of new page`,
+`•  Tech stack: Static site generator (Hugo), AWS (S3, Cloudfront, Lambda)
+•  Developed dynamic redirects and page migrations, SEO optimizations, automated search indexing and cache refresh, invalidations
+•  Created custom program to automate creation of new page`,
     },
     {
         id: nanoid(),
@@ -196,9 +213,9 @@ export const initialResumeData: ResumeData = {
         company: '',
         dates: 'Nov 2024',
         description: 
-`• Developed backup solution with S3
-• Bucket lifecycle policy, incremental nature, git-integrated, highly automated
-• Analyzed logs using SQL queries to get operational insights`,
+`•  Developed backup solution with S3
+•  Bucket lifecycle policy, incremental nature, git-integrated, highly automated
+•  Analyzed logs using SQL queries to get operational insights`,
     },
     {
         id: nanoid(),
@@ -206,9 +223,9 @@ export const initialResumeData: ResumeData = {
         company: '',
         dates: 'Sep 2024',
         description: 
-`• Loaded bank statement file (CSV) into GCP BigQuery
-• Developed SQL queries to analyze spending trends
-• Generate interactive visualizations (pie charts, bar charts, tables)`,
+`•  Loaded bank statement file (CSV) into GCP BigQuery
+•  Developed SQL queries to analyze spending trends
+•  Generate interactive visualizations (pie charts, bar charts, tables)`,
     }
   ],
   education: [

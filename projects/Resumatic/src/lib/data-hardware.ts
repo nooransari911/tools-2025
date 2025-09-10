@@ -47,15 +47,35 @@ export const initialResumeData: ResumeData = {
       technologies: 'PCB Design, Oscilloscope, Soldering'
     }
   ],
+
+  // workExperience: [
+  //   {
+  //     id: nanoid(),
+  //     position: 'Team Member',
+  //     company: 'Major Project: AXI-APB Bridge (VLSI Domain)',
+  //     //location: 'Pune, MH',
+  //     dates: 'Jul 2025 - Present',
+  //     description: [
+  //       "Part of 3-member team for our final year project",
+  //       "Project involves connecting various subsystems within a processor",
+  //       "Design the core architecture and protocol logic and coordinate team efforts.",
+  //       "Pioneer the initial research and proof-of-concept work that establishes the project foundation for the team.",
+  //       "Mentor teammates through design challenges and code reviews."
+  //      ]
+  //   }
+  // ],
+
   experience: [
     {
       id: nanoid(),
       role: 'Major Project: AXI-APB Bridge (VLSI Domain)',
       company: 'Sponsored by Iravan Technologies',
       dates: 'Jul 2025 - Present',
-      description: `• Design an AXI-APB bridge in Verilog for high-speed, low-power applications
-• Build comprehensive testbench using SystemVerilog and modern verification practices
-• Focused on modular architecture with clear separation of concerns`
+      description:
+      `• Pioneered the initial research and proof-of-concept work that establishes the project foundation
+• Designed a modular core architecture in Verilog with clear separation of concerns
+• Built comprehensive testbench using SystemVerilog and modern verification practices.
+• Mentored teammates through design challenges and coordinate team efforts`,
     },
     {
       id: nanoid(),

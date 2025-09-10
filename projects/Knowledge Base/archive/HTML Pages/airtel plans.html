@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtel Mobile Recharge Plans | Dark Mode</title>
+    <style>
+        /* --- Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* --- Dark Mode Palette & General Styles --- */
+        :root {
+            --primary-color: rgb(255, 0, 80); /* Crimson from your example */
+            --bg-dark: #020617; /* Very Dark Slate from your example */
+            --bg-card: #111827; /* Dark Navy/Cool Gray */
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* --- STYLED SCROLLBARS (AS REQUESTED) --- */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgb(60, 60, 60);
+            border-radius: 5px;
+            border: 2px solid #000;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+
+        /* --- Header --- */
+        .header {
+            background-color: var(--bg-card);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo {
+            height: 40px;
+        }
+
+        /* --- Main Layout --- */
+        .main-container {
+            display: flex;
+            padding: 2rem;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .filters-panel {
+            flex: 0 0 300px;
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .results-panel {
+            flex-grow: 1;
+        }
+
+        /* --- Filters Panel --- */
+        .filter-group {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+        .filter-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .filter-group h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .control-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .control-group input[type="checkbox"], .control-group input[type="radio"] {
+            accent-color: var(--primary-color);
+            width: 1em;
+            height: 1em;
+        }
+
+        .price-slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        #price-slider {
+            width: 100%;
+            accent-color: var(--primary-color);
+        }
+
+        /* --- Results Panel --- */
+        .results-header {
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.5rem;
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .results-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        #results-count {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* --- Plan Card --- */
+        .plan-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* --- HOVER ANIMATION REMOVED & REPLACED --- */
+        .plan-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(255, 0, 80, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .card-category {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            background-color: rgba(255, 0, 80, 0.1);
+            border: 1px solid rgba(255, 0, 80, 0.3);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .card-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-item .value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .detail-item .label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .card-benefits h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-primary);
+        }
+
+        .benefit-item .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .card-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex-grow: 1;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: rgb(220, 0, 70);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        #no-results {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            display: none; /* Hidden by default */
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+            }
+            .filters-panel {
+                position: static;
+                width: 100%;
+                height: auto;
+                overflow-y: visible;
+            }
+        }
+
+        @media (max-width: 768px) {
+             body {
+                font-size: 14px;
+             }
+            .main-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
+            .header {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <img src="https://assets.airtel.in/static-assets/acp/common/logo-red.svg" alt="Airtel Logo" class="header-logo">
+    </header>
+
+    <main class="main-container">
+        <aside class="filters-panel">
+            <form id="filters-form">
+                 <div class="filter-group">
+                    <h3>Sort by</h3>
+                    <select id="sort-select" class="btn btn-secondary" style="width: 100%;">
+                        <option value="recommended">Recommended</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="validity-desc">Validity: High to Low</option>
+                        <option value="data-desc">Data: High to Low</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Category</h3>
+                    <div class="control-group">
+                        <label><input type="radio" name="category" value="all" checked> All Plans</label>
+                        <label><input type="radio" name="category" value="Truly Unlimited"> Truly Unlimited</label>
+                        <label><input type="radio" name="category" value="Data"> Data</label>
+                        <label><input type="radio" name="category" value="Entertainment"> Entertainment</label>
+                        <label><input type="radio" name="category" value="International Roaming"> Intl Roaming</label>
+                        <label><input type="radio" name="category" value="Talktime"> Talktime</label>
+                        <label><input type="radio" name="category" value="Inflight Roaming"> Inflight Roaming</label>
+                        <label><input type="radio" name="category" value="Plan Vouchers"> Plan Vouchers</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Price</h3>
+                    <div class="price-slider-labels">
+                        <span>₹10</span>
+                        <span id="price-value">₹5000</span>
+                    </div>
+                    <input type="range" id="price-slider" name="price" min="10" max="5000" value="5000" step="10">
+                </div>
+
+                <div class="filter-group">
+                    <h3>Validity</h3>
+                    <div class="control-group">
+                        <label><input type="checkbox" name="validity" value="7"> 7 Days & Less</label>
+                        <label><input type="checkbox" name="validity" value="30"> 21-30 Days</label>
+                        <label><input type="checkbox" name="validity" value="56"> 56 Days</label>
+                        <label><input type="checkbox" name="validity" value="84"> 84 Days</label>
+                        <label><input type="checkbox" name="validity" value="365"> 365 Days</label>
+                    </div>
+                </div>
+
+                 <div class="filter-group">
+                    <h3>Benefits</h3>
+                     <div class="control-group">
+                        <label><input type="checkbox" name="benefits" value="Netflix"> Netflix</label>
+                        <label><input type="checkbox" name="benefits" value="Amazon Prime"> Amazon Prime</label>
+                        <label><input type="checkbox" name="benefits" value="JioHotstar"> JioHotstar</label>
+                        <label><input type="checkbox" name="benefits" value="Airtel Xstream Play"> Airtel Xstream Play</label>
+                        <label><input type="checkbox" name="benefits" value="Unlimited 5G Data"> Unlimited 5G Data</label>
+                    </div>
+                </div>
+            </form>
+        </aside>
+
+        <section class="results-panel">
+            <div class="results-header">
+                <h2>Showing <span id="results-count">0</span> Plans</h2>
+            </div>
+
+            <div id="plans-grid" class="plans-grid">
+                <!-- Plan cards will be dynamically inserted here -->
+            </div>
+            <div id="no-results">
+                <h3>No plans match your criteria.</h3>
+                <p>Try adjusting your filters.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- COMPLETE & ACCURATE DATA SOURCE ---
+        const allPlans = [
+            // --- Truly Unlimited ---
+            {id: 1, price: 3599, validity: 365, data_daily_gb: 2, calls: "Unlimited", benefits: ["Unlimited 5G Data"], category: "Truly Unlimited", recommended: true},
+            {id: 2, price: 3999, validity: 365, data_daily_gb: 2.5, calls: "Unlimited", benefits: ["JioHotstar", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 3, price: 1199, validity: 84, data_daily_gb: 2.5, calls: "Unlimited", benefits: ["Amazon Prime", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 4, price: 979, validity: 84, data_daily_gb: 2, calls: "Unlimited", benefits: ["Airtel Xstream Play", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 5, price: 929, validity: 90, data_daily_gb: 1.5, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Truly Unlimited"},
+            {id: 6, price: 859, validity: 84, data_daily_gb: 1.5, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 7, price: 838, validity: 56, data_daily_gb: 3, calls: "Unlimited", benefits: ["Amazon Prime", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 8, price: 799, validity: 77, data_daily_gb: 1.5, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 9, price: 649, validity: 56, data_daily_gb: 2, calls: "Unlimited", benefits: ["Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 10, price: 619, validity: 60, data_daily_gb: 1.5, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Truly Unlimited"},
+            {id: 11, price: 579, validity: 56, data_daily_gb: 1.5, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Truly Unlimited"},
+            {id: 12, price: 449, validity: 28, data_daily_gb: 3, calls: "Unlimited", benefits: ["Airtel Xstream Play", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 13, price: 429, validity: 30, data_daily_gb: 2.5, calls: "Unlimited", benefits: ["Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 14, price: 379, validity: 30, data_daily_gb: 2, calls: "Unlimited", benefits: ["Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 15, price: 349, validity: 28, data_daily_gb: 1.5, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 16, price: 355, validity: 30, data_bulk_gb: 25, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Truly Unlimited"},
+            {id: 17, price: 299, validity: 28, data_daily_gb: 1, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 18, price: 199, validity: 28, data_bulk_gb: 2, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Truly Unlimited"},
+            {id: 19, price: 219, validity: 28, data_bulk_gb: 3, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Truly Unlimited"},
+            {id: 20, price: 2249, validity: 365, data_bulk_gb: 30, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 21, price: 1849, validity: 365, data_bulk_gb: 0, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 22, price: 1798, validity: 84, data_daily_gb: 3, calls: "Unlimited", benefits: ["Netflix", "Unlimited 5G Data"], category: "Truly Unlimited", recommended: true},
+            {id: 23, price: 1729, validity: 84, data_daily_gb: 2, calls: "Unlimited", benefits: ["Netflix", "JioHotstar", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 24, price: 1029, validity: 84, data_daily_gb: 2, calls: "Unlimited", benefits: ["JioHotstar", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 25, price: 609, validity: 30, data_bulk_gb: 60, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Truly Unlimited"},
+            {id: 26, price: 589, validity: 30, data_bulk_gb: 50, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Truly Unlimited"},
+            {id: 27, price: 548, validity: 84, data_bulk_gb: 7, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 28, price: 489, validity: 77, data_bulk_gb: 6, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 29, price: 469, validity: 84, data_bulk_gb: 0, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 30, price: 409, validity: 28, data_daily_gb: 2.5, calls: "Unlimited", benefits: ["Airtel Xstream Play", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 31, price: 399, validity: 28, data_daily_gb: 2.5, calls: "Unlimited", benefits: ["JioHotstar", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 32, price: 398, validity: 28, data_daily_gb: 2, calls: "Unlimited", benefits: ["JioHotstar", "Unlimited 5G Data"], category: "Truly Unlimited"},
+            {id: 33, price: 319, validity: 30, data_daily_gb: 1.5, calls: "Unlimited", benefits: [], category: "Truly Unlimited"},
+            {id: 34, price: 189, validity: 21, data_bulk_gb: 1, calls: "Unlimited", benefits: ["Perplexity Pro AI"], category: "Truly Unlimited"},
+            {id: 35, price: 598, validity: 28, data_daily_gb: 2, calls: "Unlimited", benefits: ["Netflix", "JioHotstar", "Unlimited 5G Data"], category: "Truly Unlimited"},
+
+            // --- Data ---
+            {id: 101, price: 361, validity: 30, data_bulk_gb: 50, calls: "N/A", benefits: [], category: "Data", recommended: true},
+            {id: 102, price: 279, validity: 30, data_bulk_gb: 1, calls: "N/A", benefits: ["Netflix", "JioHotstar"], category: "Data"},
+            {id: 103, price: 195, validity: 30, data_bulk_gb: 12, calls: "N/A", benefits: ["JioHotstar", "Airtel Xstream Play"], category: "Data"},
+            {id: 104, price: 181, validity: 30, data_bulk_gb: 15, calls: "N/A", benefits: ["Airtel Xstream Play"], category: "Data"},
+            {id: 105, price: 161, validity: 30, data_bulk_gb: 12, calls: "N/A", benefits: [], category: "Data"},
+            {id: 106, price: 121, validity: 30, data_bulk_gb: 6, calls: "N/A", benefits: [], category: "Data"},
+            {id: 107, price: 100, validity: 30, data_bulk_gb: 5, calls: "N/A", benefits: ["JioHotstar"], category: "Data"},
+            {id: 108, price: 99, validity: 2, data_desc: "Unlimited", calls: "N/A", benefits: [], category: "Data"},
+            {id: 109, price: 77, validity: 7, data_bulk_gb: 5, calls: "N/A", benefits: [], category: "Data"},
+            {id: 110, price: 49, validity: 1, data_desc: "Unlimited", calls: "N/A", benefits: [], category: "Data"},
+            {id: 111, price: 33, validity: 1, data_bulk_gb: 2, calls: "N/A", benefits: [], category: "Data"},
+            {id: 112, price: 26, validity: 1, data_bulk_gb: 1.5, calls: "N/A", benefits: [], category: "Data"},
+            {id: 113, price: 22, validity: 1, data_bulk_gb: 1, calls: "N/A", benefits: [], category: "Data"},
+
+            // --- International Roaming ---
+            {id: 201, price: 1098, validity: 0, calls: "200 mins", data_bulk_gb: 3, description: "3GB, 200mins IC+OG (IN+Local), 20 SMS (USA, Europe, Gulf, Asia, Africa & more)", category: "International Roaming"},
+            {id: 202, price: 798, validity: 0, calls: "150 mins", data_bulk_gb: 2, description: "2GB, 150mins IC+OG (IN+Local), 20 SMS (USA, Europe, Gulf, Asia, Africa & more)", category: "International Roaming"},
+            {id: 203, price: 2998, validity: 0, calls: "300 mins", data_bulk_gb: 10, description: "10GB, 300mins IC+OG (IN+Local), 20 SMS (USA, Europe, Gulf, Asia, Africa & more)", category: "International Roaming"},
+            {id: 204, price: 4000, validity: 0, calls: "100 mins", data_bulk_gb: 5, description: "Benefits abroad: 5GB, 100mins IC+OG. In India: 1.5GB/day, unlimited calls.", category: "International Roaming"},
+            {id: 205, price: 648, validity: 0, calls: "100 mins", data_bulk_gb: 1, description: "1GB, 100mins IC+OG (IN+Local), 10 SMS (USA, Europe, Gulf, Asia, Africa & more)", category: "International Roaming"},
+            {id: 206, price: 98, validity: 0, calls: "Std charges", data_desc: "Activation", description: "International roaming service activation. Free incoming SMS. Voice/Data at standard charges.", category: "International Roaming"},
+            {id: 207, price: 699, validity: 0, calls: "N/A", data_bulk_gb: 2, description: "2GB Data (USA, Europe, Gulf, Asia, Africa & more)", category: "International Roaming"},
+
+            // --- Talktime ---
+            {id: 301, price: 5000, validity: 0, talktime: "₹4237.29", calls: "N/A", category: "Talktime"},
+            {id: 302, price: 1000, validity: 0, talktime: "₹847.46", calls: "N/A", category: "Talktime"},
+            {id: 303, price: 500, validity: 0, talktime: "₹423.73", calls: "N/A", category: "Talktime"},
+            {id: 304, price: 120, validity: 0, talktime: "₹98.69", calls: "N/A", category: "Talktime"},
+            {id: 305, price: 10, validity: 0, talktime: "₹7.47", calls: "N/A", category: "Talktime"},
+
+            // --- Entertainment (dupes from Truly Unlimited, but listed as their own group) ---
+            {id: 401, price: 1798, validity: 84, data_daily_gb: 3, calls: "Unlimited", benefits: ["Netflix", "Unlimited 5G Data"], category: "Entertainment", recommended: true},
+            {id: 402, price: 1729, validity: 84, data_daily_gb: 2, calls: "Unlimited", benefits: ["Netflix", "JioHotstar", "Unlimited 5G Data"], category: "Entertainment"},
+            {id: 403, price: 1199, validity: 84, data_daily_gb: 2.5, calls: "Unlimited", benefits: ["Amazon Prime", "Unlimited 5G Data"], category: "Entertainment"},
+            {id: 404, price: 1029, validity: 84, data_daily_gb: 2, calls: "Unlimited", benefits: ["JioHotstar", "Unlimited 5G Data"], category: "Entertainment"},
+            {id: 405, price: 979, validity: 84, data_daily_gb: 2, calls: "Unlimited", benefits: ["Airtel Xstream Play", "Unlimited 5G Data"], category: "Entertainment"},
+            {id: 406, price: 838, validity: 56, data_daily_gb: 3, calls: "Unlimited", benefits: ["Amazon Prime", "Unlimited 5G Data"], category: "Entertainment"},
+            {id: 407, price: 598, validity: 28, data_daily_gb: 2, calls: "Unlimited", benefits: ["Netflix", "JioHotstar", "Unlimited 5G Data"], category: "Entertainment"},
+            {id: 408, price: 449, validity: 28, data_daily_gb: 3, calls: "Unlimited", benefits: ["Airtel Xstream Play", "Unlimited 5G Data"], category: "Entertainment"},
+            {id: 409, price: 399, validity: 28, data_daily_gb: 2.5, calls: "Unlimited", benefits: ["JioHotstar", "Unlimited 5G Data"], category: "Entertainment"},
+            {id: 410, price: 398, validity: 28, data_daily_gb: 2, calls: "Unlimited", benefits: ["JioHotstar", "Unlimited 5G Data"], category: "Entertainment"},
+            {id: 411, price: 279, validity: 30, data_bulk_gb: 1, calls: "N/A", benefits: ["Netflix", "JioHotstar"], category: "Entertainment"},
+            {id: 412, price: 181, validity: 30, data_bulk_gb: 15, calls: "N/A", benefits: ["Airtel Xstream Play"], category: "Entertainment"},
+
+             // --- Inflight Roaming packs ---
+            {id: 501, price: 295, validity: 0, data_bulk_gb: 0.5, calls: "100 mins OG", description: "In-Flight: 500MB, 100mins OG, 100 SMS on selected Intl flights.", category: "Inflight Roaming"},
+            {id: 502, price: 595, validity: 0, data_bulk_gb: 1, calls: "100 mins OG", description: "In-Flight: 1GB, 100mins OG, 100 SMS on selected Intl flights.", category: "Inflight Roaming"},
+            {id: 503, price: 196, validity: 0, data_bulk_gb: 0.25, calls: "100 mins OG", description: "In-Flight: 250MB, 100mins OG, 100 SMS on selected Intl flights.", category: "Inflight Roaming"},
+
+            // --- Plan Vouchers ---
+            {id: 601, price: 3599, validity: 365, data_daily_gb: 2, calls: "Unlimited", benefits: ["Unlimited 5G Data"], category: "Plan Vouchers"},
+            {id: 602, price: 3999, validity: 365, data_daily_gb: 2.5, calls: "Unlimited", benefits: ["JioHotstar", "Unlimited 5G Data"], category: "Plan Vouchers"},
+            {id: 603, price: 609, validity: 30, data_bulk_gb: 60, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Plan Vouchers"},
+            {id: 604, price: 589, validity: 30, data_bulk_gb: 50, calls: "Unlimited", benefits: ["Airtel Xstream Play"], category: "Plan Vouchers"},
+        ];
+
+        // --- DOM Elements & Logic ---
+        const priceSlider = document.getElementById('price-slider');
+        const priceValue = document.getElementById('price-value');
+        const filtersForm = document.getElementById('filters-form');
+        const sortSelect = document.getElementById('sort-select');
+        const plansGrid = document.getElementById('plans-grid');
+        const resultsCount = document.getElementById('results-count');
+        const noResultsMessage = document.getElementById('no-results');
+
+        const benefitDetails = {
+            'Netflix': { name: 'Netflix', icon: 'https://assets.airtel.in/static-assets/thanks/images/propositions/home/NETFLIX.png' },
+            'Amazon Prime': { name: 'Amazon Prime', icon: 'https://assets.airtel.in/Amazon_Prime_Circle_Blue-on-White_RGB.png' },
+            'JioHotstar': { name: 'JioHotstar', icon: 'https://assets.airtel.in/teams/adtech-cms/ADTECH/images/photo_6260370770924520175_x.jpg' },
+            'Airtel Xstream Play': { name: 'Airtel Xstream Play', icon: 'https://assets.airtel.in/static-assets/thanks/images/static/Xstream_Play_App_Icon_2x.png' },
+            'Unlimited 5G Data': { name: 'Unlimited 5G', icon: 'https://assets.airtel.in/teams/adtech-cms/ADTECH/images/5G_icon_big.jpg' },
+            'Perplexity Pro AI': { name: 'Perplexity Pro AI', icon: 'https://assets.airtel.in/static-assets/thanks/images/static/perplexity-logo-new.png'}
+        };
+
+        function renderPlans(plans) {
+            plansGrid.innerHTML = '';
+            noResultsMessage.style.display = plans.length === 0 ? 'block' : 'none';
+            plansGrid.style.display = plans.length === 0 ? 'none' : 'grid';
+            resultsCount.textContent = plans.length;
+
+            plans.forEach(plan => {
+                let dataDisplay = 'N/A';
+                if (plan.data_daily_gb) dataDisplay = `${plan.data_daily_gb} GB/Day`;
+                else if (plan.data_bulk_gb !== undefined) dataDisplay = `${plan.data_bulk_gb} GB`;
+                else if (plan.data_desc) dataDisplay = plan.data_desc;
+                else if (plan.talktime) dataDisplay = 'Talktime Pack';
+
+                let validityDisplay = plan.validity > 0 ? `${plan.validity} Days` : 'N/A';
+                if (plan.validity === 30) validityDisplay = '1 Month';
+
+                let benefitsHtml = (plan.benefits && plan.benefits.length > 0) ? `
+                    <div class="card-benefits">
+                        <h4>Benefits</h4>
+                        <ul class="benefits-list">
+                            ${plan.benefits.map(b => `
+                                <li class="benefit-item">
+                                    <img src="${benefitDetails[b]?.icon || ''}" alt="${benefitDetails[b]?.name}" class="icon">
+                                    <span>${benefitDetails[b]?.name || b}</span>
+                                </li>`).join('')}
+                        </ul>
+                    </div>` : '';
+
+                let descriptionHtml = plan.description ? `<p class="card-description">${plan.description}</p>` : '';
+
+                const card = document.createElement('div');
+                card.className = 'plan-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-price">₹${plan.price}</div>
+                        <span class="card-category">${plan.category}</span>
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-item"><div class="value">${dataDisplay}</div><div class="label">Data</div></div>
+                        <div class="detail-item"><div class="value">${validityDisplay}</div><div class="label">Validity</div></div>
+                        <div class="detail-item"><div class="value">${plan.calls || 'N/A'}</div><div class="label">Calls</div></div>
+                        <div class="detail-item"><div class="value">${plan.talktime || 'N/A'}</div><div class="label">Talktime</div></div>
+                    </div>
+                    ${benefitsHtml}
+                    ${descriptionHtml}
+                    <div class="card-actions">
+                        <button class="btn btn-secondary">View Details</button>
+                        <button class="btn btn-primary">Recharge Now</button>
+                    </div>`;
+                plansGrid.appendChild(card);
+            });
+        }
+
+        function getFilters() {
+            const formData = new FormData(filtersForm);
+            return {
+                category: formData.get('category'),
+                price: parseInt(formData.get('price'), 10),
+                validity: formData.getAll('validity').map(Number),
+                benefits: formData.getAll('benefits')
+            };
+        }
+
+        function updateDisplay() {
+            const filters = getFilters();
+            let filteredPlans = [...allPlans];
+
+            if (filters.category !== 'all') {
+                filteredPlans = filteredPlans.filter(plan => plan.category === filters.category);
+            }
+
+            filteredPlans = filteredPlans.filter(plan => plan.price <= filters.price);
+
+            if (filters.validity.length > 0) {
+                filteredPlans = filteredPlans.filter(plan => {
+                    return filters.validity.some(v => {
+                        if (v === 7) return plan.validity > 0 && plan.validity <= 7;
+                        if (v === 30) return plan.validity >= 21 && plan.validity <= 30;
+                        if (v === 365) return plan.validity >= 365;
+                        return plan.validity === v;
+                    });
+                });
+            }
+
+            if (filters.benefits.length > 0) {
+                filteredPlans = filteredPlans.filter(plan =>
+                    filters.benefits.every(benefit => plan.benefits && plan.benefits.includes(benefit))
+                );
+            }
+
+            const sortBy = sortSelect.value;
+            switch (sortBy) {
+                case 'price-asc': filteredPlans.sort((a, b) => a.price - b.price); break;
+                case 'price-desc': filteredPlans.sort((a, b) => b.price - a.price); break;
+                case 'validity-desc': filteredPlans.sort((a, b) => b.validity - a.validity); break;
+                case 'data-desc':
+                    const getDataValue = (p) => p.data_daily_gb || (p.data_bulk_gb / (p.validity || 30)) || 0;
+                    filteredPlans.sort((a, b) => getDataValue(b) - getDataValue(a));
+                    break;
+                case 'recommended':
+                    filteredPlans.sort((a, b) => (b.recommended ? 1 : 0) - (a.recommended ? 1 : 0) || a.price - b.price);
+                    break;
+            }
+
+            renderPlans(filteredPlans);
+        }
+
+        priceSlider.addEventListener('input', (e) => { priceValue.textContent = `₹${e.target.value}`; });
+        filtersForm.addEventListener('change', updateDisplay);
+        sortSelect.addEventListener('change', updateDisplay);
+        document.addEventListener('DOMContentLoaded', updateDisplay);
+    </script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myers-Briggs Cognitive Functions Quadrant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; /* slate-950 */
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: radial-gradient(circle at 1px 1px, #475569 1px, transparent 0);
+            background-size: 24px 24px;
+            mask: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 75%);
+            -webkit-mask: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 75%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+
+        .font-baskerville-italic {
+            font-family: 'Libre Baskerville', serif;
+            font-style: italic;
+        }
+
+        .font-baskerville {
+            font-family: 'Libre Baskerville', serif;
+        }
+
+        /*
+          REFACTOR:
+          Component classes are defined here using @apply.
+          This encapsulates utility classes for better maintainability.
+        */
+        @layer components {
+            .page-title {
+                @apply text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 mb-6;
+            }
+            .page-subtitle {
+                @apply text-lg text-slate-400 max-w-4xl mx-auto leading-relaxed;
+            }
+            .axis-label-main {
+                @apply text-2xl font-semibold text-slate-200 tracking-wider mb-2;
+            }
+            .axis-label-sub {
+                @apply text-sm text-slate-500;
+            }
+            .quadrant-card {
+                @apply bg-gradient-to-br from-slate-900/30 to-slate-900/10 border border-white/10 rounded-2xl p-6 h-full flex flex-col backdrop-blur-2xl transition-all duration-200 ease-out;
+                will-change: transform, box-shadow, border-color;
+            }
+            .quadrant-card:hover {
+                @apply transform border-cyan-400;
+                box-shadow: 0 0 12px rgba(34, 211, 238, 0.2), 0 0 40px rgba(34, 211, 238, 0.15), 0 4px 12px rgba(0, 0, 0, 0.3);
+            }
+            .quadrant-header {
+                @apply flex items-baseline justify-between mb-4;
+            }
+            .quadrant-initials {
+                @apply font-baskerville text-4xl font-bold text-cyan-300;
+            }
+            .quadrant-title {
+                @apply font-baskerville-italic text-2xl font-bold text-slate-100 text-right;
+            }
+            .quadrant-description {
+                @apply text-slate-400 text-sm leading-relaxed flex-grow mb-6;
+            }
+            .type-pill {
+                @apply bg-cyan-950/40 border border-cyan-700/30 text-cyan-200 py-2 rounded-lg text-sm font-medium;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-300 antialiased min-h-screen">
+
+    <div class="container mx-auto px-4 sm:px-8 py-16 max-w-7xl">
+
+        <!-- Header -->
+        <header class="text-center mb-20">
+            <h1 class="page-title">
+                Cognitive Function Quadrants
+            </h1>
+            <p class="page-subtitle">
+                A systematic visualization of the 16 personality types organized by their core cognitive preferences for perceiving information and making decisions.
+            </p>
+        </header>
+
+        <!-- Quadrant Layout -->
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-[160px_1fr_32px_1fr_160px] grid-rows-[160px_1fr_32px_1fr] h-[900px]">
+
+                <!-- Axes -->
+                <div class="col-start-2 col-span-3 row-start-3 flex items-center justify-center">
+                    <div class="w-full h-px bg-gradient-to-r from-cyan-500/0 via-cyan-500/70 to-cyan-500/0"></div>
+                </div>
+                <div class="row-start-2 row-span-3 col-start-3 flex items-center justify-center">
+                    <div class="h-full w-px bg-gradient-to-b from-cyan-500/0 via-cyan-500/70 to-cyan-500/0"></div>
+                </div>
+
+                <!-- Axis Labels -->
+                <div class="col-start-2 row-start-1 flex items-end justify-center pb-6">
+                    <div class="text-center">
+                        <div class="axis-label-main">Intuition (N)</div>
+                        <div class="axis-label-sub">Abstract • Patterns • Future</div>
+                    </div>
+                </div>
+                <div class="col-start-4 row-start-1 flex items-end justify-center pb-6">
+                    <div class="text-center">
+                        <div class="axis-label-main">Sensing (S)</div>
+                        <div class="axis-label-sub">Concrete • Facts • Present</div>
+                    </div>
+                </div>
+                <div class="col-start-1 row-start-2 flex items-center justify-end pr-6">
+                    <div class="vertical-text text-center">
+                        <div class="axis-label-main">Thinking (T)</div>
+                        <div class="axis-label-sub">Logic • Objective • Analysis</div>
+                    </div>
+                </div>
+                <div class="col-start-1 row-start-4 flex items-center justify-end pr-6">
+                     <div class="vertical-text text-center">
+                        <div class="axis-label-main">Feeling (F)</div>
+                        <div class="axis-label-sub">Values • Subjective • Harmony</div>
+                    </div>
+                </div>
+
+                <!-- NT Quadrant -->
+                <div class="col-start-2 row-start-2 p-4">
+                    <div class="quadrant-card">
+                        <div class="quadrant-header">
+                            <div class="quadrant-initials">NT</div>
+                            <h2 class="quadrant-title">The Rationals</h2>
+                        </div>
+                        <p class="quadrant-description">Strategic innovators who combine abstract thinking with logical analysis.</p>
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="type-pill">INTJ</div>
+                            <div class="type-pill">INTP</div>
+                            <div class="type-pill">ENTJ</div>
+                            <div class="type-pill">ENTP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ST Quadrant -->
+                <div class="col-start-4 row-start-2 p-4">
+                    <div class="quadrant-card">
+                        <div class="quadrant-header">
+                            <div class="quadrant-initials">ST</div>
+                            <h2 class="quadrant-title">The Guardians</h2>
+                        </div>
+                        <p class="quadrant-description">Practical organizers who combine concrete observation with logical decisions.</p>
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="type-pill">ISTJ</div>
+                            <div class="type-pill">ISTP</div>
+                            <div class="type-pill">ESTJ</div>
+                            <div class="type-pill">ESTP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NF Quadrant -->
+                <div class="col-start-2 row-start-4 p-4">
+                    <div class="quadrant-card">
+                        <div class="quadrant-header">
+                            <div class="quadrant-initials">NF</div>
+                            <h2 class="quadrant-title">The Idealists</h2>
+                        </div>
+                        <p class="quadrant-description">Inspiring visionaries who combine abstract thinking with value-based decisions.</p>
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="type-pill">INFJ</div>
+                            <div class="type-pill">INFP</div>
+                            <div class="type-pill">ENFJ</div>
+                            <div class="type-pill">ENFP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SF Quadrant -->
+                <div class="col-start-4 row-start-4 p-4">
+                    <div class="quadrant-card">
+                        <div class="quadrant-header">
+                            <div class="quadrant-initials">SF</div>
+                            <h2 class="quadrant-title">The Artisans</h2>
+                        </div>
+                        <p class="quadrant-description">Compassionate supporters who combine concrete observation with value-based decisions.</p>
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="type-pill">ISFJ</div>
+                            <div class="type-pill">ISFP</div>
+                            <div class="type-pill">ESFJ</div>
+                            <div class="type-pill">ESFP</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-20 pt-8 border-t border-slate-800">
+            <p class="text-slate-500 max-w-3xl mx-auto">
+                Each quadrant represents a unique archetype, shaping how individuals navigate their internal and external worlds.
+            </p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

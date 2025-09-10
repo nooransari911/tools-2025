@@ -38,9 +38,20 @@ export type AdditionalKnowledgeInterests = {
   description: string
 }
 
+
+export type WorkExperience = {
+  id: string;
+  position: string;
+  company: string;
+  location?: string;
+  dates: string;
+  description: string[];
+}
+
 export interface ResumeData {
   personalInfo: PersonalInfo;
-  experience: Experience[];
+  workExperience?: WorkExperience []; // actual work experience
+  experience: Experience[];          // Projects only, not actual work experience
   education: Education[];
   certificates: Certificate[];
   skills: Skills[];

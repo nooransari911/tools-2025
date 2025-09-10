@@ -36,6 +36,7 @@ import { PersonalInfoEditor } from './editor/PersonalInfoEditor';
 import { ExperienceEditor } from './editor/ExperienceEditor';
 import { EducationEditor } from './editor/EducationEditor';
 import { CertificatesEditor } from './editor/CertificatesEditor';
+import { WorkExperienceEditor } from './editor/WorkExperienceEditor';
 
 interface EditorSidebarProps {
 	resume: ResumeData;
@@ -133,7 +134,7 @@ const handlePrint = async (resumeType: 'software' | 'hardware', font: string) =>
 	const combinedCssText = cssTexts.join('/* --- Next Stylesheet --- */');
 	const resumeTypeChar = resumeType === 'software' ? 'S' : 'H';
 	const formattedDate = getFormattedDate();
-	const title = `Resume ${resumeTypeChar} ${formattedDate}`;
+	const title = `Resume ${resumeTypeChar} ${formattedDate} ${font}`;
 
 
 	const fontMap: { [key: string]: string } = {
@@ -199,6 +200,76 @@ export function EditorSidebar({
 	const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 		setResume((prev) => ({ ...prev, personalInfo: { ...prev.personalInfo, [name]: value } }));
+	};
+
+	// Add these handler functions in the EditorSidebar component:
+	const handleWorkExperienceChange = (id: string, field: string, value: string | string[]) => {
+		setResume((prev) => ({
+			...prev,
+			workExperience: prev.workExperience.map((exp) =>
+				exp.id === id ? { ...exp, [field]: value } : exp
+			),
+		}));
+	};
+
+	const addWorkExperience = () => {
+		setResume((prev) => ({
+			...prev,
+			workExperience: [...prev.workExperience, {
+				id: nanoid(),
+				position: '',
+				company: '',
+				location: '',
+				dates: '',
+				description: ['']
+			}],
+		}));
+	};
+
+	const removeWorkExperience = (id: string) => {
+		setResume((prev) => ({
+			...prev,
+			workExperience: prev.workExperience.filter((exp) => exp.id !== id)
+		}));
+	};
+
+	const addDescriptionPoint = (expId: string) => {
+		setResume((prev) => ({
+			...prev,
+			workExperience: prev.workExperience.map((exp) =>
+				exp.id === expId ? { ...exp, description: [...exp.description, ''] } : exp
+			),
+		}));
+	};
+
+	const handleDescriptionChange = (expId: string, index: number, value: string) => {
+		setResume((prev) => ({
+			...prev,
+			workExperience: prev.workExperience.map((exp) =>
+				exp.id === expId
+					? {
+						...exp,
+						description: exp.description.map((point, i) =>
+							i === index ? value : point
+						),
+					}
+					: exp
+			),
+		}));
+	};
+
+	const removeDescriptionPoint = (expId: string, index: number) => {
+		setResume((prev) => ({
+			...prev,
+			workExperience: prev.workExperience.map((exp) =>
+				exp.id === expId
+					? {
+						...exp,
+						description: exp.description.filter((_, i) => i !== index),
+					}
+					: exp
+			),
+		}));
 	};
 
 	const handleExperienceChange = (id: string, e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -267,34 +338,51 @@ export function EditorSidebar({
 	};
 
 	const handleExportMarkdown = () => {
-		const { personalInfo, experience, education, certificates } = resume;
-
+		const { personalInfo, workExperience, experience, education, certificates } = resume;
+	  
 		let markdownContent = `# ${personalInfo.name}\n\n`;
 		if (personalInfo.email) markdownContent += `Email: ${personalInfo.email}\n`;
 		if (personalInfo.phone) markdownContent += `Phone: ${personalInfo.phone}\n`;
 		if (personalInfo.linkedin) markdownContent += `LinkedIn: ${personalInfo.linkedin}\n`;
 		if (personalInfo.github) markdownContent += `GitHub: ${personalInfo.github}\n`;
 		if (personalInfo.website) markdownContent += `Website: ${personalInfo.website}\n`;
-
-		markdownContent += `\n# Experience\n\n`;
-		experience.forEach(exp => {
-			markdownContent += `## ${exp.role} ${exp.company}\n`;
-			markdownContent += `*${exp.dates}*\n\n`;
-			markdownContent += `${exp.description}\n\n`;
+	  
+		markdownContent += `\n# Work Experience\n\n`;
+		workExperience.forEach(exp => {
+		  markdownContent += `## ${exp.position} at ${exp.company}\n`;
+		  if (exp.location) markdownContent += `*${exp.location}*\n`;
+		  markdownContent += `*${exp.dates}*\n\n`;
+		  exp.description.forEach(point => {
+			markdownContent += `- ${point}\n`;
+		  });
+		  markdownContent += `\n`;
 		});
-
+	  
+		markdownContent += `\n# Projects\n\n`;
+		experience.forEach(exp => {
+		  markdownContent += `## ${exp.role} ${exp.company}\n`;
+		  markdownContent += `*${exp.dates}*\n\n`;
+		  // Handle existing project descriptions (they're still strings)
+		  exp.description.split('\n').forEach(line => {
+			if (line.trim()) {
+			  markdownContent += `${line}\n`;
+			}
+		  });
+		  markdownContent += `\n`;
+		});
+	  
 		markdownContent += `# Education\n\n`;
 		education.forEach(edu => {
-			markdownContent += `## ${edu.institution}\n`;
-			markdownContent += `*${edu.dates}*\n`;
-			markdownContent += `${edu.degree}\n\n`;
+		  markdownContent += `## ${edu.institution}\n`;
+		  markdownContent += `*${edu.dates}*\n`;
+		  markdownContent += `${edu.degree}\n\n`;
 		});
-
+	  
 		markdownContent += `# Certificates\n\n`;
 		certificates.forEach(cert => {
-			markdownContent += `*   ${cert.name}\n`;
+		  markdownContent += `*   ${cert.name}\n`;
 		});
-
+	  
 		const blob = new Blob([markdownContent], { type: 'text/markdown' });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -304,7 +392,7 @@ export function EditorSidebar({
 		a.click();
 		document.body.removeChild(a);
 		URL.revokeObjectURL(url);
-	};
+	  };
 
 	return (
 		<Sidebar collapsible="icon" className="no-print" id="editor-sidebar">
@@ -360,6 +448,18 @@ export function EditorSidebar({
 						<PersonalInfoEditor
 							personalInfo={resume.personalInfo}
 							onChange={handlePersonalInfoChange}
+						/>
+					</SectionWrapper>
+
+					<SectionWrapper value="work-experience" title="Work Experience" icon={<Briefcase className="mr-2" />}>
+						<WorkExperienceEditor
+							workExperience={resume.workExperience}
+							onChange={handleWorkExperienceChange}
+							onAdd={addWorkExperience}
+							onRemove={removeWorkExperience}
+							onAddDescriptionPoint={addDescriptionPoint}
+							onDescriptionChange={handleDescriptionChange}
+							onRemoveDescriptionPoint={removeDescriptionPoint}
 						/>
 					</SectionWrapper>
 
