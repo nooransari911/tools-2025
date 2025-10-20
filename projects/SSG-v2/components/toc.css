@@ -1,0 +1,5 @@
+/* Table of Contents Scroll Spy Styles */
+.hextra-toc a.hextra-toc-active {
+  /* @apply hx:text-gray-900! hx:dark:text-gray-50! hx:transition-all hx:duration-200; */
+  @apply hx:text-primary-600! hx:dark:text-primary-800! hx:transition-all hx:duration-200;
+}

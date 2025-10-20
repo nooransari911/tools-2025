@@ -37,6 +37,7 @@ import { ExperienceEditor } from './editor/ExperienceEditor';
 import { EducationEditor } from './editor/EducationEditor';
 import { CertificatesEditor } from './editor/CertificatesEditor';
 import { WorkExperienceEditor } from './editor/WorkExperienceEditor';
+import { CoverLetterEditor } from './editor/CoverLetterEditor';
 
 interface EditorSidebarProps {
 	resume: ResumeData;
@@ -202,6 +203,14 @@ export function EditorSidebar({
 		setResume((prev) => ({ ...prev, personalInfo: { ...prev.personalInfo, [name]: value } }));
 	};
 
+
+	const handleCoverLetterChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setResume((prev) => ({
+			...prev,
+			coverLetter: e.target.value,
+		}));
+	};
+
 	// Add these handler functions in the EditorSidebar component:
 	const handleWorkExperienceChange = (id: string, field: string, value: string | string[]) => {
 		setResume((prev) => ({
@@ -339,50 +348,50 @@ export function EditorSidebar({
 
 	const handleExportMarkdown = () => {
 		const { personalInfo, workExperience, experience, education, certificates } = resume;
-	  
+
 		let markdownContent = `# ${personalInfo.name}\n\n`;
 		if (personalInfo.email) markdownContent += `Email: ${personalInfo.email}\n`;
 		if (personalInfo.phone) markdownContent += `Phone: ${personalInfo.phone}\n`;
 		if (personalInfo.linkedin) markdownContent += `LinkedIn: ${personalInfo.linkedin}\n`;
 		if (personalInfo.github) markdownContent += `GitHub: ${personalInfo.github}\n`;
 		if (personalInfo.website) markdownContent += `Website: ${personalInfo.website}\n`;
-	  
+
 		markdownContent += `\n# Work Experience\n\n`;
 		workExperience.forEach(exp => {
-		  markdownContent += `## ${exp.position} at ${exp.company}\n`;
-		  if (exp.location) markdownContent += `*${exp.location}*\n`;
-		  markdownContent += `*${exp.dates}*\n\n`;
-		  exp.description.forEach(point => {
-			markdownContent += `- ${point}\n`;
-		  });
-		  markdownContent += `\n`;
+			markdownContent += `## ${exp.position} at ${exp.company}\n`;
+			if (exp.location) markdownContent += `*${exp.location}*\n`;
+			markdownContent += `*${exp.dates}*\n\n`;
+			exp.description.forEach(point => {
+				markdownContent += `- ${point}\n`;
+			});
+			markdownContent += `\n`;
 		});
-	  
+
 		markdownContent += `\n# Projects\n\n`;
 		experience.forEach(exp => {
-		  markdownContent += `## ${exp.role} ${exp.company}\n`;
-		  markdownContent += `*${exp.dates}*\n\n`;
-		  // Handle existing project descriptions (they're still strings)
-		  exp.description.split('\n').forEach(line => {
-			if (line.trim()) {
-			  markdownContent += `${line}\n`;
-			}
-		  });
-		  markdownContent += `\n`;
+			markdownContent += `## ${exp.role} ${exp.company}\n`;
+			markdownContent += `*${exp.dates}*\n\n`;
+			// Handle existing project descriptions (they're still strings)
+			exp.description.split('\n').forEach(line => {
+				if (line.trim()) {
+					markdownContent += `${line}\n`;
+				}
+			});
+			markdownContent += `\n`;
 		});
-	  
+
 		markdownContent += `# Education\n\n`;
 		education.forEach(edu => {
-		  markdownContent += `## ${edu.institution}\n`;
-		  markdownContent += `*${edu.dates}*\n`;
-		  markdownContent += `${edu.degree}\n\n`;
+			markdownContent += `## ${edu.institution}\n`;
+			markdownContent += `*${edu.dates}*\n`;
+			markdownContent += `${edu.degree}\n\n`;
 		});
-	  
+
 		markdownContent += `# Certificates\n\n`;
 		certificates.forEach(cert => {
-		  markdownContent += `*   ${cert.name}\n`;
+			markdownContent += `*   ${cert.name}\n`;
 		});
-	  
+
 		const blob = new Blob([markdownContent], { type: 'text/markdown' });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -392,7 +401,7 @@ export function EditorSidebar({
 		a.click();
 		document.body.removeChild(a);
 		URL.revokeObjectURL(url);
-	  };
+	};
 
 	return (
 		<Sidebar collapsible="icon" className="no-print" id="editor-sidebar">
@@ -448,6 +457,13 @@ export function EditorSidebar({
 						<PersonalInfoEditor
 							personalInfo={resume.personalInfo}
 							onChange={handlePersonalInfoChange}
+						/>
+					</SectionWrapper>
+
+					<SectionWrapper value="cover-letter" title="Cover Letter" icon={<FileText className="mr-2" />}>
+						<CoverLetterEditor
+							value={resume.coverLetter || ''}
+							onChange={handleCoverLetterChange}
 						/>
 					</SectionWrapper>
 

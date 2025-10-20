@@ -12,6 +12,7 @@ export interface Experience {
   company: string;
   dates: string;
   description: string;
+  descriptionLs?: string [];
 }
 
 export interface Education {
@@ -49,12 +50,14 @@ export type WorkExperience = {
 }
 
 export interface ResumeData {
+  coverLetter?: string;
   personalInfo: PersonalInfo;
   workExperience?: WorkExperience []; // actual work experience
   experience: Experience[];          // Projects only, not actual work experience
   education: Education[];
   certificates: Certificate[];
   skills: Skills[];
+  skillsReference?: Skills[];
   additionalinfo?: AdditionalKnowledgeInterests [];
   font: string;
   theme: 'dark' | 'light';

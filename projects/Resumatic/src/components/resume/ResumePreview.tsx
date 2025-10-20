@@ -64,10 +64,24 @@ export const ResumePreview = React.forwardRef<HTMLDivElement, { resume: ResumeDa
           </div>
         </header>
 
+        {/* Cover Letter */}
+        {resume.coverLetter && (
+          <section className="mb-6 w-3/4">
+            <p className={`whitespace-pre-line leading-relaxed ${grayShadeL8xx(themeName)} text-sm`}>
+              {resume.coverLetter}
+            </p>
+          </section>
+        )}
+
+
         {/* Summary */}
-        <section className="mb-5 w-3/4">
-          <p className={`leading-relaxed ${grayShadeL8xx(themeName)} text-sm`}>{resume.personalInfo.summary}</p>
-        </section>
+        {resume.personalInfo.summary && (
+          <section className="mb-5 w-[82%]">
+            <p className={`whitespace-pre-line leading-relaxed ${grayShadeL8xx(themeName)} text-sm`}>
+              {resume.personalInfo.summary}
+            </p>
+          </section>
+        )}
 
         <section className="mb-5">
           <h2 className="text-xl font-bold mb-2 font-headline">Technical Skills</h2>
@@ -91,20 +105,20 @@ export const ResumePreview = React.forwardRef<HTMLDivElement, { resume: ResumeDa
 
         {/* Work Experience */}
         <section className="mb-5">
-        {
-          resume.workExperience && resume.workExperience.length > 0 &&
-          (<div>
-            <h2 className="text-xl font-bold mb-2 font-headline">Work Experience</h2>
-            <hr className="border-t border-gray-400 my-1" />
-          </div>)
-        }
+          {
+            resume.workExperience && resume.workExperience.length > 0 &&
+            (<div>
+              <h2 className="text-xl font-bold mb-2 font-headline">Work Experience</h2>
+              <hr className="border-t border-gray-400 my-1" />
+            </div>)
+          }
           {resume.workExperience?.map((exp) => (
             <div key={exp.id} className="mb-3 print:break-inside-avoid-page">
-              <div className="flex justify-between items-baseline mb-1">
-                <p className={`text-lg font-headline ${grayShadeL7xx(themeName)}`}>
+              <div className="flex justify-between items-baseline">
+                <p className={`font-bold text-lg font-headline ${grayShadeL7xx(themeName)}`}>
                   {exp.position}
                 </p>
-                <p className={`font-medium ${grayShadeL6xx(themeName)}`}>{exp.dates}</p>
+                <p className={`font-lg ${grayShadeL6xx(themeName)}`}>{exp.dates}</p>
               </div>
               <p className={`text-lg font-headline ${grayShadeL7xx(themeName)}`}>
                 {exp.company}{exp.location ? `, ${exp.location}` : ''}
@@ -135,6 +149,14 @@ export const ResumePreview = React.forwardRef<HTMLDivElement, { resume: ResumeDa
               <p className={`mt-1 ${grayShadeL6xx(themeName)} whitespace-pre-wrap leading-relaxed w-3/4`}>
                 {proj.description}
               </p>
+                <ul className="mt-1 space-y-1 w-3/4">
+                {proj.descriptionLs?.map((point, index) => (
+                  <li key={index} className={`flex ${grayShadeL6xx(themeName)}`}>
+                    <span className="mr-2">•</span>
+                    <span className="leading-relaxed">{point}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </section>
@@ -158,11 +180,9 @@ export const ResumePreview = React.forwardRef<HTMLDivElement, { resume: ResumeDa
         <section className="mb-5 print:break-inside-avoid-page">
           {resume.certificates?.length ? <div><h2 className="text-xl font-bold mb-2 font-headline">Certificates</h2> <hr className="border-t border-gray-400 my-1" /> </div> : ""}
           {resume.certificates ? resume.certificates.map((cert) => (
-            <div>
               <div key={cert.id} className={`mb-1 ${grayShadeL7xx(themeName)}`}>
                 <p>{cert.name}</p>
               </div>
-            </div>
           )) : ""}
         </section>
 

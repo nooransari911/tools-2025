@@ -23,6 +23,9 @@ rsync -avz /home/ansarimn/.config/bat/ /home/ansarimn/Downloads/notes/system/bat
 rsync -avz /home/ansarimn/Downloads/essays/themes/papermod/layouts/ /home/ansarimn/Downloads/tools-2025/projects/SSG/ > /dev/null
 rsync -avz /home/ansarimn/Downloads/essays/themes/papermod/assets/css/ /home/ansarimn/Downloads/tools-2025/projects/SSG/ > /dev/null
 
+rsync -avz /home/ansarimn/Downloads/Site-V2/themes/hextra/layouts/ /home/ansarimn/Downloads/tools-2025/projects/SSG-v2/ > /dev/null
+rsync -avz /home/ansarimn/Downloads/Site-V2/themes/hextra/assets/css/ /home/ansarimn/Downloads/tools-2025/projects/SSG-v2/ > /dev/null
+
 
 
 # git add .gitignore

@@ -127,7 +127,7 @@ export const initialResumeData: ResumeData = {
   education: [
     {
       id: nanoid(),
-      institution: 'I2IT',
+      institution: 'nternational Institute of Information Technology (I2IT)',
       degree: 'Bachelor of Engineering, Electronics & Telecommunication',
       dates: '2026',
       gpa: '',
@@ -156,6 +156,6 @@ export const initialResumeData: ResumeData = {
     //   description: 'Explored the high-level design and specifications of real-world launch vehicles and commercial aircraft'
     // }
   ],
-  font: 'Inter',
+  font: 'Libre Baskerville',
   theme: 'dark'
 };
