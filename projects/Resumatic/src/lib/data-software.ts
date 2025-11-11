@@ -133,7 +133,8 @@ export const initialResumeData: ResumeData = {
     // summary: "Aspiring data scientist with a passion for extracting insights from complex datasets and building intelligent data processing systems.\n\nI have hands-on experience in developing predictive models, automating data workflows, and creating interactive visualizations using Python and SQL. My work demonstrates proficiency in statistical modeling, building AI-based processing platforms, and translating raw data into actionable business intelligence.\n\nEager to apply my analytical skills and technical expertise to solve real-world data challenges and drive data-driven decision making."
     // summary: 'Backend engineer with hands-on experience building high-performance, concurrent systems. Designed multi-threaded pipelines optimized for throughput and reliability. Proficient in Spring Boot for developing REST APIs, dependency injection, and application configuration.\n\nMy work is supported by a strong foundation in databases (SQL and NoSQL) and cloud platforms (AWS). Eager to apply my Java development skills to solve complex engineering challenges',
     // summary: 'Backend Engineer with a strong foundation in Java and SQL. Developed a multi-threaded data processing application that leverages concurrency to improve throughput. Leveraged the Spring Framework for dependency injection (IoC) and to manage application components.\n\nEager to apply my problem-solving abilities to build reliable and scalable backend systems.',
-    summary: 'Backend Developer with a strong foundation in Java. Developed a high-performance pipeline for verifying data integrity that achieves throughput of over 500 MB/sec.\n\nEager to apply my problem-solving abilities to build reliable and scalable backend systems.',
+    // Data science: summary: 'I build high-throughput data systems and leverage AI to solve complex problems.\n\n I have engineered a scalable, multi-threaded system that processes data at over 300 MB/sec. I\'ve also designed an AI-based platform to automate file processing.\n\nI am eager to apply my skills in data engineering and system design to tackle real-world challenges.'
+    summary: 'Backend Developer with a strong foundation in Java. Developed a high-performance pipeline for verifying data integrity that achieves throughput of over 300 MB/sec.\n\nEager to apply my problem-solving abilities to build reliable and scalable backend systems.',
   },
 
   //coverLetter: "I'm excited to apply for the backend internship at Hue Logics. My hands-on experience building REST APIs with modern backend frameworks (FastAPI, NestJS) and deep AWS expertise align well with your tech stack requirements. I also have practical experience with NoSQL databases (DynamoDB).\n\nWhile I have limited experience in Go and MongoDB, my projects demonstrate a strong foundation in modular, maintainable server-side development. I look forward to contributing to your team.",
@@ -188,6 +189,26 @@ export const initialResumeData: ResumeData = {
 
 
   skills: [
+    // {
+    //   id: nanoid(),
+    //   category: 'Domains',
+    //   technologies: 'Data Engineering, AI, System Design'
+    // },
+    {
+      id: nanoid(),
+      category: 'Domains',
+      technologies: 'Backend Development, Data Engineering'
+    },
+    // {
+    //   id: nanoid(),
+    //   category: 'Data Engineering',
+    //   technologies: 'High-Throughput Pipelines, Asynchronous Data Processing'
+    // },
+    // {
+    //   id: nanoid(),
+    //   category: 'Data Science & AI',
+    //   technologies: 'Statistical Modeling, AI Integration, Data Visualization'
+    // },
     {
       id: nanoid(),
       category: 'Languages',
@@ -208,11 +229,11 @@ export const initialResumeData: ResumeData = {
       category: 'Databases',
       technologies: 'Postgres, AWS DynamoDB'
     },
-    {
-      id: nanoid(),
-      category: 'Cloud',
-      technologies: 'AWS (S3, Lambda, API Gateway)'
-    },
+    // {
+    //   id: nanoid(),
+    //   category: 'Cloud',
+    //   technologies: 'AWS (S3, Lambda, API Gateway)'
+    // },
     // {
     //   id: nanoid(),
     //   category: 'Developer Tools',
@@ -242,10 +263,12 @@ export const initialResumeData: ResumeData = {
     //       role: "Predicting Compound Interest",
     //       company: '',
     //       dates: "Aug 2025",
-    //       description:
-    // `•  Engineered a linear model to approximate compound interest
-    // •  Tuned for upto 10% p.a. rate and upto 10 year timeframe
-    // •  Achieved accuracy upto 3% under target range`
+    //       description: '',
+    //       descriptionLs: [
+    // 'Engineered a linear model to approximate compound interest',
+    // 'Tuned for upto 10% p.a. rate and upto 10 year timeframe',
+    // 'Achieved accuracy upto 3% under target range',
+    //       ],
     //     },
     //     {
     //       id: nanoid(),
@@ -267,7 +290,7 @@ export const initialResumeData: ResumeData = {
       description: ``,
       descriptionLs: [
         "Developed a scalable system for large-scale data integrity verification",
-        "Achieved a processing throughput of over 500 MB/sec",
+        "Achieved a processing throughput of over 300 MB/sec",
         "Implemented a robust, multi-threaded concurrency model",
         "Implemented a decoupled Producer-Consumer pipeline to maximize throughput",
         "Used Spring IoC and Factory patterns to build a modular and maintainable system",
