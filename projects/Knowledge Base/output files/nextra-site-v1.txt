@@ -1,0 +1,2169 @@
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/postcss.config.mjs ========
+const config = {
+  plugins: {
+    '@tailwindcss/postcss': {}
+  }
+}
+
+export default config
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/QUICKSTART.md ========
+# Quick Start Guide
+
+Get your Nextra documentation site running in 60 seconds!
+
+## 🚀 Install & Run
+
+```bash
+# 1. Extract the zip file
+unzip nextra-site.zip
+cd nextra-site
+
+# 2. Install dependencies
+npm install
+
+# 3. Start development server
+npm run dev
+```
+
+That's it! Open http://localhost:3000
+
+## 📝 Your First Edit
+
+Edit `content/index.mdx` to customize the home page:
+
+```mdx
+# My Documentation
+
+Welcome to my awesome docs!
+```
+
+## 🎨 Customize Theme
+
+Edit `src/app/layout.tsx`:
+
+```typescript
+const navbar = (
+  <Navbar logo={<strong>My Brand</strong>} />
+)
+```
+
+## 📄 Add Pages
+
+Create `content/docs/guide.mdx`:
+
+```mdx
+# User Guide
+
+This is a new page!
+```
+
+Access at: http://localhost:3000/docs/guide
+
+## 🏗️ Build for Production
+
+```bash
+npm run build
+npm start
+```
+
+## 📚 Learn More
+
+- `README.md` - Project overview
+- `SETUP.md` - Detailed setup
+- `ARCHITECTURE.md` - Technical deep dive
+
+## ✅ Verify Installation
+
+After `npm run dev`, check:
+- ✅ Home page loads
+- ✅ Sidebar shows navigation
+- ✅ Blue styled box appears
+- ✅ Getting Started page works
+
+## 🆘 Issues?
+
+```bash
+# Port 3000 in use?
+npm run dev -- -p 3001
+
+# Dependencies issues?
+rm -rf node_modules package-lock.json
+npm install
+```
+
+Happy documenting! 🎉
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/Nextra types.md ========
+# Understanding Nextra's Real Data Structure
+
+## Why Previous Solutions Were Wrong
+
+I was incorrectly assuming `PageMapItem` was a simple object with `name`, `route`, and `children`. In reality, it's a **union type** of three different structures:
+
+```typescript
+type PageMapItem = Folder | MdxFile | MetaJsonFile
+```
+
+## The Actual Structure
+
+### 1. Folder
+```typescript
+{
+  name: string,       // "java", "OS", etc.
+  route: string,      // "/java", "/OS", etc.
+  children: PageMapItem[]  // Nested items
+}
+```
+
+### 2. MdxFile  
+```typescript
+{
+  name: string,       // "getting-started"
+  route: string,      // "/java/getting-started"
+  frontMatter?: {     // Optional metadata from MDX
+    title?: string,
+    description?: string,
+    // ... other metadata
+  }
+}
+```
+
+### 3. MetaJsonFile
+```typescript
+{
+  data: {
+    [fileName: string]: Meta  // Configuration from _meta.json
+  }
+}
+// Where Meta can be:
+// - string (just a title)
+// - object (with display, type, href, etc.)
+```
+
+## Example PageMap Structure
+
+When Nextra processes your content, it creates something like:
+
+```javascript
+pageMap = [
+  {
+    // MetaJsonFile from root _meta.json
+    data: {
+      "index": { title: "Home", display: "hidden" },
+      "java": { title: "Java", type: "page" },
+      "OS": { title: "Operating Systems", type: "page" }
+    }
+  },
+  {
+    // MdxFile for index
+    name: "index",
+    route: "/",
+    frontMatter: { title: "Welcome" }
+  },
+  {
+    // Folder for Java section
+    name: "java",
+    route: "/java",
+    children: [
+      {
+        // MetaJsonFile from java/_meta.json
+        data: {
+          "index": { display: "hidden" },
+          "getting-started": "Getting Started",
+          "basics": "Java Basics"
+        }
+      },
+      {
+        // MdxFile
+        name: "index",
+        route: "/java",
+        frontMatter: { title: "Java Documentation" }
+      },
+      {
+        // MdxFile
+        name: "getting-started",
+        route: "/java/getting-started"
+      },
+      {
+        // Nested Folder
+        name: "basics",
+        route: "/java/basics",
+        children: [...]
+      }
+    ]
+  },
+  {
+    // Folder for OS section
+    name: "OS",
+    route: "/OS",
+    children: [
+      // Similar structure
+    ]
+  }
+]
+```
+
+## The Correct Approach to Sidebar Scoping
+
+### Step 1: Identify Current Section
+```typescript
+// Use type guards to safely check item types
+function isFolder(item: PageMapItem): item is Folder {
+  return 'children' in item && Array.isArray(item.children)
+}
+
+// Find the current section folder
+const sectionFolder = pageMap.find(item => {
+  if (isFolder(item)) {
+    return item.route === `/${currentSection}`
+  }
+  return false
+}) as Folder | undefined
+```
+
+### Step 2: Extract Section's Children
+```typescript
+// Get only the children of the current section
+const scopedPageMap = sectionFolder ? sectionFolder.children : pageMap
+```
+
+### Step 3: Handle MetaJsonFiles
+MetaJsonFiles don't render in the navigation but affect how other items display:
+- They can set `display: "hidden"` to hide items
+- They can set custom titles
+- They define the order of items
+
+## Key Insights
+
+1. **PageMap is heterogeneous**: Not all items have the same shape
+2. **Type guards are essential**: Must check item type before accessing properties
+3. **MetaJsonFiles are configuration**: They don't render but affect rendering
+4. **Folders contain the hierarchy**: Only Folders have children
+5. **Routes are the key**: Use routes to match sections, not just names
+
+## Correct Implementation Pattern
+
+```typescript
+// 1. Always use type guards
+if (isFolder(item)) {
+  // Safe to access item.children
+}
+
+// 2. Filter to navigable items
+const navigableItems = pageMap.filter(
+  (item): item is Folder | MdxFile => 
+    isFolder(item) || isMdxFile(item)
+)
+
+// 3. Scope by finding and extracting folder children
+const scopedContent = folder.children
+
+// 4. Process meta configuration separately
+const meta = pageMap.find(isMetaJsonFile)
+applyMetaConfiguration(items, meta)
+```
+
+## Common Mistakes to Avoid
+
+1. ❌ Assuming all PageMapItems have `name` and `route`
+2. ❌ Not checking types before accessing properties  
+3. ❌ Treating MetaJsonFiles as navigable items
+4. ❌ Hardcoding section names instead of dynamic detection
+5. ❌ Ignoring the nested structure of Folders
+
+## Testing Your Implementation
+
+```typescript
+// Debug helper to understand your actual pageMap
+function debugPageMap(pageMap: PageMapItem[]) {
+  pageMap.forEach(item => {
+    if (isFolder(item)) {
+      console.log('Folder:', item.name, '→', item.route)
+      console.log('  Children:', item.children.length)
+    } else if (isMdxFile(item)) {
+      console.log('MDX:', item.name, '→', item.route)
+    } else if (isMetaJsonFile(item)) {
+      console.log('Meta:', Object.keys(item.data))
+    }
+  })
+}
+```
+
+Use this to understand your actual data structure before implementing the scoping logic.
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/theme.config.tsx ========
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/.vscode/settings.json ========
+{
+  "editor.insertSpaces": false,
+  "editor.tabSize": 4,
+  "editor.detectIndentation": false
+}
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/tsconfig.json ========
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/**/*"
+  ],
+  "exclude": ["node_modules"]
+}
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/README.md ========
+# Nextra Documentation Site
+
+A modern documentation site built with Next.js, TypeScript, Tailwind CSS V4, and Nextra.
+
+## 🚀 Features
+
+- **Next.js 15** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS V4** with PostCSS
+- **Nextra 4** documentation theme
+- **Pagefind** for full-text search
+- **MDX** support for rich content
+- **@ alias** for clean imports
+
+## 📁 Project Structure
+
+```
+nextra-site/
+├── content/                    # Documentation content (MDX files)
+│   ├── index.mdx              # Home page
+│   └── getting-started.mdx    # Example page
+├── src/
+│   ├── app/
+│   │   ├── [[...mdxPath]]/    # Catch-all route for MDX pages
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx         # Root layout with Nextra components
+│   │   └── globals.css        # Tailwind CSS import
+│   └── mdx-components.tsx     # MDX component customization
+├── next.config.mjs            # Next.js + Nextra configuration
+├── postcss.config.mjs         # PostCSS configuration for Tailwind
+├── tsconfig.json              # TypeScript configuration with @ alias
+└── package.json               # Dependencies and scripts
+```
+
+## 🛠️ Installation
+
+```bash
+npm install
+```
+
+## 🏃 Development
+
+Start the development server with Turbopack:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🏗️ Building for Production
+
+Build the site and generate search index:
+
+```bash
+npm run build
+```
+
+This runs two steps:
+1. `next build` - Builds the Next.js application
+2. `postbuild` - Runs Pagefind to index content for search
+
+## 🚢 Production Server
+
+Start the production server:
+
+```bash
+npm start
+```
+
+## 📝 Adding Content
+
+1. Create `.mdx` files in the `content/` directory
+2. They automatically become available at their path:
+   - `content/docs/api.mdx` → `/docs/api`
+   - `content/guide/setup.mdx` → `/guide/setup`
+
+### Example MDX file:
+
+```mdx
+# Page Title
+
+Your content here with **markdown** formatting.
+
+You can use Tailwind classes:
+
+<div className="p-4 bg-blue-500 text-white rounded">
+  Styled content
+</div>
+```
+
+## ⚙️ Configuration
+
+### Nextra Options
+Edit `next.config.mjs` to configure Nextra:
+- Search settings
+- Content directory path
+- Theme options
+
+### Tailwind CSS
+Tailwind V4 uses `@import "tailwindcss"` in `src/app/globals.css`.
+No separate `tailwind.config.js` needed!
+
+### TypeScript
+The `@` alias points to `src/` directory for clean imports:
+```typescript
+import { Component } from '@/components/Component'
+```
+
+## 🔍 Search
+
+Search is powered by Pagefind and enabled by default:
+- Indexes all HTML content after build
+- Client-side search (no server required)
+- Lightning fast search results
+
+To disable search, edit `next.config.mjs`:
+```javascript
+const withNextra = nextra({
+  search: false
+})
+```
+
+## 📚 Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Nextra Documentation](https://nextra.site)
+- [Tailwind CSS V4 Docs](https://tailwindcss.com/docs)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs)
+
+## 📄 License
+
+MIT
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/src/lib/nextra-nav.ts ========
+// File: src/lib/nextra-nav.ts
+// ================================================
+
+import type {
+	PageMapItem,
+	Folder,
+	MdxFile,
+	MetaJsonFile
+} from 'nextra'
+
+// Essential type guards for PageMapItem union type
+export function isFolder(item: PageMapItem): item is Folder {
+	return 'children' in item && Array.isArray(item.children)
+}
+
+export function isMdxFile(item: PageMapItem): item is MdxFile {
+	return 'route' in item && !('children' in item) && !('data' in item)
+}
+
+export function isMetaJsonFile(item: PageMapItem): item is MetaJsonFile {
+	return 'data' in item
+}
+
+// Get the current major section from URL path
+export function getCurrentSectionFolder(
+	pathname: string,
+	pageMap: PageMapItem[]
+): Folder | null {
+	// Extract first path segment (e.g., "java" from "/java/getting-started")
+	const segments = pathname.split('/').filter(Boolean)
+	if (segments.length === 0) return null
+
+	const firstSegment = segments[0]
+
+	// Find the matching folder in pageMap
+	const folder = pageMap.find((item): item is Folder => {
+		if (!isFolder(item)) return false
+		return item.name === firstSegment ||
+			item.route === `/${firstSegment}` ||
+			item.route === firstSegment
+	})
+
+	return folder || null
+}
+
+// Get scoped sidebar items for current section
+export function getScopedSidebarItems(
+	pathname: string,
+	pageMap: PageMapItem[]
+): PageMapItem[] {
+	const sectionFolder = getCurrentSectionFolder(pathname, pageMap)
+
+	// If we're in a section, return only its children
+	// Otherwise return the full pageMap (for homepage)
+	return sectionFolder ? sectionFolder.children : pageMap
+}
+
+// Get items that should appear in navbar
+export function getNavbarItems(pageMap: PageMapItem[]): (Folder | MdxFile)[] {
+	return pageMap.filter((item): item is Folder | MdxFile => {
+		// Only include Folders and MdxFiles
+		if (!isFolder(item) && !isMdxFile(item)) return false
+
+		// Exclude index page
+		if (item.name === 'index') return false
+
+		// Include everything else with a route
+		return Boolean(item.route)
+	})
+}
+
+// Extract title from item (considering meta configuration)
+export function getItemTitle(item: Folder | MdxFile): string {
+	// Check frontMatter for MDX files
+	if (isMdxFile(item) && item.frontMatter?.title) {
+		return item.frontMatter.title
+	}
+
+	// Format name as fallback
+	return formatName(item.name)
+}
+
+function formatName(name: string): string {
+	// Special cases
+	const specialCases: Record<string, string> = {
+		'api': 'API',
+		'faq': 'FAQ'
+	}
+
+	if (specialCases[name]) return specialCases[name]
+
+	// Convert kebab-case to Title Case
+	return name
+		.split(/[-_]/)
+		.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ')
+}
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/src/mdx-components.tsx ========
+// mdx-components.tsx
+
+import { useMDXComponents as getDocsMDXComponents } from 'nextra-theme-docs'
+
+// 1. Infer the correct components type by looking at what the original hook RETURNS.
+type MDXComponents = ReturnType<typeof getDocsMDXComponents>
+
+// 2. Define our custom hook. It receives the components passed by the MDX renderer.
+export function useMDXComponents(components?: MDXComponents): MDXComponents {
+  // 3. Get the default components from Nextra. It takes NO arguments.
+  const defaultComponents = getDocsMDXComponents()
+
+  // 4. Return the merged components. The ones passed in (and any custom ones)
+  //    will override the defaults from Nextra.
+  return {
+    ...defaultComponents,
+    ...components
+    // You could add your own global overrides here too
+    // Example: h1: (props) => <h1 className="text-3xl" {...props} />,
+  }
+}
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/src/app/[[...mdxPath]]/mdx-wrapper.tsx ========
+// src/components/mdx-layout.tsx
+
+'use client'
+
+import type { ReactNode } from 'react'
+import { useMDXComponents } from '@/mdx-components'
+// We will now infer this type based on the data we actually receive
+// import type PageOpts from 'nextra' // DELETE THIS LINE
+
+// This is the robust way to get the type of the `pageOpts` object
+import type { importPage } from 'nextra/pages'
+type PageOpts = Omit<Awaited<ReturnType<typeof importPage>>, 'default'>
+
+type MdxLayoutProps = {
+  children: ReactNode
+  // The type is now guaranteed to match what page.tsx provides
+  pageOpts: PageOpts
+}
+
+export function MdxLayout({ children, pageOpts }: MdxLayoutProps) {
+  const { wrapper: Wrapper } = useMDXComponents()
+
+  // Wrapper expects the full pageOpts object
+  return <Wrapper {...pageOpts}>{children}</Wrapper>
+}
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/src/app/[[...mdxPath]]/page.tsx ========
+// // src/app/[[...mdxPath]]/page.tsx
+
+// import { generateStaticParamsFor, importPage } from 'nextra/pages'
+// import { MdxLayout } from '@/app/[[...mdxPath]]/mdx-wrapper'
+// import type { Metadata } from 'next'
+
+// // This ONLY changes how params are handled, not your routing/scoping logic
+// interface PageProps {
+// 	params: Promise<{ mdxPath?: string[] }>
+// }
+
+
+
+// export const generateStaticParams = generateStaticParamsFor('mdxPath')
+
+// // FIX: Destructure `{ params }` directly in the function signature.
+// // This is the correct pattern that avoids the "await params" error.
+// export async function generateMetadata(props: PageProps): Promise<Metadata> {
+// 	const params = await props.params;  // ← Await params first
+// 	const mdxPath = params.mdxPath || [];
+
+// 	const { metadata } = await importPage(mdxPath)
+// 	// const { metadata } = await importPage(params.mdxPath)
+// 	return metadata
+// }
+
+// // FIX: Also destructure `{ params }` directly here.
+// export default async function Page({ params }: PageProps) {
+// 	const { mdxPath } = await params  // ← Await params first
+// 	const { default: MDXContent, ...pageOpts } = await importPage(mdxPath)
+// 	// const { default: MDXContent, ...pageOpts } = await importPage(params.mdxPath)
+
+// 	return (
+// 		<MdxLayout pageOpts={pageOpts}>
+// 			<MDXContent />
+// 		</MdxLayout>
+// 	)
+// }
+
+
+
+
+// src/app/[[...mdxPath]]/page.tsx
+
+import { generateStaticParamsFor, importPage } from 'nextra/pages'
+import { MdxLayout } from '@/app/[[...mdxPath]]/mdx-wrapper'
+import type { Metadata } from 'next'
+
+/**
+ * NOTE: keep PageProps matching your Next version.
+ * If your Next passes `params` as a Promise (Next 15+), use that.
+ * If it passes as plain object, adapt accordingly.
+ */
+interface PageProps {
+  params: Promise<{ mdxPath?: string[] }>
+}
+
+export const generateStaticParams = generateStaticParamsFor('mdxPath')
+
+// TEMP: avoid prerender crash while debugging (remove when fixed)
+export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  try {
+    const { mdxPath } = await params
+    const path = mdxPath ?? []
+    const { metadata } = await importPage(path)
+    return metadata
+  } catch (err) {
+    // Log detailed context for build logs
+    console.error('[generateMetadata] failed', {
+      message: (err as Error).message,
+      stack: (err as Error).stack,
+    })
+    throw err
+  }
+}
+
+export default async function Page({ params }: PageProps) {
+  const { mdxPath } = await params
+  const path = mdxPath ?? []
+
+  // 1) Import page with defensive error handling
+  let imported: Awaited<ReturnType<typeof importPage>> | null = null
+  try {
+    imported = await importPage(path)
+  } catch (err) {
+    console.error('[page] importPage FAILED', {
+      mdxPath: path,
+      message: (err as Error).message,
+      stack: (err as Error).stack,
+    })
+    // Throw a clear error so Amplify log contains context
+    throw new Error(`importPage failed for path="${path.join('/')}" - ${String((err as Error).message)}`)
+  }
+
+  // 2) Extract MDX content & pageOpts safely
+  const { default: MDXContent, ...pageOpts } = imported
+
+  // 3) Log pageOpts keys & metadata minimal preview to help root-cause
+  try {
+    const preview = {
+      keys: Object.keys(pageOpts || {}),
+      // avoid printing huge objects — show common fields if present
+      metadata: (pageOpts as any)?.metadata ? (pageOpts as any).metadata : null,
+      frontmatter: (pageOpts as any)?.frontmatter ? (pageOpts as any).frontmatter : null,
+    }
+    console.log('[page] rendering', { mdxPath: path, preview })
+  } catch (err) {
+    console.warn('[page] preview logging failed', { err: (err as Error).message })
+  }
+
+  // 4) Render wrapped MDX with try/catch so we get exact stack + context when it fails
+  try {
+    return (
+      <MdxLayout pageOpts={pageOpts as any}>
+        <MDXContent />
+      </MdxLayout>
+    )
+  } catch (err) {
+    // Very important: print the full context to build log
+    console.error('[page] MDX render FAILED', {
+      mdxPath: path,
+      pageOptsKeys: Object.keys(pageOpts || {}),
+      message: (err as Error).message,
+      stack: (err as Error).stack,
+    })
+    // Re-throw with context for Amplify to show
+    throw new Error(`MDX render error for path="${path.join('/')}" - ${(err as Error).message}`)
+  }
+}
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/src/app/components/custom-navbar.tsx ========
+// app/_components/custom-navbar.jsx
+'use client'
+import { usePathname } from 'next/navigation'
+import { Navbar } from 'nextra-theme-docs'
+
+export function CustomNavbar(props: any) {
+  const pathname = usePathname()
+  
+  // Wrap the default Navbar and apply custom styling
+  return (
+    <div className="custom-navbar-wrapper">
+      <Navbar {...props} />
+      <style jsx>{`
+        .custom-navbar-wrapper :global(a[href="${pathname}"]) {
+          color: #dc2626;
+          border-bottom: 2px solid #dc2626;
+        }
+      `}</style>
+    </div>
+  )
+}
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/src/app/components/ScopedLayout.tsx ========
+// File: src/components/ScopedLayout.tsx
+// ================================================
+
+'use client'
+
+import { Layout, Navbar } from 'nextra-theme-docs'
+import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { useMemo } from 'react'
+import type { PageMapItem } from 'nextra'
+// Import the utilities (adjust path as needed)
+import {
+	getCurrentSectionFolder,
+	getScopedSidebarItems,
+	getNavbarItems,
+	getItemTitle
+} from '@/lib/nextra-nav'
+import Image from 'next/image'
+
+interface ScopedLayoutProps {
+	children: React.ReactNode
+	pageMap: PageMapItem[]
+}
+
+export function ScopedLayout({
+	children,
+	pageMap
+}: ScopedLayoutProps) {
+	const pathname = usePathname();
+
+	const router = useRouter();
+
+	// Get current section for highlighting
+	const currentSection = useMemo(() =>
+		getCurrentSectionFolder(pathname, pageMap),
+		[pathname, pageMap]
+	)
+
+	// Get scoped sidebar items (only current section's children)
+	const sidebarItems = useMemo(() =>
+		getScopedSidebarItems(pathname, pageMap),
+		[pathname, pageMap]
+	)
+
+	// Get navbar sections
+	const navbarItems = useMemo(() =>
+		getNavbarItems(pageMap),
+		[pageMap]
+	)
+
+	// Build navbar with section highlighting
+	const navbar = (
+		<div style={{ padding: '0 36px' }}>
+
+			<Navbar
+				logo={
+					<div
+						onClick={() => router.push('/')}
+						style={{
+							fontWeight: 'bold',
+							fontSize: '1.5rem',
+							display: 'flex',
+							alignItems: 'center',
+							gap: '0.5rem',
+						}}
+					>
+						<Image
+							src="/assets/logo-dark.svg"
+							alt="Logo"
+							width={40}
+							height={40}
+						/>
+
+						{/* <span>📚</span> */}
+						<span>Site V2</span>
+					</div>
+				}
+			>
+				<nav style={{ display: 'flex', gap: '2.5rem' }}>
+					{navbarItems.map(item => {
+						const title = getItemTitle(item)
+						const isActive = currentSection?.name === item.name
+
+						return (
+							<Link
+								key={item.route}
+								href={item.route}
+								style={{
+									fontWeight: isActive ? '600' : '400',
+									color: isActive ? '#ff0000' : 'inherit',
+									borderBottom: isActive ? '2px solid #ff0000' : 'none',
+									paddingBottom: '2px',
+									transition: 'all 0.2s'
+								}}
+							>
+								{title}
+							</Link>
+						)
+					})}
+				</nav>
+			</Navbar>
+		</div>
+	)
+
+	// Configure sidebar behavior
+	const sidebarConfig = {
+		// Expand content when in section, collapse on homepage
+		defaultMenuCollapseLevel: currentSection ? 2 : 1,
+		toggleButton: true,
+	}
+
+	return (
+		<Layout
+			pageMap={sidebarItems}  // ← THE KEY: Scoped items, not full pageMap
+			navbar={navbar}
+			sidebar={sidebarConfig}
+			// footer={
+			//     <footer style={{
+			//         textAlign: 'center',
+			//         padding: '2rem 0',
+			//         color: '#666'
+			//     }}>
+			//         © {new Date().getFullYear()} Documentation
+			//     </footer>
+			// }
+			toc={{
+				backToTop: "Scroll to Top",
+				float: true,
+				title: 'On This Page'
+			}}
+			navigation={true}
+		>
+			{children}
+		</Layout>
+	)
+}
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/src/app/main-layout.tsx ========
+import { Footer, Layout, Navbar } from 'nextra-theme-docs'
+import { Banner, Head } from 'nextra/components'
+import { getPageMap } from 'nextra/page-map'
+import 'nextra-theme-docs/style.css'
+import './globals.css'
+import "@/app/styles/custom.css"
+
+export const metadata = {
+  title: 'Nextra Documentation',
+  description: 'A Next.js + Nextra documentation site'
+}
+
+const banner = (
+  <Banner storageKey="nextra-banner">
+    Welcome to our documentation site! 🎉
+  </Banner>
+)
+
+const navbar = (
+  <Navbar
+    logo={<strong>Nextra Docs</strong>}
+  />
+);
+
+const footer = (
+  <Footer>
+    MIT {new Date().getFullYear()} © Nextra Documentation.
+  </Footer>
+)
+
+export default async function RootLayout({
+  children
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <Head>
+        {/* Additional head tags can be added here */}
+      </Head>
+      <body>
+        <Layout
+          // banner={banner}
+          navbar={navbar}
+          pageMap={await getPageMap("/")}
+          sidebar={{
+            defaultMenuCollapseLevel: 1,  // Collapses at major section level
+            autoCollapse: true            // CRITICAL: This roots sidebar at current section
+          }}
+          docsRepositoryBase="https://github.com/yourusername/nextra-site"
+        // footer={footer}
+        >
+          {children}
+        </Layout>
+      </body>
+    </html>
+  )
+}
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/src/app/layout.tsx ========
+// File: src/app/layout.tsx
+// ================================================
+
+import { getPageMap } from 'nextra/page-map'
+import { ScopedLayout } from '@/app/components/ScopedLayout'
+import 'nextra-theme-docs/style.css'
+import './globals.css'
+import "@/app/styles/custom.css"
+
+
+export const metadata = {
+  title: 'Site V2',
+  description: 'Technical Documentation Site',
+}
+
+export default async function RootLayout({
+  children
+}: {
+  children: React.ReactNode
+}) {
+  // Get the complete pageMap
+  const { getPageMap } = await import('nextra/page-map')
+  const pageMap = await getPageMap()
+  
+  return (
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <body>
+        <ScopedLayout pageMap={pageMap}>
+          {children}
+        </ScopedLayout>
+      </body>
+    </html>
+  )
+}
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/Nextra Extension.md ========
+// ================================================
+// ALL-IN-ONE SIDEBAR SCOPING SOLUTION FOR NEXTRA 4
+// Copy this entire file and split into your project
+// ================================================
+
+/**
+ * WHAT THIS DOES:
+ * - Scopes sidebar to show only current section's content
+ * - Shows all major sections in navbar
+ * - Works with Nextra's actual PageMapItem types
+ * - No hardcoding - dynamically detects sections
+ * 
+ * HOW TO USE:
+ * 1. Copy the type guards and utilities to src/lib/nextra-nav.ts
+ * 2. Copy ScopedLayout to src/components/ScopedLayout.tsx
+ * 3. Update your src/app/layout.tsx as shown below
+ * 4. Ensure your _meta.json files are configured correctly
+ */
+
+// ================================================
+// PART 1: TYPE GUARDS AND UTILITIES
+// File: src/lib/nextra-nav.ts
+// ================================================
+
+import type { 
+  PageMapItem, 
+  Folder, 
+  MdxFile, 
+  MetaJsonFile 
+} from 'nextra'
+
+// Essential type guards for PageMapItem union type
+export function isFolder(item: PageMapItem): item is Folder {
+  return 'children' in item && Array.isArray(item.children)
+}
+
+export function isMdxFile(item: PageMapItem): item is MdxFile {
+  return 'route' in item && !('children' in item) && !('data' in item)
+}
+
+export function isMetaJsonFile(item: PageMapItem): item is MetaJsonFile {
+  return 'data' in item
+}
+
+// Get the current major section from URL path
+export function getCurrentSectionFolder(
+  pathname: string, 
+  pageMap: PageMapItem[]
+): Folder | null {
+  // Extract first path segment (e.g., "java" from "/java/getting-started")
+  const segments = pathname.split('/').filter(Boolean)
+  if (segments.length === 0) return null
+  
+  const firstSegment = segments[0]
+  
+  // Find the matching folder in pageMap
+  const folder = pageMap.find((item): item is Folder => {
+    if (!isFolder(item)) return false
+    return item.name === firstSegment || 
+           item.route === `/${firstSegment}` ||
+           item.route === firstSegment
+  })
+  
+  return folder || null
+}
+
+// Get scoped sidebar items for current section
+export function getScopedSidebarItems(
+  pathname: string,
+  pageMap: PageMapItem[]
+): PageMapItem[] {
+  const sectionFolder = getCurrentSectionFolder(pathname, pageMap)
+  
+  // If we're in a section, return only its children
+  // Otherwise return the full pageMap (for homepage)
+  return sectionFolder ? sectionFolder.children : pageMap
+}
+
+// Get items that should appear in navbar
+export function getNavbarItems(pageMap: PageMapItem[]): (Folder | MdxFile)[] {
+  return pageMap.filter((item): item is Folder | MdxFile => {
+    // Only include Folders and MdxFiles
+    if (!isFolder(item) && !isMdxFile(item)) return false
+    
+    // Exclude index page
+    if (item.name === 'index') return false
+    
+    // Include everything else with a route
+    return Boolean(item.route)
+  })
+}
+
+// Extract title from item (considering meta configuration)
+export function getItemTitle(item: Folder | MdxFile): string {
+  // Check frontMatter for MDX files
+  if (isMdxFile(item) && item.frontMatter?.title) {
+    return item.frontMatter.title
+  }
+  
+  // Format name as fallback
+  return formatName(item.name)
+}
+
+function formatName(name: string): string {
+  // Special cases
+  const specialCases: Record<string, string> = {
+    'OS': 'Operating Systems',
+    'api': 'API',
+    'faq': 'FAQ'
+  }
+  
+  if (specialCases[name]) return specialCases[name]
+  
+  // Convert kebab-case to Title Case
+  return name
+    .split(/[-_]/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
+// ================================================
+// PART 2: SCOPED LAYOUT COMPONENT
+// File: src/components/ScopedLayout.tsx
+// ================================================
+
+'use client'
+
+import { Layout, Navbar } from 'nextra-theme-docs'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { useMemo } from 'react'
+import type { PageMapItem } from 'nextra'
+// Import the utilities (adjust path as needed)
+// import {
+//   getCurrentSectionFolder,
+//   getScopedSidebarItems,
+//   getNavbarItems,
+//   getItemTitle
+// } from '@/lib/nextra-nav'
+
+interface ScopedLayoutProps {
+  children: React.ReactNode
+  pageMap: PageMapItem[]
+}
+
+export function ScopedLayout({ 
+  children, 
+  pageMap 
+}: ScopedLayoutProps) {
+  const pathname = usePathname()
+  
+  // Get current section for highlighting
+  const currentSection = useMemo(() => 
+    getCurrentSectionFolder(pathname, pageMap),
+    [pathname, pageMap]
+  )
+  
+  // Get scoped sidebar items (only current section's children)
+  const sidebarItems = useMemo(() => 
+    getScopedSidebarItems(pathname, pageMap),
+    [pathname, pageMap]
+  )
+  
+  // Get navbar sections
+  const navbarItems = useMemo(() => 
+    getNavbarItems(pageMap),
+    [pageMap]
+  )
+  
+  // Build navbar with section highlighting
+  const navbar = (
+    <Navbar 
+      logo={
+        <Link 
+          href="/" 
+          style={{ 
+            fontWeight: 'bold', 
+            fontSize: '1.1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          <span>📚</span>
+          <span>Documentation</span>
+        </Link>
+      }
+    >
+      <nav style={{ display: 'flex', gap: '1.5rem' }}>
+        {navbarItems.map(item => {
+          const title = getItemTitle(item)
+          const isActive = currentSection?.name === item.name
+          
+          return (
+            <Link
+              key={item.route}
+              href={item.route}
+              style={{
+                fontWeight: isActive ? '600' : '400',
+                color: isActive ? '#0070f3' : 'inherit',
+                borderBottom: isActive ? '2px solid #0070f3' : 'none',
+                paddingBottom: '2px',
+                transition: 'all 0.2s'
+              }}
+            >
+              {title}
+            </Link>
+          )
+        })}
+      </nav>
+    </Navbar>
+  )
+  
+  // Configure sidebar behavior
+  const sidebarConfig = {
+    // Expand content when in section, collapse on homepage
+    defaultMenuCollapseLevel: currentSection ? 2 : 1,
+    toggleButton: true,
+  }
+  
+  return (
+    <Layout
+      pageMap={sidebarItems}  // ← THE KEY: Scoped items, not full pageMap
+      navbar={navbar}
+      sidebar={sidebarConfig}
+      footer={
+        <footer style={{ 
+          textAlign: 'center', 
+          padding: '2rem 0',
+          color: '#666'
+        }}>
+          © {new Date().getFullYear()} Documentation
+        </footer>
+      }
+      toc={{
+        float: true,
+        title: 'On This Page'
+      }}
+      breadcrumb={true}
+      navigation={true}
+    >
+      {children}
+    </Layout>
+  )
+}
+
+// ================================================
+// PART 3: ROOT LAYOUT
+// File: src/app/layout.tsx
+// ================================================
+
+// import { getPageMap } from 'nextra/page-map'
+// import { ScopedLayout } from '@/components/ScopedLayout'
+// import 'nextra-theme-docs/style.css'
+
+export const metadata = {
+  title: 'Documentation',
+  description: 'Technical Documentation Site',
+}
+
+export default async function RootLayout({
+  children
+}: {
+  children: React.ReactNode
+}) {
+  // Get the complete pageMap
+  const { getPageMap } = await import('nextra/page-map')
+  const pageMap = await getPageMap()
+  
+  return (
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <body>
+        <ScopedLayout pageMap={pageMap}>
+          {children}
+        </ScopedLayout>
+      </body>
+    </html>
+  )
+}
+
+// ================================================
+// PART 4: META CONFIGURATION
+// File: content/_meta.json
+// ================================================
+
+const rootMetaExample = {
+  "index": {
+    "title": "Home",
+    "display": "hidden"  // Hide from navbar
+  },
+  "java": {
+    "title": "Java Documentation",
+    "type": "page"  // Show in navbar
+  },
+  "OS": {
+    "title": "Operating Systems",
+    "type": "page"  // Show in navbar
+  },
+  "python": {
+    "title": "Python",
+    "type": "page"  // Show in navbar
+  }
+}
+
+// ================================================
+// PART 5: TESTING & DEBUGGING
+// ================================================
+
+// Debug helper to understand your pageMap structure
+export function debugPageMap(pageMap: PageMapItem[]): void {
+  console.group('🗺️ PageMap Structure')
+  
+  pageMap.forEach((item, index) => {
+    if (isFolder(item)) {
+      console.log(`📁 [${index}] Folder: ${item.name} → ${item.route}`)
+      console.log(`   └─ Children: ${item.children.length}`)
+    } else if (isMdxFile(item)) {
+      console.log(`📄 [${index}] MDX: ${item.name} → ${item.route}`)
+    } else if (isMetaJsonFile(item)) {
+      console.log(`⚙️ [${index}] Meta:`, Object.keys(item.data))
+    }
+  })
+  
+  console.groupEnd()
+}
+
+// ================================================
+// USAGE & EXPECTED BEHAVIOR
+// ================================================
+
+/**
+ * EXPECTED BEHAVIOR:
+ * 
+ * 1. Homepage ("/"):
+ *    - Sidebar: Shows all major sections (Java, OS, Python)
+ *    - Navbar: Shows all major sections
+ *    - No section is highlighted
+ * 
+ * 2. Java Section ("/java/getting-started"):
+ *    - Sidebar: Shows ONLY Java subsections
+ *    - Navbar: Highlights "Java"
+ *    - Can navigate within Java without seeing OS content
+ * 
+ * 3. OS Section ("/OS/memory"):
+ *    - Sidebar: Shows ONLY OS subsections
+ *    - Navbar: Highlights "Operating Systems"
+ *    - Java content is not visible in sidebar
+ * 
+ * KEY BENEFITS:
+ * - Reduced cognitive load
+ * - Cleaner navigation
+ * - Scales to any number of sections
+ * - No hardcoding required
+ * 
+ * TROUBLESHOOTING:
+ * 
+ * If sidebar shows everything:
+ * - Check that your section folders exist in pageMap
+ * - Verify folder names match URL segments
+ * - Use debugPageMap() to inspect structure
+ * 
+ * If navbar is empty:
+ * - Ensure _meta.json has type: "page" for sections
+ * - Check that sections have routes
+ * 
+ * If TypeScript errors:
+ * - Install @types/nextra if needed
+ * - Ensure you're using proper type guards
+ */
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/SETUP.md ========
+# Setup Guide
+
+Quick setup guide for the Nextra documentation site.
+
+## Prerequisites
+
+- Node.js 18+ 
+- npm, yarn, or pnpm
+
+## Installation Steps
+
+### 1. Install Dependencies
+
+```bash
+npm install
+```
+
+This installs:
+- Next.js 15.1+ with App Router
+- React 19
+- Nextra 4.1+ and theme
+- Tailwind CSS V4
+- TypeScript
+- Pagefind (search)
+
+### 2. Start Development Server
+
+```bash
+npm run dev
+```
+
+The site will be available at [http://localhost:3000](http://localhost:3000)
+
+**Expected output:**
+```
+▲ Next.js 15.1.4 (turbo)
+- Local:        http://localhost:3000
+✓ Ready in Xms
+```
+
+### 3. Verify Setup
+
+Open your browser and check:
+
+✅ **Home Page** - http://localhost:3000
+- Should display "Welcome to Nextra Documentation"
+- Navbar should show "Nextra Docs"
+- Sidebar should show navigation
+
+✅ **Getting Started** - http://localhost:3000/getting-started  
+- Should display the Getting Started guide
+- Sidebar should highlight current page
+
+✅ **Search** - Press `Ctrl+K` or `⌘+K`
+- Search bar should appear
+- Note: Search only works after building (see below)
+
+✅ **Tailwind CSS** - Check styling
+- Blue box with white text should appear on home page
+- Responsive layout should work
+
+### 4. Build for Production
+
+```bash
+npm run build
+```
+
+**What happens:**
+1. Next.js builds the application → `.next/server/app/*.html`
+2. Postbuild script runs Pagefind indexing → `public/_pagefind/`
+
+**Expected output:**
+```
+Route (app)                              Size     First Load JS
+┌ ○ /                                    ...      ...
+└ ○ /getting-started                     ...      ...
+
+Running postbuild script...
+Indexed X pages
+```
+
+### 5. Test Production Build
+
+```bash
+npm start
+```
+
+Open http://localhost:3000 and verify:
+- All pages work
+- Search is functional (try searching for "tailwind")
+- Navigation works
+
+## Verification Checklist
+
+After setup, verify these files exist:
+
+```
+✅ next.config.mjs          - Nextra configuration
+✅ postcss.config.mjs       - Tailwind V4 config
+✅ tsconfig.json            - TypeScript with @ alias
+✅ src/mdx-components.tsx   - MDX component customization
+✅ src/app/layout.tsx       - Root layout with Nextra
+✅ src/app/[[...mdxPath]]/page.tsx - Content route
+✅ content/index.mdx        - Home page
+✅ content/_meta.json       - Navigation config
+```
+
+## Common Setup Issues
+
+### Issue: Port 3000 already in use
+```bash
+# Use different port
+npm run dev -- -p 3001
+```
+
+### Issue: Dependencies installation fails
+```bash
+# Clear cache and reinstall
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Issue: TypeScript errors in IDE
+```bash
+# Restart TypeScript server in VS Code
+# Press Ctrl+Shift+P > "TypeScript: Restart TS Server"
+```
+
+### Issue: Turbopack errors
+```bash
+# Try without turbopack
+npm run dev -- --no-turbopack
+```
+
+## Development Workflow
+
+### Adding New Pages
+
+1. Create MDX file in `content/`:
+```bash
+content/
+  ├── docs/
+  │   └── api.mdx        # New page
+```
+
+2. Update `content/_meta.json` or create `content/docs/_meta.json`:
+```json
+{
+  "api": "API Reference"
+}
+```
+
+3. Page is automatically available at `/docs/api`
+
+### Hot Reload
+
+- **Content changes**: Automatically reload
+- **Config changes**: Restart dev server
+- **MDX components**: Restart dev server
+
+### Testing Search
+
+1. Build the site: `npm run build`
+2. Start production: `npm start`
+3. Use search: `Ctrl+K` or `⌘+K`
+
+Note: Search doesn't work in development mode because Pagefind needs built HTML files.
+
+## IDE Setup
+
+### VS Code Recommended Extensions
+
+- **ES7+ React/Redux/React-Native snippets**
+- **Tailwind CSS IntelliSense**
+- **MDX**
+- **TypeScript Vue Plugin (Volar)**
+
+### Settings
+
+Add to `.vscode/settings.json`:
+```json
+{
+  "tailwindCSS.experimental.classRegex": [
+    ["className\\s*=\\s*['\"`]([^'\"`]*)['\"`]", "([^'\"`]*)"]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
+```
+
+## Next Steps
+
+1. ✅ Setup complete
+2. 📝 Edit `content/index.mdx` - Customize home page
+3. 🎨 Edit `src/app/layout.tsx` - Customize theme
+4. 📄 Add more pages in `content/`
+5. 🔍 Build and test search
+6. 🚀 Deploy to Vercel/Netlify
+
+## Getting Help
+
+- [Nextra Documentation](https://nextra.site)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS V4 Docs](https://tailwindcss.com/docs)
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/next.config.mjs ========
+// const nextConfig = {
+//   output: 'export',
+//   images: {
+//     unoptimized: true // mandatory, otherwise won't export
+//   }
+//   // Optional: Change the output directory `out` -> `dist`
+//   // distDir: "build"
+// }
+
+
+
+
+import nextra from 'nextra'
+
+const withNextra = nextra({})
+
+export default withNextra({
+  // ✅ keep your existing options
+  turbopack: {
+    resolveAlias: {
+      'next-mdx-import-source-file': './src/mdx-components.tsx'
+    }
+  },
+
+  // ✅ add this block: it applies globally to every page
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=600, s-maxage=86400'
+          }
+        ]
+      }
+    ]
+  }
+})
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/Implementation Guide.md ========
+# Quick Implementation Guide
+
+## Your Problem
+- Single docs site with sections (Java, OS, etc.)
+- Sidebar shows everything (too much nesting)
+- Want sidebar to show ONLY current section's content
+
+## The Solution
+Make the sidebar dynamically scope to the current major section.
+
+## Step 1: Add Navigation Utilities
+Create `src/lib/nextra-nav.ts`:
+
+```typescript
+import type { PageMapItem, Folder, MdxFile, MetaJsonFile } from 'nextra'
+
+// Type guards
+export const isFolder = (item: PageMapItem): item is Folder =>
+  'children' in item && Array.isArray(item.children)
+
+export const isMdxFile = (item: PageMapItem): item is MdxFile =>
+  'route' in item && !('children' in item) && !('data' in item)
+
+// Get current section from URL
+export function getCurrentSection(pathname: string, pageMap: PageMapItem[]) {
+  const segment = pathname.split('/').filter(Boolean)[0]
+  if (!segment) return null
+  
+  const folder = pageMap.find(item =>
+    isFolder(item) && (item.name === segment || item.route === `/${segment}`)
+  )
+  
+  return folder || null
+}
+
+// Scope sidebar to section
+export function getScopedSidebar(pathname: string, pageMap: PageMapItem[]) {
+  const section = getCurrentSection(pathname, pageMap)
+  return section ? section.children : pageMap
+}
+
+// Get navbar sections
+export function getNavbarSections(pageMap: PageMapItem[]) {
+  return pageMap.filter((item): item is Folder | MdxFile =>
+    (isFolder(item) || isMdxFile(item)) && item.name !== 'index'
+  )
+}
+```
+
+## Step 2: Create Scoped Layout Component
+Create `src/components/ScopedLayout.tsx`:
+
+```typescript
+'use client'
+import { Layout, Navbar } from 'nextra-theme-docs'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { useMemo } from 'react'
+import { getScopedSidebar, getNavbarSections, getCurrentSection } from '@/lib/nextra-nav'
+
+export function ScopedLayout({ children, pageMap }) {
+  const pathname = usePathname()
+  
+  const currentSection = useMemo(() => 
+    getCurrentSection(pathname, pageMap),
+    [pathname, pageMap]
+  )
+  
+  const sidebarItems = useMemo(() => 
+    getScopedSidebar(pathname, pageMap),
+    [pathname, pageMap]
+  )
+  
+  const navSections = useMemo(() => 
+    getNavbarSections(pageMap),
+    [pageMap]
+  )
+  
+  return (
+    <Layout
+      pageMap={sidebarItems}  // ← Scoped sidebar!
+      navbar={
+        <Navbar logo={<Link href="/">📚 Docs</Link>}>
+          <nav className="flex gap-4">
+            {navSections.map(section => (
+              <Link
+                key={section.route}
+                href={section.route}
+                className={currentSection?.name === section.name ? 'font-bold' : ''}
+              >
+                {section.name}
+              </Link>
+            ))}
+          </nav>
+        </Navbar>
+      }
+      sidebar={{ 
+        defaultMenuCollapseLevel: 2,
+        toggleButton: true 
+      }}
+    >
+      {children}
+    </Layout>
+  )
+}
+```
+
+## Step 3: Update Root Layout
+Replace `src/app/layout.tsx`:
+
+```typescript
+import { getPageMap } from 'nextra/page-map'
+import { ScopedLayout } from '@/components/ScopedLayout'
+import 'nextra-theme-docs/style.css'
+
+export default async function RootLayout({ children }) {
+  const pageMap = await getPageMap()
+  
+  return (
+    <html lang="en">
+      <body>
+        <ScopedLayout pageMap={pageMap}>
+          {children}
+        </ScopedLayout>
+      </body>
+    </html>
+  )
+}
+```
+
+## Step 4: Configure Your Meta Files
+Ensure `content/_meta.json`:
+
+```json
+{
+  "index": {
+    "title": "Home",
+    "display": "hidden"
+  },
+  "java": {
+    "title": "Java",
+    "type": "page"
+  },
+  "OS": {
+    "title": "Operating Systems",
+    "type": "page"
+  }
+}
+```
+
+## That's It!
+
+### How It Works
+1. When at `/java/*` → Sidebar shows only Java folder's children
+2. When at `/OS/*` → Sidebar shows only OS folder's children  
+3. When at `/` → Sidebar shows all top-level items
+4. Navbar always shows major sections for navigation
+
+### Result
+- ✅ Sidebar scoped to current section
+- ✅ Navbar shows all sections
+- ✅ No hardcoding - works with any sections
+- ✅ Uses Nextra's actual type system
+
+### Testing
+Navigate to `/java/getting-started` and verify:
+- Sidebar only shows Java content
+- Navbar highlights Java
+- Can click OS in navbar to switch sections
+- OS sidebar then shows only OS content
+
+## Common Issues
+
+### "Property doesn't exist"
+You're accessing properties without type checking. Use the type guards.
+
+### Sidebar shows everything
+The section folder wasn't found. Check your folder names match the URL segments.
+
+### Navbar is empty
+Check that your root `_meta.json` has `type: "page"` for sections.
+
+## Files Needed
+1. `/src/lib/nextra-nav.ts` - Navigation utilities
+2. `/src/components/ScopedLayout.tsx` - Layout wrapper
+3. `/src/app/layout.tsx` - Root layout (updated)
+4. `/content/_meta.json` - Proper meta configuration
+
+Total lines of code: ~100
+Time to implement: 10 minutes
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/package.json ========
+{
+  "name": "nextra-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
+    "@tailwindcss/postcss": "^4.0.0",
+    "next": "^15.1.4",
+    "nextra": "^4.1.6",
+    "nextra-theme-docs": "^4.1.6",
+    "postcss": "^8.4.49",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.3",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^15.1.4",
+    "pagefind": "^1.2.1",
+    "typescript": "^5.7.2"
+  }
+}
+
+
+======== /home/ansarimn/Downloads/private-repos/nextra-nextjs-site-main/ARCHITECTURE.md ========
+# Architecture Documentation
+
+## Overview
+
+This is a documentation site built with Next.js App Router, TypeScript, Tailwind CSS V4, and Nextra. The architecture follows official documentation guidelines.
+
+## Directory Structure
+
+```
+nextra-site/
+├── content/                    # ✅ MDX content (root-level)
+│   ├── _meta.json             # Navigation configuration
+│   ├── index.mdx              # Home page
+│   └── getting-started.mdx    # Example page
+├── src/                        # ✅ Source code
+│   ├── app/                   # Next.js App Router
+│   │   ├── [[...mdxPath]]/   # Catch-all route
+│   │   │   └── page.tsx      # Renders MDX content
+│   │   ├── layout.tsx        # Root layout with Nextra
+│   │   └── globals.css       # Tailwind import
+│   └── mdx-components.tsx    # MDX customization
+├── next.config.mjs            # Configuration
+├── postcss.config.mjs         # Tailwind V4 PostCSS
+└── tsconfig.json              # TypeScript with @ alias
+```
+
+## Core Concepts
+
+### 1. Content Directory Pattern
+
+**How it works:**
+- Content files live in `content/*.mdx`
+- Catch-all route at `src/app/[[...mdxPath]]/page.tsx` renders them
+- URL `/getting-started` → loads `content/getting-started.mdx`
+
+**Key files:**
+- `src/app/[[...mdxPath]]/page.tsx` - Gateway to all content
+- `content/_meta.json` - Navigation structure
+
+### 2. Nextra Integration
+
+Nextra wraps Next.js configuration to handle MDX files:
+
+```javascript
+// next.config.mjs
+import nextra from 'nextra'
+
+const withNextra = nextra({
+  // Nextra options
+})
+
+export default withNextra({
+  // Next.js options
+})
+```
+
+### 3. Tailwind CSS V4 Architecture
+
+**New in V4:** PostCSS plugin instead of JIT compiler
+
+```css
+/* src/app/globals.css */
+@import "tailwindcss";
+```
+
+```javascript
+// postcss.config.mjs
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {}
+  }
+}
+```
+
+**No tailwind.config.js needed!**
+
+### 4. MDX Components File
+
+**Location:** `src/mdx-components.tsx`
+
+**Purpose:**
+- Required by Next.js for MDX
+- Integrates Nextra theme components
+- Allows custom component overrides
+
+**Critical config:**
+```javascript
+// next.config.mjs
+turbopack: {
+  resolveAlias: {
+    'next-mdx-import-source-file': './src/mdx-components.tsx'
+  }
+}
+```
+
+### 5. TypeScript @ Alias
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+**Usage:**
+```typescript
+import { useMDXComponents } from '@/mdx-components'
+```
+
+## Data Flow
+
+### Page Rendering
+
+```
+1. User visits /getting-started
+         ↓
+2. Next.js routes to [[...mdxPath]]/page.tsx
+         ↓
+3. params = { mdxPath: ['getting-started'] }
+         ↓
+4. importPage() loads content/getting-started.mdx
+         ↓
+5. MDX compiled with theme components
+         ↓
+6. Wrapped in Nextra Layout
+         ↓
+7. Rendered with TOC, sidebar, etc.
+```
+
+### Build Process
+
+```
+1. npm run build
+         ↓
+2. Next.js compiles app → .next/server/app/*.html
+         ↓
+3. postbuild script runs
+         ↓
+4. Pagefind indexes HTML
+         ↓
+5. Search index → public/_pagefind/
+```
+
+## Configuration Files
+
+### next.config.mjs
+```javascript
+import nextra from 'nextra'
+
+const withNextra = nextra({
+  // search: true (default)
+  // contentDirBasePath: '/' (default)
+})
+
+export default withNextra({
+  turbopack: {
+    resolveAlias: {
+      'next-mdx-import-source-file': './src/mdx-components.tsx'
+    }
+  }
+})
+```
+
+### postcss.config.mjs
+```javascript
+const config = {
+  plugins: {
+    '@tailwindcss/postcss': {}
+  }
+}
+```
+
+### tsconfig.json
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+## Key Integrations
+
+### Next.js ↔ Nextra
+- Nextra wraps Next.js config
+- Intercepts MDX imports
+- Provides `getPageMap()` for navigation
+
+### Nextra ↔ MDX Components
+- `mdx-components.tsx` provides component mapping
+- Theme components merged with custom ones
+- Turbopack resolves via alias
+
+### Content ↔ Routes
+- `content/*.mdx` files map to routes
+- `_meta.json` configures navigation
+- Catch-all route handles all paths
+
+## Search Implementation
+
+**Technology:** Pagefind (static search)
+
+**Setup:**
+```json
+// package.json
+{
+  "scripts": {
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
+  }
+}
+```
+
+**How it works:**
+1. Build outputs HTML to `.next/server/app/`
+2. Pagefind indexes these HTML files
+3. Search index goes to `public/_pagefind/`
+4. Client-side search uses this index
+
+## Common Patterns
+
+### Adding a Page
+
+1. Create `content/new-page.mdx`
+2. Add to `content/_meta.json`:
+```json
+{
+  "new-page": "New Page"
+}
+```
+3. Access at `/new-page`
+
+### Custom Components
+
+```typescript
+// src/mdx-components.tsx
+export function useMDXComponents(components: any) {
+  return {
+    ...themeComponents,
+    ...components,
+    MyComponent: (props) => <div {...props} />
+  }
+}
+```
+
+### Theme Customization
+
+```typescript
+// src/app/layout.tsx
+const navbar = (
+  <Navbar
+    logo={<strong>My Brand</strong>}
+  />
+)
+```
+
+## Troubleshooting
+
+### "Module not found: mdx-components"
+**Solution:** Verify `turbopack.resolveAlias` in `next.config.mjs`
+
+### Tailwind classes not working
+**Solution:** 
+1. Check `postcss.config.mjs` exists
+2. Verify `@import "tailwindcss"` in `globals.css`
+
+### Search not working
+**Solution:**
+1. Run `npm run build`
+2. Verify `public/_pagefind/` exists
+3. Test with `npm start`
+
+### Content not rendering
+**Solution:** Check `src/app/[[...mdxPath]]/page.tsx` exists
+
+## Performance
+
+- **Static Generation:** All pages pre-rendered
+- **Code Splitting:** Automatic via App Router
+- **Search:** Client-side (no server needed)
+- **Styles:** Optimized Tailwind output
+
+## Deployment
+
+**Build command:** `npm run build`
+**Output:** `.next/` directory
+**Static assets:** `public/` (includes search index)
+
+**Compatible with:**
+- Vercel (recommended)
+- Netlify
+- Any Node.js hosting
+- Static hosting (with adapter)
+
+

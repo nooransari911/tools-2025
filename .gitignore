@@ -28,8 +28,8 @@ static-manifest*
 **/dist/
 **/build/
 **/node_modules/
-/projects/Knowledge Base/py_practice/img downloader/scrapelist.txt
-
+**/scrapelist*.txt
+**/scrapelist*/**
 
 
 
