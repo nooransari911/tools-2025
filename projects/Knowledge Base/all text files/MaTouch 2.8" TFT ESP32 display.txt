@@ -1,0 +1,89 @@
+So today I got a really powerful board which seems perfect for our AI vision based projects as in got better camera, powerful microcontroller and really compact design. So this is the Mouch 2.8 in display module with camera from Maker Fabs. And in this video I'll be guiding you everything about this product, how to use it and one more interesting thing do watch out the video till the end as I'm going to give away this device to one of the lucky viewers for absolutely free. So, be ready to level up your project with this powerful board. And now, let's start this video, but after a really short ad.
+
+This video is sponsored by LTM. And you know what? LTM not just provide world-class PCB designing software, but with LTM 365, they are helping us with the complete electronics product development with really useful collaborative tool. Let me explain how it helps. For example, if you are reviewing a schematic and want to ask a specific detail about the design to let's say your software team, well, you can do that here and later they'll get an email where they can open the design in a web browser and they can also get easy access to data sheet of the component to get further information and later they can update you everything on the same page.
+
+In addition, when you send your PCB design to manufacturer, even they can comment down the issues like if the wires are too close to the pad, even they can search for any specific component or a path like VCC3 and later they can visualize it in 3D to ensure complete accuracy before manufacturing begins. Really useful, isn't it? And you know what's the best part of watching this ad? Well, if you click my link provided in the description of this video, you'll not only get the access to free trial version, but you can also get flat 25% off on the license purchase. So, do check out the link provided in the description.
+
+And now, let's move ahead with our video. So, that's how you'll receive the board. And inside the box, we get the complete board with camera. And at the first glance, you will notice that the camera is huge. I mean, really huge.
+
+So, here is the side-by-side comparison with the camera that comes along with the ESP32 cam board, and you can totally see the difference. We'll come to the specs about the camera later in this video. Moving on, here I have noticed one very interesting thing, which is it comes with a builtin 16 GB of SD card in it, which is really great. I think it's really convenient for the end user. Good job.
+
+And yeah, that was all about the unboxing and first look. Now, let's have a look over the specs of this product. So this board is powered by ESP32S3 chipset. So we can expect built-in Wi-Fi and Bluetooth support in it. And this variant is N16 R8 which means it got 16 MB of flash storage and 8 MB of PS RAM in it.
+
+Now talking about the display then it got 2.8 in IPS display with 320x240 pixel of resolution and on the top it also got a capacitive touch panel on it. Now talking about the camera then it got OV3660 camera module which is a 3 MP camera and got better low light performance. Now here on the back we notice two USB type-C port. So what's that? Well, out of two, one is the regular USB port connected via CS340 programming IC which is later connected to the ESP32S3 chipset and other USB is the native USB which is connected directly to the ESP32S3 chipset.
+
+Now on the screen you can see the functionalities of both the USB ports. Here on board we get the support for SD card module which is a great add-on on this board. And finally, we also get couple of GPIOs exposed to attach external ferifers to this device. And that was all about the complete specification of this board. And now let's move on to Ardino ID and let's see how to program it and we'll also test out some example codes.
+
+Okay. So here is my Arduino ID and I'm using the version 2.3.2. Now when we go to the wiki page from of this particular product from maker fabs, they already guided all the steps required to program it with the help of the Ardino ID. So first of all we need to copy this URL and later we need to go to Ardino settings and here inside this section we need to paste that particular URL. After doing that you can go to uh boards manager and here if you type out ESP32 you'll find an option called as ESP32 by aspressive system and here they have recommended to use 2.0.10 version for all the example codes that they have provided.
+
+So after doing this we are good to go to upload the example code and they also provide the example code into their GitHub repository whose link I'll be providing in the description. You just need to download this zip file. In my case I already downloaded and inside the zip file just go to the example folder and here are a couple of example codes that they have provided. So let's just try to test one or two example code. So let's try with the face detect one and here I'll open the face detect.ino and here is the example code.
+
+Now here they have done a pretty good job which is they have mentioned the library version of the particular library they have used. So make sure you have the same library version before uploading the code. In my case the library versions are same. So here what I'll do is I'll just select the right comp port on which the uh camera board is connected. Later you need to go to tools and here you need to do couple of changes which is first of all you need to change the flash size to 16 MB.
+
+Letter you have to change the partition scheme to again 16 MB flash with the 3 MB A uh partition. Later in the PSM you need to select OPI PSM. Uh this three changes you need to do and later you are good to go to upload it. So let us hit the upload button and let's wait for the code to get uploaded. Okay.
+
+So the code is successfully uploaded and here on the screen as you can see I'm started getting the live stream live camera stream and it is also detecting my face like we can see the rectangular box around my face and as you can see the frame rate is pretty high like it's 25 frame per second that's why it feels very smooth. It is not like we cannot see the frame refreshing on the display. It's very very smooth and it is also able to detect the face completely fine. Okay. And also the maker fabs team claimed that this camera works great in the low light condition as well.
+
+So just try to turn off the studio lights. And let's see what kind of footage we are getting on the screen. Okay. So both the studio lights are turned off and we are not able to see anything on on the DSLR. But if you can see this maker fabs display.
+
+Yes, I can still see my face completely clear. like it's a very low light condition but still the footage is quite clear. I'm not able to see my uh like it's the face recognition is not working definitely but uh still I can see everything quite clear. So definitely this big camera sensor do works great in the low light condition. Now let's just turn on the lights. Okay.
+
+So that was the face detect code. Now let's try to upload some other example code maybe the LVGL widgets and let's see uh how LVGL performs on this particular display. So for this particular uh code you need to have the library called as BP cap touch. You can copy it and here inside the library section you can paste that and you just need to install the version 1.0.1. In my case I already installed it and now we good to go to upload it.
+
+So make sure you have selected the right comp port and all the configurations are same that we have done previously. After confirming, let's just hit the upload button and let's wait for the code to get uploaded. Okay, so the code is successfully uploaded and on the screen we got the LVGL widget. Okay, there's the same example code that we used to see in other displays. Okay, and this particular uh code or the the widgets on this display feels quite smooth.
+
+As I said previously, I'm unable to see the frame refreshing on the display. In other displays, I can see the lag while swiping from one uh menu to other menu. But uh here I cannot see the frame refreshing. It's not visible means the frame rate is definitely higher and it feels smooth like using our smartphone stuff like that. Okay.
+
+But anyways the LVJL widget code is successfully working and that was all about uh how to program this board with the help of Ardino no ID. Now let's move up to the next step in which we learn how to use this display with the square line studio like how to design the graphics in the square line studio and later how to export it and how to upload it into this display. So let's move on to square line studio. Okay. So here is the square line studio.
+
+Now if you are regular follower of my videos you must be knowing what square line studio is. So with the help of square studio basically we can design the UI by just dragging and dropping and in the end the software will generate the Arduino code for that particular UI. Okay. So now we'll go to the create button and here under the maker fab section you will find the option called as mod es3 SPI. Basically this is the same mode which we are using and this mode is newly added into the latest version of square lens studio which is 1.5.1.
+
+So make sure you update to 1.5.1 or the higher version to see this board option. After that just select this board and now we'll click here and we'll try to save everything uh in the desktop. Okay, I'll create a new folder called as demo and save everything in this folder and rest of everything I'll keep it as it is and click on create button. So here we got the window of the same size the same resolution of our uh maker fabs board. Now we are good to go to design a UI.
+
+So I'll design a simple UI because I'm here to teach you how to use the square line studio export the code and upload into the maker fabs board. So we are not focusing on any project rather I'll uh design a simple UI and later uh teach you how to export it and upload it. Okay. So first of all what I'll do is I'll try to add a keyboard here. Okay.
+
+We'll resize it to fit to screen. Letter we'll add a text box. Uh for example this text area. Okay. Again we'll resize it to fit to the screen.
+
+Now we need to link both of them. For that you need to click on the keyboard and here inside the target area just select the text area one. So now both the are linked. And to test that you can just click on the play button. And now if I type anything here as you can see it is printed onto the text area.
+
+Okay let's click on play button again to uh go into the edit mode. Now let's just add a button here. Uh where is button? Here's the button. I'll resize it to fit in between.
+
+And I'll add a label to it which says submit. Okay. And I'll change its color to white. Perfect. So now what I want to do is as soon as someone write any kind of uh text here after that it will uh he or she will click on the submit button and the response will be successfully submitted.
+
+So now let's just click on uh screen to add a new screen. And here what I'll do, I'll add an image. Okay, for that I'll click on add file into assets. And here I'll add this green tick mark. Click on open.
+
+And it will add the image here. Now I'll drag and drop the image into the screen too. And below that uh tick mark, I'll just uh change the text to response submitted. Perfect. Okay.
+
+So as soon as someone types the uh data here, click on the submit button. it should uh go to the next screen which says response submitted. Okay. So now the last step is we need to add the action to the buttons. For that I'll click on the button and click on add event. Here I'll click on uh clicked only.
+
+So as soon as the button is clicked I want to change the screen and I want to change the screen to screen two. And here you can choose the animation. I will keep it as it is like fade on. And that's it. We are done with this particular demo UI.
+
+To play it I will click on this play icon. And now as soon as I type uh anything here, click on the submit button. It says response submitted. Okay, that's a simple UI. Now it's time to export it and try to upload it and test it into a hardware.
+
+To export it, I'll click on export. Later, I'll click on create template project. I'll go to the demo folder which I have created. And here inside the demo folder, I'll create a new folder called as export. Click on create and I will uh export the template project here.
+
+Here as you can see it says export succeeded. So now let's just head over to that folder. So here inside the export folder we get a new folder called as square line project. And here inside this folder we got the libraries section. So first of all we need to copy all the libraries.
+
+Later we need to go to documents Ardino into libraries. And here we need to paste all the libraries. If you already have those libraries, click on uh replace button to replace the existing library because uh these are the library version like the particular library version supported for the particular code. After uh replacing all the libraries, you can go to UI and here is the UI.io the Arduino ID supported code which is ready to be uploaded. Okay.
+
+So just try to test it out. For that I'll select the right board and comp port. Uh and the board for this display is ESP32S3D module. After that we also need to do the configuration like uh the flash size 16 MB partition scheme to 16 M with 3 MB and uh PS RAM to OBI PS RAM. That's pretty much it.
+
+Let's try to hit the upload button and let's see if this works or not. Okay, so the code is successfully uploaded and here on the screen I got the exact same UI with the keyboard button and the placeholder. Let's try to test it out. So I'll type my name here and due to the capacitive touchcreen it is really very smooth to type anything on it with uh with the great precision. Okay, so I type my name, I click on the submit button.
+
+Uh okay, it says response submitted and the UI that we have designed is successfully working without writing any single line of code for it. Now in the square line studio we don't have any option to add the camera widget or live camera feed uh in that UI. So to add the camera we need to change this particular code add the camera base code manually and later we can upload it onto the display to mix the LVGL widgets with the camera code. So that is kind of a manual thing that we need to do but yeah that is something that we can keep it for our upcoming project or upcoming videos. And with this, I think you have enough information, enough knowledge about how to use this board and how to make different kind of projects with it.
+
+So, why not to arrange a contest for it? So, yes, it's time to announce the giveaway contest. But before that, if you really like the board and want to get it for yourself, well, it is available for sale on our website techies.com. Yes, it's only available at techies.com across India. So, we can ship it to your location.
+
+Let you can try making your own projects out of it. Okay. So now let's move ahead with the giveaway contest. So what you need to do is uh you need to definitely like the video, be a subscriber of our channel and lastly you need to comment down the project idea that you want to make when you receive this particular board. Well, that project idea should be practically implementable on this particular board itself.
+
+It should not like uh be a project that requires higher configuration, higher processing power, nothing. this particular board should be enough to make that particular project. Okay. So, you need to comment down the project idea in the comment section of the video. And this giveaway contest is totally dependable on audience. Okay.
+
+I'm not involved in it. No judges are involved in it. So, the comment below this video and wait not just a simple comment. The comment with the project idea below this video gets maximum number of likes within 7 days of the video getting published on YouTube. will be announced as the winner of this giveaway contest and they will get this complete board absolutely free of cost. Not even you need to pay the shipping charges, no taxes, nothing.
+
+Absolutely free of cost. This board will be delivered at your doorstep. Simple contest totally dependable on the audience, okay? On the viewers, okay? And as it's based on audience, well, I will request you to genuinely like those comment, those project idea which you personally like the most.
+
+Okay? Don't just randomly like any of the comment like what you love. Wow. And yeah, that was all about the video. That was all about the giveaway contest.
+
+I hope you liked the video. I hope you like this particular board. I particularly find it very interesting, very useful. Hence, I imported this board on my expenses. Okay.
+
+And yes similarly I'll try to import more such unique useful things which are not at all available on internet not at all available in India just for you people just keep supporting us keep watching our videos and yeah that being said I'm just ending this video here and now just wait for my next video and till then explore learn share with me tech [Music]

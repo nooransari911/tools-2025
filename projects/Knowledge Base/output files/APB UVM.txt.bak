@@ -1,0 +1,565 @@
+======== /home/ansarimn/Downloads/APB UVM/agent.sv ========
+// agent.sv
+// This class is a container for the driver, generator, and monitor.
+
+class apb_agent;
+    // Component handles
+    apb_generator generator;
+    apb_driver    driver;
+    apb_monitor   monitor;
+
+    // Mailbox handles
+    mailbox #(apb_transaction) gen2drv_mbx;
+    
+    // Constructor
+    function new();
+        gen2drv_mbx = new();
+    endfunction
+
+    // Build phase: create the components
+    function void build(virtual apb_if.master vif, virtual apb_if.monitor mon_vif, mailbox #(apb_transaction) mon2scb_mbx, mailbox #(apb_transaction) gen2scb_mbx);
+        $display("[AGENT] Building components...");
+        generator = new(gen2drv_mbx, gen2scb_mbx);
+        driver    = new(vif, gen2drv_mbx);
+        monitor   = new(mon_vif, mon2scb_mbx);
+    endfunction
+
+    // Run phase: start the components
+    task run();
+        $display("[AGENT] Starting components...");
+        fork
+            generator.run();
+            driver.run();
+            monitor.run();
+        join
+    endtask
+    
+endclass
+
+
+======== /home/ansarimn/Downloads/APB UVM/design.sv ========
+module apb_slave (
+    // Global signals
+    input wire pclk,
+    input wire presetn,
+
+    // APB slave interface signals
+    input wire [31:0] paddr,
+    input wire        psel,
+    input wire        penable,
+    input wire        pwrite,
+    input wire [31:0] pwdata,
+    output reg [31:0] prdata,
+    output reg        pready,
+    output reg        pslverr
+);
+
+    // Internal registers for the slave
+    reg [31:0] reg0;
+    reg [31:0] reg1;
+    reg [31:0] reg2;
+    reg [31:0] reg3;
+
+    // APB state machine logic
+    // The pready signal is asserted in the ACCESS state
+    always @(posedge pclk or negedge presetn) begin
+        if (!presetn) begin
+            pready <= 1'b0;
+        end else begin
+            // By default, pready is low. It goes high only during the access phase.
+            pready <= psel && penable;
+        end
+    end
+    
+    // Write logic
+    always @(posedge pclk or negedge presetn) begin
+        if (!presetn) begin
+            reg0 <= 32'h0;
+            reg1 <= 32'h0;
+            reg2 <= 32'h0;
+            reg3 <= 32'h0;
+        end else if (psel && penable && pwrite) begin
+            // Decode the address to write to the correct register
+            case (paddr[3:2])
+                2'b00: reg0 <= pwdata;
+                2'b01: reg1 <= pwdata;
+                2'b10: reg2 <= pwdata;
+                2'b11: reg3 <= pwdata;
+                default: ;
+            endcase
+        end
+    end
+
+    // Read logic
+    always @(posedge pclk or negedge presetn) begin
+        if (!presetn) begin
+            prdata <= 32'h0;
+        end else if (psel && penable && !pwrite) begin
+             // Decode the address to read from the correct register
+            case (paddr[3:2])
+                2'b00: prdata <= reg0;
+                2'b01: prdata <= reg1;
+                2'b10: prdata <= reg2;
+                2'b11: prdata <= reg3;
+                default: prdata <= 32'hDEADBEEF; // Return a default value for invalid address
+            endcase
+        end
+    end
+
+    // Slave error logic (not implemented for this simple slave)
+    always @(posedge pclk or negedge presetn) begin
+        if (!presetn) begin
+            pslverr <= 1'b0;
+        end else begin
+            pslverr <= 1'b0; // No error conditions in this slave
+        end
+    end
+
+endmodule
+
+
+======== /home/ansarimn/Downloads/APB UVM/driver.sv ========
+// driver.sv
+// Drives APB signals on the interface based on transactions received from the generator.
+
+class apb_driver;
+    // Virtual interface handle
+    virtual apb_if.master vif;
+
+    // Mailbox handle to get transactions from the generator
+    mailbox #(apb_transaction) gen2drv_mbx;
+
+    // Constructor
+    function new(virtual apb_if.master vif, mailbox #(apb_transaction) gen2drv_mbx);
+        this.vif = vif;
+        this.gen2drv_mbx = gen2drv_mbx;
+    endfunction
+
+    // Task to reset the interface signals
+    task reset();
+        $display("[DRIVER] Waiting for reset assertion...");
+        wait(!vif.presetn);
+        $display("[DRIVER] Reset is asserted.");
+        vif.psel <= 0;
+        vif.penable <= 0;
+        vif.pwrite <= 0;
+        vif.paddr <= 0;
+        vif.pwdata <= 0;
+        wait(vif.presetn);
+        @(posedge vif.pclk); // Synchronize to clock edge after reset
+        $display("[DRIVER] Reset is de-asserted.");
+    endtask
+
+    // Main task to drive transactions
+    task run();
+        apb_transaction tx;
+        forever begin
+            gen2drv_mbx.get(tx);
+            $display("[DRIVER] Received transaction from generator.");
+            tx.display("DRIVER");
+            
+            // Drive APB transaction
+            @(posedge vif.pclk);
+            // SETUP phase
+            vif.psel <= 1;
+            vif.paddr <= tx.paddr;
+            vif.pwrite <= tx.pwrite;
+            if (tx.pwrite)
+                vif.pwdata <= tx.pwdata;
+            
+            @(posedge vif.pclk);
+            // ACCESS phase
+            vif.penable <= 1;
+            
+            // Wait for pready from slave
+            wait(vif.pready);
+            @(posedge vif.pclk);
+
+            // Capture read data if it's a read transaction
+            if (!tx.pwrite) begin
+                tx.prdata = vif.prdata;
+            end
+            
+            // End transaction
+            vif.psel <= 0;
+            vif.penable <= 0;
+            $display("[DRIVER] Finished driving transaction.");
+        end
+    endtask
+
+endclass
+
+
+
+======== /home/ansarimn/Downloads/APB UVM/environment.sv ========
+// environment.sv
+// This class is the top-level container for the testbench, instantiating the agent and scoreboard.
+
+`include "transaction.sv"
+`include "generator.sv"
+`include "driver.sv"
+`include "monitor.sv"
+`include "scoreboard.sv"
+`include "agent.sv"
+
+class apb_environment;
+    // Component handles
+    apb_agent      agent;
+    apb_scoreboard scoreboard;
+
+    // Mailbox handles for connecting components
+    mailbox #(apb_transaction) gen2scb_mbx;
+    mailbox #(apb_transaction) mon2scb_mbx;
+
+    // Virtual interface handles
+    virtual apb_if.master vif;
+    virtual apb_if.monitor mon_vif;
+  
+    // Constructor
+    function new(virtual apb_if.master vif, virtual apb_if.monitor mon_vif);
+        this.vif = vif;
+        this.mon_vif = mon_vif;
+        gen2scb_mbx = new();
+        mon2scb_mbx = new();
+        agent = new();
+        scoreboard = new(gen2scb_mbx, mon2scb_mbx);
+    endfunction
+
+    // Build the environment
+    task build();
+        $display("[ENV] Building environment...");
+        agent.build(vif, mon_vif, mon2scb_mbx, gen2scb_mbx);
+    endtask
+
+    // Run the test
+    task run();
+        $display("[ENV] Running test...");
+        // Start the reset task from the environment
+        reset();
+        fork
+            agent.run();
+            scoreboard.run();
+        join_none
+        wait(agent.generator.ended.triggered);
+        #20; // Allow final transactions to be processed
+        $display("[ENV] Test finished.");
+        scoreboard.report();
+    endtask
+  
+    // Reset task
+    task reset();
+      $display("[ENV] Resetting DUT...");
+      // Call the driver's reset task via the agent
+      agent.driver.reset();
+    endtask
+
+endclass
+
+
+
+======== /home/ansarimn/Downloads/APB UVM/generator.sv ========
+// generator.sv
+// Generates random APB transactions and sends them to the driver.
+
+class apb_generator;
+    // Mailbox handle to send transactions to the driver
+    mailbox #(apb_transaction) gen2drv_mbx;
+    mailbox #(apb_transaction) gen2scb_mbx;
+  
+    // Event to signal the end of generation
+    event ended;
+
+    // Number of transactions to generate
+    int repeat_count = 10;
+
+    // Constructor
+    function new(mailbox #(apb_transaction) gen2drv_mbx, mailbox #(apb_transaction) gen2scb_mbx);
+        this.gen2drv_mbx = gen2drv_mbx;
+        this.gen2scb_mbx = gen2scb_mbx;
+    endfunction
+
+    // Main task to generate and send transactions
+    task run();
+        apb_transaction tx;
+        $display("[GENERATOR] Starting generation of %0d transactions", repeat_count);
+        repeat (repeat_count) begin
+            tx = new();
+            if (!tx.randomize()) begin
+                $fatal("[GENERATOR] Transaction randomization failed!");
+            end
+            gen2drv_mbx.put(tx);
+            gen2scb_mbx.put(tx); // Send a copy to the scoreboard for checking
+            $display("[GENERATOR] Sent transaction to driver and scoreboard.");
+            tx.display("GENERATOR");
+        end
+        $display("[GENERATOR] Finished generating all transactions.");
+        -> ended;
+    endtask
+endclass
+
+
+======== /home/ansarimn/Downloads/APB UVM/interface.sv ========
+// interface.sv
+// This defines the APB interface signals.
+// It uses modports to specify signal directions for the testbench (driver) and monitor.
+
+interface apb_if (input bit pclk, input bit presetn);
+    // APB signals
+    logic [31:0] paddr;
+    logic        psel;
+    logic        penable;
+    logic        pwrite;
+    logic [31:0] pwdata;
+    logic [31:0] prdata;
+    logic        pready;
+    logic        pslverr;
+
+    // Modport for the Driver (Master)
+    modport master (
+        output paddr,
+        output psel,
+        output penable,
+        output pwrite,
+        output pwdata,
+        input  prdata,
+        input  pready,
+        input  pslverr,
+        input  pclk,
+        input  presetn
+    );
+
+    // Modport for the Monitor
+    modport monitor (
+        input paddr,
+        input psel,
+        input penable,
+        input pwrite,
+        input pwdata,
+        input prdata,
+        input pready,
+        input pslverr,
+        input pclk,
+        input presetn
+    );
+endinterface
+
+
+======== /home/ansarimn/Downloads/APB UVM/monitor.sv ========
+// monitor.sv
+// Passively monitors the APB interface and reconstructs transactions.
+
+class apb_monitor;
+    // Virtual interface handle
+    virtual apb_if.monitor vif;
+
+    // Mailbox handle to send monitored transactions to the scoreboard
+    mailbox #(apb_transaction) mon2scb_mbx;
+
+    // Constructor
+    function new(virtual apb_if.monitor vif, mailbox #(apb_transaction) mon2scb_mbx);
+        this.vif = vif;
+        this.mon2scb_mbx = mon2scb_mbx;
+    endfunction
+
+    // Main task to monitor the bus
+    task run();
+        apb_transaction tx;
+        forever begin
+            @(posedge vif.pclk);
+            // A transaction is detected when psel and penable are high
+            if (vif.psel && vif.penable && vif.pready) begin
+                tx = new();
+                tx.paddr = vif.paddr;
+                tx.pwrite = vif.pwrite;
+                
+                if (tx.pwrite) begin
+                    tx.pwdata = vif.pwdata;
+                end else begin
+                    tx.prdata = vif.prdata;
+                end
+                
+                mon2scb_mbx.put(tx);
+                $display("[MONITOR] Detected and sent transaction to scoreboard.");
+                tx.display("MONITOR");
+            end
+        end
+    endtask
+endclass
+
+
+======== /home/ansarimn/Downloads/APB UVM/scoreboard.sv ========
+// scoreboard.sv
+// Compares transactions from the generator (expected) with transactions from the monitor (actual).
+
+class apb_scoreboard;
+    // Mailbox handles to get transactions
+    mailbox #(apb_transaction) gen2scb_mbx; // Expected transactions
+    mailbox #(apb_transaction) mon2scb_mbx; // Actual transactions
+
+    int transactions_passed = 0;
+    int transactions_failed = 0;
+
+    // Constructor
+    function new(mailbox #(apb_transaction) gen2scb_mbx, mailbox #(apb_transaction) mon2scb_mbx);
+        this.gen2scb_mbx = gen2scb_mbx;
+        this.mon2scb_mbx = mon2scb_mbx;
+    endfunction
+
+    // Main task to compare transactions
+    task run();
+        apb_transaction gen_tx, mon_tx;
+        forever begin
+            gen2scb_mbx.get(gen_tx);
+            mon2scb_mbx.get(mon_tx);
+            $display("[SCOREBOARD] Received transaction from Generator and Monitor.");
+            
+            // Comparison logic
+            if (gen_tx.pwrite) begin // It's a write transaction
+                if (gen_tx.paddr == mon_tx.paddr && gen_tx.pwdata == mon_tx.pwdata) begin
+                    $display("[SCOREBOARD] PASS: Write data and address match.");
+                    transactions_passed++;
+                end else begin
+                    $error("[SCOREBOARD] FAIL: Write transaction mismatch.");
+                    transactions_failed++;
+                    $display("Expected:"); gen_tx.display("GEN");
+                    $display("Actual:");   mon_tx.display("MON");
+                end
+            end else begin // It's a read transaction, so we need to check the DUT's read data
+                // For a read, the generator's transaction does not know the read data yet.
+                // A more complex scoreboard would use a predictor/reference model.
+                // Here, we just check if the address and control signals match.
+                if(gen_tx.paddr == mon_tx.paddr) begin
+                    $display("[SCOREBOARD] PASS: Read addresses match.");
+                    transactions_passed++;
+                end else begin
+                    $error("[SCOREBOARD] FAIL: Read address mismatch.");
+                    transactions_failed++;
+                end
+            end
+        end
+    endtask
+
+    // Function to report final results
+    function void report();
+        $display("=====================================================");
+        $display("               SCOREBOARD FINAL REPORT               ");
+        $display("=====================================================");
+        $display("Transactions PASSED: %0d", transactions_passed);
+        $display("Transactions FAILED: %0d", transactions_failed);
+        $display("=====================================================");
+    endfunction
+
+endclass
+
+
+======== /home/ansarimn/Downloads/APB UVM/testbench.sv ========
+// tb_top.sv
+// This is the top-level module that instantiates the DUT, interface, and the test environment.
+
+`include "interface.sv"
+`include "environment.sv"
+
+module tb_top;
+
+    // Clock and reset signals
+    bit pclk;
+    bit presetn;
+
+    // Clock generation
+    always #5 pclk = ~pclk;
+
+    // Instantiate the APB interface
+    apb_if apb_bus (
+        .pclk(pclk),
+        .presetn(presetn)
+    );
+
+    // Instantiate the DUT (Design Under Test)
+    apb_slave dut (
+        .pclk(pclk),
+        .presetn(presetn),
+        .paddr(apb_bus.paddr),
+        .psel(apb_bus.psel),
+        .penable(apb_bus.penable),
+        .pwrite(apb_bus.pwrite),
+        .pwdata(apb_bus.pwdata),
+        .prdata(apb_bus.prdata),
+        .pready(apb_bus.pready),
+        .pslverr(apb_bus.pslverr)
+    );
+
+    // Instantiate the environment
+    apb_environment env;
+
+    // Main test sequence
+    initial begin
+        // Initialize clock and reset
+        pclk = 0;
+        presetn = 0;
+
+        // Create the environment
+        env = new(apb_bus.master, apb_bus.monitor);
+        
+        // Build the testbench components
+        env.build();
+
+        // Apply reset
+        #10;
+        presetn = 1;
+        
+        // Start the test
+        env.run();
+        
+        // Finish simulation
+        #100;
+        $finish;
+    end
+  
+    // Dump waves for debugging
+    initial begin
+      $dumpfile("dump.vcd");
+      $dumpvars(0, tb_top);
+    end
+
+endmodule
+
+
+
+======== /home/ansarimn/Downloads/APB UVM/transaction.sv ========
+// transaction.sv
+// This class defines the structure of an APB transaction packet.
+
+class apb_transaction;
+    // Transaction properties
+    rand bit [31:0] paddr;
+    rand bit [31:0] pwdata;
+    bit [31:0] prdata;
+    rand bit pwrite; // 1 for write, 0 for read
+
+    // Constraints for randomization
+    constraint addr_align { paddr[1:0] == 2'b00; } // 4-byte aligned address
+    constraint valid_addr { paddr < 16; } // Limit address to the slave's range
+
+    // Function to print transaction details
+    function void display(string name);
+        $display("[%s] Transaction Details:", name);
+        $display("\t PWRITE = %0b", pwrite);
+        $display("\t PADDR  = 0x%0h", paddr);
+        if (pwrite)
+            $display("\t PWDATA = 0x%0h", pwdata);
+        else
+            $display("\t PRDATA = 0x%0h", prdata);
+    endfunction
+
+    // Function to copy a transaction
+    function apb_transaction copy();
+      copy = new();
+      copy.paddr = this.paddr;
+      copy.pwdata = this.pwdata;
+      copy.prdata = this.prdata;
+      copy.pwrite = this.pwrite;
+    endfunction
+
+endclass
+
+

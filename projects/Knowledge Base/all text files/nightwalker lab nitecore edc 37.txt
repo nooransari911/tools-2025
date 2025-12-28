@@ -1,0 +1,79 @@
+[Music] Hey guys, MJ here from Nightcore Singapore. Remember when I said the EDC 29 changed everything? Well, I was wrong. This changes everything. The Night Call EDC 37 has just landed and it is making every other EDC light look like a toy, right? 8,000 lumens. 8,000 mAh battery, 7h hour runtime at 1,500 lumens.
+
+The numbers are so crazy, I thought that was a typo at first, but here's what got me excited. You can now program exactly what each button does. No other light lets you do this. When I show you how to set it up around the 5minute mark, you will see why this is so huge. The ADC29 was incredible, but it had one runtime limitation that frustrated users worldwide.
+
+The ADC37 doesn't just fix that problem. It completely solves it and they managed to fit an 8,000 mAh battery in here. Larger than any 2170 battery on the market. Before we dive in, I'll be giving away this EDC37. So remember to subscribe and comment below on if you use an EDC37 in your everyday carry.
+
+If yes, why? If not, why not? Once we get 500 likes, I'll pick a winner and announce it in the description box below. So what was that runtime limitation I mentioned earlier? Well, the EDC29 is an incredible light.
+
+It became Nightcore's best seller for good reason. But here's the thing. It was designed for use cases where two-hour runtime at 1,200 lumens was perfect. The problem came from users working extended 12-hour shifts. They wanted that same EDC29 performance, but with longer run time.
+
+The flat profile design that makes these lights perfect for concealed carry. Also means you can't swap out batteries. There's no commercially available flat battery that you can just swap out. So users with longer operational needs had to rely on power banks like the Pocket 1000 here to recharge on the go. Not the best when you're in the middle of a situation.
+
+So users spoke loud and clear. We love the EDC 29, but we need more runtime for extended use. As usual, Nightcore listened and they didn't just extend the runtime. They went back to the drawing board and completely redesigned what was possible in this form factor. The biggest upgrade they did, they packed in a massive 8,000 mAh battery.
+
+For comparison, the EDC29's battery is just 2,500 milliampere. So, this battery is three times bigger. So, this gives you an insane 7h hour runtime at 1,500 lumens. Now, remember, the EDC29 can only manage 2 hours at 1,500 lumens. Even the legendary MH12 Pro here only does 4 hours at 1,200 lumens.
+
+But wait, it gets better. At lower brightness levels, it can do 100 lumens for 30 hours, 15 lumens for 190 hours. Combined with the 12 month standby shelf life, this becomes a very reliable light for emergency and bugout bags as well. Note the battery is still not removable, so you have to recharge it via the USBC port here to a wall plug or power bank. Zero to full in just 2 hours.
+
+Very, very quick recharge time, so that's a huge plus. While charging, the screen will show the battery progress. Pro tip, for extended use, I recommend the Nycore Pocket 1000 power bank with it built-in USBC cable and 10,000 mAh capacity. So, you can almost fully recharge the EDC37 once and at 22 watts, you will quick charge the EDC37 in 2 hours. So, just bring two pocket 1,000 power banks and you can quick charge the EDC37 twice in the field.
+
+So, that's essentially tripling your run time to over 21 hours at 1,500 lumens. It's enough for multiple days of operation. The Pocket 1000 weighs only 160 gram and is just 12.5 mm thick, so barely noticeable in your kit. But the runtime is not even the most impressive part. The larger size also meant a wider bezel to fit a more powerful LED setup with the dual UHI 20 max LEDs.
+
+They bumped up the output to 8,000 lumens from the EDC 29's maximum of 6,500 lumen. So, here's how the bezel looks like compared to the EDC 29. Much larger. You can see the 18 micro LEDs that turn on and off depending on what mode you're in. So 8,000 lumens can only be reached using the flood light mode like this where all 18 micro LEDs turn on flooding everything in front of you in a ball of light.
+
+The catch is 8,000 lumens only last about 10 seconds before the light needs to cool down. You can see the timer come on in the display as soon as you're in it. Once you let go, the timer recharges so you know when you can trigger it again. The timer is based on temperature. So the more you turbo the light, the hotter it gets. and the shorter the timer becomes.
+
+Once it's too hot like this, it will drop down to 400 lumens while the light cools down. So, you might wonder, what am I going to do with just a few seconds of turbo? It's like the top speed of a car. 200 mph is there if you need it, but you don't use it all the time, and that's okay. The average brightness most users need from a light is around 250 to 1,000 lumens for 90% of applications. To give you some context, the high beam of a car's headlight is around 2,000 lumens.
+
+In real world, most users, myself included, will have the beam on at about 400 lmmens or 1,000 lmmens and only turbo when needed. So, if you need to see far, just half press the mode button for a 3,000 lm search light mode that hits up to 420 m. This is exactly the same as the 3,00 lm search light on the EDC 29. Yes, both flood and search modes are limited by temperature. The good thing about Nightcore versus other brands is not just about raw brightness.
+
+They do care about the beam pattern. The precision orange peel reflector gives you a very smooth, concentrated beam without the harsh drop off. Some brands just chase lumens, but their beam pattern looks terrible because they didn't care about their users. So, the next upgrade is a big one. The controls are now customizable.
+
+This is massive. It changes how you can work with the light. On the EDC29, you could only switch between strobe or flood when you fully press the mode button. But the EDC37 takes customization to a whole new level. You can now set what the button does at half press and at full press independently.
+
+So if you want half press to be spot beam and full press to be strobe, you got it. If you prefer flat beam on half press and full spot beam on full press, done. This means you can configure the light exactly how you want to use it, not how the manufacturer thinks you should use it. So here's how to change it. For half press setup, when the light is off, half press and hold the mode button, then full press the tail button to cycle through the following sequence.
+
+Search, which is the spot beam, or lumin shield, which is the flat beam or strobe. Once you hit the one you want, release the mode button. The light will remember this setting for half press and hold. The process is the same for setting full press mode. So this means a security person might set half press for strobe to quickly get attention of crowds and traffic while a search and rescue operator might prefer half press sport beam to spot victims at distance and full press stroke for signaling.
+
+A police officer might set half press as flood mode to scan big areas at one go and full press for strobe to disorient suspects at close range. And so the EDC37 adapts to your working needs. This level of customization was never possible before. very very powerful. More useful things that this light can do. Half pressing the power button when the light is off lets you turn on the light at the brightness you want before it even turns on.
+
+So half press the power button you can cycle through 15 lmmens, 100 lumens, 400 lumens, 5500 lumens. If I want that, I full press and it comes on at 1,500 lumens. It's a subtle tweak, but it gives you more control and light discipline. And if you really wanted to be discreet, half press and hold the power button so it turns on at ultra low 15 lm. Do your quiet check.
+
+Once you let go, it turns off. This is impossible to do in every other light. Usually, when you momentarily press anything, you get blasted by a wall of light on turbo. Here's another useful one. Reverse momentary low mode.
+
+So, if you are on 1,500 lumens, checking things out a far and you need to check a map up close or talk to a teammate without blinding them. Half press and hold the power button, it will drop to 15 lmmens. Check your maps, let go, and it goes back to 1,500 lumens. No other light outside of the EDC series can do this reverse momentary low mode from high. None.
+
+Okay. No need to cycle through up and down like the MH12 Pro here. It's small details like this that makes the EDC37 feel so intuitive to use. Now, anything you do will be shown on the OLED screen here which covers brightness level, lumens, and the most important one remaining runtime down to the minute. So, no more battery anxiety or guessing.
+
+With such a huge battery, you can see exactly how much time you have left at any brightness level. So, this is especially important for extended shifts where you need to pay attention to battery life. So, speaking of making it through shifts, the manual lockout switch is black and is moved to the front here. The position is easy to reach with your thumb. Slide it up to lock and then down to unlock.
+
+So, this removes all the silly lock and unlock combinations you find on every other light. Even when the light is on, just slide up and it's locked. Kind of like a kill switch. So, it's a simple, reliable way to prevent accidental activation. This also greatly improves activation speed over the older models.
+
+Even when I draw, I need to wait for it to unlock. Press and hold. Wait for the timer to go. And now I go. For the EDC37, when it's on full lock, just flick down and you are good to go.
+
+On this point, two things were removed from the previous models. First is the semi-lockout mode, which means you can still turbo when the light is locked up. For the EDC37 is now either full lock or none at all, which is okay for me. I rarely use the semi-lockout mode. The second thing that was removed, proximity sensor that dims the light when you turn on with something in front of it.
+
+Again, not a big deal breaker. Removable glass breakers. They come pre-installed from the factory and are new silicon nitrite ceramic tips that can shatter glass with minimal effort. So, if you don't need this type of tools on your light, you can swap them out with normal screws that also come included. So, this makes the light airplane safe and travel safe.
+
+Yes, most airlines will not allow glass breaking tips and anything that looks like a weapon on board. So, this is a great solution that offers even more customization options. But how does it actually feel in use? When it comes to handling and grip, it follows the same rugged styling as the EDC29 with textured pads around key areas for grip. It feels great to hold with or without gloves.
+
+The pocket clip is very thick and is screwed in. So, that's how you can use it without a holster. Some have mentioned that it's not a deep carry pocket clip. Yes, it's not. They intentionally placed it higher so you can easily pull it out.
+
+A small note, if you want to run a wrist lanyard with this, you can with the middle loop here that is large enough to fit a paracord. But what is a dealbreaker for some despite it rugged loop, the EDC37 is still not completely waterproof. It is just weatherproof at IP54. So light rain, mud, dust is okay, but don't go diving with this or drop it in a river. It's not rated for that and you will flood.
+
+Then you have to spend another day drying it out. So let's compare this with similar size lights on the market. The Nightcore TM 12K. here is the closest in size and it gives you 12,000 lumens burst. But when it comes to battery capacity, it's smaller at 4,800 miampere. So runtime is half of the EDC37.
+
+And because of the array LED setup, it can only do flat beam and the beam distance is also half of what the EDC37 can reach. So outside of Nightcore, the Ace Beam M2 comes close 3,200 lumens with different beams. The way they do it is with dedicated flat and sport bezels. Many brands have to resort to this because they don't have the microledd technology that is unique to Ncore. The Loop Gear S05 is another one that comes to mind.
+
+So many of you asked me to check this model out. It does some amazing things like waterproofing and removable batteries, but brightness, runtime, and control still pale in comparison. Do you guys want to see a longer head-to-head between these two lights? Let me know in the comments below. In my opinion, when it comes down to it, for tactical use, the EDC37 is smaller and still outperforms the rest in brightness, runtime, beam distance, and especially in controls and ergonomics.
+
+Okay, no other brand has packed this much innovation into a light of this size. So, should you buy the EDC37? Yes, the EDC37 is bigger than the EDC 29, but that's intentional. Every millimeter is packed with performance. If you absolutely need the slimmer size, stick with the EDC29.
+
+But if you want the best performance possible in a flat light, the extra bunk is worth every gram, right? For me at least, the choice is very clear. For maximum runtime with maximum power in a flat light format, the EDC 37 is the best one right now. 37 proves that Nightcore isn't just making incremental upgrades. They're completely reimagining what's possible. They listen to their user feedback.
+
+They address every major concern and push the limits of flat light technology. So with his massive 8,000 mAh battery, 8,000 lumen output, 7 hour runtime at 1,500 lumens, this is now Nightcore's most advanced and most capable light. So if you've been waiting for a flat light that can truly handle extended operations without compromise, the wait is over. The EDC37 has set a new standard that other brands will be chasing for years to come. The EDC37 is in stock now at nightcore.sg/edc37.
+
+When the EDC29 launched, we sold out in just 2 weeks. With the EDC37's breakthrough features, I expect it to go even faster. And remember, if you're not sure which light best suits your requirements, drop a comment below describing your use case, and I'll personally help you select the right tool. So, if you like to see more in-depth gear analysis, professional techniques, subscribe below and hit the notification bell. I'll see you on the next one.
+
+MJ signing out.

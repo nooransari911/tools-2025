@@ -124,9 +124,9 @@
 
 {{- if not site.Params.assets.disableFingerprinting }}
 {{- $stylesheet := $stylesheet | fingerprint }}
-<link crossorigin="anonymous" href="{{ $stylesheet.RelPermalink }}" integrity="{{ $stylesheet.Data.Integrity }}" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="{{ $stylesheet.RelPermalink }}" integrity="{{ $stylesheet.Data.Integrity }}" rel="stylesheet">
 {{- else }}
-<link crossorigin="anonymous" href="{{ $stylesheet.RelPermalink }}" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="{{ $stylesheet.RelPermalink }}" rel="stylesheet">
 {{- end }}
 
 {{- /* Search */}}
@@ -154,7 +154,7 @@
 <meta name="msapplication-TileColor" content="{{ site.Params.assets.msapplication_TileColor | default "#2e2e33" }}">
 */}}
 
-<link rel="icon" type="image/png" sizes={{ .Site.Params.favicon_size }}x{{ .Site.Params.favicon_size }} href="/favicon-512.png">
+<link rel="icon" type="image/png" sizes={{ .Site.Params.favicon_size }}x{{ .Site.Params.favicon_size }} href="/favicon-128.png">
 
 
 

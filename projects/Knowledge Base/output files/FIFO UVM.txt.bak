@@ -1,0 +1,1634 @@
+======== /home/ansarimn/Downloads/FIFO/consumer.sv ========
+// fifo_consumer.sv
+import fifo_pkg::*;
+
+class fifo_consumer #(parameter int DATA_WIDTH = 8);
+
+  virtual fifo_intf #(DATA_WIDTH) .consumer vif;
+
+  function new(virtual fifo_intf #(DATA_WIDTH) .consumer vif);
+    this.vif = vif;
+  endfunction
+  
+  task main();
+    wait(vif.rst_n);
+    $display("CONSUMER (Lazy): Reset deasserted, starting to read with high-utilization strategy.");
+
+    // We are always ready to accept data from the DUT
+    vif.tb_cb.c_consumer_ready <= 1'b1;
+    vif.tb_cb.c_read_en        <= 1'b0;
+    
+    forever begin
+      // Wait for the next clock edge to sample the DUT status
+      @(vif.tb_cb);
+      
+      // Case 1: High-priority read. FIFO is almost full or full.
+      // We must read aggressively to relieve backpressure.
+      if (vif.tb_cb.status.almost_full || vif.tb_cb.status.full) begin
+      //if (vif.tb_cb.status.full) begin
+        if (vif.tb_cb.d_consumer_valid) begin
+          //$display("CONSUMER (Lazy): High Priority Read at time %0t. Fill count: %0d", $time, vif.tb_cb.fill_count);
+          perform_read();
+        end
+      end
+      
+      // Case 2: Low-priority read. Data is available, but no urgency.
+      // Wait a random number of cycles to let the FIFO fill up.
+      else if (vif.tb_cb.d_consumer_valid) begin
+        int delay_cycles;
+        delay_cycles = $urandom_range(1, 5); // Wait 1 to 5 cycles
+        //$display("CONSUMER (Lazy): Low Priority - delaying read for %0d cycles at time %0t. Fill count: %0d", delay_cycles, $time, vif.tb_cb.fill_count);
+        repeat(delay_cycles) @(vif.tb_cb);
+        
+        // After waiting, check again if data is still valid before reading
+        if (vif.tb_cb.d_consumer_valid) begin
+          perform_read();
+        end
+      end
+      
+      // Case 3: No data available. Do nothing, just wait for the next cycle.
+      else begin
+        // The forever loop's initial @(vif.tb_cb) handles the wait.
+      end
+    end
+  endtask
+
+  // Helper task for a single read operation
+  task perform_read();
+    vif.tb_cb.c_read_en <= 1'b1;
+    @(vif.tb_cb);
+    vif.tb_cb.c_read_en <= 1'b0;
+  endtask
+
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/design.sv ========
+// design.sv
+module sync_fifo #(
+  parameter DEPTH = 16,
+  parameter ALMOST_FULL_THRESH = 12,
+  parameter ALMOST_EMPTY_THRESH = 4
+)(
+  fifo_intf.fifo_core fifo_bus
+);
+  localparam DATA_WIDTH = $bits (fifo_bus.data.write_data);
+  localparam PTR_WIDTH  = $clog2(DEPTH);
+
+  typedef struct packed {
+    logic [DATA_WIDTH-1:0] data;
+    logic [7:0]            id;
+  } fifo_entry_t;
+
+
+  logic [PTR_WIDTH-1:0]   write_ptr, read_ptr;
+  fifo_entry_t memory [DEPTH];
+  logic [PTR_WIDTH-1:0] fill_level;
+
+  logic [PTR_WIDTH:0]     next_write_ptr, next_read_ptr;
+  fifo_entry_t next_write_entry;
+  logic [7:0]			  next_ip_id, next_op_id;
+
+  logic do_write, do_read;
+
+
+
+  assign fill_level = write_ptr - read_ptr;
+  assign fifo_bus.fill_count = fill_level;
+  assign fifo_bus.status.empty = (fill_level == 0);
+  assign fifo_bus.status.full  = (fill_level == DEPTH);
+  assign fifo_bus.status.almost_empty = (fill_level <= ALMOST_EMPTY_THRESH);
+  assign fifo_bus.status.almost_full  = (fill_level >= ALMOST_FULL_THRESH);
+
+  assign fifo_bus.d_producer_ready = !fifo_bus.status.full;
+  assign fifo_bus.d_consumer_valid = !fifo_bus.status.empty;
+
+  assign do_write = fifo_bus.control.write_en && fifo_bus.d_producer_ready && fifo_bus.p_producer_valid;
+  assign do_read  = fifo_bus.control.read_en  && fifo_bus.d_consumer_valid && fifo_bus.c_consumer_ready;
+  assign next_write_entry.data = fifo_bus.data.write_data;
+  assign next_write_entry.id = fifo_bus.ip_id;
+
+
+
+  always_comb begin
+    next_write_ptr = write_ptr;
+    next_read_ptr  = read_ptr;
+    next_op_id	   = '0;
+
+
+    if (do_write) begin
+      next_write_ptr = write_ptr + 1;
+    end
+
+    if (do_read) begin
+      next_read_ptr = read_ptr + 1;
+    end
+  end
+
+  always_ff @(posedge fifo_bus.clk) begin
+    write_ptr <= next_write_ptr;
+    read_ptr  <= next_read_ptr;
+
+
+    if (!fifo_bus.rst_n) begin
+      write_ptr <= '0;
+      read_ptr  <= '0;
+      fifo_bus.data.read_data <= '0;
+      fifo_bus.op_id <= '0;
+    end else begin
+      if (do_write) begin
+        memory[write_ptr] <= next_write_entry;
+      end
+
+      if (do_read) begin
+        fifo_bus.data.read_data <= memory [read_ptr].data;
+        fifo_bus.op_id <= memory [read_ptr].id;
+      end
+    end
+  end
+
+endmodule
+
+======== /home/ansarimn/Downloads/FIFO/driver.sv ========
+// fifo_driver.sv
+import fifo_pkg::*;
+
+class fifo_driver #(parameter int DATA_WIDTH = 8);
+  
+  virtual fifo_intf #(DATA_WIDTH) .driver vif;
+  mailbox #(fifo_transaction #(DATA_WIDTH)) gen2drv;
+
+  function new(
+    virtual fifo_intf #(DATA_WIDTH) .driver vif,
+    mailbox #(fifo_transaction #(DATA_WIDTH)) gen2drv
+  );
+    this.vif = vif;
+    this.gen2drv = gen2drv;
+  endfunction
+
+  task main();
+    fifo_transaction #(DATA_WIDTH) txn;
+    wait(vif.rst_n);
+    $display("DRIVER: Reset deasserted, starting to drive.");
+    
+    vif.tb_cb.p_write_en     <= 1'b0;
+    vif.tb_cb.p_producer_valid <= 1'b0;
+    vif.tb_cb.ip_id          <= '0;
+
+    forever begin
+      gen2drv.get(txn);
+      wait(vif.tb_cb.d_producer_ready);
+      
+      @(vif.tb_cb);
+      vif.tb_cb.p_write_en     <= 1'b1;
+      vif.tb_cb.p_producer_valid <= 1'b1;
+      vif.tb_cb.p_write_data   <= txn.data;
+      vif.tb_cb.ip_id          <= txn.txn_id; // FIX: Drive the transaction ID
+      
+      @(vif.tb_cb);
+      vif.tb_cb.p_write_en     <= 1'b0;
+      vif.tb_cb.p_producer_valid <= 1'b0;
+      vif.tb_cb.ip_id          <= '0;
+    end
+  endtask
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/env.sv ========
+// fifo_env.sv
+import fifo_pkg::*;
+
+class fifo_environment #(parameter int DATA_WIDTH = 8);
+
+  virtual fifo_intf #(DATA_WIDTH) vif;
+  
+  // Components
+  fifo_generator      #(DATA_WIDTH) gen;
+  fifo_driver         #(DATA_WIDTH) drv;
+  fifo_consumer       #(DATA_WIDTH) cons;
+  fifo_monitor        #(DATA_WIDTH) mon;
+  performance_monitor              perf_mon; // ADDED
+  fifo_scoreboard     #(DATA_WIDTH) scb;
+
+  // Mailboxes
+  mailbox #(fifo_transaction #(DATA_WIDTH)) gen2drv_mbx;
+  mailbox #(fifo_transaction #(DATA_WIDTH)) prod_mon2scb_mbx;
+  mailbox #(fifo_transaction #(DATA_WIDTH)) cons_mon2scb_mbx;
+
+  function new(virtual fifo_intf #(DATA_WIDTH) vif);
+    this.vif = vif;
+    gen2drv_mbx = new();
+    prod_mon2scb_mbx = new();
+    cons_mon2scb_mbx = new();
+  endfunction
+
+  function void build_phase();
+    gen      = new(gen2drv_mbx); 
+    drv      = new(vif.driver, gen2drv_mbx); 
+    cons     = new(vif.consumer);
+    mon      = new(vif, prod_mon2scb_mbx, cons_mon2scb_mbx);
+    perf_mon = new(vif); // ADDED
+    scb      = new(prod_mon2scb_mbx, cons_mon2scb_mbx);
+  endfunction
+
+  task run_phase(int num_txns);
+    $display("ENVIRONMENT: Starting all components...");
+    fork
+      gen.main(num_txns);
+      drv.main();
+      cons.main();
+      mon.main();
+      perf_mon.main(); // ADDED
+      scb.main();
+    join_none
+  endtask
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/fifo_intf.sv ========
+// fifo_intf.sv
+interface fifo_intf #(
+  parameter DATA_WIDTH = 8
+);
+
+  typedef struct packed {
+    logic write_en;
+    logic read_en;
+  } fifo_control_t;
+
+  typedef struct packed {
+    logic full;
+    logic empty;
+    logic almost_full;
+    logic almost_empty;
+  } fifo_status_t;
+
+  typedef struct packed {
+    logic [DATA_WIDTH-1:0] write_data;
+    logic [DATA_WIDTH-1:0] read_data;
+  } fifo_data_t;
+
+  typedef struct packed {
+    logic ready;
+    logic valid;
+  } channel_handshake_t;
+
+
+  logic clk;
+  logic rst_n;
+  logic [31:0] fill_count;
+  logic [7:0] ip_id, op_id;
+
+
+  logic p_write_en;
+  logic c_read_en;
+  logic [DATA_WIDTH-1:0] p_write_data;
+  logic [DATA_WIDTH-1:0] c_read_data;
+  logic p_producer_valid;
+  logic d_producer_ready;
+  logic d_consumer_valid;
+  logic c_consumer_ready;
+
+
+
+  fifo_control_t control;
+  fifo_status_t  status;
+  fifo_data_t    data;
+
+  channel_handshake_t producer_hshake, consumer_hshake;
+
+
+  assign control.write_en = p_write_en;
+  assign control.read_en  = c_read_en;
+  assign data.write_data  = p_write_data;
+  assign c_read_data	  = data.read_data;
+  assign producer_hshake.valid = p_producer_valid;
+  assign producer_hshake.ready = d_producer_ready;
+  assign consumer_hshake.valid = d_consumer_valid;
+  assign consumer_hshake.ready = c_consumer_ready;
+
+  clocking tb_cb @(posedge clk);
+    default input #1step output #0ps;
+    output p_write_en, c_read_en, p_write_data, ip_id, p_producer_valid, c_consumer_ready;
+    input status, fill_count, c_read_data, op_id, d_producer_ready, d_consumer_valid;
+  endclocking
+
+  modport driver   (clocking tb_cb, input clk, input rst_n);
+  modport consumer (clocking tb_cb, input clk, input rst_n);
+
+  modport fifo_core (
+    input  control,
+    inout  data,
+    output status,
+    output fill_count,
+    input  p_producer_valid,
+    output d_producer_ready,
+    output d_consumer_valid,
+    input  c_consumer_ready,
+    input  ip_id,
+    output op_id,
+    input  clk, 
+    input  rst_n
+  );
+    
+    
+  modport monitor (
+    input control,
+    input status,
+    input data,
+    input fill_count,
+    input producer_hshake,
+    input consumer_hshake,
+    input ip_id,
+    input op_id,
+    input clk, 
+    input rst_n
+  );
+
+endinterface
+
+======== /home/ansarimn/Downloads/FIFO/fifo_package.sv ========
+// fifo_pkg.sv
+package fifo_pkg;
+
+  class fifo_transaction #(parameter int DATA_WIDTH = 8);
+
+    protected static int next_id = 0;
+    int unsigned txn_id;
+
+    // Stimulus (driven by driver)
+    rand logic [DATA_WIDTH-1:0] data;
+    
+    // Observed Response (captured by monitor)
+    logic [DATA_WIDTH-1:0] actual_data;
+    logic [7:0]            actual_op_id;
+
+    function new();
+      this.txn_id = next_id++;
+    endfunction
+    
+    function void print_full(string result);
+      $display("\n\n-------------------- TXN #%0d | %s --------------------", txn_id, result);
+      $display("  Stimulus: Data=0x%h, ID=%0d", data, txn_id);
+      $display("  Expected: Data=0x%h, ID=%0d", data, txn_id); // Expected is same as stimulus
+      $display("  Actual:   Data=0x%h, ID=%0d", actual_data, actual_op_id);
+      $display("------------------------------------------------------------------");
+    endfunction
+
+  endclass
+
+endpackage
+
+======== /home/ansarimn/Downloads/FIFO/generator.sv ========
+// fifo_generator.sv
+import fifo_pkg::*;
+
+class fifo_generator #(parameter int DATA_WIDTH = 8);
+  
+  bit done = 1'b0;
+  mailbox #(fifo_transaction #(DATA_WIDTH)) gen2drv;
+
+  function new(mailbox #(fifo_transaction #(DATA_WIDTH)) gen2drv);
+    this.gen2drv = gen2drv;
+  endfunction
+
+  task main(int num_txns);
+    repeat (num_txns) begin
+      fifo_transaction #(DATA_WIDTH) txn = new();
+      if (!txn.randomize()) begin
+        $fatal(0, "Transaction randomization failed!");
+      end
+      
+      gen2drv.put(txn);
+    end
+    $display("GENERATOR: Finished sending all %0d transactions.", num_txns);
+    done = 1'b1;
+  endtask
+
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/monitor.sv ========
+// fifo_monitor.sv
+import fifo_pkg::*;
+
+class fifo_monitor #(parameter int DATA_WIDTH = 8);
+
+  virtual fifo_intf #(DATA_WIDTH) vif;
+  mailbox #(fifo_transaction #(DATA_WIDTH)) prod_mon2scb;
+  mailbox #(fifo_transaction #(DATA_WIDTH)) cons_mon2scb;
+  
+  function new(
+    virtual fifo_intf #(DATA_WIDTH) vif,
+    mailbox #(fifo_transaction #(DATA_WIDTH)) prod_mon2scb,
+    mailbox #(fifo_transaction #(DATA_WIDTH)) cons_mon2scb
+  );
+    this.vif = vif;
+    this.prod_mon2scb = prod_mon2scb;
+    this.cons_mon2scb = cons_mon2scb;
+  endfunction
+
+  task main();
+    $display("MONITOR: Starting to monitor both producer and consumer ports.");
+    fork
+      monitor_producer();
+      monitor_consumer();
+    join_none
+  endtask
+
+  // Watches the producer (write) side of the interface
+  task monitor_producer();
+    forever begin
+      // Manually wait for the clock edge. We are not using a clocking block.
+      @(posedge vif.clk); 
+      
+      // Sample the raw interface signals as seen by the DUT.
+      // This logic now correctly mirrors the DUT's 'do_write' condition.
+      if (vif.p_producer_valid && vif.d_producer_ready && vif.p_write_en) begin
+        fifo_transaction #(DATA_WIDTH) txn = new();
+        txn.txn_id = vif.ip_id; // Capture the ID from the bus
+        txn.data = vif.p_write_data;
+        prod_mon2scb.put(txn);
+        //$display("MONITOR (PROD): Saw write of txn #%0d", txn.txn_id);
+      end
+    end
+  endtask
+  
+  // Watches the consumer (read) side of the interface
+  task monitor_consumer();
+    forever begin
+      // Manually wait for the clock edge.
+      @(posedge vif.clk);
+
+      // Sample the raw interface signals as seen by the DUT.
+      // This logic now correctly mirrors the DUT's 'do_read' condition.
+      if (vif.d_consumer_valid && vif.c_consumer_ready && vif.c_read_en) begin
+        fifo_transaction #(DATA_WIDTH) txn = new();
+        // The read_data and op_id are outputs from the DUT's flops,
+        // so they are stable after the clock edge where 'do_read' was true.
+        // We need to sample them carefully. The 'do_read' is asserted for one cycle.
+        // The DUT will place data on the bus in the *next* cycle.
+        
+        // Correct read sampling: Data is valid on the cycle AFTER the read enable.
+        // Therefore, we wait one more cycle to sample the output.
+        @(posedge vif.clk);
+
+        txn.actual_data = vif.data.read_data;
+        txn.actual_op_id = vif.op_id;
+        cons_mon2scb.put(txn);
+        //$display("MONITOR (CONS): Saw read of txn with id #%0d", txn.actual_op_id);
+      end
+    end
+  endtask
+
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/performance_monitor.sv ========
+// performance_monitor.sv
+
+class performance_monitor;
+
+  virtual fifo_intf vif;
+  
+  // --- FIX: Changed from dynamic array to a queue ---
+  int unsigned fill_count_history[$];
+  
+  function new(virtual fifo_intf vif);
+    this.vif = vif;
+  endfunction
+
+  task main();
+    $display("PERF_MONITOR: Starting to sample fill_count.");
+    wait(vif.rst_n);
+    forever begin
+      @(posedge vif.clk);
+      // Now this is the correct usage for a queue
+      fill_count_history.push_back(vif.fill_count);
+    end
+  endtask
+
+  // Function to print the collected data as a simple text-based graph
+  function void print_report(int max_depth);
+    int scale_factor;
+    int bar_length;
+    string bar;
+    
+    $display("\n-------------------- FIFO Fill Level vs. Time --------------------");
+    $display("Max Depth: %0d | Samples Collected: %0d", max_depth, fill_count_history.size());
+    $display("------------------------------------------------------------------");
+
+    // To iterate over a queue, we can still use a standard for loop with index
+    if (fill_count_history.size() == 0) return; // Prevent division by zero
+    
+    scale_factor = (fill_count_history.size() / 100) + 1; // Aim for max 100 lines
+    
+    for (int i = 0; i < fill_count_history.size(); i = i + scale_factor) begin
+      bar = "";
+      // Scale bar length to a reasonable width (e.g., 50 characters)
+      bar_length = (fill_count_history[i] * 50) / max_depth;
+      for (int j = 0; j < bar_length; j++) begin
+        bar = {bar, "#"};
+      end
+      // Format the output line
+      // Note: The time is i * 10ns because clk period is 10ns
+      $display("Time %5dns | Fill: %2d | %s", i * 10, fill_count_history[i], bar);
+    end
+    
+    $display("------------------------------------------------------------------\n");
+  endfunction
+
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/reference_model.sv ========
+// fifo_reference_model.sv
+import fifo_pkg::*;
+class fifo_reference_model #(parameter int DATA_WIDTH = 8);
+
+  mailbox #(fifo_transaction #(DATA_WIDTH)) con2ref;
+  mailbox #(fifo_transaction #(DATA_WIDTH)) ref2scb;
+
+  function new(
+    mailbox #(fifo_transaction #(DATA_WIDTH)) con2ref,
+    mailbox #(fifo_transaction #(DATA_WIDTH)) ref2scb
+  );
+    this.con2ref = con2ref;
+    this.ref2scb  = ref2scb;
+  endfunction
+
+  task main();
+    fifo_transaction #(DATA_WIDTH) txn;
+    forever begin
+      // Get transaction with stimulus and actual data
+      con2ref.get(txn);
+
+      // For a FIFO, the expected data is simply the original stimulus data
+      txn.expected_data = txn.data;
+      
+      // FIX: Populate the expected output ID. For this design, it's the transaction ID.
+      //txn.expected_op_id = txn.txn_id;
+      
+      //$display("REF_MODEL: Populated expected data 0x%h, id %0d for TXN #%0d", txn.expected_data, txn.expected_op_id, txn.txn_id);
+
+      // Send the fully populated transaction to the scoreboard
+      ref2scb.put(txn);
+    end
+  endtask
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/scoreboard.sv ========
+// fifo_scoreboard.sv
+import fifo_pkg::*;
+
+class fifo_scoreboard #(parameter int DATA_WIDTH = 8);
+
+  mailbox #(fifo_transaction #(DATA_WIDTH)) prod_mon2scb;
+  mailbox #(fifo_transaction #(DATA_WIDTH)) cons_mon2scb;
+  
+  fifo_transaction #(DATA_WIDTH) expected_q[int]; // Associative array for in-flight txns
+  
+  int passed_txn_count = 0;
+  int failed_txn_count = 0;
+  
+  // --- ADDITIONS for robust termination ---
+  int   num_txns_to_check = 0;
+  event all_txns_checked;
+  // ----------------------------------------
+
+  function new(
+    mailbox #(fifo_transaction #(DATA_WIDTH)) prod_mon2scb,
+    mailbox #(fifo_transaction #(DATA_WIDTH)) cons_mon2scb
+  );
+    this.prod_mon2scb = prod_mon2scb;
+    this.cons_mon2scb = cons_mon2scb;
+  endfunction
+
+  task main();
+    $display("SCOREBOARD: Starting...");
+    fork
+      collect_expected();
+      check_actual();
+    join_none
+  endtask
+
+  task collect_expected();
+    fifo_transaction #(DATA_WIDTH) txn;
+    forever begin
+      prod_mon2scb.get(txn);
+      expected_q[txn.txn_id] = txn;
+    end
+  endtask
+
+  task check_actual();
+    fifo_transaction #(DATA_WIDTH) actual_txn, expected_txn;
+    forever begin
+      cons_mon2scb.get(actual_txn);
+
+      if (expected_q.exists(actual_txn.actual_op_id)) begin
+        expected_txn = expected_q[actual_txn.actual_op_id];
+        
+        actual_txn.txn_id = expected_txn.txn_id;
+        actual_txn.data   = expected_txn.data;
+
+        if (actual_txn.actual_data === expected_txn.data) begin
+          passed_txn_count++;
+          actual_txn.print_full("PASSED");
+        end else begin
+          failed_txn_count++;
+          actual_txn.print_full("FAILED - Data Mismatch");
+          $error("SCOREBOARD: Mismatch on TXN #%0d", actual_txn.txn_id);
+        end
+        expected_q.delete(actual_txn.actual_op_id);
+      end else begin
+        failed_txn_count++;
+        $error("SCOREBOARD: Received unexpected transaction with ID #%0d", actual_txn.actual_op_id);
+      end
+      
+      // --- ADDITION: Check for test completion ---
+      if ((passed_txn_count + failed_txn_count) == num_txns_to_check) begin
+        -> all_txns_checked;
+      end
+      // ------------------------------------------
+    end
+  endtask
+
+  task report_summary();
+    if (expected_q.num() > 0) begin
+      $error("SCOREBOARD: %0d transactions were sent but never received!", expected_q.num());
+      foreach(expected_q[i]) begin
+          $display("  --> Missing TXN #%0d", i);
+          failed_txn_count++;
+      end
+    end
+
+    $display("\n-------------------- TEST SUMMARY --------------------");
+    $display("Total transactions checked: %0d", passed_txn_count + failed_txn_count);
+    $display("Passed transactions: %0d", passed_txn_count);
+    $display("Failed transactions: %0d", failed_txn_count);
+    $display("------------------------------------------------------\n");
+    if (failed_txn_count == 0 && (passed_txn_count == num_txns_to_check)) begin
+      $display("********************* TEST PASSED *********************");
+    end else begin
+      $display("********************* TEST FAILED *********************");
+    end
+  endtask
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/testbench.sv ========
+// fifo_testbench.sv
+`timescale 1ns/1ps
+
+`include "fifo_package.sv"
+`include "fifo_intf.sv"
+`include "generator.sv"
+`include "driver.sv"
+`include "consumer.sv"
+`include "monitor.sv"
+`include "performance_monitor.sv"
+`include "scoreboard.sv"
+`include "env.sv"
+`include "test.sv"
+
+// `reference_model.sv` is no longer used
+// `transaction.sv` is redundant with the package
+
+module fifo_testbench;
+
+  parameter DATA_WIDTH = 8;
+  parameter DEPTH = 16;
+
+  logic clk;
+  logic rst_n;
+  
+  fifo_intf #(DATA_WIDTH) fifo_if();
+
+  assign fifo_if.clk = clk;
+  assign fifo_if.rst_n = rst_n;
+
+  sync_fifo #(
+    .DEPTH(DEPTH)
+  ) dut (
+    .fifo_bus(fifo_if.fifo_core)
+  );
+
+  initial begin
+    clk = 0;
+    forever #5ns clk = ~clk;
+  end
+
+  initial begin
+    fifo_random_test test;
+    
+    rst_n = 1'b0;
+    @(posedge clk);
+    @(posedge clk);
+    rst_n = 1'b1;
+    
+    test = new();
+    test.run_test(fifo_if);
+  end
+
+endmodule
+
+======== /home/ansarimn/Downloads/FIFO/test.sv ========
+// fifo_test.sv
+import fifo_pkg::*;
+
+class base_test #(parameter int DATA_WIDTH = 8);
+  int unsigned num_txns_to_run = 100;
+  fifo_environment #(DATA_WIDTH) env;
+
+  function new();
+  endfunction
+
+  virtual task run_phase();
+    env.scb.num_txns_to_check = num_txns_to_run;
+
+    env.run_phase(num_txns_to_run);
+    
+    $display("TEST: Test components running. Waiting for scoreboard to signal completion...");
+    wait(env.scb.all_txns_checked.triggered);
+    
+    $display("TEST: All transactions checked. Soaking for 50ns...");
+    #50ns;
+
+    // --- ADDITION: Print performance report before finishing ---
+    env.perf_mon.print_report(16); // 16 is the DUT's DEPTH
+
+    env.scb.report_summary();
+    $finish;
+  endtask
+
+  task run_test(virtual fifo_intf #(DATA_WIDTH) vif);
+    env = new(vif);
+    env.build_phase();
+    this.run_phase();
+  endtask
+  
+endclass
+
+class fifo_random_test extends base_test #(8);
+  // ... (no changes needed here)
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/transaction.sv ========
+// fifo_transaction.sv
+class fifo_transaction #(parameter int DATA_WIDTH = 8);
+
+  protected static int next_id = 0;
+  int unsigned txn_id;
+
+  // Stimulus
+  rand logic [DATA_WIDTH-1:0] data;
+
+  // Fields to be populated by the testbench components
+  logic [DATA_WIDTH-1:0] actual_data;
+  logic [7:0]            actual_op_id;    // UPDATED: To capture the output ID from the FIFO
+  logic [DATA_WIDTH-1:0] expected_data;
+  logic [7:0]            expected_op_id;  // UPDATED: To hold the expected ID for comparison
+
+  function new();
+    this.txn_id = next_id++;
+  endfunction
+
+  function void print_stimulus(string tag = "STIM");
+    $display("\n\n[%s] TXN #%0d: Sent Data = 0x%h", tag, txn_id, data);
+  endfunction
+  
+  function void print_full(string result);
+    $display("\n\n-------------------- TXN #%0d | %s --------------------", txn_id, result);
+     $display("  Stimulus: Data=0x%h, ID=%0d", data, txn_id);
+     $display("  Expected: Data=0x%h, ID=%0d", expected_data, expected_op_id);
+     $display("  Actual:   Data=0x%h, ID=%0d", actual_data, actual_op_id);
+     $display("------------------------------------------------------------------");
+  endfunction
+
+endclass
+
+======== /home/ansarimn/Downloads/FIFO/xrun.log ========
+xrun: 23.09-s001: (c) Copyright 1995-2023 Cadence Design Systems, Inc.
+TOOL:	xrun	23.09-s001: Started on Nov 13, 2025 at 23:02:00 EST
+xrun
+	-Q
+	-unbuffered
+	-timescale 1ns/1ns
+	-sysv
+	-access +rw
+	design.sv
+	testbench.sv
+	Top level design units:
+		fifo_pkg
+		$unit_0x67f934e9
+		fifo_testbench
+Loading snapshot worklib.fifo_testbench:sv .................... Done
+SVSEED default: 1
+xcelium> source /xcelium23.09/tools/xcelium/files/xmsimrc
+xcelium> run
+ENVIRONMENT: Starting all components...
+TEST: Test components running. Waiting for scoreboard to signal completion...
+GENERATOR: Finished sending all 100 transactions.
+MONITOR: Starting to monitor both producer and consumer ports.
+PERF_MONITOR: Starting to sample fill_count.
+SCOREBOARD: Starting...
+DRIVER: Reset deasserted, starting to drive.
+CONSUMER (Lazy): Reset deasserted, starting to read with high-utilization strategy.
+
+
+-------------------- TXN #0 | PASSED --------------------
+  Stimulus: Data=0xad, ID=0
+  Expected: Data=0xad, ID=0
+  Actual:   Data=0xad, ID=0
+------------------------------------------------------------------
+
+
+-------------------- TXN #1 | PASSED --------------------
+  Stimulus: Data=0x65, ID=1
+  Expected: Data=0x65, ID=1
+  Actual:   Data=0x65, ID=1
+------------------------------------------------------------------
+
+
+-------------------- TXN #2 | PASSED --------------------
+  Stimulus: Data=0xdd, ID=2
+  Expected: Data=0xdd, ID=2
+  Actual:   Data=0xdd, ID=2
+------------------------------------------------------------------
+
+
+-------------------- TXN #3 | PASSED --------------------
+  Stimulus: Data=0x0a, ID=3
+  Expected: Data=0x0a, ID=3
+  Actual:   Data=0x0a, ID=3
+------------------------------------------------------------------
+
+
+-------------------- TXN #4 | PASSED --------------------
+  Stimulus: Data=0xca, ID=4
+  Expected: Data=0xca, ID=4
+  Actual:   Data=0xca, ID=4
+------------------------------------------------------------------
+
+
+-------------------- TXN #5 | PASSED --------------------
+  Stimulus: Data=0xb5, ID=5
+  Expected: Data=0xb5, ID=5
+  Actual:   Data=0xb5, ID=5
+------------------------------------------------------------------
+
+
+-------------------- TXN #6 | PASSED --------------------
+  Stimulus: Data=0x2e, ID=6
+  Expected: Data=0x2e, ID=6
+  Actual:   Data=0x2e, ID=6
+------------------------------------------------------------------
+
+
+-------------------- TXN #7 | PASSED --------------------
+  Stimulus: Data=0xc6, ID=7
+  Expected: Data=0xc6, ID=7
+  Actual:   Data=0xc6, ID=7
+------------------------------------------------------------------
+
+
+-------------------- TXN #8 | PASSED --------------------
+  Stimulus: Data=0xec, ID=8
+  Expected: Data=0xec, ID=8
+  Actual:   Data=0xec, ID=8
+------------------------------------------------------------------
+
+
+-------------------- TXN #9 | PASSED --------------------
+  Stimulus: Data=0x51, ID=9
+  Expected: Data=0x51, ID=9
+  Actual:   Data=0x51, ID=9
+------------------------------------------------------------------
+
+
+-------------------- TXN #10 | PASSED --------------------
+  Stimulus: Data=0xdc, ID=10
+  Expected: Data=0xdc, ID=10
+  Actual:   Data=0xdc, ID=10
+------------------------------------------------------------------
+
+
+-------------------- TXN #11 | PASSED --------------------
+  Stimulus: Data=0x3c, ID=11
+  Expected: Data=0x3c, ID=11
+  Actual:   Data=0x3c, ID=11
+------------------------------------------------------------------
+
+
+-------------------- TXN #12 | PASSED --------------------
+  Stimulus: Data=0x62, ID=12
+  Expected: Data=0x62, ID=12
+  Actual:   Data=0x62, ID=12
+------------------------------------------------------------------
+
+
+-------------------- TXN #13 | PASSED --------------------
+  Stimulus: Data=0x2a, ID=13
+  Expected: Data=0x2a, ID=13
+  Actual:   Data=0x2a, ID=13
+------------------------------------------------------------------
+
+
+-------------------- TXN #14 | PASSED --------------------
+  Stimulus: Data=0x41, ID=14
+  Expected: Data=0x41, ID=14
+  Actual:   Data=0x41, ID=14
+------------------------------------------------------------------
+
+
+-------------------- TXN #15 | PASSED --------------------
+  Stimulus: Data=0xac, ID=15
+  Expected: Data=0xac, ID=15
+  Actual:   Data=0xac, ID=15
+------------------------------------------------------------------
+
+
+-------------------- TXN #16 | PASSED --------------------
+  Stimulus: Data=0xc2, ID=16
+  Expected: Data=0xc2, ID=16
+  Actual:   Data=0xc2, ID=16
+------------------------------------------------------------------
+
+
+-------------------- TXN #17 | PASSED --------------------
+  Stimulus: Data=0x34, ID=17
+  Expected: Data=0x34, ID=17
+  Actual:   Data=0x34, ID=17
+------------------------------------------------------------------
+
+
+-------------------- TXN #18 | PASSED --------------------
+  Stimulus: Data=0x25, ID=18
+  Expected: Data=0x25, ID=18
+  Actual:   Data=0x25, ID=18
+------------------------------------------------------------------
+
+
+-------------------- TXN #19 | PASSED --------------------
+  Stimulus: Data=0xb7, ID=19
+  Expected: Data=0xb7, ID=19
+  Actual:   Data=0xb7, ID=19
+------------------------------------------------------------------
+
+
+-------------------- TXN #20 | PASSED --------------------
+  Stimulus: Data=0xbc, ID=20
+  Expected: Data=0xbc, ID=20
+  Actual:   Data=0xbc, ID=20
+------------------------------------------------------------------
+
+
+-------------------- TXN #21 | PASSED --------------------
+  Stimulus: Data=0x27, ID=21
+  Expected: Data=0x27, ID=21
+  Actual:   Data=0x27, ID=21
+------------------------------------------------------------------
+
+
+-------------------- TXN #22 | PASSED --------------------
+  Stimulus: Data=0xf9, ID=22
+  Expected: Data=0xf9, ID=22
+  Actual:   Data=0xf9, ID=22
+------------------------------------------------------------------
+
+
+-------------------- TXN #23 | PASSED --------------------
+  Stimulus: Data=0x78, ID=23
+  Expected: Data=0x78, ID=23
+  Actual:   Data=0x78, ID=23
+------------------------------------------------------------------
+
+
+-------------------- TXN #24 | PASSED --------------------
+  Stimulus: Data=0x5f, ID=24
+  Expected: Data=0x5f, ID=24
+  Actual:   Data=0x5f, ID=24
+------------------------------------------------------------------
+
+
+-------------------- TXN #25 | PASSED --------------------
+  Stimulus: Data=0xa9, ID=25
+  Expected: Data=0xa9, ID=25
+  Actual:   Data=0xa9, ID=25
+------------------------------------------------------------------
+
+
+-------------------- TXN #26 | PASSED --------------------
+  Stimulus: Data=0xeb, ID=26
+  Expected: Data=0xeb, ID=26
+  Actual:   Data=0xeb, ID=26
+------------------------------------------------------------------
+
+
+-------------------- TXN #27 | PASSED --------------------
+  Stimulus: Data=0xdf, ID=27
+  Expected: Data=0xdf, ID=27
+  Actual:   Data=0xdf, ID=27
+------------------------------------------------------------------
+
+
+-------------------- TXN #28 | PASSED --------------------
+  Stimulus: Data=0xe6, ID=28
+  Expected: Data=0xe6, ID=28
+  Actual:   Data=0xe6, ID=28
+------------------------------------------------------------------
+
+
+-------------------- TXN #29 | PASSED --------------------
+  Stimulus: Data=0x7e, ID=29
+  Expected: Data=0x7e, ID=29
+  Actual:   Data=0x7e, ID=29
+------------------------------------------------------------------
+
+
+-------------------- TXN #30 | PASSED --------------------
+  Stimulus: Data=0xcf, ID=30
+  Expected: Data=0xcf, ID=30
+  Actual:   Data=0xcf, ID=30
+------------------------------------------------------------------
+
+
+-------------------- TXN #31 | PASSED --------------------
+  Stimulus: Data=0xb3, ID=31
+  Expected: Data=0xb3, ID=31
+  Actual:   Data=0xb3, ID=31
+------------------------------------------------------------------
+
+
+-------------------- TXN #32 | PASSED --------------------
+  Stimulus: Data=0x4d, ID=32
+  Expected: Data=0x4d, ID=32
+  Actual:   Data=0x4d, ID=32
+------------------------------------------------------------------
+
+
+-------------------- TXN #33 | PASSED --------------------
+  Stimulus: Data=0xac, ID=33
+  Expected: Data=0xac, ID=33
+  Actual:   Data=0xac, ID=33
+------------------------------------------------------------------
+
+
+-------------------- TXN #34 | PASSED --------------------
+  Stimulus: Data=0x15, ID=34
+  Expected: Data=0x15, ID=34
+  Actual:   Data=0x15, ID=34
+------------------------------------------------------------------
+
+
+-------------------- TXN #35 | PASSED --------------------
+  Stimulus: Data=0x98, ID=35
+  Expected: Data=0x98, ID=35
+  Actual:   Data=0x98, ID=35
+------------------------------------------------------------------
+
+
+-------------------- TXN #36 | PASSED --------------------
+  Stimulus: Data=0xbe, ID=36
+  Expected: Data=0xbe, ID=36
+  Actual:   Data=0xbe, ID=36
+------------------------------------------------------------------
+
+
+-------------------- TXN #37 | PASSED --------------------
+  Stimulus: Data=0x7f, ID=37
+  Expected: Data=0x7f, ID=37
+  Actual:   Data=0x7f, ID=37
+------------------------------------------------------------------
+
+
+-------------------- TXN #38 | PASSED --------------------
+  Stimulus: Data=0x5e, ID=38
+  Expected: Data=0x5e, ID=38
+  Actual:   Data=0x5e, ID=38
+------------------------------------------------------------------
+
+
+-------------------- TXN #39 | PASSED --------------------
+  Stimulus: Data=0x85, ID=39
+  Expected: Data=0x85, ID=39
+  Actual:   Data=0x85, ID=39
+------------------------------------------------------------------
+
+
+-------------------- TXN #40 | PASSED --------------------
+  Stimulus: Data=0x3e, ID=40
+  Expected: Data=0x3e, ID=40
+  Actual:   Data=0x3e, ID=40
+------------------------------------------------------------------
+
+
+-------------------- TXN #41 | PASSED --------------------
+  Stimulus: Data=0x44, ID=41
+  Expected: Data=0x44, ID=41
+  Actual:   Data=0x44, ID=41
+------------------------------------------------------------------
+
+
+-------------------- TXN #42 | PASSED --------------------
+  Stimulus: Data=0x17, ID=42
+  Expected: Data=0x17, ID=42
+  Actual:   Data=0x17, ID=42
+------------------------------------------------------------------
+
+
+-------------------- TXN #43 | PASSED --------------------
+  Stimulus: Data=0x50, ID=43
+  Expected: Data=0x50, ID=43
+  Actual:   Data=0x50, ID=43
+------------------------------------------------------------------
+
+
+-------------------- TXN #44 | PASSED --------------------
+  Stimulus: Data=0xd1, ID=44
+  Expected: Data=0xd1, ID=44
+  Actual:   Data=0xd1, ID=44
+------------------------------------------------------------------
+
+
+-------------------- TXN #45 | PASSED --------------------
+  Stimulus: Data=0x9f, ID=45
+  Expected: Data=0x9f, ID=45
+  Actual:   Data=0x9f, ID=45
+------------------------------------------------------------------
+
+
+-------------------- TXN #46 | PASSED --------------------
+  Stimulus: Data=0xe0, ID=46
+  Expected: Data=0xe0, ID=46
+  Actual:   Data=0xe0, ID=46
+------------------------------------------------------------------
+
+
+-------------------- TXN #47 | PASSED --------------------
+  Stimulus: Data=0x27, ID=47
+  Expected: Data=0x27, ID=47
+  Actual:   Data=0x27, ID=47
+------------------------------------------------------------------
+
+
+-------------------- TXN #48 | PASSED --------------------
+  Stimulus: Data=0x57, ID=48
+  Expected: Data=0x57, ID=48
+  Actual:   Data=0x57, ID=48
+------------------------------------------------------------------
+
+
+-------------------- TXN #49 | PASSED --------------------
+  Stimulus: Data=0xe5, ID=49
+  Expected: Data=0xe5, ID=49
+  Actual:   Data=0xe5, ID=49
+------------------------------------------------------------------
+
+
+-------------------- TXN #50 | PASSED --------------------
+  Stimulus: Data=0x18, ID=50
+  Expected: Data=0x18, ID=50
+  Actual:   Data=0x18, ID=50
+------------------------------------------------------------------
+
+
+-------------------- TXN #51 | PASSED --------------------
+  Stimulus: Data=0x66, ID=51
+  Expected: Data=0x66, ID=51
+  Actual:   Data=0x66, ID=51
+------------------------------------------------------------------
+
+
+-------------------- TXN #52 | PASSED --------------------
+  Stimulus: Data=0x9e, ID=52
+  Expected: Data=0x9e, ID=52
+  Actual:   Data=0x9e, ID=52
+------------------------------------------------------------------
+
+
+-------------------- TXN #53 | PASSED --------------------
+  Stimulus: Data=0xc1, ID=53
+  Expected: Data=0xc1, ID=53
+  Actual:   Data=0xc1, ID=53
+------------------------------------------------------------------
+
+
+-------------------- TXN #54 | PASSED --------------------
+  Stimulus: Data=0x61, ID=54
+  Expected: Data=0x61, ID=54
+  Actual:   Data=0x61, ID=54
+------------------------------------------------------------------
+
+
+-------------------- TXN #55 | PASSED --------------------
+  Stimulus: Data=0xe7, ID=55
+  Expected: Data=0xe7, ID=55
+  Actual:   Data=0xe7, ID=55
+------------------------------------------------------------------
+
+
+-------------------- TXN #56 | PASSED --------------------
+  Stimulus: Data=0xfb, ID=56
+  Expected: Data=0xfb, ID=56
+  Actual:   Data=0xfb, ID=56
+------------------------------------------------------------------
+
+
+-------------------- TXN #57 | PASSED --------------------
+  Stimulus: Data=0x45, ID=57
+  Expected: Data=0x45, ID=57
+  Actual:   Data=0x45, ID=57
+------------------------------------------------------------------
+
+
+-------------------- TXN #58 | PASSED --------------------
+  Stimulus: Data=0xae, ID=58
+  Expected: Data=0xae, ID=58
+  Actual:   Data=0xae, ID=58
+------------------------------------------------------------------
+
+
+-------------------- TXN #59 | PASSED --------------------
+  Stimulus: Data=0x37, ID=59
+  Expected: Data=0x37, ID=59
+  Actual:   Data=0x37, ID=59
+------------------------------------------------------------------
+
+
+-------------------- TXN #60 | PASSED --------------------
+  Stimulus: Data=0x02, ID=60
+  Expected: Data=0x02, ID=60
+  Actual:   Data=0x02, ID=60
+------------------------------------------------------------------
+
+
+-------------------- TXN #61 | PASSED --------------------
+  Stimulus: Data=0x52, ID=61
+  Expected: Data=0x52, ID=61
+  Actual:   Data=0x52, ID=61
+------------------------------------------------------------------
+
+
+-------------------- TXN #62 | PASSED --------------------
+  Stimulus: Data=0xb1, ID=62
+  Expected: Data=0xb1, ID=62
+  Actual:   Data=0xb1, ID=62
+------------------------------------------------------------------
+
+
+-------------------- TXN #63 | PASSED --------------------
+  Stimulus: Data=0xc0, ID=63
+  Expected: Data=0xc0, ID=63
+  Actual:   Data=0xc0, ID=63
+------------------------------------------------------------------
+
+
+-------------------- TXN #64 | PASSED --------------------
+  Stimulus: Data=0x0b, ID=64
+  Expected: Data=0x0b, ID=64
+  Actual:   Data=0x0b, ID=64
+------------------------------------------------------------------
+
+
+-------------------- TXN #65 | PASSED --------------------
+  Stimulus: Data=0xc1, ID=65
+  Expected: Data=0xc1, ID=65
+  Actual:   Data=0xc1, ID=65
+------------------------------------------------------------------
+
+
+-------------------- TXN #66 | PASSED --------------------
+  Stimulus: Data=0xb4, ID=66
+  Expected: Data=0xb4, ID=66
+  Actual:   Data=0xb4, ID=66
+------------------------------------------------------------------
+
+
+-------------------- TXN #67 | PASSED --------------------
+  Stimulus: Data=0xd9, ID=67
+  Expected: Data=0xd9, ID=67
+  Actual:   Data=0xd9, ID=67
+------------------------------------------------------------------
+
+
+-------------------- TXN #68 | PASSED --------------------
+  Stimulus: Data=0xd3, ID=68
+  Expected: Data=0xd3, ID=68
+  Actual:   Data=0xd3, ID=68
+------------------------------------------------------------------
+
+
+-------------------- TXN #69 | PASSED --------------------
+  Stimulus: Data=0x66, ID=69
+  Expected: Data=0x66, ID=69
+  Actual:   Data=0x66, ID=69
+------------------------------------------------------------------
+
+
+-------------------- TXN #70 | PASSED --------------------
+  Stimulus: Data=0xa6, ID=70
+  Expected: Data=0xa6, ID=70
+  Actual:   Data=0xa6, ID=70
+------------------------------------------------------------------
+
+
+-------------------- TXN #71 | PASSED --------------------
+  Stimulus: Data=0xba, ID=71
+  Expected: Data=0xba, ID=71
+  Actual:   Data=0xba, ID=71
+------------------------------------------------------------------
+
+
+-------------------- TXN #72 | PASSED --------------------
+  Stimulus: Data=0x2c, ID=72
+  Expected: Data=0x2c, ID=72
+  Actual:   Data=0x2c, ID=72
+------------------------------------------------------------------
+
+
+-------------------- TXN #73 | PASSED --------------------
+  Stimulus: Data=0x89, ID=73
+  Expected: Data=0x89, ID=73
+  Actual:   Data=0x89, ID=73
+------------------------------------------------------------------
+
+
+-------------------- TXN #74 | PASSED --------------------
+  Stimulus: Data=0x5e, ID=74
+  Expected: Data=0x5e, ID=74
+  Actual:   Data=0x5e, ID=74
+------------------------------------------------------------------
+
+
+-------------------- TXN #75 | PASSED --------------------
+  Stimulus: Data=0x5e, ID=75
+  Expected: Data=0x5e, ID=75
+  Actual:   Data=0x5e, ID=75
+------------------------------------------------------------------
+
+
+-------------------- TXN #76 | PASSED --------------------
+  Stimulus: Data=0x22, ID=76
+  Expected: Data=0x22, ID=76
+  Actual:   Data=0x22, ID=76
+------------------------------------------------------------------
+
+
+-------------------- TXN #77 | PASSED --------------------
+  Stimulus: Data=0xbd, ID=77
+  Expected: Data=0xbd, ID=77
+  Actual:   Data=0xbd, ID=77
+------------------------------------------------------------------
+
+
+-------------------- TXN #78 | PASSED --------------------
+  Stimulus: Data=0x80, ID=78
+  Expected: Data=0x80, ID=78
+  Actual:   Data=0x80, ID=78
+------------------------------------------------------------------
+
+
+-------------------- TXN #79 | PASSED --------------------
+  Stimulus: Data=0x9b, ID=79
+  Expected: Data=0x9b, ID=79
+  Actual:   Data=0x9b, ID=79
+------------------------------------------------------------------
+
+
+-------------------- TXN #80 | PASSED --------------------
+  Stimulus: Data=0x07, ID=80
+  Expected: Data=0x07, ID=80
+  Actual:   Data=0x07, ID=80
+------------------------------------------------------------------
+
+
+-------------------- TXN #81 | PASSED --------------------
+  Stimulus: Data=0x84, ID=81
+  Expected: Data=0x84, ID=81
+  Actual:   Data=0x84, ID=81
+------------------------------------------------------------------
+
+
+-------------------- TXN #82 | PASSED --------------------
+  Stimulus: Data=0x25, ID=82
+  Expected: Data=0x25, ID=82
+  Actual:   Data=0x25, ID=82
+------------------------------------------------------------------
+
+
+-------------------- TXN #83 | PASSED --------------------
+  Stimulus: Data=0x7b, ID=83
+  Expected: Data=0x7b, ID=83
+  Actual:   Data=0x7b, ID=83
+------------------------------------------------------------------
+
+
+-------------------- TXN #84 | PASSED --------------------
+  Stimulus: Data=0xf4, ID=84
+  Expected: Data=0xf4, ID=84
+  Actual:   Data=0xf4, ID=84
+------------------------------------------------------------------
+
+
+-------------------- TXN #85 | PASSED --------------------
+  Stimulus: Data=0xa9, ID=85
+  Expected: Data=0xa9, ID=85
+  Actual:   Data=0xa9, ID=85
+------------------------------------------------------------------
+
+
+-------------------- TXN #86 | PASSED --------------------
+  Stimulus: Data=0x0e, ID=86
+  Expected: Data=0x0e, ID=86
+  Actual:   Data=0x0e, ID=86
+------------------------------------------------------------------
+
+
+-------------------- TXN #87 | PASSED --------------------
+  Stimulus: Data=0x5a, ID=87
+  Expected: Data=0x5a, ID=87
+  Actual:   Data=0x5a, ID=87
+------------------------------------------------------------------
+
+
+-------------------- TXN #88 | PASSED --------------------
+  Stimulus: Data=0x0c, ID=88
+  Expected: Data=0x0c, ID=88
+  Actual:   Data=0x0c, ID=88
+------------------------------------------------------------------
+
+
+-------------------- TXN #89 | PASSED --------------------
+  Stimulus: Data=0x5b, ID=89
+  Expected: Data=0x5b, ID=89
+  Actual:   Data=0x5b, ID=89
+------------------------------------------------------------------
+
+
+-------------------- TXN #90 | PASSED --------------------
+  Stimulus: Data=0x95, ID=90
+  Expected: Data=0x95, ID=90
+  Actual:   Data=0x95, ID=90
+------------------------------------------------------------------
+
+
+-------------------- TXN #91 | PASSED --------------------
+  Stimulus: Data=0x0d, ID=91
+  Expected: Data=0x0d, ID=91
+  Actual:   Data=0x0d, ID=91
+------------------------------------------------------------------
+
+
+-------------------- TXN #92 | PASSED --------------------
+  Stimulus: Data=0x94, ID=92
+  Expected: Data=0x94, ID=92
+  Actual:   Data=0x94, ID=92
+------------------------------------------------------------------
+
+
+-------------------- TXN #93 | PASSED --------------------
+  Stimulus: Data=0xe8, ID=93
+  Expected: Data=0xe8, ID=93
+  Actual:   Data=0xe8, ID=93
+------------------------------------------------------------------
+
+
+-------------------- TXN #94 | PASSED --------------------
+  Stimulus: Data=0xe2, ID=94
+  Expected: Data=0xe2, ID=94
+  Actual:   Data=0xe2, ID=94
+------------------------------------------------------------------
+
+
+-------------------- TXN #95 | PASSED --------------------
+  Stimulus: Data=0x6a, ID=95
+  Expected: Data=0x6a, ID=95
+  Actual:   Data=0x6a, ID=95
+------------------------------------------------------------------
+
+
+-------------------- TXN #96 | PASSED --------------------
+  Stimulus: Data=0xbf, ID=96
+  Expected: Data=0xbf, ID=96
+  Actual:   Data=0xbf, ID=96
+------------------------------------------------------------------
+
+
+-------------------- TXN #97 | PASSED --------------------
+  Stimulus: Data=0x4a, ID=97
+  Expected: Data=0x4a, ID=97
+  Actual:   Data=0x4a, ID=97
+------------------------------------------------------------------
+
+
+-------------------- TXN #98 | PASSED --------------------
+  Stimulus: Data=0x8f, ID=98
+  Expected: Data=0x8f, ID=98
+  Actual:   Data=0x8f, ID=98
+------------------------------------------------------------------
+
+
+-------------------- TXN #99 | PASSED --------------------
+  Stimulus: Data=0x8f, ID=99
+  Expected: Data=0x8f, ID=99
+  Actual:   Data=0x8f, ID=99
+------------------------------------------------------------------
+TEST: All transactions checked. Soaking for 50ns...
+
+-------------------- FIFO Fill Level vs. Time --------------------
+Max Depth: 16 | Samples Collected: 250
+------------------------------------------------------------------
+Time     0ns | Fill:  0 | 
+Time    30ns | Fill:  2 | ######
+Time    60ns | Fill:  2 | ######
+Time    90ns | Fill:  3 | #########
+Time   120ns | Fill:  4 | ############
+Time   150ns | Fill:  5 | ###############
+Time   180ns | Fill:  6 | ##################
+Time   210ns | Fill:  7 | #####################
+Time   240ns | Fill:  7 | #####################
+Time   270ns | Fill:  9 | ############################
+Time   300ns | Fill:  9 | ############################
+Time   330ns | Fill: 11 | ##################################
+Time   360ns | Fill: 11 | ##################################
+Time   390ns | Fill: 12 | #####################################
+Time   420ns | Fill: 12 | #####################################
+Time   450ns | Fill: 13 | ########################################
+Time   480ns | Fill: 12 | #####################################
+Time   510ns | Fill: 13 | ########################################
+Time   540ns | Fill: 12 | #####################################
+Time   570ns | Fill: 13 | ########################################
+Time   600ns | Fill: 12 | #####################################
+Time   630ns | Fill: 13 | ########################################
+Time   660ns | Fill: 12 | #####################################
+Time   690ns | Fill: 13 | ########################################
+Time   720ns | Fill: 12 | #####################################
+Time   750ns | Fill: 13 | ########################################
+Time   780ns | Fill: 12 | #####################################
+Time   810ns | Fill: 13 | ########################################
+Time   840ns | Fill: 12 | #####################################
+Time   870ns | Fill: 13 | ########################################
+Time   900ns | Fill: 12 | #####################################
+Time   930ns | Fill: 13 | ########################################
+Time   960ns | Fill: 12 | #####################################
+Time   990ns | Fill: 13 | ########################################
+Time  1020ns | Fill: 12 | #####################################
+Time  1050ns | Fill: 13 | ########################################
+Time  1080ns | Fill: 12 | #####################################
+Time  1110ns | Fill: 13 | ########################################
+Time  1140ns | Fill: 12 | #####################################
+Time  1170ns | Fill: 13 | ########################################
+Time  1200ns | Fill: 12 | #####################################
+Time  1230ns | Fill: 13 | ########################################
+Time  1260ns | Fill: 12 | #####################################
+Time  1290ns | Fill: 13 | ########################################
+Time  1320ns | Fill: 12 | #####################################
+Time  1350ns | Fill: 13 | ########################################
+Time  1380ns | Fill: 12 | #####################################
+Time  1410ns | Fill: 13 | ########################################
+Time  1440ns | Fill: 12 | #####################################
+Time  1470ns | Fill: 13 | ########################################
+Time  1500ns | Fill: 12 | #####################################
+Time  1530ns | Fill: 13 | ########################################
+Time  1560ns | Fill: 12 | #####################################
+Time  1590ns | Fill: 13 | ########################################
+Time  1620ns | Fill: 12 | #####################################
+Time  1650ns | Fill: 13 | ########################################
+Time  1680ns | Fill: 12 | #####################################
+Time  1710ns | Fill: 13 | ########################################
+Time  1740ns | Fill: 12 | #####################################
+Time  1770ns | Fill: 13 | ########################################
+Time  1800ns | Fill: 12 | #####################################
+Time  1830ns | Fill: 13 | ########################################
+Time  1860ns | Fill: 12 | #####################################
+Time  1890ns | Fill: 13 | ########################################
+Time  1920ns | Fill: 12 | #####################################
+Time  1950ns | Fill: 13 | ########################################
+Time  1980ns | Fill: 12 | #####################################
+Time  2010ns | Fill: 12 | #####################################
+Time  2040ns | Fill: 11 | ##################################
+Time  2070ns | Fill: 10 | ###############################
+Time  2100ns | Fill:  9 | ############################
+Time  2130ns | Fill:  8 | #########################
+Time  2160ns | Fill:  8 | #########################
+Time  2190ns | Fill:  7 | #####################
+Time  2220ns | Fill:  6 | ##################
+Time  2250ns | Fill:  6 | ##################
+Time  2280ns | Fill:  5 | ###############
+Time  2310ns | Fill:  4 | ############
+Time  2340ns | Fill:  3 | #########
+Time  2370ns | Fill:  3 | #########
+Time  2400ns | Fill:  2 | ######
+Time  2430ns | Fill:  1 | ###
+Time  2460ns | Fill:  0 | 
+Time  2490ns | Fill:  0 | 
+------------------------------------------------------------------
+
+
+-------------------- TEST SUMMARY --------------------
+Total transactions checked: 100
+Passed transactions: 100
+Failed transactions: 0
+------------------------------------------------------
+
+********************* TEST PASSED *********************
+Simulation complete via $finish(1) at time 2525 NS + 0
+./test.sv:26     $finish;
+xcelium> exit
+TOOL:	xrun	23.09-s001: Exiting on Nov 13, 2025 at 23:02:01 EST  (total: 00:00:01)
+
+

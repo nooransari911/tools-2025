@@ -1,0 +1,123 @@
+So Shiao family got two new and really powerful members called as Shiao NRF54 L-15 and Shiao NRF54 L-15 sense. Well, these two boards are based on Nordic chipset which got some really promising configurations. And the coolest part, this uses the Zipon Artos which is one of the most popular and most widely used real-time operating system in the market. And this video covers everything that you need to know to get started with this board. Starting with the unboxing, the specifications.
+
+Later we'll discuss what is Zepher Artos and further we'll start with setting up the tools required for Ziper Artos both for Windows and Mac system. And finally we'll be testing out couple of example codes in it. So by end of the video you'll be comfortable enough to use this board and make your own wireless projects. And in case if you make it till the end you'll also get a chance to participate in a giveaway in which you can get these boards for absolutely free. And now let just grab those hardware and let's start with the unboxing part.
+
+So this is how you'll receive the board. And yes, seed changed the packaging of almost all the Xiao boards. And now you'll receive them in this plastic box. So inside the box, we get to see the main Xiao board. And below that, we get to see some mail headers and a QR code, which is not a sticker by the way.
+
+And scanning to which lands you on a Shiao series page on Seed's website. And the unboxing experience is same for both the variants. So yeah, that's all you get inside the box. And now let's move ahead and discuss the specifications of the board. So as we know this shiao board is based on nrf54 L15 chipset which got ARM Cortex M33 processor clocked at 128 MHz and along with that it also got a risk 5based core processor.
+
+Now talking about the memory then it got built-in 1.5 MB of nonvolatile memory or we can say flash 256 KB of RAM and if I talk about the wireless protocols then it supports a lot of them including Amazon Sidewalk plus it also supports Bluetooth channel sounding which is one of the feature of BL6 which is used for proximity detection with great precision along with that this Shiao board also got a built-in ceramic antenna and built built-in battery charging circuit in it. And now talking about the sensors, then the normal version don't have any built-in sensor while the sense version got built-in 6axis IMU and a digital microphone on board and all this in the same shiao form factor of just 21x7.5 mm. So that was all about the specifications of this board and now it's time to move ahead and learn how to use it. Now this board currently doesn't support Ardino ID as of now in August 2025 but we may get its support in near future. So as of now we can use this board only with the help of Ziper Artos.
+
+So for those who don't know Ziper Artos is a small scalable and open-source realtime operating system designed for resource constrainted emirate devices means you can think of Zipur as a Linux but just for microcontrollers with less RAM, less storage and less powerful. So now the question is we do have a couple of other arttos in the market. So why zip? Well, there are a couple of reasons for it like Ziper is completely open source and it's backed by Linux Foundation. Secondly, it supports the boards from multiple manufacturers.
+
+So you can run Ziper on your Ardino boards, ESP boards and also on the Nordic semiconductor boards. Further, Ziper has a huge community worldwide. So getting a help with your code will be really easy. And the most important part Ziper Artos is not just for building projects but you can make commercial gradede products as well. Like on the screen you can see couple of products built out of Zipher Artos.
+
+So because of these features Cipher is becoming more and more popular Artos in the market. So that was basic overview about what Zipher Artos actually is. And now let's move on to our computer and let's see what are the necessary softwares and packages required to write our first ever code in Ziper Artos. So before uploading the code we first need to set up the Visual Studio code in our computer. So for that you first need to download the Visual Studio code for your operating system.
+
+In my case I have downloaded one for the Mac. So let me just open that up. So in the visual studio you need to go to the extensions and here just search for nrf and you need to install this extension called as nrf connect for vs code extension pack. Just click on it and here you will find the installed button. In my case as I already installed it so it's not showing up and once you install it successfully a new option of nrf connect will appear here.
+
+So just click on it after that. Later after installing the nrf connect you need to install the tool chains. For that you can go to manage tool chains. Click on install tool chains and here you need to install the version 3.0.1 which is recommended by the seed team itself. Again in my case I have already installed the 3.0.1 hence it is not showing up but in your case you to click on 3.0.1 and just press enter.
+
+It will install and it will definitely take some time. So that's why I did all the steps before. After installing the tool chain as you can see I'm I'm already having the 3.0.1 here. Okay. So after installing the tool chain you need to install the SDK.
+
+For that click on manage SDKs again install SDK and you need to install that same 3.0.1 SDK version which is this. Again in my case I have already installed. You just have to click here press enter and it will get installed and definitely will take some time. Okay. So now we are good to go to open up the first example code.
+
+For that you can click on create new application and click on copy a sample. Now here you can just type as blink and it will say blinky sample. Just click on it. So later after that you need to remember this particular location where your application is being created. In my case it is inside users/ suchin Sony/blinky.
+
+So we'll need this location later on. So just remember where you are creating this application and let us just press enter. Click on open. It will open up the example code here. Okay.
+
+So as you can see the blinky appeared here. So now here we need to do one more step which is to add the support for shiao board. And for that you can refer to the documentation page from the seed uh whose link I'll be attaching in the description. And here under point uh number five you have a option called as download the libraries. Just click on it and it will open up the uh GitHub repository.
+
+Okay. You just need to download the zip file of GitHub repository. And after downloading when you open that repo you will find a folder called as cipher. Go inside that and here is a folder called as board which has the shiao board support. So just copy this folder and now you need to go to the folder where the blinky application was created.
+
+In my case it's inside such Sony. So I'll go inside it and here I will just paste that boards folder and I will replace it with the existing one. And with this we now have the support for the shiao board uh in the visual studio. Okay. So now we are good to go to build this application and upload it into our shiao board.
+
+So for that what you can do is you just need to go to this nrf connect uh application or the option we can say and below that you'll find option called as application and blinky and here is the option called as add build configuration just click on it and here under the board target just type as shiao and you'll find option called as shia nrf54 l15 if you don't find this I'll I'll recommend you to uh you know close this visual studio open it once again and later you can find it okay so I'll uh click this board option and that's pretty much it. You just need to click on generate and build and it will generate the uh firmware file which later need to be uploaded onto our board. So this will definitely take some time and in the meantime we need to do one more step which is the last step uh which will help us to upload this code into our board. So let me show you how to perform that step. So for that we'll again go to this uh seed studios documentation page and this particular step which is the last tab has different ways or different processes for Windows and Mac OS.
+
+I'll let you know for both the system as of now I'll show you for the Mac OS. I'll click on Mac and here are a couple of commands to be performed. So let me just open up the terminal window. So first command is this. So I'll copy and paste it here.
+
+Press enter. I need to put the password and press enter again. Press enter. Okay. So this command is executed successfully.
+
+Let's go ahead and download or copy this command and paste it here. Press enter. This is also done. Now this one. Copy and paste here. [Music] Perfect.
+
+And now after installing we just need to type this command to see if it is installed or not. And yeah it is installed. So I think we are done with all the step for the Mac OS. And now let me just show you how to upload this code and later I'll show you the steps to be performed in the Windows system as well. Okay.
+
+So after doing this we'll go back to the Visual Studio Code and here as you can see we got the build folder under Blinkcky. That means the application is successfully built. Now what we need to do is we need to go to manage tool chains and here click on open to open open terminal profile. It will open up a terminal window here and here we just need to type the command as vest space flash. Now make sure the shiao board is connected with a computer and after that uh just type enter and uh let's wait and yes the code is successfully uploaded and on the shiao board we can see the green LED the onboard onboard LED blinking at the interval of 1 second that's the very basic very first blink example code that we uploaded with the help of cyher ardos using visual studio so that was the step for the Mac OS and now let me show you the steps for Windows OS Okay.
+
+So now let's see the steps for the Windows OS. So first of all, we need to open up the PowerShell. So I'll type uh I'll press the Windows button and type PowerShell. And uh here's Windows PowerShell and we need to run as administrator. So we'll click on it.
+
+Perfect. So in this terminal, we need to first type get execution policy. So I'll copy it and uh paste it here. Press enter. Okay.
+
+Let's type this one. It's not mentioned like what response should we get here. But anyways, we executed both the commands and now let's just type this command. I'll copy it and we'll paste it here and let's see what happens. Okay, this says it already detected uh this uh chocolate in my system but I don't think I have installed it.
+
+So I'll I have deleted that folder and I'll try to paste that line once again and let's see if this works or not. Okay. So, it started downloading and installing it. Okay. So, we are done with this.
+
+Now, let's move on to the next step which is this. So, I'll copy go inside the PowerShell and paste it here. And let's uh press enter. I'll press Y. Okay.
+
+So, this step is also successfully done. And now I think we are done with everything. We just need to confirm our installation. So I'll just copy this command and paste it inside the PowerShell and uh yeah it detected. So everything is uh installed successfully.
+
+Now we're good to go to flash the code uh using the Windows OS. For that uh again we'll need to go to uh VS Code. Let's open that up and here into manage tools chains and then into let me just confirm into open terminal profile. So yeah, here is the terminal window. And now here just we need to type as west flash.
+
+Make sure the board is connected with the computer. In my case, it's already connected. And let's just press enter. And yes, the code is successfully uploaded with the Windows OS as well. And on the board, I can see the green LED blinking at the interval of 1 second.
+
+So those were the steps for both Windows and Mac OS to flash the firmware in the Shiao board. And now let me show you a couple of other example codes and how we can flash in it and how to test them out. So first of all uh like previously we tested the LED blink and now let us test out how uh to read the button data and based on the buttons data how to control the LED. For that what I'll do I'll just go to Visual Studio and click on file and open folder. Now in my case I already created the folders of three example codes and I'll show you those example codes only.
+
+And also I'll be providing all these folders into my GitHub repository so you can try it out. Now this folder not only contains the code file and all the configuration file but also I have added the sheet uh but also I added the shout board inside the boards folder. So you don't need to do that step as well. Okay. So let's start with the buttons folder.
+
+So I'll click on this folder and click on select folder. It will open it up in the visual studio. Now if you want to visualize the code and the logic well you can uh find that under main. C. So and inside the source folder there is a file called as main C and the main C contains all the main logic of that particular code.
+
+Okay. So uh this structure may find a little different from the one which we have seen in Ardino ID. Well there are a couple of more steps to be performed here. But yeah we need to get comfortable with this if you want to make some production ready code. Okay.
+
+Uh so yeah uh if we go inside the main loop which is nothing but the while one similar to the void loop we can see that we are just reading the button state. So if the button state is zero that means if the button is pressed we are just turning on the LED and if the button is not pressed then we are turning the LED off. And this will repeat after 10 millisecond of delay. We can change the delay as much as we want. Okay.
+
+So now what you need to do after opening up this code you need to go to this uh nrf connect. And here you can see the board is already built but we need to remove this build configuration and need to build it once again to uh flash successfully onto our board. So after removing this click on add build configuration and uh as we have already added the shiao board as you can see the shiao board automatically appeared here. If it doesn't appear make sure you do the board step that we done in the blink example code then it will appear. After that you just need to click on generate and build and this will definitely take some time to build the firmware file.
+
+So let me just fast forward this video. Okay. So it successfully built the folder. Now to flash it, we just need to go to manage tool chains and click on open terminal profile. And here uh first of all make sure the board is connected with the computer.
+
+And after that you just need to type out west space flash. And this will successfully flash the firmware into our board. And successfully flashed as well. And now if I show you the working of it in my smartphone's camera. Let me just turn on the video recording.
+
+And here if I press this push button, as you can see, the green LED on board gets turned on. And if I release it, it gets turned off. Press to turn it on and release to turn it off. On, off, on, off. So yeah, that's how you can read the button status and can give the output to dedicated GPI.
+
+So that was another example code uh which I tested in the shaboard. Now let's try out other two example codes. So I'll click on close folder to close it. And now I'll again go to files and go click on open folder. And this time let us test out the example code called as D mic or digital microphone.
+
+Select the folder. So I'll be testing it in the SA sh sense board only. This will not work in the regular NRF54 L15 board. So after that again if you want to check out the code you can go to source and main C file and this contains uh the complete logic of this code. Okay.
+
+And uh after you are done with your C file you can go to the nrf connect then remove this build configuration. Okay so after removing just click on add build configuration and here make sure the board selected is of shiao. Yes it's selected and just click on generate and build. This will build the firmware file ready to be flashed onto our board. Now in the meantime if I take you to the main C file.
+
+So now what this code does is it is recording our audio for uh I think 1,000 millisecond. Yes. Uh 1 second and it is storing inside a buffer. Okay. Uh let me show you that buffer.
+
+Okay. So we are storing it inside the buffer. And uh there's no such logic written here to retrieve that uh buffer and to listen to that audio. We are just recording it and storing it and it will just uh say exiting after the 1 second timeout period. So let me just show you the the result.
+
+Okay. So the yeah build is successfully done. So we can go to nrf connect into manage tool chains then into open terminal profile. Make sure the board is connected and just type out uh west space flash. Press enter and this will flash the code into our sha board is successfully flashed.
+
+It's pretty fast. Then we can go to serial monitor option and here just select the right comp port which is selected already and click on start monitoring. Hello. Okay, let's just try to reset the board. Hello.
+
+Hello. Hello. And yeah, as you can see it says it has successfully recorded and stored inside the buffer like all the audio data. And lastly, it says exiting. So this is kind of confusing like it is definitely recording the data but I'm unable to listen to what kind of data it's been recorded.
+
+Okay I I didn't found it. If you if you know how to listen to this particular like how to retrieve the puff or how to re listen to the audio well if you know let me know in the comments because I didn't find that particular option but yeah that was the another example code that we tested and successfully running as well. And the last code is of the uh IMU data that that means the accelerometer and the gyroscope data. So yes, the sense board do have the built-in accelerometer and gyroscope. So click on open folder and go to desktop and the third one is named as entitle.
+
+But anyways, this is for the IMU testing. If you go inside the source and main C file. Oh, there are two main.t. Yeah. So this is the one.
+
+Okay. So inside this, we are giving the I2C address of that uh imu chip. Okay. So it's working on I2C. And basically inside the main loop, what we are doing it, let me just show you.
+
+So yeah inside the while one inside the void loop we can see we are just displaying the raw data that means the data of gyroscope and the accelerometer after interval of 1,000 mcond or we can say 1 second. So again we'll go to nrf connect and we'll remove this build configuration. Click on add build configuration and here make sure the sha board is selected. Yes, it is selected. Now we can click on generate and build.
+
+This will build the firmware file ready to be flashed. And in the meantime, we can have a look over the main C file as well. Let's just go once again. This is the one. So I was saying that it is printing uh the raw data after inter 1 second.
+
+And for that this function is being called. So if I go to the definition of this function and here it is and as you can see using the print app function which is similar to the serial print you can see we are displaying the accelerometers raw data like the XYZ access and later we are displaying the gyro raw data again XYZ and in the end we are printing the trigger counter I guess yes let me just see yes we are increasing the counter at the start of each loop so we are printing the counter value as well. So these three data points we are printing on the serial monitor and yeah let's wait for the code to get built and we'll test it out in the serial monitor itself. Okay. So the code is successfully built and we can go to nrf connect and later go to manage tool chains and click on open terminal profile.
+
+Make sure the board is connected and after that just type out west space flash. Press enter and this will flash the code and yes it successfully flashed. So we can go to the serial monitor click the right comp port. Click on start monitoring and yeah as you can see trigger counter 6 7 8 and we are getting the raw data of accelerometer and gyroscope. So if I do some movements so the values are being changed.
+
+If I keep it steady values will stay more or less the same. It won't have much difference but if I change it yeah it is definitely having a a lot of difference. So yeah that was a built-in uh sensor testing as well. And these were the three example codes which I chosen to test out in this particular video. But you can try out all of the example codes as well.
+
+Let me show you the GitHub repository from the seed. So here's the GitHub repository from the seed. And here as you can see they have a couple of example codes for blink and Bluetooth and DMIC recorder. That's the digital microphone recorder. I tried this but it uh didn't work on my my end.
+
+You can try it out. Then the D mic which which we have tried. Then we also tried the e-aper one. I haven't shown in this video but I have already tried it to run the e-aper display using this shaboard and it works successfully fine. So that's how you can try different different different uh example codes from the seeds website as well.
+
+The steps will be the same which I have shown in the video. The only thing is make sure you add the boards support into the boards folder. That's the only change otherwise everything will be pretty much the same and yeah that's how you can easily use the shiao board running zip artos. So those were a couple of example code that we tried on the shiao board running cipher artos. And now what I think we do need to have a couple of more example codes to try out complete features of this board like the one for ziggb thread matter Amazon sidewalk and also for Bluetooth channel sounding.
+
+So currently we do not have any of these example codes but I'm pretty much sure that seeds team will definitely work on it will provide us all this and much more example codes in near future so that we can explore all the features of this board and can make some amazing projects out of it. Now here one more thing what I think is writing the code may seems tricky for Ziper Artos as compared to writing it in Ardino IDE but with more and more example codes and more and more project videos on like Zipur Artos topic will make all of us more comfortable on using it and later we can write our own codes as well that will be production ready. So we all need to definitely work on it and now let's talk about the giveaway contest. So yes, I'm going to give away one Shiao NRA54 L15 and one Shiao NRF54 L-15 sense to two of my lucky viewers and and participating in this giveaway contest is really very simple. So, first of all, you need to be the subscriber of the channel and also you need to click the like button of this video and let us comment below your project idea with the help of this board and later after a week, we'll be choosing two random lucky winners out of the comment section and we'll be giving away each of the board to each of them completely free of cost.
+
+So, yeah, that was all about the video and the giveaway contest. I hope you liked it. I hope you got to learn something new from it. And yeah, that being said, I am just ending this video here and now. Wait for my next video.
+
+Until then, explore, learn, share with me, Techie SMS. [Music]

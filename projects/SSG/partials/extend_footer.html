@@ -6,28 +6,3 @@
 
 
 
-{{/* layouts/partials/extend_footer.html */}}
-
-{{/* lightgallery.js Core */}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/zoom/lg-zoom.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const galleries = document.querySelectorAll('.custom-lightgallery'); // Matches class from shortcode
-    galleries.forEach(gallery => {
-      lightGallery(gallery, {
-        plugins: [lgZoom, lgThumbnail], // Add plugins here
-        selector: '.lg-item', // Tells lightgallery to use children with this class
-        thumbnail: true,
-        animateThumb: false,
-        zoomFromOrigin: false, // Can improve performance on some devices
-        allowMediaOverlap: true,
-        toggleThumb: true,
-        download: false, // Set to true to enable download button
-        // Add other lightgallery options here
-        // e.g. mode: 'lg-fade', speed: 500,
-      });
-    });
-  });
-</script>
