@@ -29,7 +29,16 @@ static-manifest*
 **/build/
 **/node_modules/
 **/scrapelist*.txt
-**/scrapelist*/**
+**/scrapelist**/
+__pycache__/
+*.pyc
+
+# SEO Optimize generated data / logs
+/projects/CMS/SEO Optimize/data/
+/projects/CMS/SEO Optimize/logs/
+
+# README working notes / transcripts
+/projects/README/
 
 
 
